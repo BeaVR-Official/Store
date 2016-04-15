@@ -1,1 +1,96 @@
-<h1>Page d'une application LOL<h1>
+
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
+  <div class="panel panel-default">
+
+  <div class="panel-heading">Informations</div>
+  <div class="panel-body">
+
+    <div id="container" ng-repeat="applicationInfos in applications">
+    <div class="container">
+      <div class="well">
+          <div class="media">
+          	<a class="pull-left" href="#">
+        		<img class="media-object" src="{{ applicationInfos.logo }}" style="width: 150px; height: 150px;">
+      		</a>
+      		<div class="media-body">
+        		<h4 class="media-heading">{{ applicationInfos.name }}</h4>
+              <p class="text-right">Publié le : {{ applicationInfos.creationDate }}</p>
+              <p>
+                {{ applicationInfos.description }}
+              </p>
+              <p class="text-left">Website :  www.google.fr</p>
+
+              <!--<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="ZPQUF3AFKYDUC">
+                <input type="image" src="https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_buynow_SM.gif" border="0" name="submit" alt="PayPal, le réflexe sécurité pour payer en ligne">
+                <img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
+              </form>-->
+
+             <p class="text-right"><button type="button" class="btn btn-success">{{ applicationInfos.price }}€</button></p>
+           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br />
+  <h4 class="media-heading">Images du jeu </h4>
+  <br />
+
+  <div class="col-md-12">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img class="slide-image" src="assets/img/carrousel/img4.jpg" alt="">
+                </div>
+                <div class="item">
+                    <img class="slide-image" src="assets/img/carrousel/img5.jpg" alt="">
+                </div>
+                <div class="item">
+                    <img class="slide-image" src="assets/img/carrousel/img6.jpg" alt="">
+                </div>
+            </div>
+            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+    </div>
+</div>
+
+  </div>
+</div>
+
+
+
+
+  <h3> Commentaires </h3>
+  <div id="container" ng-repeat="commentInfos in comments">
+  <div class="container">
+    <div class="well">
+        <div class="media">
+        	<a class="pull-left" href="#">
+      		<img class="media-object" src="{{ commentInfos.picture_profile }}">
+    		</a>
+    		<div class="media-body">
+      		<h4 class="media-heading"> {{ commentInfos.title }}</h4>
+            <p class="text-right">By Utilisateur{{ commentInfos.author}}</p>
+            <p>
+              {{ commentInfos.comment }}
+            </p>
+            <ul class="list-inline list-unstyled">
+    			       <li><span><i class="glyphicon glyphicon-calendar"></i> {{ commentInfos.date }}</span></li>
+    			 </ul>
+         </div>
+      </div>
+    </div>
+  </div>
+</div>
