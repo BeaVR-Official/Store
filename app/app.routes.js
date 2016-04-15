@@ -33,6 +33,11 @@ website.config(function($routeProvider){
                 controller  : 'libraryController'
             })
 
+            .when('/progression', {
+                templateUrl : 'app/components/progression/progression.html',
+                controller  : 'progressionController'
+            })
+
             .when('/offline', {
                 templateUrl : 'app/components/offline/offline.html',
                 controller  : 'offlineController'
