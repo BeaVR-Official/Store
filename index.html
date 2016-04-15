@@ -65,7 +65,7 @@
 
         <div class="row">
 
-            <div class="col-md-2" ng-show="leftMenu">
+            <div id="leftMenu" class="col-md-2" ng-show="leftMenu">
                 <p class="lead">Devices</p>
                 <div class="list-group">
                   <a href="#" class="list-group-item"><img src="assets/img/icons/steeve.png">Occulus Rift</a>
@@ -90,7 +90,7 @@
               <div ng-view></div>
             </div>
 
-            <div class="col-md-2" ng-show="rightMenu">
+            <div id="rightMenu" class="col-md-2" ng-show="rightMenu">
                 <p class="lead">Compte</p>
                 <div class="list-group">
                   <a href="#" class="list-group-item"><img src="https://scontent.fsan1-2.fna.fbcdn.net/hphotos-xlf1/v/t1.0-9/12814463_10207906164508574_3767012560302165678_n.jpg?oh=b94fdc4e5539eb694f3e90a168613430&oe=577B95B3" class="img-circle" style="display: block; margin: auto;"></a>
@@ -121,6 +121,8 @@
     <!-- Angular JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+
+    <script src="https://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha1.js"></script>
 
     <script src="app/app.module.js"></script>
     <script src="app/app.routes.js"></script>
