@@ -10,6 +10,8 @@ website.controller('mainController', function($scope, $http) {
 
       $scope.data = response.data.Message;
 
+      console.log(response);
+
   }, function(error){
     console.debug("failed dans la requête pour fetch la liste des devices");
   });
