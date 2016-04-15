@@ -1,7 +1,7 @@
 
-website.controller('mainController', function($scope, $http) {
+website.controller('offlineController', function($scope, $http) {
 
-  console.log("Controller Main");
+  console.log("Controller offline");
 
   $scope.leftMenu = true;
   $scope.rightMenu = true;

@@ -43,7 +43,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand-logo" href="#">
+                <a class="navbar-brand-logo" href="#/">
                   <img class="navbar-brand-logo" src="assets/img/logo/beaver-logo-min.png">
                 </a>
             </div>
@@ -91,15 +91,22 @@
             </div>
 
             <div id="rightMenu" class="col-md-2" ng-show="rightMenu">
-                <p class="lead">Compte</p>
-                <div class="list-group">
+
+              <div id="itemConnexion" class="list-group">
+                  <a href="#/connexion" class="list-group-item">Connexion</a>
+              </div>
+
+
+                <p id="titleCompteMenu"class="lead">Compte</p>
+                <div id="compteMenu" class="list-group">
                   <a href="#" class="list-group-item"><img src="https://scontent.fsan1-2.fna.fbcdn.net/hphotos-xlf1/v/t1.0-9/12814463_10207906164508574_3767012560302165678_n.jpg?oh=b94fdc4e5539eb694f3e90a168613430&oe=577B95B3" class="img-circle" style="display: block; margin: auto;"></a>
                     <a href="#/profile" class="list-group-item">Mon Profile</a>
                     <a href="#/library" class="list-group-item">Bibliothèque</a>
+                    <a href="#/" class="list-group-item">Progression</a>
                 </div>
 
-                <p class="lead">Développement</p>
-                <div class="list-group">
+                <p id="titleDeveloppementMenu" class="lead">Développement</p>
+                <div id="developpementMenu" class="list-group">
                     <a href="#" class="list-group-item"><img src="assets/img/icons/code.png">Devenir développeur</a>
                     <a href="#" class="list-group-item"><img src="assets/img/icons/api.png">Publier une application</a>
                     <a href="#" class="list-group-item"><img src="assets/img/icons/git.png">Gérer vos applications</a>
@@ -136,6 +143,8 @@
     <script src="app/components/applicationDetail/applicationDetailController.js"></script>
 
     <script src="app/components/library/libraryController.js"></script>
+
+    <script src="app/components/offline/offlineController.js"></script>
 
     <!-- jQuery -->
     <script src="assets/js/jquery.js"></script>

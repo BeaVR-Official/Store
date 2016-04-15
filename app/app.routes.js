@@ -33,6 +33,11 @@ website.config(function($routeProvider){
                 controller  : 'libraryController'
             })
 
+            .when('/offline', {
+                templateUrl : 'app/components/offline/offline.html',
+                controller  : 'offlineController'
+            })
+
             .when('/users/edit/:idUsers', {
                 templateUrl : 'pages/usersEdit.html',
                 controller  : 'usersEditController'
