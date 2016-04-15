@@ -3,12 +3,9 @@ website.controller('applicationDetailController', function($scope, $http, $route
 
     console.log("Controller Detail d'une application");
 
-    //$scope.idApplication = $routeParams.idApplication;
-
     $http.get(url + '/api/applications/' + $routeParams.idApplications).then(function(response){
 
       $scope.applications = response.data.Applications;
-      console.log(response);
 
     }, function(error){
       console.debug("failed dans la requête pour fetch la liste des devices");
