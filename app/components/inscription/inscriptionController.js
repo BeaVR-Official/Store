@@ -23,8 +23,8 @@ website.controller('inscriptionController', function($scope, $http) {
 
         }, function(error){
 
-          alert("l'inscription n'a pas réussie");
-          $scope.message = 'Une erreur est survenue durant la connection';
+          alert("Echec lors de l'inscription.");
+          $scope.message = "Une erreur est survenue durant l'inscription";
         });
       };
 });

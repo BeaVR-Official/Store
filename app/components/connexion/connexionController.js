@@ -22,8 +22,8 @@ website.controller('connexionController', function($scope, $http, $window) {
           $window.location.href = '#/'
         }, function(error){
 
-          alert("l'inscription n'a pas réussie");
-          $scope.message = 'Une erreur est survenue durant la connection';
+          alert("Echec lors de la connexion.");
+          $scope.message = 'Une erreur est survenue durant la connexion';
         });
       };
 
