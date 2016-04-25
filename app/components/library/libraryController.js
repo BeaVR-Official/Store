@@ -7,7 +7,7 @@ website.controller('libraryController', function($scope, $http, $routeParams) {
   * @TODO: envoyer en paramètre l'id de l'utilisateurs stocké dans les cookies
   **/
 
-  $http.get(url + '/api/applications/1').then(function(response){
+  $http.get(url + '/api/applications/').then(function(response){
 
     $scope.applicationsList = response.data.Applications;
 
