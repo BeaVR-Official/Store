@@ -8,7 +8,7 @@ website.controller('offlineController', function($scope, $http) {
 
   $http.get(url + '/api/applications').then(function(response){
 
-      $scope.data = response.data.Message;
+      $scope.data = response.data.Applications;
   }, function(error){
     console.debug("failed dans la requête pour fetch la liste des devices");
   });

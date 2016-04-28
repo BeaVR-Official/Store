@@ -8,15 +8,15 @@
 
 
 <div class="row">
-  <div id="container" ng-repeat="applicationInfos in applicationsList">
-  <div class="col-lg-4">
-    <img class="img-circle" src="{{ applicationInfos.logo }}" alt="Generic placeholder image" width="140" height="140">
-    <h4>{{ applicationInfos.name }}</h4>
-    <p>{{ applicationInfos.description }}</p>
-    <p>
-      <a class="btn btn-default" href="#" role="button">Lancer</a>
-      <a class="btn btn-danger" href="#" role="button">Supprimer</a>
-    </p>
+    <div id="container" ng-repeat="applicationInfos in applicationsList">
+      <div class="col-lg-4">
+        <img class="img-circle" ng-src="{{ applicationInfos.logo }}" alt="Generic placeholder image" width="140" height="140">
+        <h4>{{ applicationInfos.name }}</h4>
+        <p>{{ applicationInfos.description }}</p>
+        <p>
+          <a class="btn btn-default" href="#" role="button">Lancer</a>
+          <a class="btn btn-danger" href="#" role="button">Supprimer</a>
+        </p>
+      </div>
   </div>
-</div>
 </div>
