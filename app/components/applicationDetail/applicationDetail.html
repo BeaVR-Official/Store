@@ -5,18 +5,18 @@
   <div class="panel-heading">Informations</div>
   <div class="panel-body">
 
-    <div id="container" ng-repeat="applicationInfos in applications">
+    <div id="container">
     <div class="container">
       <div class="well">
           <div class="media">
           	<a class="pull-left" href="#">
-        		<img class="media-object" src="{{ applicationInfos.logo }}" style="width: 150px; height: 150px;">
+        		<img class="media-object" ng-src="{{applications.logo }}" style="width: 150px; height: 150px;">
       		</a>
       		<div class="media-body">
-        		<h4 class="media-heading">{{ applicationInfos.name }}</h4>
-              <p class="text-right">Publiée le : {{ applicationInfos.creationDate }}</p>
+        		<h4 class="media-heading">{{applications.name }}</h4>
+              <p class="text-right">Publiée le : {{applications.creationDate | date:'dd/MM/yyyy'}}</p>
               <p>
-                {{ applicationInfos.description }}
+                {{ applications.description }}
               </p>
               <p class="text-left">Website :  www.google.fr</p>
 
@@ -27,7 +27,7 @@
                 <img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
               </form>-->
 
-             <p class="text-right"><button type="button" class="btn btn-success">{{ applicationInfos.price }}€</button></p>
+             <p class="text-right"><button type="button" class="btn btn-success">{{ applications.price }}€</button></p>
            </div>
         </div>
       </div>
@@ -35,7 +35,7 @@
   </div>
 
   <br />
-  <h4 class="media-heading">Images du jeu </h4>
+  <h4 class="media-heading">Images de l'application</h4>
   <br />
 
   <div class="col-md-12">
@@ -78,7 +78,7 @@
     <div class="well">
         <div class="media">
         	<a class="pull-left" href="#">
-      		<img class="media-object" src="{{ commentInfos.picture_profile }}">
+      		<img class="media-object" ng-src="{{ commentInfos.picture_profile }}">
     		</a>
     		<div class="media-body">
       		<h4 class="media-heading"> {{ commentInfos.title }}</h4>
@@ -87,7 +87,7 @@
               {{ commentInfos.comment }}
             </p>
             <ul class="list-inline list-unstyled">
-    			       <li><span><i class="glyphicon glyphicon-calendar"></i> {{ commentInfos.date }}</span></li>
+    			       <li><span><i class="glyphicon glyphicon-calendar"></i> {{ commentInfos.date | date:'dd/MM/yyyy'}}</span></li>
     			 </ul>
          </div>
       </div>
