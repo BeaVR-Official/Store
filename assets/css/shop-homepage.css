@@ -51,4 +51,11 @@ body {
 
 footer {
     /*margin: 50px 0;*/
+    height: auto;
+}
+
+.navbar-brand-logo {
+    padding-top: 3px;
+    height: 45px;
+    margin-right: 10px;
 }
