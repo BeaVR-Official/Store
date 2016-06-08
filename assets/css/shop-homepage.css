@@ -26,6 +26,14 @@ body {
     overflow: hidden;
 }
 
+/*Added*/
+.caption a {
+  font-weight:bold;
+}
+.caption a:hover {
+    color: #0d7777;
+}
+
 .caption h4 {
     white-space: nowrap;
 }
