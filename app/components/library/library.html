@@ -3,18 +3,40 @@
 #itemConnexion {
   display: none;
 }
-</style>
-<h1>Ma bibliothèque d'applications</h1>
 
+.application-name {
+  font-weight:bold;
+  text-align:center;
+}
+
+.btn-launch-application {
+  text-align:center;
+}
+
+.application-area {
+  height:350px;
+}
+
+/* WEBKIT ONLY */
+.library-app-description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* number of lines to show */
+}
+</style>
+
+<h1 class="page-title">Ma bibliothèque d'applications</h1>
 
 <div class="row">
     <div id="container" ng-repeat="applicationInfos in applicationsList">
-      <div class="col-lg-4">
-        <img class="img-circle" ng-src="{{ applicationInfos.logo }}" alt="Generic placeholder image" width="140" height="140">
-        <h4>{{ applicationInfos.name }}</h4>
-        <p>{{ applicationInfos.description }}</p>
-        <p>
-          <a class="btn btn-default" href="#" role="button">Lancer</a>
+      <div class="col-lg-4 application-area">
+        <img class="img-circle center-block" ng-src="{{ applicationInfos.logo }}" alt="Generic placeholder image" width="140" height="140">
+        <h4 class="application-name">{{ applicationInfos.name }}</h4>
+        <p class="library-app-description">{{ applicationInfos.description }}</p>
+        <p class="btn-launch-application">
+          <a class="btn btn-secondary btn-beavr" href="#" role="button">Lancer</a>
         </p>
       </div>
   </div>

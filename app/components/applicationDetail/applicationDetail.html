@@ -19,6 +19,10 @@
   font-size:14px;
 }
 
+.well {
+  height:auto;
+}
+
 </style>
 
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
@@ -35,14 +39,14 @@
           <div class="media">
           	<a class="pull-left" href="#">
         		<img class="media-object" ng-src="{{applications.logo }}" style="width: 150px; height: 150px;">
-      		</a>
+      		  </a>
       		<div class="media-body">
         		<h4 class="media-heading">{{applications.name }}</h4>
               <p class="text-right date-publication">Publiée le : {{applications.creationDate | date:'dd/MM/yyyy'}}</p>
               <p class="description-application">
                 {{ applications.description }}
               </p>
-              <p class="text-left">Website :  www.google.fr</p>
+              <p class="text-left">Website :  <a href="http://www.google.fr">http://www.google.fr</a></p>
 
               <!--<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                 <input type="hidden" name="cmd" value="_s-xclick">
@@ -51,7 +55,7 @@
                 <img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
               </form>-->
 
-             <p class="text-right"><button type="button" class="btn btn-success">{{ applications.price }}€</button></p>
+             <p class="text-right"><button type="button" class="btn btn-secondary btn-beavr btn-lg">{{ applications.price }}€</button></p>
            </div>
         </div>
       </div>
