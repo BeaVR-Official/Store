@@ -37,7 +37,7 @@ REST.prototype.connectMysql = function() {
         //port     : '3306', //8889
         port : 3306,
         //database : 'beavr_dev', //restful_api_demo
-        database : 'beavr_dev', //restful_api_demo
+        database : 'beavr_new', //restful_api_demo
         debug    :  false
     });
 
