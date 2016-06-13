@@ -42,6 +42,11 @@ website.config(function($routeProvider){
                 templateUrl : 'app/components/offline/offline.html',
                 controller  : 'offlineController'
             })
+            
+            .when('/resetPassword', {
+                templateUrl : 'app/components/resetPassword/resetPassword.html',
+                controller  : 'resetPasswordController'
+            })
 
             .when('/users/edit/:idUsers', {
                 templateUrl : 'pages/usersEdit.html',

@@ -26,6 +26,14 @@ body {
     overflow: hidden;
 }
 
+/*Added*/
+.caption a {
+  font-weight:bold;
+}
+.caption a:hover {
+    color: #0d7777;
+}
+
 .caption h4 {
     white-space: nowrap;
 }
@@ -51,4 +59,11 @@ body {
 
 footer {
     /*margin: 50px 0;*/
+    height: auto;
+}
+
+.navbar-brand-logo {
+    padding-top: 3px;
+    height: 45px;
+    margin-right: 10px;
 }

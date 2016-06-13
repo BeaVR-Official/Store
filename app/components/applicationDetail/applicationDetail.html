@@ -1,24 +1,56 @@
+<style>
+
+.media-body .media-heading {
+  color:#32a9ad;
+  font-weight:bold;
+  font-size:22px;
+}
+
+.application-logo {
+  border:2px solid #32a9ad;
+}
+
+.page-part-title {
+  font-size:20px;
+  font-weight:bold;
+}
+
+.date-publication {
+  font-weight:bold;
+}
+
+.description-application {
+  font-size:14px;
+}
+
+.well {
+  height:auto;
+}
+
+</style>
 
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
   <div class="panel panel-default">
 
-  <div class="panel-heading">Informations</div>
   <div class="panel-body">
 
-    <div id="container" ng-repeat="applicationInfos in applications">
+  <h4 class="media-heading page-part-title">Informations</h4>
+  <br />
+    
+    <div id="container">
     <div class="container">
       <div class="well">
           <div class="media">
           	<a class="pull-left" href="#">
-        		<img class="media-object" src="{{ applicationInfos.logo }}" style="width: 150px; height: 150px;">
-      		</a>
+        		<img class="media-object application-logo" ng-src="{{applications.logo }}" style="width: 150px; height: 150px;">
+      		  </a>
       		<div class="media-body">
-        		<h4 class="media-heading">{{ applicationInfos.name }}</h4>
-              <p class="text-right">Publiée le : {{ applicationInfos.creationDate }}</p>
-              <p>
-                {{ applicationInfos.description }}
+        		<h4 class="media-heading">{{applications.name }}</h4>
+              <p class="text-right date-publication">Publiée le : {{applications.creationDate | date:'dd/MM/yyyy'}}</p>
+              <p class="description-application">
+                {{ applications.description }}
               </p>
-              <p class="text-left">Website :  www.google.fr</p>
+              <p class="text-left"><b>Développée par :</b> {{applications.author}}</p>
 
               <!--<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                 <input type="hidden" name="cmd" value="_s-xclick">
@@ -27,7 +59,7 @@
                 <img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
               </form>-->
 
-             <p class="text-right"><button type="button" class="btn btn-success">{{ applicationInfos.price }}€</button></p>
+             <p class="text-right"><button type="button" class="btn btn-secondary btn-beavr btn-lg">{{ applications.price }}€</button></p>
            </div>
         </div>
       </div>
@@ -35,7 +67,7 @@
   </div>
 
   <br />
-  <h4 class="media-heading">Images du jeu </h4>
+  <h4 class="media-heading page-part-title">Images de l'application</h4>
   <br />
 
   <div class="col-md-12">
@@ -78,7 +110,7 @@
     <div class="well">
         <div class="media">
         	<a class="pull-left" href="#">
-      		<img class="media-object" src="{{ commentInfos.picture_profile }}">
+      		<img class="media-object" ng-src="{{ commentInfos.picture_profile }}">
     		</a>
     		<div class="media-body">
       		<h4 class="media-heading"> {{ commentInfos.title }}</h4>
@@ -87,7 +119,7 @@
               {{ commentInfos.comment }}
             </p>
             <ul class="list-inline list-unstyled">
-    			       <li><span><i class="glyphicon glyphicon-calendar"></i> {{ commentInfos.date }}</span></li>
+    			       <li><span><i class="glyphicon glyphicon-calendar"></i> {{ commentInfos.date | date:'dd/MM/yyyy'}}</span></li>
     			 </ul>
          </div>
       </div>
