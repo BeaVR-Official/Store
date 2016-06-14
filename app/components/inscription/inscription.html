@@ -12,24 +12,46 @@
 
 <div id="containerFormulaire">
 <div class="form-wrapper">
-  <h3>Inscription</h3>
-  <form>
-    <div class="form-item">
+  <h3 class="page-title">Inscription</h3>
+
+  <style>
+  .no-error input,
+  .no-error input:focus {
+    border-bottom: 2px solid #1BB2BD;
+  }
+  </style>
+
+  <form name="inscriptionForm">
+
+    <div class="form-item" ng-class="{'no-error' : inscriptionForm.email.$valid}">
       <label for="email"></label>
-      <input type="email" required="required" placeholder="Email" ng-model="inscription.email"></input>
+      <input type="email" required="required" placeholder="Email" ng-model="inscriptionData.email"></input>
     </div>
-    <div class="form-item">
+
+    <div class="form-item" ng-class="{'no-error' : inscriptionForm.pseudo.$valid}">
+      <label for="pseudo"></label>
+      <input type="text" name="pseudo" required="required" ng-minlength="3" ng-maxlength="16" placeholder="Pseudo" ng-model="inscriptionData.pseudo"></input>
+      <div ng-messages="inscriptionForm.pseudo.$error">
+        <div ng-message="minlength">Le pseudo doit être composé de 3 caractères minimum.</div>
+        <div ng-message="maxlength">Le pseudo doit être composé de 16 caractères maximum.</div>
+      </div>
+    </div>
+
+    <div class="form-item" ng-class="{'no-error' : inscriptionForm.password.$valid}">
       <label for="password"></label>
-      <input type="password" required="required" placeholder="Mot de passe" ng-model="inscription.password"></input>
+      <input type="password" name="password" required="required" placeholder="Mot de passe" ng-minlength="8" ng-model="inscriptionData.password"></input>
+      <div ng-messages="inscriptionForm.password.$error">
+        <div ng-message="minlength">Le mot de passe doit être composé de 8 caractères minimum.</div>
+      </div>
     </div>
+
     <div class="button-panel">
-      <input type="submit" class="button" title="Inscription" value="Inscription" ng-click="inscriptionAction()"></input>
+      <input type="submit" class="button" title="Inscription" value="S'inscrire" ng-model="inscriptionData.text" ng-click="inscriptionAction()"></input>
     </div>
   </form>
   <div class="form-footer">
-
     <p>
-    <a href="#/connexion">Connexion</a>
+    <a href="#/connexion">Se connecter</a>
     </p>
   </div>
 </div>

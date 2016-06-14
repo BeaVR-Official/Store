@@ -73,7 +73,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, sha1){
   *     }
   *
   * @apiError (Erreur) {Boolean} Error Retourne "true" en cas d'erreur
-  * @apiError (Erreur) {Number} Code Code d'erreur (100 = Un des champs est mal renseigné, 101 = L'utilisateur existe déja)
+  * @apiError (Erreur) {Number} Code Code d'erreur (100 = Un des champs est mal renseigné, 101 = L'utilisateur existe déja, 104 = Le pseudonyme est déjà utilisé)
   *
   * @apiErrorExample Erreur - Réponse :
   *     {
@@ -83,7 +83,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, sha1){
   *
   */
   router.post("/registration", function(req,res){
-
+    
       var query = "INSERT INTO ?? (`pseudo`, `email`, `password`, `role`) VALUES (?, ?, ?, 4)";
       var table = ["Users", req.body.pseudo, req.body.email, sha1(req.body.password)];
 
@@ -95,7 +95,18 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, sha1){
           else
           {
             if (err.code == "ER_DUP_ENTRY")
-              res.json({"Error" : true, "Code" : 101}); // L'utilisateur existe déjà
+            {
+              var pattern = ".*Duplicate entry '.*' for key '(.*)'";
+              var matches = err.message.match(pattern);
+              
+              if (matches != null)
+              {
+                if (matches[1] == "pseudo")
+                  res.json({"Error" : true, "Code" : 104}); // Le pseudo est déjà utilisé
+                if (matches[1] == "email")
+                  res.json({"Error" : true, "Code" : 101}); // L'email est déjà utilisé
+              }
+            }
             else
               res.json({"Error" : true, "Code" : 100}); // Un des champs est mal renseigné
           }
