@@ -8,18 +8,45 @@
   display: none;
 }
 
+.no-error input,
+.no-error input:focus {
+  border-bottom: 2px solid #1BB2BD;
+}
+
+.error-message {
+  text-align:center;
+  color:#e85a5a;
+  font-size:15px;
+  font-weight:bold;
+}
+
+.glyphicon.spinning {
+    animation: spin 2s infinite linear;
+    -webkit-animation: spin2 2s infinite linear;
+}
+@keyframes spin {
+    from {
+        transform: scale(1) rotate(0deg);
+    }
+    to {
+        transform: scale(1) rotate(360deg);
+    }
+}
+@-webkit-keyframes spin2 {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
 </style>
+
 
 <div id="containerFormulaire">
 <div class="form-wrapper">
   <h3 class="page-title">Inscription</h3>
-
-  <style>
-  .no-error input,
-  .no-error input:focus {
-    border-bottom: 2px solid #1BB2BD;
-  }
-  </style>
+  <div class="error-message" ng-show="inscriptionForm.$submitted">{{returnMessage}}</div>
 
   <form name="inscriptionForm">
 
@@ -46,8 +73,9 @@
     </div>
 
     <div class="button-panel">
-      <input type="submit" class="button" title="Inscription" value="S'inscrire" ng-model="inscriptionData.text" ng-click="inscriptionAction()"></input>
+      <button type="submit" class="button" title="Inscription" ng-model="inscriptionData.text" ng-click="inscriptionAction()">S'inscrire<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
     </div>
+
   </form>
   <div class="form-footer">
     <p>
