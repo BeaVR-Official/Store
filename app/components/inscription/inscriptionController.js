@@ -1,4 +1,3 @@
-
 website.controller('inscriptionController', function($scope, $http) {
 
     $scope.inscriptionData = {
@@ -18,7 +17,7 @@ website.controller('inscriptionController', function($scope, $http) {
           password : $scope.inscriptionData.password
         };
 
-        if (data.pseudo.length >= 3 && data.pseudo.length <= 16 && data.password.length >= 8) {
+        if (data.password && data.pseudo && data.pseudo.length >= 3 && data.pseudo.length <= 16 && data.password.length >= 8) {
 
           $scope.loading = true;
 
@@ -28,8 +27,7 @@ website.controller('inscriptionController', function($scope, $http) {
                   if (result.Error == false) {
                     $scope.inscriptionData = {};
                     $scope.returnMessage = successMessage["INSCRIPTION"];
-                  }
-                  else {
+                  } else {
                     switch (result.Code)
                     {
                       case 100:

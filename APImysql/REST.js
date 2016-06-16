@@ -3,10 +3,12 @@ var randomstring = require("randomstring");
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 var transporter = nodemailer.createTransport(smtpTransport({
-    service: 'Yahoo',
+    host: "ssl0.ovh.net", // hostname
+    secure: true,
+    port: 465, // port for secure SMTP
     auth: {
-        user: 'beavrfr@yahoo.com',
-        pass: 'epitech2017'
+        user: "contact@beavr.fr",
+        pass: "epitech2017"
     }
 }));
 
@@ -298,14 +300,16 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, sha1){
                     else
                     {
                         var mailOptions = {
-                            from: 'BeaVR <beavrfr@yahoo.com>',
+                            from: 'BeaVR <contact@beavr.fr>',
                             to: req.body.email,
                             subject: 'Réinitialisation du mot de passe',
                             text: 'Bonjour, votre nouveau mot de passe est le suivant : ' + password
                         };
                         transporter.sendMail(mailOptions, function(error, info) {
-                            if (error)
+                            if (error) {
                                 res.json({"Error" : true, "Code" : 202})
+                                console.log(error);
+                            }
                             else
                                 res.json({"Error" : false, "Code" : 1});
                             console.log(info);

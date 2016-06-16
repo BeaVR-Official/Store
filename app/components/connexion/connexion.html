@@ -8,31 +8,72 @@
       display: none;
     }
 
+.no-error input,
+.no-error input:focus {
+  border-bottom: 2px solid #1BB2BD;
+}
+
+.error-message {
+  text-align:center;
+  color:#e85a5a;
+  font-size:15px;
+  font-weight:bold;
+}
+
+.glyphicon.spinning {
+    animation: spin 2s infinite linear;
+    -webkit-animation: spin2 2s infinite linear;
+}
+@keyframes spin {
+    from {
+        transform: scale(1) rotate(0deg);
+    }
+    to {
+        transform: scale(1) rotate(360deg);
+    }
+}
+@-webkit-keyframes spin2 {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
 </style>
 
-  <div id="containerFormulaire">
+<div id="containerFormulaire">
   <div class="form-wrapper">
-  <h3>Connexion</h3>
-  <form>
-  <div class="form-item">
-  <label for="email"></label>
-  <input type="email" name="email" required="required" placeholder="Email" ng-model="connexion.email"></input>
+    <h3 class="page-title">Connexion</h3>
+    <div class="error-message" ng-show="connectionForm.$submitted">{{returnMessage}}</div>
+
+    <form name="connectionForm">
+
+      <div class="form-item" ng-class="{'no-error' : connectionForm.email.$valid}">
+        <label for="email"></label>
+        <input type="email" required="required" placeholder="Email" ng-model="connectionData.email"></input>
+      </div>
+
+      <div class="form-item" ng-class="{'no-error' : connectionForm.password.$valid}">
+        <label for="password"></label>
+        <input type="password" name="password" required="required" placeholder="Mot de passe" ng-minlength="8" ng-model="connectionData.password"></input>
+        <div ng-messages="connectionForm.password.$error">
+          <div ng-message="minlength">Le mot de passe doit être composé de 8 caractères minimum.</div>
+        </div>
+      </div>
+
+      <div class="button-panel">
+        <button type="submit" class="button" title="Connexion" ng-model="connectionData.text" ng-click="connexionAction()">Connexion<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+      </div>
+
+    </form>
+    <div class="form-footer">
+      <p>
+        <a href="#/inscription">S'inscrire</a>
+      </p>
+      <p>
+        <a href="#/resetPassword">Mot de passe oublié ?</a>
+      </p>
+    </div>
   </div>
-  <div class="form-item">
-  <label for="password"></label>
-  <input type="password" name="password" required="required" placeholder="Mot de passe" ng-model="connexion.password"></input>
-  </div>
-  <div class="button-panel">
-  <input type="submit" class="button" title="Connexion" value="Connexion" ng-click="connexionAction()"></input>
-  </div>
-  </form>
-  <div class="form-footer">
-  <p>
-  <a href="#/inscription">S'inscrire</a>
-  </p>
-  <p>
-  <a href="#/resetPassword">Mot de passe oublié ?</a>
-  </p>
-  </div>
-  </div>
-  </div>
+</div>

@@ -1,30 +1,46 @@
-
-
 website.controller('connexionController', function($scope, $http, $window) {
 
-  $scope.connexion = {
+  $scope.connectionData = {
       email : '',
       password : '',
     };
 
+    $scope.returnMessage = '';
+    $scope.loading;
+
     $scope.connexionAction = function(){
 
-        data = {
-          email : $scope.connexion.email,
-          password : CryptoJS.SHA1($scope.connexion.password).toString()
+        var data = {
+          email : $scope.connectionData.email,
+          password : $scope.connectionData.password
         };
 
-        $http.post(url + '/api/connection', data).then(function(){
+        if (data.password && data.password.length >= 8) {
+          $scope.loading = true;
+          $http.post(url + '/api/connection', data)
+            .success(function(result){
 
-          /*
-          * @TODO : check plus profondément la response pour être sur que la requête a bien été effectué
-          */
-          $window.location.href = '#/'
-        }, function(error){
-
-          alert("Echec lors de la connexion.");
-          $scope.message = 'Une erreur est survenue durant la connexion';
-        });
+                if (result.Error == false) {
+                  $scope.connectionData = {};
+                  $window.location.href = "#/"
+                } else {
+                  switch (result.Code)
+                  {
+                    case 103:
+                      $scope.returnMessage = errorMessage["CONNEXION_103"];
+                      break;
+                    case 200:
+                      $scope.returnMessage = errorMessage["CONNEXION_200"];
+                      break;
+                  }
+                }
+                $scope.loading = false;
+            })
+            .error(function(result){
+                $scope.returnMessage = errorMessage["CONNEXION"];
+                $scope.loading = false;
+            });
+        }
       };
 
   console.log("Controller Connexion");
