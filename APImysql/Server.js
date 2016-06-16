@@ -59,7 +59,9 @@ REST.prototype.configureExpress = function(connection) {
 
       var router = express.Router();
       app.use('/api', router);
-      var rest_router = new rest(router, connection, sha1);
+
+			var rest_router = new rest(router, connection, sha1);
+
       self.startServer();
 }
 

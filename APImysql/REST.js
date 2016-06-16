@@ -15,19 +15,20 @@ function REST_ROUTER(router, connection, sha1){
   self.handleRoutes(router, connection, sha1);
 }
 
+
 REST_ROUTER.prototype.handleRoutes = function(router, connection, sha1){
 
   /*
-   _______ _________          _______  _______  _______ 
+   _______ _________          _______  _______  _______
   (  ___  )\__   __/|\     /|(  ____ \(  ____ )(  ____ \
   | (   ) |   ) (   | )   ( || (    \/| (    )|| (    \/
-  | |   | |   | |   | (___) || (__    | (____)|| (_____ 
+  | |   | |   | |   | (___) || (__    | (____)|| (_____
   | |   | |   | |   |  ___  ||  __)   |     __)(_____  )
   | |   | |   | |   | (   ) || (      | (\ (         ) |
   | (___) |   | |   | )   ( || (____/\| ) \ \__/\____) |
   (_______)   )_(   |/     \|(_______/|/   \__/\_______)
 
-  */                                                      
+  */
 
   /**
   * @api {get} / Réponse basique
@@ -83,7 +84,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, sha1){
   *
   */
   router.post("/registration", function(req,res){
-    
+
       var query = "INSERT INTO ?? (`pseudo`, `email`, `password`, `role`) VALUES (?, ?, ?, 4)";
       var table = ["Users", req.body.pseudo, req.body.email, sha1(req.body.password)];
 
@@ -98,7 +99,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, sha1){
             {
               var pattern = ".*Duplicate entry '.*' for key '(.*)'";
               var matches = err.message.match(pattern);
-              
+
               if (matches != null)
               {
                 if (matches[1] == "pseudo")
@@ -414,16 +415,16 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, sha1){
       });
   });
 
-  /*    
-            _______  _______  _______  _______ 
+  /*
+            _______  _______  _______  _______
   |\     /|(  ____ \(  ____ \(  ____ )(  ____ \
   | )   ( || (    \/| (    \/| (    )|| (    \/
-  | |   | || (_____ | (__    | (____)|| (_____ 
+  | |   | || (_____ | (__    | (____)|| (_____
   | |   | |(_____  )|  __)   |     __)(_____  )
   | |   | |      ) || (      | (\ (         ) |
   | (___) |/\____) || (____/\| ) \ \__/\____) |
   (_______)\_______)(_______/|/   \__/\_______)
-  
+
   */
 
   /**
@@ -694,7 +695,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, sha1){
   router.post("/users", function(req,res){
 
       var query = "INSERT INTO ??(??,??,??,??,??,??) VALUES (?,?,?,?,?,?)";
-      var table = ["Users", "email", "pseudo", "password", "lastName", "firstName", "role", 
+      var table = ["Users", "email", "pseudo", "password", "lastName", "firstName", "role",
       req.body.email, req.body.pseudo, sha1(req.body.password), req.body.lastName, req.body.firstName, req.body.role];
 
       query = mysql.format(query,table);
@@ -712,15 +713,15 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, sha1){
   });
 
   /*
-   _______  _______  _______  _       _________ _______  _______ __________________ _______  _        _______ 
+   _______  _______  _______  _       _________ _______  _______ __________________ _______  _        _______
   (  ___  )(  ____ )(  ____ )( \      \__   __/(  ____ \(  ___  )\__   __/\__   __/(  ___  )( (    /|(  ____ \
   | (   ) || (    )|| (    )|| (         ) (   | (    \/| (   ) |   ) (      ) (   | (   ) ||  \  ( || (    \/
-  | (___) || (____)|| (____)|| |         | |   | |      | (___) |   | |      | |   | |   | ||   \ | || (_____ 
+  | (___) || (____)|| (____)|| |         | |   | |      | (___) |   | |      | |   | |   | ||   \ | || (_____
   |  ___  ||  _____)|  _____)| |         | |   | |      |  ___  |   | |      | |   | |   | || (\ \) |(_____  )
   | (   ) || (      | (      | |         | |   | |      | (   ) |   | |      | |   | |   | || | \   |      ) |
   | )   ( || )      | )      | (____/\___) (___| (____/\| )   ( |   | |   ___) (___| (___) || )  \  |/\____) |
   |/     \||/       |/       (_______/\_______/(_______/|/     \|   )_(   \_______/(_______)|/    )_)\_______)
-                                                                                                            
+
   */
 
   /**
@@ -897,7 +898,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, sha1){
   * @apiParam {Number} creator ID de l'auteur de l'application
   * @apiParam {String} url Lien vers l'application
   * @apiParam {Number} state Statut de l'application
-  * @apiParam {Number} logo ID du logo de l'application 
+  * @apiParam {Number} logo ID du logo de l'application
   *
   * @apiSuccess (Succès) {Boolean} Error Retourne "false" en cas de réussite
   * @apiSuccess (Succès) {Number} Code Code d'erreur (1 = Aucune erreur détectée)
@@ -1175,15 +1176,15 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, sha1){
   });
 
   /*
-   ______   _______          _________ _______  _______  _______ 
+   ______   _______          _________ _______  _______  _______
   (  __  \ (  ____ \|\     /|\__   __/(  ____ \(  ____ \(  ____ \
   | (  \  )| (    \/| )   ( |   ) (   | (    \/| (    \/| (    \/
-  | |   ) || (__    | |   | |   | |   | |      | (__    | (_____ 
+  | |   ) || (__    | |   | |   | |   | |      | (__    | (_____
   | |   | ||  __)   ( (   ) )   | |   | |      |  __)   (_____  )
   | |   ) || (       \ \_/ /    | |   | |      | (            ) |
   | (__/  )| (____/\  \   /  ___) (___| (____/\| (____/\/\____) |
   (______/ (_______/   \_/   \_______/(_______/(_______/\_______)
-                                                               
+
   */
 
   /**
@@ -1427,15 +1428,15 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, sha1){
 
   /*
 
-     _______  _______ _________ _______  _______  _______  _______ _________ _______  _______ 
+     _______  _______ _________ _______  _______  _______  _______ _________ _______  _______
   (  ____ \(  ___  )\__   __/(  ____ \(  ____ \(  ___  )(  ____ )\__   __/(  ____ \(  ____ \
   | (    \/| (   ) |   ) (   | (    \/| (    \/| (   ) || (    )|   ) (   | (    \/| (    \/
-  | |      | (___) |   | |   | (__    | |      | |   | || (____)|   | |   | (__    | (_____ 
+  | |      | (___) |   | |   | (__    | |      | |   | || (____)|   | |   | (__    | (_____
   | |      |  ___  |   | |   |  __)   | | ____ | |   | ||     __)   | |   |  __)   (_____  )
   | |      | (   ) |   | |   | (      | | \_  )| |   | || (\ (      | |   | (            ) |
   | (____/\| )   ( |   | |   | (____/\| (___) || (___) || ) \ \_____) (___| (____/\/\____) |
   (_______/|/     \|   )_(   (_______/(_______)(_______)|/   \__/\_______/(_______/\_______)
-                                                                                          
+
 
   */
 
@@ -1526,7 +1527,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, sha1){
       connection.query(query,function(err,rows){
           if (!err)
             res.json({"Error" : false, "Code" : 1}); // OK
-          else 
+          else
             res.json({"Error" : true, "Code" : 102}); // Error
       });
   });
@@ -1645,7 +1646,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, sha1){
         res.json({"Error" : true, "Code" : 102}); // Erreur
     });
   });
-  
+
   /**
   * @api {get} /categorytypesanddevices Récupérer les thèmes et les devices
   * @apiVersion 1.0.0
@@ -1691,15 +1692,15 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, sha1){
 
   /*
 
-   _______  _______  _______  _______  _______  _       _________ _______ 
+   _______  _______  _______  _______  _______  _       _________ _______
   (  ____ \(  ___  )(       )(       )(  ____ \( (    /|\__   __/(  ____ \
   | (    \/| (   ) || () () || () () || (    \/|  \  ( |   ) (   | (    \/
-  | |      | |   | || || || || || || || (__    |   \ | |   | |   | (_____ 
+  | |      | |   | || || || || || || || (__    |   \ | |   | |   | (_____
   | |      | |   | || |(_)| || |(_)| ||  __)   | (\ \) |   | |   (_____  )
   | |      | |   | || |   | || |   | || (      | | \   |   | |         ) |
   | (____/\| (___) || )   ( || )   ( || (____/\| )  \  |   | |   /\____) |
   (_______/(_______)|/     \||/     \|(_______/|/    )_)   )_(   \_______)
-                                                                        
+
 
   */
 
@@ -1739,7 +1740,7 @@ REST_ROUTER.prototype.handleRoutes = function(router, connection, sha1){
   router.post("/comments",function(req,res){
       var query = "INSERT INTO ??(??,??,??,??,??,??) VALUES (?,?,?,?,?,?)";
       var table = ["Comments","title", "comment","rating","author","application","date",
-                  req.body.title, req.body.comment, req.body.rating, req.body.author, req.body.application, 
+                  req.body.title, req.body.comment, req.body.rating, req.body.author, req.body.application,
                   (new Date ((new Date((new Date(new Date())).toISOString() )).getTime() - ((new Date()).getTimezoneOffset()*60000))).toISOString().slice(0, 19).replace('T', ' ')];
       query = mysql.format(query,table);
       connection.query(query,function(err,rows){
