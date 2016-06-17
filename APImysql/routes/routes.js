@@ -18,6 +18,7 @@ var transporter = nodemailer.createTransport(smtpTransport({
         pass: "epitech2017"
     }
 }));
+var jwt = require('jsonwebtoken');
 
 /**
  * @api {get} / Réponse basique
@@ -167,8 +168,13 @@ router.post("/connection", function(req,res){
                     {
                         if (rows.length == 0)
                             res.json({"Error" : true, "Code" : 200}); // Mot de passe incorrect
-                        else
-                            res.json({"Error" : false, "Code" : 1, "Data" : rows[0]}); // OK
+                        else {
+                            var expires = 10080; // one week
+                            var token = jwt.sign(rows[0], 'XSVgtQ;>1!,z`,xDA*zMzs|#$Iku-`P(l9p.u/1IO][#wKs\cXS\ElxM~P{pw4J', {
+                                expiresIn:'7d'
+                            });
+                            res.json({"Error" : false, "Code" : 1, "Data" : rows[0], "Token" : token}); // OK
+                        }
                     }
                     else
                         res.json({"Error" : true, "Code" : 102}); // Erreur
