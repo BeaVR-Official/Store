@@ -21,6 +21,7 @@ website.controller('connexionController', function($scope, $http, $window) {
             .success(function(result){
 
                 if (result.Error == false) {
+                  $window.localStorage.token = result.Token;
                   $scope.connectionData = {};
                   $window.location.href = "#/"
                 } else {

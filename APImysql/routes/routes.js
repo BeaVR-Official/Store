@@ -168,8 +168,7 @@ router.post("/connection", function(req,res){
                     {
                         if (rows.length == 0)
                             res.json({"Error" : true, "Code" : 200}); // Mot de passe incorrect
-                        else {
-                            var expires = 10080; // one week
+                        else { // L'utilisateur est authentifié
                             var token = jwt.sign(rows[0], 'XSVgtQ;>1!,z`,xDA*zMzs|#$Iku-`P(l9p.u/1IO][#wKs\cXS\ElxM~P{pw4J', {
                                 expiresIn:'7d'
                             });

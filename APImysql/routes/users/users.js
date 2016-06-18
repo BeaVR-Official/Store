@@ -6,6 +6,7 @@ var mysql = require("mysql");
 var express = require('express');
 var router = express.Router();
 var sha1 = require('sha1');
+var jwt = require('jsonwebtoken');
 
 
 /**
@@ -98,10 +99,11 @@ router.get("/", function(req, res){
   *     }
  *
  */
-router.get("/:idUser", function(req, res){
+router.get("/:token", function(req, res){
 
+    var decoded = jwt.decode(req.params.token, 'XSVgtQ;>1!,z`,xDA*zMzs|#$Iku-`P(l9p.u/1IO][#wKs\cXS\ElxM~P{pw4J');
     var query = "SELECT * FROM ?? WHERE ??=?";
-    var table = ["Users", "idUser", req.params.idUser];
+    var table = ["Users", "idUser", decoded.idUser];
 
     query = mysql.format(query, table);
     req.app.locals.connection.query(query, function(err, rows){
