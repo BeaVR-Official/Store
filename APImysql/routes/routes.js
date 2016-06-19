@@ -292,7 +292,7 @@ router.post("/reset-password", function(req,res){
                         else
                         {
                             var mailOptions = {
-                                from: 'BeaVR <contact@beavr.fr>',
+                                from: 'BeaVR <no-reply@beavr.fr>',
                                 to: req.body.email,
                                 subject: 'Réinitialisation du mot de passe',
                                 text: 'Bonjour, votre nouveau mot de passe est le suivant : ' + password
