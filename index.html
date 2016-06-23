@@ -53,7 +53,7 @@
                         <li ng-class="{active: isActive('/connexion')}"><a href="#/connexion">Votre compte</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Feedback</a></li>
+                        <li ng-class="{active: isActive('/feedback')}"><a href="" data-target="#feedbackModal" data-toggle="modal">Feedback</a></li>
                         <li><a href="" data-target="#myModal" data-toggle="modal">Nous contacter</a></li>
                     </ul>
                 </div><!--/.navbar-collapse -->
@@ -128,6 +128,10 @@
         </div>
     </footer>
 
+
+    <!-- jQuery -->
+    <script src="assets/js/jquery.js"></script>
+
     <!-- Angular JS -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.js"></script>
@@ -145,10 +149,8 @@
     <script src="app/components/library/libraryController.js"></script>
     <script src="app/components/progression/progressionController.js"></script>
     <script src="app/components/offline/offlineController.js"></script>
-    <script src="app/components/resetPassword/resetPasswordController.js"</script>
+    <script src="app/components/resetPassword/resetPasswordController.js"></script>
 
-    <!-- jQuery -->
-    <script src="assets/js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="assets/js/bootstrap.min.js"></script>
@@ -180,6 +182,32 @@
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-success">Envoyer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="feedbackModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Un problème avec le Store BeaVR ?</h3>
+            </div>
+            <div class="modal-body">
+                <form id="contactform" role="form" >
+                    <div class="form-group">
+                        <label for="name">Objet</label>
+                        <input type="text" id="name" placeholder="Objet de votre feedback" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" style="resize:none" rows="8" placeholder="Détail de votre feedback" class="form-control"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-secondary btn-beavr">Envoyer</button>
             </div>
         </div>
     </div>
