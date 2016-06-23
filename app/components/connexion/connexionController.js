@@ -7,7 +7,7 @@ website.controller('connexionController', function($scope, $http, $window) {
 
     $scope.returnMessage = '';
     $scope.loading;
-
+    $scope.filterMenu = false;
     $scope.connexionAction = function(){
 
         var data = {

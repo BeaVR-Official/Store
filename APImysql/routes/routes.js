@@ -116,7 +116,7 @@ router.post("/registration", function(req,res){
  *
  * @apiSuccess (Succès) {Boolean} Error Retourne "false" en cas de réussite
  * @apiSuccess (Succès) {Number} Code Code d'erreur (1 = Aucune erreur détectée)
- * @apiSuccess (Succès) {Object} Data Informations de l'utilisateur
+ * @apiSuccess (Succès) {Object} Token Informations de l'utilisateur encrypté en HS256 (HMAC avec SHA-256)
  *
  * @apiSuccessExample Succès - Réponse :
  *     {
@@ -172,7 +172,7 @@ router.post("/connection", function(req,res){
                             var token = jwt.sign(rows[0], 'XSVgtQ;>1!,z`,xDA*zMzs|#$Iku-`P(l9p.u/1IO][#wKs\cXS\ElxM~P{pw4J', {
                                 expiresIn:'7d'
                             });
-                            res.json({"Error" : false, "Code" : 1, "Data" : rows[0], "Token" : token}); // OK
+                            res.json({"Error" : false, "Code" : 1, "Token" : token}); // OK
                         }
                     }
                     else
