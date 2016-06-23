@@ -1,10 +1,32 @@
 
-website.controller('mainController', function($scope, $http) {
+website.controller('mainController', function($scope, $rootScope, $http, $window) {
 
   console.log("Controller Main");
 
-  $scope.filterMenu = true;
-  $scope.rightMenu = false;
+  $rootScope.filterMenu = true;
+  if ($window.localStorage.getItem('token') !== null) {
+    $rootScope.accountHref = '#/profile'
+    $rootScope.onlineMenu = true;
+    $rootScope.offlineMenu = false;
+
+    $http.get(url + '/api/users/' + $window.localStorage.getItem('token')).then(function(response){
+        // TODO : Récupérer l'url
+        $scope.profilePicture = response.data.Users.profilePicture;
+
+    }, function(error){
+        console.debug("failed dans la requête pour fetch la liste des applications");
+    });
+
+    $rootScope.disconnect = function() {
+      $rootScope.accountHref = '#/connection'
+      $window.localStorage.removeItem('token');
+      $window.location.href = "#/"
+      $window.location.reload();
+    }
+  } else {
+    $rootScope.onlineMenu = false;
+    $rootScope.offlineMenu = true;
+  }
   $http.get(url + '/api/applications').then(function(response){
 
   $scope.data = response.data.Applications;

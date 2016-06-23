@@ -1,4 +1,4 @@
-website.controller('inscriptionController', function($scope, $http) {
+website.controller('inscriptionController', function($scope, $rootScope, $http) {
 
     $scope.inscriptionData = {
       email : '',
@@ -8,6 +8,10 @@ website.controller('inscriptionController', function($scope, $http) {
 
     $scope.returnMessage = '';
     $scope.loading;
+
+    $rootScope.filterMenu = false;
+    $rootScope.onlineMenu = false;
+    $rootScope.offlineMenu = false;
 
     $scope.inscriptionAction = function(){
 

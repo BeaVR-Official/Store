@@ -1,5 +1,3 @@
-
-
 website.config(function($routeProvider){
 
       $routeProvider
@@ -46,6 +44,11 @@ website.config(function($routeProvider){
             .when('/resetPassword', {
                 templateUrl : 'app/components/resetPassword/resetPassword.html',
                 controller  : 'resetPasswordController'
+            })
+            
+            .when('/404', {
+                templateUrl : 'app/components/404/404.html',
+                controller  : '404Controller'
             })
 
             .when('/users/edit/:idUsers', {

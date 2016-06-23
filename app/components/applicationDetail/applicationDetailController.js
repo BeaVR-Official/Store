@@ -1,8 +1,6 @@
 
 website.controller('applicationDetailController', function($scope, $http, $routeParams){
 
-    console.log("Controller Detail d'une application");
-
     $http.get(url + '/api/applications/' + $routeParams.idApplications).then(function(response){
 
       $scope.applications = response.data.Applications;

@@ -1,5 +1,5 @@
 
-website.controller('resetPasswordController', function($scope, $http) {
+website.controller('resetPasswordController', function($scope, $rootScope, $http) {
 
   $scope.resetPasswordData = {
       email : ''
@@ -7,6 +7,10 @@ website.controller('resetPasswordController', function($scope, $http) {
 
     $scope.returnMessage = '';
     $scope.loading;
+
+    $rootScope.filterMenu = false;
+    $rootScope.onlineMenu = false;
+    $rootScope.offlineMenu = false;
 
     $scope.resetPasswordAction = function(){
 
