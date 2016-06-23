@@ -18,12 +18,12 @@ website.controller('mainController', function($scope, $rootScope, $http, $window
     });
 
     $rootScope.disconnect = function() {
-      $rootScope.accountHref = '#/connection'
       $window.localStorage.removeItem('token');
       $window.location.href = "#/"
       $window.location.reload();
     }
   } else {
+    $rootScope.accountHref = '#/connexion'
     $rootScope.onlineMenu = false;
     $rootScope.offlineMenu = true;
   }

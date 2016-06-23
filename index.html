@@ -50,7 +50,7 @@
                     <ul class="nav navbar-nav">
                         <li ng-class="{active: isActive('/')}"><a href="#/">Accueil</a></li>
                         <li ng-class="{active: isActive('/apps')}"><a href="#/apps">Catalogue</a></li>
-                        <li ng-class="{active: isActive('/connexion') || isActive('/resetPassword') || isActive('/profile') || isActive('/inscription')}"><a href="#/connexion">Votre compte</a></li>
+                        <li ng-class="{active: isActive('/connexion') || isActive('/resetPassword') || isActive('/profile') || isActive('/inscription')}"><a ng-href="{{ accountHref }}">Votre compte</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#">Feedback</a></li>
