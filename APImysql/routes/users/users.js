@@ -119,7 +119,35 @@ router.get("/:idUser(\\d+)/", function(req, res){
     });
 });
 
-
+/**
+ * @api {get} /users/:token Récupérer les informations stockées dans le token
+ * @apiVersion 1.0.0
+ * @apiName Informations d'un utilisateur
+ * @apiGroup Gestion Utilisateurs
+ * @apiDescription Retourne les informations stockées dans le token donné.
+ *
+ * @apiParam {Number} idUser ID de l'utilisateur souhaité
+ *
+ * @apiSuccess (Succès) {Boolean} Error Retourne "false" en cas de réussite
+ * @apiSuccess (Succès) {Number} Code Code d'erreur (1 = Aucune erreur détectée)
+ * @apiSuccess (Succès) {Object} Users Informations de l'utilisateur
+ *
+ * @apiSuccessExample Succès - Réponse :
+ *     {
+  *       "Error": false,
+  *       "Code" : 1,
+  *       "Users" : {
+  *           "id": 1,
+  *           "pseudo": "JeanJean",
+  *           "email": "j.dujardin@gmail.com",
+  *           "lastName": "Dujardin",
+  *           "firstName": "Jean",
+  *           "role": Users,
+  *           "profilePicture": "http://beavr.fr/media/jeandujardin.png"
+  *       }
+  *     }
+ *
+ */
 router.get("/:token", function(req, res){
 
     var decoded = jwt.decode(req.params.token, 'XSVgtQ;>1!,z`,xDA*zMzs|#$Iku-`P(l9p.u/1IO][#wKs\cXS\ElxM~P{pw4J');
