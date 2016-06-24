@@ -10,8 +10,8 @@ website.controller('mainController', function($scope, $rootScope, $http, $window
     $rootScope.offlineMenu = false;
 
     $http.get(url + '/api/users/' + $window.localStorage.getItem('token')).then(function(response){
-        // TODO : Récupérer l'url
-        $scope.profilePicture = response.data.Users.profilePicture;
+
+        $rootScope.profilePicture = response.data.Users.profilePicture;
 
     }, function(error){
         console.debug("failed dans la requête pour fetch la liste des applications");

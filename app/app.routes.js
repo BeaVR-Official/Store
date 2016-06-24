@@ -54,5 +54,8 @@ website.config(function($routeProvider){
             .when('/users/edit/:idUsers', {
                 templateUrl : 'pages/usersEdit.html',
                 controller  : 'usersEditController'
+            })
+            .otherwise({
+                redirectTo: '/404'
             });
 });

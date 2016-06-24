@@ -159,7 +159,7 @@ router.post("/connection", function(req,res){
             else
             {
                 var query = "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?";
-                var table = ["Users","email", req.body.email, "password", sha1(req.body.password)];
+                var table = ["Users", "email", req.body.email, "password", sha1(req.body.password)];
 
                 query = mysql.format(query, table);
 
@@ -168,11 +168,21 @@ router.post("/connection", function(req,res){
                     {
                         if (rows.length == 0)
                             res.json({"Error" : true, "Code" : 200}); // Mot de passe incorrect
-                        else { // L'utilisateur est authentifié
-                            var token = jwt.sign(rows[0], 'XSVgtQ;>1!,z`,xDA*zMzs|#$Iku-`P(l9p.u/1IO][#wKs\cXS\ElxM~P{pw4J', {
-                                expiresIn:'7d'
-                            });
-                            res.json({"Error" : false, "Code" : 1, "Token" : token}); // OK
+                        else {
+                            // L'utilisateur est authentifié
+                            var query = "SELECT * FROM ?? WHERE ?? = ?";
+                            var table = ["AllUsersInfos", "id", rows[0].idUser];
+                            query = mysql.format(query, table);
+                            req.app.locals.connection.query(query, function(err, rows) { // Dernière requête pour obtenir les infos importantes de l'user et les set dans le token
+                                if (!err) {
+                                    var token = jwt.sign(rows[0], 'XSVgtQ;>1!,z`,xDA*zMzs|#$Iku-`P(l9p.u/1IO][#wKs\cXS\ElxM~P{pw4J', {
+                                        expiresIn:'7d'
+                                    });
+                                    res.json({"Error" : false, "Code" : 1, "Token" : token}); // OK
+                                }
+                                else
+                                    res.json({"Error" : true, "Code" : 102}); // Erreur
+                            })
                         }
                     }
                     else

@@ -99,11 +99,11 @@ router.get("/", function(req, res){
   *     }
  *
  */
-router.get("/:token", function(req, res){
 
-    var decoded = jwt.decode(req.params.token, 'XSVgtQ;>1!,z`,xDA*zMzs|#$Iku-`P(l9p.u/1IO][#wKs\cXS\ElxM~P{pw4J');
+router.get("/:idUser(\\d+)/", function(req, res){
+
     var query = "SELECT * FROM ?? WHERE ??=?";
-    var table = ["Users", "idUser", decoded.idUser];
+    var table = ["Users", "idUser", req.params.idUser];
 
     query = mysql.format(query, table);
     req.app.locals.connection.query(query, function(err, rows){
@@ -117,6 +117,13 @@ router.get("/:token", function(req, res){
         else
             res.json({"Error" : true, "Code" : 102}); // Erreur
     });
+});
+
+
+router.get("/:token", function(req, res){
+
+    var decoded = jwt.decode(req.params.token, 'XSVgtQ;>1!,z`,xDA*zMzs|#$Iku-`P(l9p.u/1IO][#wKs\cXS\ElxM~P{pw4J');
+    res.json({"Error" : false, "Code" : 1, "Users" : decoded});
 });
 
 /**
