@@ -7,7 +7,7 @@ var express = require('express');
 var router = express.Router();
 var sha1 = require('sha1');
 var jwt = require('jsonwebtoken');
-
+var config = require('config');
 
 /**
  * @api {get} /users Liste des utilisateurs
@@ -149,8 +149,8 @@ router.get("/:idUser(\\d+)/", function(req, res){
  *
  */
 router.get("/:token", function(req, res){
-
-    var decoded = jwt.decode(req.params.token, 'XSVgtQ;>1!,z`,xDA*zMzs|#$Iku-`P(l9p.u/1IO][#wKs\cXS\ElxM~P{pw4J');
+    var secretKey = config.get('JSONWebTokens.secretKey');
+    var decoded = jwt.decode(req.params.token, secretKey);
     res.json({"Error" : false, "Code" : 1, "Users" : decoded});
 });
 

@@ -7,17 +7,10 @@ var express = require('express');
 var router = express.Router();
 var sha1 = require('sha1');
 var randomstring = require('randomstring');
+var config = require('config');
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
-var transporter = nodemailer.createTransport(smtpTransport({
-    host: "ssl0.ovh.net", // hostname
-    secure: true,
-    port: 465, // port for secure SMTP
-    auth: {
-        user: "contact@beavr.fr",
-        pass: "epitech2017"
-    }
-}));
+var transporter = nodemailer.createTransport(smtpTransport(config.get('NodeMailer.mailConfig')));
 var jwt = require('jsonwebtoken');
 
 /**
@@ -173,11 +166,10 @@ router.post("/connection", function(req,res){
                             var query = "SELECT * FROM ?? WHERE ?? = ?";
                             var table = ["AllUsersInfos", "id", rows[0].idUser];
                             query = mysql.format(query, table);
+                            var secretKey = config.get('JSONWebTokens.secretKey');
                             req.app.locals.connection.query(query, function(err, rows) { // Dernière requête pour obtenir les infos importantes de l'user et les set dans le token
                                 if (!err) {
-                                    var token = jwt.sign(rows[0], 'XSVgtQ;>1!,z`,xDA*zMzs|#$Iku-`P(l9p.u/1IO][#wKs\cXS\ElxM~P{pw4J', {
-                                        expiresIn:'7d'
-                                    });
+                                    var token = jwt.sign(rows[0], secretKey);
                                     res.json({"Error" : false, "Code" : 1, "Token" : token}); // OK
                                 }
                                 else

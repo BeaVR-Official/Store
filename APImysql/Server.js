@@ -1,6 +1,11 @@
 var express = require("express");
 var mysql   = require("mysql");
 var bodyParser  = require("body-parser");
+
+// Require to get the right configuration file under /config
+process.env.NODE_ENV = "debug";
+
+var config = require('config');
 var app  = express();
 
 var routes = require('./routes/routes');
@@ -29,20 +34,7 @@ function REST(){
 
 REST.prototype.connectMysql = function() {
     var self = this;
-    var pool      =    mysql.createPool({
-        connectionLimit : 100000,
-        host     : '5.196.88.52', //localhost
-        //host : 'localhost',
-        // user     : 'connect', //root
-        user     : 'pictar', //root
-        password : 'pictartheboss', //root
-        //password : '', //root
-        //port     : '3306', //8889
-        port : 3306,
-        //database : 'beavr_dev', //restful_api_demo
-        database : 'beavr_new', //restful_api_demo
-        debug    :  false
-    });
+    var pool = mysql.createPool(config.get('Database.dbConfig'));
 
     pool.getConnection(function(err,connection){
         if(err) {

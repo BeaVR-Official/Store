@@ -1,0 +1,28 @@
+{
+  // Database configs 
+  "Database": {
+    "dbConfig": {
+        "connectionLimit" : 100000,
+        "host"     : "5.196.88.52",
+        "user"     : "pictar",
+        "password" : "pictartheboss",
+        "port" : 3306,
+        "database" : "beavr_new",
+        "debug"   :  false
+    }
+  },
+  "JSONWebTokens": {
+    "secretKey": "XSVgtQ;>1!,z`,xDA*zMzs|#$Iku-`P(l9p.u/1IO][#wKs\\cXS\\ElxM~P{pw4J"
+  },
+  "NodeMailer": {
+    "mailConfig": {
+      "host": "ssl0.ovh.net", // hostname
+      "secure": true,
+      "port": 465, // port for secure SMTP
+      "auth": {
+          "user": "contact@beavr.fr",
+          "pass": "epitech2017"
+      }
+    }
+  }
+}

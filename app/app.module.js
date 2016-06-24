@@ -2,7 +2,7 @@
 
 var url = "http://localhost:3000";
 
-var website = angular.module('website', ['ngRoute', 'ngAnimate', 'ui.bootstrap', 'ngMessages']);
+var website = angular.module('website', ['ngRoute', 'ngAnimate', 'ngCookies', 'ngMessages', 'ui.bootstrap']);
 
 var errorMessage = {
 	"INSCRIPTION_100" : "Une erreur innattendue s'est produite. Réessayez dans quelques instants.",

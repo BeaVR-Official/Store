@@ -1,7 +1,5 @@
 
-website.controller('mainController', function($scope, $rootScope, $http, $window) {
-
-  console.log("Controller Main");
+website.controller('mainController', function($scope, $rootScope, $http, $window, $cookies) {
 
   $rootScope.filterMenu = true;
   if ($window.localStorage.getItem('token') !== null) {
@@ -19,6 +17,24 @@ website.controller('mainController', function($scope, $rootScope, $http, $window
 
     $rootScope.disconnect = function() {
       $window.localStorage.removeItem('token');
+      $window.location.href = "#/"
+      $window.location.reload();
+    }
+  } else if ($cookies.get('token') !== undefined) {
+    $rootScope.accountHref = '#/profile'
+    $rootScope.onlineMenu = true;
+    $rootScope.offlineMenu = false;
+
+    $http.get(url + '/api/users/' + $cookies.get('token')).then(function(response){
+
+        $rootScope.profilePicture = response.data.Users.profilePicture;
+
+    }, function(error){
+        console.debug("failed dans la requête pour fetch la liste des applications");
+    });
+
+    $rootScope.disconnect = function() {
+      $cookies.remove('token');
       $window.location.href = "#/"
       $window.location.reload();
     }
@@ -59,4 +75,6 @@ website.controller('carouselController', function($scope) {
       id: 2
     }
   ];
+
+  console.log("Controller Main");
 })

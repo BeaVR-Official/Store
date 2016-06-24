@@ -1,6 +1,6 @@
-website.controller('connexionController', function($scope, $rootScope, $http, $window) {
+website.controller('connexionController', function($scope, $rootScope, $http, $window, $cookies) {
 
-  if ($window.localStorage.getItem('token') === null) {
+  if ($window.localStorage.getItem('token') === null && $cookies.get('token') === undefined) {
     $scope.connectionData = {
         email : '',
         password : '',
@@ -15,16 +15,21 @@ website.controller('connexionController', function($scope, $rootScope, $http, $w
 
           var data = {
             email : $scope.connectionData.email,
-            password : $scope.connectionData.password
+            password : $scope.connectionData.password,
+            checkbox : $scope.connectionData.checkbox
           };
 
           if (data.password && data.password.length >= 8) {
             $scope.loading = true;
             $http.post(url + '/api/connection', data)
-              .success(function(result){
+              .success(function(result) {
 
                   if (result.Error == false) {
-                    $window.localStorage.setItem('token', result.Token);
+                    if (data.checkbox) {
+                      $window.localStorage.setItem('token', result.Token);
+                    } else {
+                      $cookies.put('token', result.Token);
+                    }
                     $scope.connectionData = {};
                     $window.location.href = "#/"
                   } else {
@@ -40,7 +45,7 @@ website.controller('connexionController', function($scope, $rootScope, $http, $w
                   }
                   $scope.loading = false;
               })
-              .error(function(result){
+              .error(function(result) {
                   $scope.returnMessage = errorMessage["CONNEXION"];
                   $scope.loading = false;
               });
