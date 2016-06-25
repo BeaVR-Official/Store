@@ -1,55 +1,68 @@
-website.controller('inscriptionController', function($scope, $http) {
+website.controller('feedbackController', function($scope, $http) {
 
-    $scope.inscriptionData = {
-      email : '',
-      pseudo : '',
-      password : '',
+    $scope.feedbackData = {
+      idUser : this.idUser,
+      object : '',
+      description : '',
+      recontact : false,
     };
 
     $scope.returnMessage = '';
     $scope.loading;
 
-    $scope.inscriptionAction = function(){
+    $scope.feedbackAction = function(){
 
-        var data = {
-          email : $scope.inscriptionData.email,
-          pseudo : $scope.inscriptionData.pseudo,
-          password : $scope.inscriptionData.password
-        };
+      var data = {
+        idUser : 1,
+        object : $scope.feedbackData.object,
+        description : $scope.feedbackData.description,
+        recontact : $scope.feedbackData.recontact
+      };
 
-        if (data.password && data.pseudo && data.pseudo.length >= 3 && data.pseudo.length <= 16 && data.password.length >= 8) {
+      $scope.loading = true;
+      var returnMessageDiv = angular.element(document.querySelector('#returnMessage'));
 
-          $scope.loading = true;
+      if (data.recontact == null)
+        data.recontact = false;
 
-          $http.post(url + '/api/registration', data)
-              .success(function(result) {
+      if (!data.object || data.object.length == 0)
+      {
+        $scope.returnMessage = errorMessage["FEEDBACK_OBJECT"];
+        $scope.loading = false;
+        returnMessageDiv.addClass("error-message");
+      }
+      else if (!data.description || data.description.length == 0)
+      {
+        $scope.returnMessage = errorMessage["FEEDBACK_DESCRIPTION"];    
+        $scope.loading = false;
+        returnMessageDiv.addClass("error-message"); 
+      }
+      else {
+        $http.post(url + '/api/sendFeedback', data)
+            .success(function(result) {
 
-                  if (result.Error == false) {
-                    $scope.inscriptionData = {};
-                    $scope.returnMessage = successMessage["INSCRIPTION"];
-                  } else {
-                    switch (result.Code)
-                    {
-                      case 100:
-                        $scope.returnMessage = errorMessage["INSCRIPTION_100"];
-                        break;
-                      case 101:
-                        $scope.returnMessage = errorMessage["INSCRIPTION_101"];
-                        break;
-                      case 104:
-                        $scope.returnMessage = errorMessage["INSCRIPTION_104"];
-                        break;
-                    }
+                if (result.Error == false) {
+                  $scope.feedbackData = {};
+                  $scope.returnMessage = successMessage["FEEDBACK"];
+                  obreturnMessageDivj.addClass("success-message"); 
+                } else {
+                  switch (result.Code)
+                  {
+                    case 102:
+                      $scope.returnMessage = errorMessage["FEEDBACK_102"];
+                      break;
                   }
+                  returnMessageDiv.addClass("error-message"); 
+                }
 
-                  $scope.loading = false;
-    
-              })
-              .error(function(result) {
-                  $scope.returnMessage = errorMessage["INSCRIPTION"];
-                  $scope.loading = false;
-          });
-              
-        }
+                $scope.loading = false;
+            })
+            .error(function(result) {
+                $scope.returnMessage = errorMessage["FEEDBACK"];
+                $scope.loading = false;
+                returnMessageDiv.addClass("error-message"); 
+        });
+      }
+
     };
 });

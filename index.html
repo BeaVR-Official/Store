@@ -28,6 +28,55 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <style>
+
+    .checkbox {
+        float: left;
+        margin-right: 5px !important;
+    }
+
+    .no-error input,
+    .no-error input:focus {
+      border-bottom: 2px solid #1BB2BD;
+    }
+
+    .error-message {
+      text-align:center;
+      color:#e85a5a;
+      font-size:15px;
+      font-weight:bold;
+    }
+
+    .success-message {
+      text-align:center;
+      color:#1BB2BD;
+      font-size:15px;
+      font-weight:bold;
+    }
+
+    .glyphicon.spinning {
+        animation: spin 2s infinite linear;
+        -webkit-animation: spin2 2s infinite linear;
+    }
+    @keyframes spin {
+        from {
+            transform: scale(1) rotate(0deg);
+        }
+        to {
+            transform: scale(1) rotate(360deg);
+        }
+    }
+    @-webkit-keyframes spin2 {
+        from {
+            -webkit-transform: rotate(0deg);
+        }
+        to {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    </style>
+
 </head>
 
 <body ng-controller="mainController">
@@ -150,7 +199,7 @@
     <script src="app/components/progression/progressionController.js"></script>
     <script src="app/components/offline/offlineController.js"></script>
     <script src="app/components/resetPassword/resetPasswordController.js"></script>
-
+    <script src="app/components/feedback/feedbackController.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="assets/js/bootstrap.min.js"></script>
@@ -187,27 +236,31 @@
     </div>
 </div>
 
-<div id="feedbackModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="feedbackModal" ng-controller="feedbackController" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3 id="myModalLabel">Un problème avec le Store BeaVR ?</h3>
+                <div id="returnMessage" ng-show="feedbackForm.$submitted">{{returnMessage}}</div>
             </div>
             <div class="modal-body">
-                <form id="contactform" role="form" >
+                <form id="feedbackForm" name="feedbackForm" role="form" >
                     <div class="form-group">
-                        <label for="name">Objet</label>
-                        <input type="text" id="name" placeholder="Objet de votre feedback" class="form-control"/>
+                        <label for="object">Objet</label>
+                        <input type="text" id="object" placeholder="Objet de votre feedback" class="form-control" ng-model="feedbackData.object"/>
                     </div>
                     <div class="form-group">
                         <label for="message">Message</label>
-                        <textarea id="message" style="resize:none" rows="8" placeholder="Détail de votre feedback" class="form-control"></textarea>
+                        <textarea id="message" style="resize:none" rows="8" placeholder="Détail de votre feedback" class="form-control" ng-model="feedbackData.description"></textarea>
                     </div>
+                    <div class="form-group">
+                        <input type="checkbox" id="recontact" class="checkbox" ng-model="feedbackData.recontact"/>
+                        <label for="recontact">J'accepte d'être recontacté suite à mon feedback</label>
+                        <button type="submit" class="btn btn-secondary btn-beavr" style="float:right" ng-click="feedbackAction()">Envoyer<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                    </div>
+
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-secondary btn-beavr">Envoyer</button>
             </div>
         </div>
     </div>

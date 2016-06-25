@@ -20,6 +20,13 @@
   font-weight:bold;
 }
 
+.success-message {
+  text-align:center;
+  color:#1BB2BD;
+  font-size:15px;
+  font-weight:bold;
+}
+
 .glyphicon.spinning {
     animation: spin 2s infinite linear;
     -webkit-animation: spin2 2s infinite linear;
@@ -46,7 +53,7 @@
 <div id="containerFormulaire">
 <div class="form-wrapper">
   <h3 class="page-title">Inscription</h3>
-  <div class="error-message" ng-show="inscriptionForm.$submitted">{{returnMessage}}</div>
+  <div id="returnMessage" ng-show="inscriptionForm.$submitted">{{returnMessage}}</div>
 
   <form name="inscriptionForm">
 
