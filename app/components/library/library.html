@@ -27,14 +27,19 @@
 <h1 class="page-title">Ma bibliothèque d'applications</h1>
 
 <div class="row">
-    <div id="container" ng-repeat="applicationInfos in applicationsList">
+    <div id="container" ng-show="userAppsInfos.length" ng-repeat="applicationInfos in userAppsInfos">
       <div class="col-lg-4 application-area">
-        <img class="img-circle center-block" ng-src="{{ applicationInfos.logo }}" alt="Generic placeholder image" width="140" height="140">
+        <img class="img-circle center-block" ng-src="{{ applicationInfos.logo }}" alt="Application logo" width="140" height="140">
         <h4 class="application-name">{{ applicationInfos.name }}</h4>
         <p class="library-app-description">{{ applicationInfos.description }}</p>
         <p class="btn-launch-application">
-          <a class="btn btn-secondary btn-beavr" href="#" role="button">Lancer</a>
+          <a class="btn btn-secondary btn-beavr" ng-href="{{ applicationInfos.url }}" role="button">Lancer</a>
         </p>
       </div>
-  </div>
+    </div>
+    <div ng-show="!userAppsInfos.length" class="panel panel-default">
+      <div class="panel-body">
+        <h1>Vous ne possédez pas d'applications.</h1>
+      </div>
+    </div>
 </div>

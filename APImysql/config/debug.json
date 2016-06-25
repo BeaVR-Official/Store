@@ -24,7 +24,7 @@
           "pass"  : "epitech2017"
       }
     },
-    "mailOptions": {
+    "resetPasswordMailOptions": {
       "senderEmail" : "BeaVR <no-reply@beavr.fr>",
       "emailSubject"  : "Réinitialisation du mot de passe",
       "emailBaseText" : "Bonjour, votre nouveau mot de passe est le suivant : "

@@ -5,14 +5,14 @@ website.controller('editProfileController', function($scope, $http, $window, $co
 	      $scope.userInfos = response.data.Users;
 
 	    }, function(error){
-	      console.debug("failed dans la requête pour fetch la liste des applications");
+	      console.debug("Failure while fecthing profile informations.");
 	    });
 	} else if ($cookies.get('token') !== undefined) {
 		$http.get(url + '/api/users/' + $cookies.get('token')).then(function(response) {
 	      $scope.userInfos = response.data.Users;
 
 	    }, function(error){
-	      console.debug("failed dans la requête pour fetch la liste des applications");
+	      console.debug("Failure while fecthing profile informations.");
 	    });
 	} else {
 		$window.location.href = "#/404"

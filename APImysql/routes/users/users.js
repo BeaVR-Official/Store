@@ -126,7 +126,7 @@ router.get("/:idUser(\\d+)/", function(req, res){
  * @apiGroup Gestion Utilisateurs
  * @apiDescription Retourne les informations stockées dans le token donné.
  *
- * @apiParam {Number} idUser ID de l'utilisateur souhaité
+ * @apiParam {String} token Token de l'utilisateur connecté
  *
  * @apiSuccess (Succès) {Boolean} Error Retourne "false" en cas de réussite
  * @apiSuccess (Succès) {Number} Code Code d'erreur (1 = Aucune erreur détectée)
@@ -147,12 +147,85 @@ router.get("/:idUser(\\d+)/", function(req, res){
   *       }
   *     }
  *
+ * @apiError (Erreur) {Boolean} Error Retourne "true" en cas d'erreur
+ * @apiError (Erreur) {Number} Code Code d'erreur (300 = Token incorrect)
+ *
+ * @apiErrorExample Erreur - Réponse :
+ *     {
+  *       "Error" : true,
+  *       "Code" : 102
+  *     }
  */
 router.get("/:token", function(req, res){
     var secretKey = config.get('JSONWebTokens.secretKey');
     var decoded = jwt.decode(req.params.token, secretKey);
-    res.json({"Error" : false, "Code" : 1, "Users" : decoded});
+    if (decoded != null)
+      res.json({"Error" : false, "Code" : 1, "Users" : decoded});
+    else
+      res.json({"Error" : true, "Code" : 300}); // Token incorrect
 });
+
+/**
+ * @api {get} /users/applications/:token Récupérer les applications d'un utilisateur
+ * @apiVersion 1.0.0
+ * @apiName Informations d'un utilisateur
+ * @apiGroup Gestion Utilisateurs
+ * @apiDescription Retourne les applications de l'utilisateur possédant le token passé en paramètre.
+ *
+ * @apiParam {String} token Token de l'utilisateur connecté
+ *
+ * @apiSuccess (Succès) {Boolean} Error Retourne "false" en cas de réussite
+ * @apiSuccess (Succès) {Number} Code Code d'erreur (1 = Aucune erreur détectée)
+ * @apiSuccess (Succès) {Object} Users Applications de l'utilisateur
+ *
+ * @apiSuccessExample Succès - Réponse :
+ *     {
+  *       "Error": false,
+  *       "Code" : 1,
+  *       "Users" : {
+  *           "id": 1,
+  *           "name": "Superbe app",
+  *           "description": "Description de ma superbe app",
+  *           "buyer": "28",
+  *           "retailer": "12",
+  *           "logo": "http://beavr.fr/media/masuperbeapp.png",
+  *           "url": "http://beavr.fr/app/masuperbeapp"
+  *       }
+  *     }
+ *
+ * @apiError (Erreur) {Boolean} Error Retourne "true" en cas d'erreur
+ * @apiError (Erreur) {Number} Code Code d'erreur (102 = Erreur lors de la requête, 103 = L'utilisateur n'existe pas, 300 = Token incorrect)
+ *
+ * @apiErrorExample Erreur - Réponse :
+ *     {
+  *       "Error" : true,
+  *       "Code" : 102
+  *     }
+ *
+ */
+router.get("/applications/:token", function(req, res){
+
+    var secretKey = config.get('JSONWebTokens.secretKey');
+    var decoded = jwt.decode(req.params.token, secretKey);
+    var query = "SELECT * FROM ?? WHERE ??=?";
+    if (decoded != null) {
+      var table = ["AllPurchasesInfos", "buyer", decoded.id];
+      query = mysql.format(query, table);
+      req.app.locals.connection.query(query, function(err, rows){
+          if (!err)
+          {
+              if (rows.length == 0)
+                  res.json({"Error" : true, "Code" : 103}); // L'utilise n'existe pas
+              else
+                  res.json({"Error" : false, "Code" : 1, "Users" : rows}); // OK
+          }
+          else
+              res.json({"Error" : true, "Code" : 102}); // Erreur
+      });
+    }
+    else
+      res.json({"Error" : true, "Code" : 300}); // Token incorrect
+}); 
 
 /**
  * @api {delete} /users/:idUser Supprimer un utilisateur

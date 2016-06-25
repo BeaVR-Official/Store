@@ -1,4 +1,3 @@
-
 website.controller('mainController', function($scope, $rootScope, $http, $window, $cookies) {
 
   $rootScope.filterMenu = true;
@@ -12,7 +11,7 @@ website.controller('mainController', function($scope, $rootScope, $http, $window
         $rootScope.profilePicture = response.data.Users.profilePicture;
 
     }, function(error){
-        console.debug("failed dans la requête pour fetch la liste des applications");
+        console.debug("Failure while fetching user infos.");
     });
 
     $rootScope.disconnect = function() {
@@ -30,7 +29,7 @@ website.controller('mainController', function($scope, $rootScope, $http, $window
         $rootScope.profilePicture = response.data.Users.profilePicture;
 
     }, function(error){
-        console.debug("failed dans la requête pour fetch la liste des applications");
+        console.debug("Failure while fetching user infos.");
     });
 
     $rootScope.disconnect = function() {
@@ -47,7 +46,7 @@ website.controller('mainController', function($scope, $rootScope, $http, $window
 
   $scope.data = response.data.Applications;
   }, function(error){
-    console.debug("Failure while fetching devices' list.");
+    console.debug("Failure while fetching applications' list.");
   });
 });
 

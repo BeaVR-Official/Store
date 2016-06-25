@@ -294,10 +294,10 @@ router.post("/reset-password", function(req,res){
                         else
                         {
                             var mailOptions = {
-                                from: config.get('NodeMailer.mailOptions.senderEmail'),
+                                from: config.get('NodeMailer.resetPasswordMailOptions.senderEmail'),
                                 to: req.body.email,
-                                subject: config.get('NodeMailer.mailOptions.emailSubject'),
-                                text: config.get('NodeMailer.mailOptions.emailBaseText') + password
+                                subject: config.get('NodeMailer.resetPasswordMailOptions.emailSubject'),
+                                text: config.get('NodeMailer.resetPasswordMailOptions.emailBaseText') + password
                             };
                             transporter.sendMail(mailOptions, function(error, info) {
                                 if (error) {

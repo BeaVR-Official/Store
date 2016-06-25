@@ -1,4 +1,3 @@
-
 website.controller('resetPasswordController', function($scope, $rootScope, $http) {
 
   $scope.resetPasswordData = {
