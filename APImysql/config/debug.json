@@ -16,13 +16,18 @@
   },
   "NodeMailer": {
     "mailConfig": {
-      "host": "ssl0.ovh.net", // hostname
+      "host"  : "ssl0.ovh.net", // hostname
       "secure": true,
-      "port": 465, // port for secure SMTP
-      "auth": {
-          "user": "contact@beavr.fr",
-          "pass": "epitech2017"
+      "port"  : 465, // port for secure SMTP
+      "auth"  : {
+          "user"  : "contact@beavr.fr",
+          "pass"  : "epitech2017"
       }
+    },
+    "mailOptions": {
+      "senderEmail" : "BeaVR <no-reply@beavr.fr>",
+      "emailSubject"  : "Réinitialisation du mot de passe",
+      "emailBaseText" : "Bonjour, votre nouveau mot de passe est le suivant : "
     }
   }
 }

@@ -294,10 +294,10 @@ router.post("/reset-password", function(req,res){
                         else
                         {
                             var mailOptions = {
-                                from: 'BeaVR <no-reply@beavr.fr>',
+                                from: config.get('NodeMailer.mailOptions.senderEmail'),
                                 to: req.body.email,
-                                subject: 'Réinitialisation du mot de passe',
-                                text: 'Bonjour, votre nouveau mot de passe est le suivant : ' + password
+                                subject: config.get('NodeMailer.mailOptions.emailSubject'),
+                                text: config.get('NodeMailer.mailOptions.emailBaseText') + password
                             };
                             transporter.sendMail(mailOptions, function(error, info) {
                                 if (error) {
