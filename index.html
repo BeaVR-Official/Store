@@ -28,6 +28,55 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <style>
+
+    .checkbox {
+        float: left;
+        margin-right: 5px !important;
+    }
+
+    .no-error input,
+    .no-error input:focus {
+      border-bottom: 2px solid #1BB2BD;
+    }
+
+    .error-message {
+      text-align:center;
+      color:#e85a5a;
+      font-size:15px;
+      font-weight:bold;
+    }
+
+    .success-message {
+      text-align:center;
+      color:#1BB2BD;
+      font-size:15px;
+      font-weight:bold;
+    }
+
+    .glyphicon.spinning {
+        animation: spin 2s infinite linear;
+        -webkit-animation: spin2 2s infinite linear;
+    }
+    @keyframes spin {
+        from {
+            transform: scale(1) rotate(0deg);
+        }
+        to {
+            transform: scale(1) rotate(360deg);
+        }
+    }
+    @-webkit-keyframes spin2 {
+        from {
+            -webkit-transform: rotate(0deg);
+        }
+        to {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    </style>
+
 </head>
 
 <body ng-controller="mainController">
@@ -50,12 +99,11 @@
                     <ul class="nav navbar-nav">
                         <li ng-class="{active: isActive('/')}"><a href="#/">Accueil</a></li>
                         <li ng-class="{active: isActive('/apps')}"><a href="#/apps">Catalogue</a></li>
-                        <li ng-class="{active: isActive('/connexion') || isActive('/resetPassword') || isActive('/profile') || isActive('/inscription')}"><a ng-href="{{ accountHref }}">Votre compte</a></li>
+                        <li ng-class="{active: isActive('/connexion')}"><a href="#/connexion">Votre compte</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Feedback</a></li>
+                        <li ng-class="{active: isActive('/feedback')}"><a href="" data-target="#feedbackModal" data-toggle="modal">Feedback</a></li>
                         <li><a href="" data-target="#myModal" data-toggle="modal">Nous contacter</a></li>
-                        <li><a href="" ng-show="onlineMenu" ng-click="disconnect()">Se déconnecter</a></li>
                     </ul>
                 </div><!--/.navbar-collapse -->
             </div>
@@ -69,7 +117,7 @@
 
         <div class="row">
 
-            <div id="filterMenu" class="col-md-2" ng-show="filterMenu">
+            <div id="leftMenu" class="col-md-2" ng-show="leftMenu">
                 <p class="lead">Devices</p>
                 <div class="list-group">
                   <a href="#" class="list-group-item"><img src="assets/img/icons/steeve.png">Oculus Rift</a>
@@ -94,11 +142,17 @@
               <div ng-view></div>
             </div>
 
-            <div id="onlineMenu" class="col-md-2" ng-show="onlineMenu">
-                <p id="titleCompteMenu" class="lead">Compte</p>
+            <div id="rightMenu" class="col-md-2" ng-show="rightMenu">
+
+              <div id="itemConnexion" class="list-group">
+                  <a href="#/connexion" class="list-group-item">Connexion</a>
+              </div>
+
+
+                <p id="titleCompteMenu"class="lead">Compte</p>
                 <div id="compteMenu" class="list-group">
-                  <a href="#/profile" class="list-group-item"><img ng-src="{{ profilePicture }}" class="img-circle" style="display: block; margin: auto;"></a>
-                    <a href="#/profile" class="list-group-item">Mon profil</a>
+                  <a href="#/profile" class="list-group-item"><img src="https://scontent.fsan1-2.fna.fbcdn.net/hphotos-xlf1/v/t1.0-9/12814463_10207906164508574_3767012560302165678_n.jpg?oh=b94fdc4e5539eb694f3e90a168613430&oe=577B95B3" class="img-circle" style="display: block; margin: auto;"></a>
+                    <a href="#/profile" class="list-group-item">Mon Profil</a>
                     <a href="#/library" class="list-group-item">Bibliothèque</a>
                     <a href="#/progression" class="list-group-item">Progression</a>
                 </div>
@@ -109,12 +163,6 @@
                     <a href="#" class="list-group-item"><img src="assets/img/icons/api.png">Publier une application</a>
                     <a href="#" class="list-group-item"><img src="assets/img/icons/git.png">Gérer vos applications</a>
                 </div>
-            </div>
-
-            <div id="offlineMenu" class="col-md-2" ng-show="offlineMenu">
-                <p id="titleCompteMenu" class="lead">Compte</p>
-                <a href="#/connexion" class="list-group-item">Se connecter</a>
-                <a href="#/inscription" class="list-group-item">S'inscrire</a>
             </div>
 
 
@@ -129,12 +177,15 @@
         </div>
     </footer>
 
+
+    <!-- jQuery -->
+    <script src="assets/js/jquery.js"></script>
+
     <!-- Angular JS -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-cookies.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-route.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.11/angular-messages.js"></script>
 
     <script src="app/app.module.js"></script>
     <script src="app/app.routes.js"></script>
@@ -148,10 +199,7 @@
     <script src="app/components/progression/progressionController.js"></script>
     <script src="app/components/offline/offlineController.js"></script>
     <script src="app/components/resetPassword/resetPasswordController.js"></script>
-    <script src="app/components/404/404Controller.js"></script>
-
-    <!-- jQuery -->
-    <script src="assets/js/jquery.js"></script>
+    <script src="app/components/feedback/feedbackController.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="assets/js/bootstrap.min.js"></script>
@@ -183,6 +231,36 @@
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-success">Envoyer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="feedbackModal" ng-controller="feedbackController" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Un problème avec le Store BeaVR ?</h3>
+                <div id="returnMessage" ng-show="feedbackForm.$submitted">{{returnMessage}}</div>
+            </div>
+            <div class="modal-body">
+                <form id="feedbackForm" name="feedbackForm" role="form" >
+                    <div class="form-group">
+                        <label for="object">Objet</label>
+                        <input type="text" id="object" placeholder="Objet de votre feedback" class="form-control" ng-model="feedbackData.object"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" style="resize:none" rows="8" placeholder="Détail de votre feedback" class="form-control" ng-model="feedbackData.description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" id="recontact" class="checkbox" ng-model="feedbackData.recontact"/>
+                        <label for="recontact">J'accepte d'être recontacté suite à mon feedback</label>
+                        <button type="submit" class="btn btn-secondary btn-beavr" style="float:right" ng-click="feedbackAction()">Envoyer<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                    </div>
+
+                </form>
             </div>
         </div>
     </div>
