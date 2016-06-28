@@ -1,15 +1,52 @@
+website.controller('mainController', function($scope, $rootScope, $http, $window, $cookies) {
 
-website.controller('mainController', function($scope, $http) {
+  $rootScope.filterMenu = true;
+  if ($window.localStorage.getItem('token') !== null) {
+    $rootScope.accountHref = '#/profile'
+    $rootScope.onlineMenu = true;
+    $rootScope.offlineMenu = false;
 
-  console.log("Controller Main");
+    $http.get(url + '/api/users/' + $window.localStorage.getItem('token')).then(function(response){
 
-  $scope.leftMenu = true;
-  $scope.rightMenu = true;
+        $rootScope.profilePicture = response.data.Users.profilePicture;
+
+    }, function(error){
+        console.debug("Failure while fetching user infos.");
+    });
+
+    $rootScope.disconnect = function() {
+      $window.localStorage.removeItem('token');
+      $window.location.href = "#/"
+      $window.location.reload();
+    }
+  } else if ($cookies.get('token') !== undefined) {
+    $rootScope.accountHref = '#/profile'
+    $rootScope.onlineMenu = true;
+    $rootScope.offlineMenu = false;
+
+    $http.get(url + '/api/users/' + $cookies.get('token')).then(function(response){
+
+        $rootScope.profilePicture = response.data.Users.profilePicture;
+
+    }, function(error){
+        console.debug("Failure while fetching user infos.");
+    });
+
+    $rootScope.disconnect = function() {
+      $cookies.remove('token');
+      $window.location.href = "#/"
+      $window.location.reload();
+    }
+  } else {
+    $rootScope.accountHref = '#/connexion'
+    $rootScope.onlineMenu = false;
+    $rootScope.offlineMenu = true;
+  }
   $http.get(url + '/api/applications').then(function(response){
 
   $scope.data = response.data.Applications;
   }, function(error){
-    console.debug("Failure while fetching devices' list.");
+    console.debug("Failure while fetching applications' list.");
   });
 });
 
@@ -37,4 +74,6 @@ website.controller('carouselController', function($scope) {
       id: 2
     }
   ];
+
+  console.log("Controller Main");
 })

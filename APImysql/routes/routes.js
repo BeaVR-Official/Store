@@ -7,17 +7,11 @@ var express = require('express');
 var router = express.Router();
 var sha1 = require('sha1');
 var randomstring = require('randomstring');
+var config = require('config');
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
-var transporter = nodemailer.createTransport(smtpTransport({
-    host: "ssl0.ovh.net", // hostname
-    secure: true,
-    port: 465, // port for secure SMTP
-    auth: {
-        user: "contact@beavr.fr",
-        pass: "epitech2017"
-    }
-}));
+var transporter = nodemailer.createTransport(smtpTransport(config.get('NodeMailer.mailConfig')));
+var jwt = require('jsonwebtoken');
 
 /**
  * @api {get} / Réponse basique
@@ -115,7 +109,7 @@ router.post("/registration", function(req,res){
  *
  * @apiSuccess (Succès) {Boolean} Error Retourne "false" en cas de réussite
  * @apiSuccess (Succès) {Number} Code Code d'erreur (1 = Aucune erreur détectée)
- * @apiSuccess (Succès) {Object} Data Informations de l'utilisateur
+ * @apiSuccess (Succès) {Object} Token Informations de l'utilisateur encrypté en HS256 (HMAC avec SHA-256)
  *
  * @apiSuccessExample Succès - Réponse :
  *     {
@@ -158,7 +152,7 @@ router.post("/connection", function(req,res){
             else
             {
                 var query = "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?";
-                var table = ["Users","email", req.body.email, "password", sha1(req.body.password)];
+                var table = ["Users", "email", req.body.email, "password", sha1(req.body.password)];
 
                 query = mysql.format(query, table);
 
@@ -167,8 +161,21 @@ router.post("/connection", function(req,res){
                     {
                         if (rows.length == 0)
                             res.json({"Error" : true, "Code" : 200}); // Mot de passe incorrect
-                        else
-                            res.json({"Error" : false, "Code" : 1, "Data" : rows[0]}); // OK
+                        else {
+                            // L'utilisateur est authentifié
+                            var query = "SELECT * FROM ?? WHERE ?? = ?";
+                            var table = ["AllUsersInfos", "id", rows[0].idUser];
+                            query = mysql.format(query, table);
+                            var secretKey = config.get('JSONWebTokens.secretKey');
+                            req.app.locals.connection.query(query, function(err, rows) { // Dernière requête pour obtenir les infos importantes de l'user et les set dans le token
+                                if (!err) {
+                                    var token = jwt.sign(rows[0], secretKey);
+                                    res.json({"Error" : false, "Code" : 1, "Token" : token}); // OK
+                                }
+                                else
+                                    res.json({"Error" : true, "Code" : 102}); // Erreur
+                            })
+                        }
                     }
                     else
                         res.json({"Error" : true, "Code" : 102}); // Erreur
@@ -287,10 +294,10 @@ router.post("/reset-password", function(req,res){
                         else
                         {
                             var mailOptions = {
-                                from: 'BeaVR <contact@beavr.fr>',
+                                from: config.get('NodeMailer.resetPasswordMailOptions.senderEmail'),
                                 to: req.body.email,
-                                subject: 'Réinitialisation du mot de passe',
-                                text: 'Bonjour, votre nouveau mot de passe est le suivant : ' + password
+                                subject: config.get('NodeMailer.resetPasswordMailOptions.emailSubject'),
+                                text: config.get('NodeMailer.resetPasswordMailOptions.emailBaseText') + password
                             };
                             transporter.sendMail(mailOptions, function(error, info) {
                                 if (error) {

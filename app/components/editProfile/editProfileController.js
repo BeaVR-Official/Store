@@ -1,6 +1,22 @@
+website.controller('editProfileController', function($scope, $http, $window, $cookies) {
+	
+	if ($window.localStorage.getItem('token') !== null) {
+	    $http.get(url + '/api/users/' + $window.localStorage.getItem('token')).then(function(response) {
+	      $scope.userInfos = response.data.Users;
 
+	    }, function(error){
+	      console.debug("Failure while fecthing profile informations.");
+	    });
+	} else if ($cookies.get('token') !== undefined) {
+		$http.get(url + '/api/users/' + $cookies.get('token')).then(function(response) {
+	      $scope.userInfos = response.data.Users;
 
-website.controller('editProfileController', function($scope, $http) {
+	    }, function(error){
+	      console.debug("Failure while fecthing profile informations.");
+	    });
+	} else {
+		$window.location.href = "#/404"
+	}
 
-  console.log("Controller Edit Profile");
+    console.log("Controller Edit Profile");
 });

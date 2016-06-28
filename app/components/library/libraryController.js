@@ -1,20 +1,22 @@
+website.controller('libraryController', function($scope, $http, $window, $cookies) {
 
-website.controller('libraryController', function($scope, $http, $routeParams) {
+  if ($window.localStorage.getItem('token') !== null) {
+      $http.get(url + '/api/users/applications/' + $window.localStorage.getItem('token')).then(function(response) {
+        $scope.userAppsInfos = response.data.Users;
+
+      }, function(error){
+        console.debug("Failure while fecthing library informations.");
+      });
+  } else if ($cookies.get('token') !== undefined) {
+    $http.get(url + '/api/users/applications/' + $cookies.get('token')).then(function(response) {
+        $scope.userAppsInfos = response.data.Users;
+
+      }, function(error){
+        console.debug("Failure while fecthing library informations.");
+      });
+  } else {
+    $window.location.href = "#/404"
+  }
 
   console.log("Controller Library");
-
-  /**
-  * @TODO: envoyer en paramètre l'id de l'utilisateurs stocké dans les cookies
-  **/
-
-  $http.get(url + '/api/applications/').then(function(response){
-
-    $scope.applicationsList = response.data.Applications;
-
-    console.log(response);
-
-  }, function(error){
-    console.debug("failed dans la requête pour fetch la liste des devices");
-  });
-
 });

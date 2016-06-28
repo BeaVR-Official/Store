@@ -1,13 +1,4 @@
 <style>
-
-    #leftMenu {
-      display: none;
-    }
-
-    #rightMenu {
-      display: none;
-    }
-
 .no-error input,
 .no-error input:focus {
   border-bottom: 2px solid #1BB2BD;
@@ -61,7 +52,11 @@
           <div ng-message="minlength">Le mot de passe doit être composé de 8 caractères minimum.</div>
         </div>
       </div>
-
+      <div class="checkbox">
+        <label for="checkbox">
+          <input type="checkbox" name="checkbox" ng-model="connectionData.checkbox">Se souvenir de moi</input>
+        </label>
+      </div>
       <div class="button-panel">
         <button type="submit" class="button" title="Connexion" ng-model="connectionData.text" ng-click="connexionAction()">Connexion<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
       </div>
