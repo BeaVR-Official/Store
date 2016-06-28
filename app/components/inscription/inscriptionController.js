@@ -24,7 +24,6 @@ website.controller('inscriptionController', function($scope, $rootScope, $http) 
         if (data.password && data.pseudo && data.pseudo.length >= 3 && data.pseudo.length <= 16 && data.password.length >= 8) {
 
           $scope.loading = true;
-          var returnMessageDiv = angular.element(document.querySelector('#returnMessage'));
 
           $http.post(url + '/api/registration', data)
               .success(function(result) {
@@ -32,7 +31,6 @@ website.controller('inscriptionController', function($scope, $rootScope, $http) 
                   if (result.Error == false) {
                     $scope.inscriptionData = {};
                     $scope.returnMessage = successMessage["INSCRIPTION"];
-                    returnMessageDiv.addClass("success-message");
                   } else {
                     switch (result.Code)
                     {
@@ -46,7 +44,6 @@ website.controller('inscriptionController', function($scope, $rootScope, $http) 
                         $scope.returnMessage = errorMessage["INSCRIPTION_104"];
                         break;
                     }
-                    returnMessageDiv.addClass("error-message");
                   }
 
                   $scope.loading = false;
@@ -55,7 +52,6 @@ website.controller('inscriptionController', function($scope, $rootScope, $http) 
               .error(function(result) {
                   $scope.returnMessage = errorMessage["INSCRIPTION"];
                   $scope.loading = false;
-                  returnMessageDiv.addClass("error-message");
           });
               
         }
