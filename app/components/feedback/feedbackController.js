@@ -1,4 +1,4 @@
- website.controller('feedbackController', function($scope, $http) {
+ website.controller('feedbackController', function($scope, $http, $window, $cookies) {
  
      $scope.feedbackData = {
        idUser : this.idUser,
@@ -11,9 +11,23 @@
      $scope.loading;
  
      $scope.feedbackAction = function(){
+
+        if ($window.localStorage.getItem('token') !== null) {
+            $http.get(url + '/api/users/' + $window.localStorage.getItem('token')).then(function(response) {
+              $scope.userInfos = response.data.Users;
+        }, function(error){
+              console.debug("Failure while fecthing profile informations.");
+          });
+        } else if ($cookies.get('token') !== undefined) {
+            $http.get(url + '/api/users/' + $cookies.get('token')).then(function(response) {
+              $scope.userInfos = response.data.Users;
+            }, function(error){
+              console.debug("Failure while fecthing profile informations.");
+          });
+        }
  
        var data = {
-         idUser : 1,
+         idUser : $scope.userInfos.id,
          object : $scope.feedbackData.object,
          description : $scope.feedbackData.description,
          recontact : $scope.feedbackData.recontact

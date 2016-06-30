@@ -42,12 +42,19 @@ website.controller('mainController', function($scope, $rootScope, $http, $window
     $rootScope.onlineMenu = false;
     $rootScope.offlineMenu = true;
   }
-  $http.get(url + '/api/applications').then(function(response){
 
-  $scope.data = response.data.Applications;
-  }, function(error){
-    console.debug("Failure while fetching applications' list.");
+  $http.get(url + '/api/applications').then(function(response) {
+    $scope.data = response.data.Applications;
+    }, function(error){
+      console.debug("Failure while fetching applications' list.");
   });
+
+  $scope.getRating = function(n) {
+    if (n == null)
+      return new Array(0);
+     return new Array(n);
+  };
+
 });
 
 website.controller('navbarController', function($scope, $location) {

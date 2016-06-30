@@ -79,7 +79,7 @@
 
 </head>
 
-<body ng-controller="mainController">
+<body>
 
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -102,7 +102,7 @@
                         <li ng-class="{active: isActive('/connexion') || isActive('/resetPassword') || isActive('/profile') || isActive('/inscription')}"><a ng-href="{{ accountHref }}">Votre compte</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li ng-class="{active: isActive('/feedback')}"><a href="" data-target="#feedbackModal" data-toggle="modal">Feedback</a></li>
+                        <li ng-show="onlineMenu" ng-class="{active: isActive('/feedback')}"><a href="" data-target="#feedbackModal" data-toggle="modal">Feedback</a></li>
                         <li><a href="" data-target="#myModal" data-toggle="modal">Nous contacter</a></li>
                         <li><a href="" ng-show="onlineMenu" ng-click="disconnect()">Se déconnecter</a></li>
                     </ul>

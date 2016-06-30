@@ -8,7 +8,7 @@ website.controller('applicationDetailController', function($scope, $http, $route
       console.debug("Failure while fetching applications' list.");
     });
 
-    $http.get(url + '/api/getComments/' + $routeParams.idApplications).then(function(response){
+    $http.get(url + '/api/comments/' + $routeParams.idApplications).then(function(response){
 
       $scope.comments = response.data.Comments;
     }, function(error){
