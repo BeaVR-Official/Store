@@ -43,8 +43,24 @@ website.controller('mainController', function($scope, $rootScope, $http, $window
     $rootScope.offlineMenu = true;
   }
 
-  $http.get(url + '/api/applications').then(function(response) {
+  $http.get(url + '/api/applications/state/1').then(function(response) {
     $scope.data = response.data.Applications;
+
+    $scope.data.sort(function(a, b) {
+      ratingA = a.avgRating;
+      ratingB = b.avgRating;
+
+      if (ratingA == null)
+        ratingA = 0;
+      if (ratingB == null)
+        ratingB = 0;
+
+      return parseFloat(ratingB) - parseFloat(ratingA);
+    });
+
+    console.log($scope.data);
+
+
     }, function(error){
       console.debug("Failure while fetching applications' list.");
   });
