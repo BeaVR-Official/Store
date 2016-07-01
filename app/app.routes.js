@@ -23,7 +23,7 @@ website.config(function($routeProvider){
 
             .when('/applications/details/:idApplications', {
                 templateUrl : 'app/components/applicationDetail/applicationDetail.html',
-                controller  : 'applicationDetailController'
+                controller  : 'applicationDetailController',
             })
 
             .when('/library', {

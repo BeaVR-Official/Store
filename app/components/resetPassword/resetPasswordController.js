@@ -18,12 +18,15 @@ website.controller('resetPasswordController', function($scope, $rootScope, $http
         };
 
         $scope.loading = true;
+        var returnMessageDiv = angular.element(document.querySelector('#returnMessage'));
+
         $http.post(url + '/api/reset-password', data)
         .success(function(result){
 
             if (result.Error == false) {
                 $scope.connectionData = {};
                 $scope.returnMessage = successMessage["MDPOUBLIE"];
+                returnMessageDiv.addClass("success-message");
             } else {
                 switch (result.Code)
                 {
@@ -34,12 +37,14 @@ website.controller('resetPasswordController', function($scope, $rootScope, $http
                     $scope.returnMessage = errorMessage["MDPOUBLIE_202"];
                     break;
                 }
+                returnMessageDiv.addClass("error-message");
             }
             $scope.loading = false;
         })
         .error(function(result){
             $scope.returnMessage = errorMessage["MDPOUBLIE"];
             $scope.loading = false;
+            returnMessageDiv.addClass("error-message");
         });
       };
 

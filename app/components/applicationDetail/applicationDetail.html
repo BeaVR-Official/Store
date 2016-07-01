@@ -6,7 +6,7 @@
   font-size:22px;
 }
 
-.application-logo {
+.cadre-images {
   border:2px solid #32a9ad;
 }
 
@@ -27,6 +27,30 @@
   height:auto;
 }
 
+.profile-picture {
+  max-height:150px;
+  max-width:150px;
+}
+
+.left-part-comment {
+  min-width:180px;
+  float:left;
+}
+
+.comment-header {
+  display:inline-block;
+  width:100%;
+}
+
+.author-name {
+  float:right;
+  line-height:25px;
+}
+
+.title-comment {
+  float:left;
+}
+
 </style>
 
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
@@ -42,15 +66,15 @@
       <div class="well">
           <div class="media">
           	<a class="pull-left" href="#">
-        		<img class="media-object application-logo" ng-src="{{applications.logo }}" style="width: 150px; height: 150px;">
+        		<img class="media-object cadre-images" ng-src="{{ appInfos.logo }}" style="width: 150px; height: 150px;">
       		  </a>
       		<div class="media-body">
-        		<h4 class="media-heading">{{applications.name }}</h4>
-              <p class="text-right date-publication">Publiée le : {{applications.creationDate | date:'dd/MM/yyyy'}}</p>
+        		<h4 class="media-heading">{{appInfos.name }}</h4>
+              <p class="text-right date-publication">Publiée le : {{appInfos.creationDate | date:'dd/MM/yyyy'}}</p>
               <p class="description-application">
-                {{ applications.description }}
+                {{ appInfos.description }}
               </p>
-              <p class="text-left"><b>Développée par :</b> {{applications.author}}</p>
+              <p class="text-left"><b>Développée par :</b> {{ appInfos.authorName }}</p>
 
               <!--<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                 <input type="hidden" name="cmd" value="_s-xclick">
@@ -59,7 +83,7 @@
                 <img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
               </form>-->
 
-             <p class="text-right"><button type="button" class="btn btn-secondary btn-beavr btn-lg">{{ applications.price }}€</button></p>
+             <p class="text-right"><button type="button" class="btn btn-secondary btn-beavr btn-lg">{{ appInfos.price }}€</button></p>
            </div>
         </div>
       </div>
@@ -101,20 +125,19 @@
   </div>
 </div>
 
-
-
-
-  <h3> Commentaires </h3>
+  <h3>Commentaires</h3>
   <div id="container" ng-repeat="commentInfos in comments">
   <div class="container">
     <div class="well">
         <div class="media">
-        	<a class="pull-left" href="#">
-      		<img class="media-object" ng-src="{{ commentInfos.picture_profile }}">
-    		</a>
+          <div class="left-part-comment">
+      		  <img class="media-object cadre-images profile-picture" ng-src="{{ commentInfos.profilePicture }}">
+          </div>
     		<div class="media-body">
-      		<h4 class="media-heading"> {{ commentInfos.title }}</h4>
-            <p class="text-right">Par {{ commentInfos.author}}</p>
+          <div class="comment-header">
+      		  <h4 class="media-heading title-comment"> {{ commentInfos.title }}</h4>
+            <p class="text-right author-name">Par <span style="font-weight:bold">{{commentInfos.pseudo == null ? 'Anonyme' : commentInfos.pseudo}}</span></p>
+          </div>
             <p>
               {{ commentInfos.comment }}
             </p>

@@ -1,19 +1,22 @@
 website.controller('applicationDetailController', function($scope, $http, $routeParams){
 
+    var limit = 3;
+
     $http.get(url + '/api/applications/' + $routeParams.idApplications).then(function(response){
 
-      $scope.applications = response.data.Applications;
+      $scope.appInfos = response.data.Applications;
 
     }, function(error){
       console.debug("Failure while fetching applications' list.");
     });
 
-    $http.get(url + '/api/comments/' + $routeParams.idApplications).then(function(response){
+    $http.get(url + '/api/comments/' + $routeParams.idApplications + '/' + limit).then(function(response){
 
       $scope.comments = response.data.Comments;
+
+      console.log($scope.comments);
+
     }, function(error){
       console.debug("Failure while fetching comments' list.");
     });
-
-    console.log("Controller Detail d'une application");
 });
