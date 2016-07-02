@@ -6826,4 +6826,11 @@ footer{
   .btn-beavr:active {
     background-color: #24777A;
     color:white;
+    text-decoration:none;
+  }
+
+  footer {
+    padding-top:10px;
+    text-align:center;
+    position:relative !important;
   }

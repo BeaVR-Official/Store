@@ -86,16 +86,22 @@
     font-size:22px;
   }
 
+  #comments-section {
+    width:100%;
+  }
+
+  #under-comments {
+    text-align:center;
+    margin: 10px auto;
+  }
+
 </style>
 
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
-  <div class="panel panel-default">
-
+<div class="panel panel-default">
   <div class="panel-body">
-
-  <h4 class="media-heading page-part-title">Informations</h4>
-  <br />
-    
+    <h4 class="media-heading page-part-title">Informations</h4>
+    <br />
     <div id="container">
     <div class="container">
       <div class="well">
@@ -162,37 +168,40 @@
         </div>
     </div>
 </div>
-
-  </div>
 </div>
 
+<div id="comments-section">
   <h3>{{ appInfos.nbComments > 0 ? 'Commentaires' : 'Aucun commentaire pour cette application' }}</h3>
   <div id="container" ng-repeat="commentInfos in comments">
-  <div class="container">
-    <div class="well">
-        <div class="media">
-          <div class="left-part-comment">
-            <div class="comment-infos">
-              <img class="media-object cadre-images profile-picture" ng-src="{{ commentInfos.profilePicture }}">
-              <div id="comment-rating">
-                  <span ng-show="commentInfos.rating != null" ng-repeat="t in getRating(commentInfos.rating) track by $index" ng-class="{'ratings-last-child':$last}" class="glyphicon glyphicon-star"></span>
-                  <span ng-show="commentInfos.rating != null" ng-repeat="t in getRating(5 - commentInfos.rating) track by $index" class="glyphicon glyphicon-star-empty"></span>
+    <div class="container">
+      <div class="well">
+          <div class="media">
+            <div class="left-part-comment">
+              <div class="comment-infos">
+                <img class="media-object cadre-images profile-picture" ng-src="{{ commentInfos.profilePicture }}">
+                <div id="comment-rating">
+                    <span ng-show="commentInfos.rating != null" ng-repeat="t in getRating(commentInfos.rating) track by $index" ng-class="{'ratings-last-child':$last}" class="glyphicon glyphicon-star"></span>
+                    <span ng-show="commentInfos.rating != null" ng-repeat="t in getRating(5 - commentInfos.rating) track by $index" class="glyphicon glyphicon-star-empty"></span>
+                </div>
               </div>
             </div>
+          <div class="media-body">
+            <div class="comment-header">
+              <h4 class="media-heading title-comment"> {{ commentInfos.title }}</h4>
+              <p class="text-right author-name">Par <span style="font-weight:bold">{{commentInfos.pseudo == null ? 'Anonyme' : commentInfos.pseudo}}</span></p>
+            </div>
+              <p>
+                {{ commentInfos.comment }}
+              </p>
+              <ul class="list-inline list-unstyled">
+                  <li><span><i class="glyphicon glyphicon-calendar"></i> {{ commentInfos.date | date:'dd/MM/yyyy'}}</span></li>
+            </ul>
           </div>
-    		<div class="media-body">
-          <div class="comment-header">
-      		  <h4 class="media-heading title-comment"> {{ commentInfos.title }}</h4>
-            <p class="text-right author-name">Par <span style="font-weight:bold">{{commentInfos.pseudo == null ? 'Anonyme' : commentInfos.pseudo}}</span></p>
-          </div>
-            <p>
-              {{ commentInfos.comment }}
-            </p>
-            <ul class="list-inline list-unstyled">
-    			       <li><span><i class="glyphicon glyphicon-calendar"></i> {{ commentInfos.date | date:'dd/MM/yyyy'}}</span></li>
-    			 </ul>
-         </div>
+        </div>
       </div>
     </div>
+  </div>
+  <div id="under-comments">
+    <a ng-show="appInfos.nbComments > 0" href="" class="btn-beavr btn-lg">En voir plus ({{ appInfos.nbComments }} avis)</a>
   </div>
 </div>
