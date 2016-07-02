@@ -1,6 +1,129 @@
 var url = "http://beavr-api.herokuapp.com";
 
-var website = angular.module('website', ['ngRoute', 'ngAnimate', 'ngCookies', 'ngMessages', 'ui.bootstrap']);
+var website = angular.module('website', ['ngRoute', 'ngAnimate', 'ngCookies', 'ngMessages', 'angular-jwt', 'ui.bootstrap']);
+
+website.factory('AuthenticationService', function($http, $window, $cookies, jwtHelper) {
+	var authService = {};
+
+	authService.login = function(data) {
+		return $http.post(url + '/api/connection', data)
+		.success(function(result) {
+			if (result.Error == false) {
+				if (data.checkbox) {
+					$window.localStorage.setItem('token', result.Token);
+				} else {
+					$cookies.put('token', result.Token);
+				}
+				$window.location.href = "#/"
+			}
+		});
+	}
+
+	authService.disconnect = function() {
+		if (authService.isAuthenticated()) {
+			if ($window.localStorage.getItem('token') !== null) {
+				$window.localStorage.removeItem('token');
+				$window.location.href = "#/"
+				$window.location.reload();
+			} else if ($cookies.get('token') !== undefined) {
+				$cookies.remove('token');
+				$window.location.href = "#/"
+				$window.location.reload();
+			}
+		}
+	}
+
+	authService.isOffline = function() {
+		return $window.localStorage.getItem('token') === null && $cookies.get('token') === undefined;
+	}
+
+	authService.isTokenFormatted = function () {
+		if ($window.localStorage.getItem('token') !== null) {
+			try {
+				var userInfos = jwtHelper.decodeToken($window.localStorage.getItem('token'));
+				return true;
+			} catch (error) {
+				return false;
+			}
+		} else if ($cookies.get('token') !== undefined) {
+			try {
+				var userInfos = jwtHelper.decodeToken($cookies.get('token'));
+				return true;
+			} catch (error) {
+				return false;
+			}
+		}
+	}
+
+	authService.isAuthenticated = function() {
+		if ($window.localStorage.getItem('token') !== null) {
+			var token = $window.localStorage.getItem('token');
+			if (authService.isTokenFormatted(token)) {
+				var userInfos = jwtHelper.decodeToken(token);
+				return userInfos.id !== undefined;
+			}
+		} else if ($cookies.get('token') !== undefined) {
+			var token = $cookies.get('token');
+			if (authService.isTokenFormatted(token)) {
+				var userInfos = jwtHelper.decodeToken(token);
+				return userInfos.id !== undefined;
+			}
+		}
+	}
+
+	authService.getToken = function() {
+		if (authService.isAuthenticated()) {
+			if ($window.localStorage.getItem('token') !== null) {
+				var userInfos = jwtHelper.decodeToken($window.localStorage.getItem('token'));
+				return userInfos;
+			} else if ($cookies.get('token') !== undefined) {
+				var userInfos = jwtHelper.decodeToken($cookies.get('token'));
+				return userInfos;
+			}
+		}
+	}
+
+	authService.getEncryptedToken = function() {
+		if (authService.isAuthenticated()) {
+			if ($window.localStorage.getItem('token') !== null) {
+				return $window.localStorage.getItem('token');
+			} else if ($cookies.get('token') !== undefined) {
+				return $cookies.get('token');
+			}
+		}
+	}
+
+	authService.getConnectedUserLibraryInfos = function () {
+		return $http.get(url + '/api/users/applications/' + authService.getEncryptedToken());
+	}
+
+	authService.isAuthorized = function(authorizedRoles) {
+		if (!angular.isArray(authorizedRoles)) { // prevent type conflict
+			authorizedRoles = [authorizedRoles];
+		}
+		if (authService.isAuthenticated()) {
+			var role;
+			if ($window.localStorage.getItem('token') !== null) {
+				var userInfos = jwtHelper.decodeToken($window.localStorage.getItem('token'));
+				role = userInfos.role;
+			} else if ($cookies.get('token') !== undefined) {
+				var userInfos = jwtHelper.decodeToken($cookies.get('token'));
+				role = userInfos.role;
+			}
+			return authorizedRoles.indexOf(role) !== -1;
+		} else {
+			return false;
+		}
+	}
+
+	return authService;
+});
+
+website.constant('USER_ROLES', {
+	User 			: 'User',
+	Developer 		: 'Developer',
+	Administrator 	: 'Administrator'
+});
 
 var errorMessage = {
 	"INSCRIPTION_100" : "Une erreur innattendue s'est produite. Réessayez dans quelques instants.",

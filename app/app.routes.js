@@ -1,9 +1,17 @@
-website.config(function($routeProvider){
+website.config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_ROLES){
 
       $routeProvider
             .when('/', {
               templateUrl : 'app/components/main/main.html',
-              controller  : 'mainController'
+              controller  : 'mainController',
+              resolve     : {
+                    token : function(AuthenticationService, $window) {
+                        if (AuthenticationService.isOffline() || AuthenticationService.isTokenFormatted()) {
+                            return AuthenticationService.getToken();
+                        }
+                        $window.location.href = "#/404";
+                    }
+                }
             })
 
             .when('/inscription', {
@@ -13,12 +21,28 @@ website.config(function($routeProvider){
 
             .when('/connexion', {
                 templateUrl : 'app/components/connexion/connexion.html',
-                controller  : 'connexionController'
+                controller  : 'connexionController',
+                resolve     : {
+                    token : function(AuthenticationService, $window) {
+                        if (AuthenticationService.isOffline()) {
+                            return AuthenticationService.getToken();
+                        }
+                        $window.location.href = "#/404";
+                    }
+                }
             })
 
             .when('/profile', {
                 templateUrl : 'app/components/editProfile/editProfile.html',
-                controller  : 'editProfileController'
+                controller  : 'editProfileController',
+                resolve     : {
+                    token   : function(AuthenticationService, $window) {
+                        if (AuthenticationService.isAuthorized([USER_ROLES.User, USER_ROLES.Developer, USER_ROLES.Administrator])) {
+                            return AuthenticationService.getToken();
+                        }
+                        $window.location.href = "#/404";
+                    }
+                }
             })
 
             .when('/applications/details/:idApplications', {
@@ -28,17 +52,28 @@ website.config(function($routeProvider){
 
             .when('/library', {
                 templateUrl : 'app/components/library/library.html',
-                controller  : 'libraryController'
+                controller  : 'libraryController',
+                resolve     : {
+                    libraryInfos   : function(AuthenticationService, $window) {
+                        if (AuthenticationService.isAuthorized([USER_ROLES.User, USER_ROLES.Developer, USER_ROLES.Administrator])) {
+                            return AuthenticationService.getConnectedUserLibraryInfos();
+                        }
+                        $window.location.href = "#/404";
+                    }
+                }
             })
 
             .when('/progression', {
                 templateUrl : 'app/components/progression/progression.html',
-                controller  : 'progressionController'
-            })
-
-            .when('/offline', {
-                templateUrl : 'app/components/offline/offline.html',
-                controller  : 'offlineController'
+                controller  : 'progressionController',
+                resolve     : {
+                    token   : function(AuthenticationService, $window) {
+                        if (AuthenticationService.isAuthorized([USER_ROLES.User, USER_ROLES.Developer, USER_ROLES.Administrator])) {
+                            return AuthenticationService.getToken();
+                        }
+                        $window.location.href = "#/404";
+                    }
+                }
             })
             
             .when('/resetPassword', {
@@ -58,4 +93,4 @@ website.config(function($routeProvider){
             .otherwise({
                 redirectTo: '/404'
             });
-});
+}]);
