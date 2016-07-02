@@ -10,9 +10,9 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 		.success(function(result) {
 			if (result.Error == false) {
 				if (data.checkbox) {
-					$window.localStorage.setItem('token', result.Token);
+					$window.localStorage.setItem('store_token', result.Token);
 				} else {
-					$cookies.put('token', result.Token);
+					$cookies.put('store_token', result.Token);
 				}
 				$window.location.href = "#/"
 			}
@@ -21,12 +21,12 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 
 	authService.disconnect = function() {
 		if (authService.isAuthenticated()) {
-			if ($window.localStorage.getItem('token') !== null) {
-				$window.localStorage.removeItem('token');
+			if ($window.localStorage.getItem('store_token') !== null) {
+				$window.localStorage.removeItem('store_token');
 				$window.location.href = "#/"
 				$window.location.reload();
-			} else if ($cookies.get('token') !== undefined) {
-				$cookies.remove('token');
+			} else if ($cookies.get('store_token') !== undefined) {
+				$cookies.remove('store_token');
 				$window.location.href = "#/"
 				$window.location.reload();
 			}
@@ -34,20 +34,20 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 	}
 
 	authService.isOffline = function() {
-		return $window.localStorage.getItem('token') === null && $cookies.get('token') === undefined;
+		return $window.localStorage.getItem('store_token') === null && $cookies.get('store_token') === undefined;
 	}
 
 	authService.isTokenFormatted = function () {
-		if ($window.localStorage.getItem('token') !== null) {
+		if ($window.localStorage.getItem('store_token') !== null) {
 			try {
-				var userInfos = jwtHelper.decodeToken($window.localStorage.getItem('token'));
+				var userInfos = jwtHelper.decodeToken($window.localStorage.getItem('store_token'));
 				return true;
 			} catch (error) {
 				return false;
 			}
-		} else if ($cookies.get('token') !== undefined) {
+		} else if ($cookies.get('store_token') !== undefined) {
 			try {
-				var userInfos = jwtHelper.decodeToken($cookies.get('token'));
+				var userInfos = jwtHelper.decodeToken($cookies.get('store_token'));
 				return true;
 			} catch (error) {
 				return false;
@@ -56,14 +56,14 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 	}
 
 	authService.isAuthenticated = function() {
-		if ($window.localStorage.getItem('token') !== null) {
-			var token = $window.localStorage.getItem('token');
+		if ($window.localStorage.getItem('store_token') !== null) {
+			var token = $window.localStorage.getItem('store_token');
 			if (authService.isTokenFormatted(token)) {
 				var userInfos = jwtHelper.decodeToken(token);
 				return userInfos.id !== undefined;
 			}
-		} else if ($cookies.get('token') !== undefined) {
-			var token = $cookies.get('token');
+		} else if ($cookies.get('store_token') !== undefined) {
+			var token = $cookies.get('store_token');
 			if (authService.isTokenFormatted(token)) {
 				var userInfos = jwtHelper.decodeToken(token);
 				return userInfos.id !== undefined;
@@ -73,11 +73,11 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 
 	authService.getToken = function() {
 		if (authService.isAuthenticated()) {
-			if ($window.localStorage.getItem('token') !== null) {
-				var userInfos = jwtHelper.decodeToken($window.localStorage.getItem('token'));
+			if ($window.localStorage.getItem('store_token') !== null) {
+				var userInfos = jwtHelper.decodeToken($window.localStorage.getItem('store_token'));
 				return userInfos;
-			} else if ($cookies.get('token') !== undefined) {
-				var userInfos = jwtHelper.decodeToken($cookies.get('token'));
+			} else if ($cookies.get('store_token') !== undefined) {
+				var userInfos = jwtHelper.decodeToken($cookies.get('store_token'));
 				return userInfos;
 			}
 		}
@@ -85,10 +85,10 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 
 	authService.getEncryptedToken = function() {
 		if (authService.isAuthenticated()) {
-			if ($window.localStorage.getItem('token') !== null) {
-				return $window.localStorage.getItem('token');
-			} else if ($cookies.get('token') !== undefined) {
-				return $cookies.get('token');
+			if ($window.localStorage.getItem('store_token') !== null) {
+				return $window.localStorage.getItem('store_token');
+			} else if ($cookies.get('store_token') !== undefined) {
+				return $cookies.get('store_token');
 			}
 		}
 	}
@@ -103,11 +103,11 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 		}
 		if (authService.isAuthenticated()) {
 			var role;
-			if ($window.localStorage.getItem('token') !== null) {
-				var userInfos = jwtHelper.decodeToken($window.localStorage.getItem('token'));
+			if ($window.localStorage.getItem('store_token') !== null) {
+				var userInfos = jwtHelper.decodeToken($window.localStorage.getItem('store_token'));
 				role = userInfos.role;
-			} else if ($cookies.get('token') !== undefined) {
-				var userInfos = jwtHelper.decodeToken($cookies.get('token'));
+			} else if ($cookies.get('store_token') !== undefined) {
+				var userInfos = jwtHelper.decodeToken($cookies.get('store_token'));
 				role = userInfos.role;
 			}
 			return authorizedRoles.indexOf(role) !== -1;

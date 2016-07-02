@@ -9,6 +9,9 @@ website.controller('connexionController', function($scope, $rootScope, Authentic
     $rootScope.filterMenu = false;
     $rootScope.onlineMenu = false;
     $rootScope.offlineMenu = false;
+    $rootScope.devMenu = false;
+    $rootScope.registerDev = false;
+
     $scope.connexionAction = function(){
 
         var data = {

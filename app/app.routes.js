@@ -25,7 +25,7 @@ website.config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_RO
                 resolve     : {
                     token : function(AuthenticationService, $window) {
                         if (AuthenticationService.isOffline()) {
-                            return AuthenticationService.getToken();
+                            return ;
                         }
                         $window.location.href = "#/404";
                     }

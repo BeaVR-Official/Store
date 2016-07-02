@@ -1,16 +1,22 @@
-website.controller('mainController', function($scope, $rootScope, $http, AuthenticationService, token) {
+website.controller('mainController', function($scope, $rootScope, $http, AuthenticationService, token, USER_ROLES) {
 
   $rootScope.filterMenu = true;
   if (token !== undefined) {
-    $rootScope.accountHref = '#/profile'
     $rootScope.onlineMenu = true;
     $rootScope.offlineMenu = false;
     $rootScope.profilePicture = token.profilePicture;
     $rootScope.disconnect = AuthenticationService.disconnect;
+    if (AuthenticationService.isAuthorized(USER_ROLES.Developer)) {
+      $rootScope.devMenu = true;
+      $rootScope.registerDev = false;
+    } else {
+      $rootScope.devMenu = false;
+      $rootScope.registerDev = true;
+    }
   } else {
-    $rootScope.accountHref = '#/connexion'
     $rootScope.onlineMenu = false;
     $rootScope.offlineMenu = true;
+    $rootScope.devMenu = false;
   }
 
   $http.get(url + '/api/applications/state/1').then(function(response) {

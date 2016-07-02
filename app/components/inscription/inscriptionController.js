@@ -12,6 +12,8 @@ website.controller('inscriptionController', function($scope, $rootScope, $http) 
     $rootScope.filterMenu = false;
     $rootScope.onlineMenu = false;
     $rootScope.offlineMenu = false;
+    $rootScope.devMenu = false;
+    $rootScope.registerDev = false;
 
     $scope.inscriptionAction = function(){
 
