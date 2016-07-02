@@ -1,0 +1,185 @@
+<style>
+
+.media-body .media-heading {
+  color:#32a9ad;
+  font-weight:bold;
+  font-size:22px;
+}
+.cadre-images {
+  border:2px solid #32a9ad;
+}
+
+.page-part-title {
+  font-size:20px;
+  font-weight:bold;
+}
+
+.date-publication {
+  font-weight:bold;
+}
+
+.description-application {
+  font-size:14px;
+}
+
+.well {
+  height:auto;
+}
+
+.profile-picture {
+  max-height:120px;
+  max-width:120px;
+  margin:0 auto;
+}
+
+.left-part-appInfos {
+  min-width:150px;
+  float:left;
+}
+
+.left-part-comment {
+    min-width:180px;
+    float:left;
+}
+
+ .glyphicon-star,
+ .glyphicon-star-empty,
+ .ratings {
+    color:#32a9ad;
+    margin-right: 5px;
+    min-height: 25px;
+  }
+
+  .ratings-last-child {
+    margin-right:1px;
+  }
+
+  .app-rating-last-child {
+    margin-right:0px;
+  }
+
+  .app-rating-first-child {
+    margin-left:5px;
+  }
+
+  .app-infos {
+    max-width:120px;
+  }
+
+.comment-header {
+  display:inline-block;
+  width:100%;
+}
+
+.author-name {
+  float:right;
+  line-height:25px;
+}
+
+.title-comment {
+  float:left;
+}
+
+  .comment-infos {
+      max-width:150px;
+  }
+
+  #comment-rating {
+    margin: 10px auto 0  auto;
+    text-align:center;
+    font-size:15px;
+  }
+  #app-rating .glyphicon {
+    font-size:15px;
+    line-height:22px;
+    vertical-align:middle;
+  }
+
+  .back-app-link {
+      float:right;
+      font-size:15px;
+  }
+
+    #comments-section {
+    width:100%;
+  }
+
+  #under-comments {
+    text-align:center;
+    margin: 10px auto;
+  }
+
+</style>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div id="container">
+    <div class="container">
+      <div class="well">
+          <div class="media">
+            <div class="left-part-appInfos">
+              <div class="app-infos">
+                <img class="media-object cadre-images profile-picture" ng-src="{{ appInfos.logo }}" style="width: 150px; height: 150px;">
+              </div>
+      		  </div>
+      		<div class="media-body">
+                <h4 class="media-heading">{{appInfos.name }}</h4>
+                <br>
+                <p class="text-left"><b>Publiée le :</b> {{appInfos.creationDate | date:'dd/MM/yyyy'}}</p>
+                <p class="text-left"><b>Développée par :</b> {{ appInfos.authorName }}</p>
+                <div id="app-rating">
+                    <p class="text-left"><b>Note moyenne : </b>
+                        <span ng-show="appInfos.avgRating != null" ng-repeat="t in getRating(appInfos.avgRating) track by $index" ng-class="{'app-rating-last-child':$last, 'app-rating-first-child':$first}" class="glyphicon glyphicon-star"></span>
+                        <span ng-show="appInfos.avgRating != null" ng-repeat="t in getRating(5 - appInfos.avgRating) track by $index" class="glyphicon glyphicon-star-empty"></span>
+                    </p>
+                </div>
+           </div>
+        </div>
+      </div>
+      <a class="text-right back-app-link" ng-href="#/applications/details/{{ appInfos.id }}"><span class="glyphicon glyphicon-chevron-left"></span> Retour à l'application</a>
+    </div>
+    </div> 
+  </div>
+</div>
+
+<div id="comments-section">
+  <h3>{{ appInfos.nbComments > 0 ? 'Tous les commentaires (' + appInfos.nbComments + ')' : 'Aucun commentaire pour cette application' }}</h3>
+  <div id="container" ng-repeat="commentInfos in filteredComments">
+    <div class="container">
+      <div class="well">
+          <div class="media">
+            <div class="left-part-comment">
+              <div class="comment-infos">
+                <img class="media-object cadre-images profile-picture" ng-src="{{ commentInfos.profilePicture }}">
+                <div id="comment-rating">
+                    <span ng-show="commentInfos.rating != null" ng-repeat="t in getRating(commentInfos.rating) track by $index" ng-class="{'ratings-last-child':$last}" class="glyphicon glyphicon-star"></span>
+                    <span ng-show="commentInfos.rating != null" ng-repeat="t in getRating(5 - commentInfos.rating) track by $index" class="glyphicon glyphicon-star-empty"></span>
+                </div>
+              </div>
+            </div>
+          <div class="media-body">
+            <div class="comment-header">
+              <h4 class="media-heading title-comment"> {{ commentInfos.title }}</h4>
+              <p class="text-right author-name">Par <span style="font-weight:bold">{{commentInfos.pseudo == null ? 'Anonyme' : commentInfos.pseudo}}</span></p>
+            </div>
+              <p>
+                {{ commentInfos.comment }}
+              </p>
+              <ul class="list-inline list-unstyled">
+                  <li><span><i class="glyphicon glyphicon-calendar"></i> {{ commentInfos.date | date:'dd/MM/yyyy hh:mm'}}</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <uib-pagination 
+      total-items="comments.length" 
+      ng-model="currentPage" 
+      items-per-page="numPerPage"
+      boundary-links="true">
+  </uib-pagination>
+</div>
+
