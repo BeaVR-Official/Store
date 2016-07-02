@@ -166,7 +166,7 @@
   </div>
 </div>
 
-  <h3>Commentaires</h3>
+  <h3>{{ appInfos.nbComments > 0 ? 'Commentaires' : 'Aucun commentaire pour cette application' }}</h3>
   <div id="container" ng-repeat="commentInfos in comments">
   <div class="container">
     <div class="well">
