@@ -177,7 +177,8 @@
 
   <uib-pagination 
       total-items="comments.length" 
-      ng-model="currentPage" 
+      ng-model="currentPage"
+      max-size="maxSize"
       items-per-page="numPerPage"
       boundary-links="true">
   </uib-pagination>

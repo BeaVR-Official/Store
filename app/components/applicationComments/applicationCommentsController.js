@@ -6,6 +6,7 @@ website.controller('applicationCommentsController', function($scope, $http, $rou
     /* Variables used for the pagination. */
     $scope.currentPage = 1;
     $scope.numPerPage = 2;
+    $scope.maxSize = 5;
 
     $http.get(url + '/api/applications/' + $routeParams.idApplication).then(function(response){
       $scope.appInfos = response.data.Applications;
