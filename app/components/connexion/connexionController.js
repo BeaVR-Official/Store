@@ -42,6 +42,4 @@ website.controller('connexionController', function($scope, $rootScope, Authentic
           });
         }
   };
-
-  console.log("Controller Connexion");
 });

@@ -70,6 +70,4 @@ website.controller('carouselController', function($scope) {
       id: 2
     }
   ];
-
-  console.log("Controller Main");
 })

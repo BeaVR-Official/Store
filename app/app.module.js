@@ -94,7 +94,7 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 	}
 
 	authService.getConnectedUserLibraryInfos = function () {
-		return $http.get(url + '/api/users/applications/' + authService.getEncryptedToken());
+		return $http.get(url + '/api/users/applications');
 	}
 
 	authService.isAuthorized = function(authorizedRoles) {
@@ -123,6 +123,13 @@ website.constant('USER_ROLES', {
 	User 			: 'User',
 	Developer 		: 'Developer',
 	Administrator 	: 'Administrator'
+});
+
+website.config(function Config($httpProvider, jwtInterceptorProvider) {
+  jwtInterceptorProvider.tokenGetter = ['config', 'AuthenticationService', function(config, AuthenticationService) {
+	return AuthenticationService.getEncryptedToken();
+  }];
+  $httpProvider.interceptors.push('jwtInterceptor');
 });
 
 var errorMessage = {
