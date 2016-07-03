@@ -104,9 +104,25 @@
     width:100%;
   }
 
-  #under-comments {
+  #pagination {
     text-align:center;
-    margin: 10px auto;
+    font-size:15px;
+  }
+
+  #pagination a {
+    color: #32a9ad;
+    background-color: #f5f5f5;
+    border: 1px solid #32a9ad;
+  }
+
+  .pagination > .active > a,
+  .pagination > .active > span,
+  .pagination > .active > a:hover,
+  .pagination > .active > span:hover,
+  .pagination > .active > a:focus,
+  .pagination > .active > span:focus {
+    color:white !important;
+    background-color: #32a9ad !important;
   }
 
 </style>
@@ -173,14 +189,9 @@
       </div>
     </div>
   </div>
-
-
-  <uib-pagination 
-      total-items="comments.length" 
-      ng-model="currentPage"
-      max-size="maxSize"
-      items-per-page="numPerPage"
-      boundary-links="true">
-  </uib-pagination>
+  <div id="pagination" ng-show="comments.length > numPerPage">
+    <uib-pagination first-text="Première" previous-text="Précédente" next-text="Suivante" last-text="Dernière" class="pagination-style" total-items="comments.length"
+    ng-model="currentPage" max-size="maxSize" items-per-page="numPerPage" boundary-links="true" />
+  </div>
 </div>
 
