@@ -54,11 +54,16 @@ website.config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_RO
                 templateUrl : 'app/components/library/library.html',
                 controller  : 'libraryController',
                 resolve     : {
+                    token   : function(AuthenticationService, $window) {
+                        if (AuthenticationService.isAuthorized([USER_ROLES.User, USER_ROLES.Developer, USER_ROLES.Administrator])) {
+                            return AuthenticationService.getToken();
+                        }
+                        $window.location.href = "#/404";
+                    },
                     libraryInfos   : function(AuthenticationService, $window) {
                         if (AuthenticationService.isAuthorized([USER_ROLES.User, USER_ROLES.Developer, USER_ROLES.Administrator])) {
                             return AuthenticationService.getConnectedUserLibraryInfos();
                         }
-                        $window.location.href = "#/404";
                     }
                 }
             })
