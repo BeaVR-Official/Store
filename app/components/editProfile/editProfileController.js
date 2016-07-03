@@ -1,4 +1,5 @@
 website.controller('editProfileController', function($scope, $rootScope, token, AuthenticationService, USER_ROLES) {
+	$rootScope.filterMenu = false;
 	$rootScope.onlineMenu = true;
     $rootScope.offlineMenu = false;
     $rootScope.profilePicture = token.profilePicture;
