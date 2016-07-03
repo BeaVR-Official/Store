@@ -6816,12 +6816,12 @@ footer{
     color:#1BB2BD;
   }
   
-  .btn-beavr {
+  .btn-beavr,
+  .btn-beavr:focus {
     background-color: #1BB2BD;
     color:white;
   }
 
-  .btn-beavr:focus,
   .btn-beavr:hover,
   .btn-beavr:active {
     background-color: #24777A;
@@ -6832,5 +6832,4 @@ footer{
   footer {
     padding-top:10px;
     text-align:center;
-    position:relative !important;
   }
