@@ -4,6 +4,22 @@
 
 <style>
 
+       .error-message {
+       text-align:center;
+       color:#e85a5a;
+       font-size:15px;
+       font-weight:bold;
+       line-height:30px;
+     }
+ 
+     .success-message {
+       text-align:center;
+       color:#1BB2BD;
+       font-size:15px;
+       font-weight:bold;
+       line-height:30px
+     }
+
 .media-body .media-heading {
   color:#32a9ad;
   font-weight:bold;
@@ -163,6 +179,10 @@
     width:10px;
   }
 
+  .rating-container .filled-stars {
+    -webkit-text-stroke: 0px !important;
+  }
+
 </style>
 
 <div class="panel panel-default">
@@ -190,7 +210,8 @@
            </div>
         </div>
       </div>
-      <button class="btn btn-beavr" type="button" data-toggle="collapse" data-target="#addComment" aria-expanded="false" aria-controls="collapseExample">Ajouter un commentaire</button>
+      <button class="btn btn-beavr" ng-show="hasCommented == false" type="button" data-toggle="collapse" data-target="#addComment" aria-expanded="false" aria-controls="collapseExample">Ajouter un commentaire</button>
+      <button class="btn btn-beavr" ng-show="hasCommented == true" type="button" data-toggle="collapse" data-target="#addComment" aria-expanded="false" aria-controls="collapseExample">Modifier son commentaire</button>
       <a class="text-right back-app-link" ng-href="#/applications/details/{{ appInfos.id }}"><span class="glyphicon glyphicon-chevron-left"></span> Retour à l'application</a>
     </div>
     </div> 
@@ -199,27 +220,33 @@
 
 <div id="comments-section">
 
-<div class="collapse" id="addComment">
-  <div class="panel panel-default">
-    <form id="addCommentForm" name="addCommentForm" role="form">
-        <div class="form-group">
-            <label for="title">Titre</label>
-            <input type="text" id="title" placeholder="Titre de votre commentaire" class="form-control"/>
-        </div>
-        <div class="form-group">
-          <label for="rating">Note</label>
-          <input id="input-21b" name="rating" value="3" class="rating" data-show-caption="false"  type="number" min=0 max=5 step=1>
-        </div>
-        <div class="form-group">
-            <label for="comment">Commentaire</label>
-            <textarea id="comment" style="resize:none" rows="8" placeholder="Contenu de votre commentaire" class="form-control"></textarea>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-secondary btn-beavr">Ajouter<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
-        </div>
-    </form>
+  <div class="collapse" id="addComment">
+    <div class="panel panel-default">
+      <form id="addCommentForm" name="addCommentForm" role="form">
+          <div class="form-group">
+              <label for="title">Titre</label>
+              <input type="text" ng-model="addCommentData.title" id="title" placeholder="Titre de votre commentaire" class="form-control"/>
+          </div>
+          <div class="form-group">
+            <label for="rating">Note</label>
+            <input id="input-21b" name="rating" value="3" class="rating" data-show-caption="false"  type="number" min=0 max=5 step=1>
+          </div>
+          <div class="form-group">
+              <label for="comment">Commentaire</label>
+              <textarea id="comment" ng-model="addCommentData.comment" style="resize:none" rows="8" placeholder="Contenu de votre commentaire" class="form-control"></textarea>
+          </div>
+          <div class="form-group row">
+              <div class="col-sm-10">
+                <div id="returnMessage" class="pull-left success-message">{{returnMessage}}</div>
+              </div>
+              <div class="col-sm-2">
+              <button type="submit" ng-show="hasCommented == false" ng-click="addCommentAction()" class="btn btn-secondary btn-beavr">Ajouter<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+              <button class="btn btn-secondary btn-beavr .col-xs-6 .col-md-4" type="submit" ng-show="hasCommented == true" ng-click="editCommentAction()">Modifier<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+            </div>
+          </div>
+      </form>
+    </div>
   </div>
-</div>
 
   <h3>{{ appInfos.nbComments > 0 ? 'Tous les commentaires (' + appInfos.nbComments + ')' : 'Aucun commentaire pour cette application' }}</h3>
 

@@ -139,11 +139,17 @@ var errorMessage = {
  	"FEEDBACK_102" : "Echec lors de l'envoi de votre feedback. Réessayez dans quelques instants.",
  	"FEEDBACK" : "Une erreur est survenue lors de l'envoi de votre feedback. Réessayez dans quelques instants.",
  	"FEEDBACK_OBJECT" : "L'objet de votre feedback ne peut pas être vide.",
- 	"FEEDBACK_DESCRIPTION" : "Votre feedback ne peut pas être vide."
+ 	"FEEDBACK_DESCRIPTION" : "Votre feedback ne peut pas être vide.",
+	"EDIT_COMMENT" : "Votre commentaire n'a pas pu être modifié. Réessayez dans quelques instants.",
+	"EDIT_COMMENT_102" : "Une erreur est survenue lors de l'envoi de votre commentaire. Réessayez dans quelques instants.",
+	"ADD_COMMENT" : "Votre commentaire n'a pas pu être ajouté. Réessayez dans quelques instants.",
+	"ADD_COMMENT_102" : "Une erreur est survenue lors de l'envoi de votre commentaire. Réessayez dans quelques instants."
 };
 
 var successMessage = {
 	"INSCRIPTION" : "Inscription effectuée avec succès.",
  	"MDPOUBLIE" : "Un nouveau mot de passe va vous être envoyé par mail d'ici quelques minutes.",
- 	"FEEDBACK" : "Votre feedback nous a correctement été transmis. L'équipe BeaVR vous remercie !"
+ 	"FEEDBACK" : "Votre feedback nous a correctement été transmis. L'équipe BeaVR vous remercie !",
+	"EDIT_COMMENT" : "Votre commentaire a correctement été modifié.",
+	"ADD_COMMENT" : "Votre commentaire a correctement été ajouté."
 };
