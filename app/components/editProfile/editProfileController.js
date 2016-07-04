@@ -1,22 +1,15 @@
-website.controller('editProfileController', function($scope, $http, $window, $cookies) {
-	
-	if ($window.localStorage.getItem('token') !== null) {
-	    $http.get(url + '/api/users/' + $window.localStorage.getItem('token')).then(function(response) {
-	      $scope.userInfos = response.data.Users;
-
-	    }, function(error){
-	      console.debug("Failure while fecthing profile informations.");
-	    });
-	} else if ($cookies.get('token') !== undefined) {
-		$http.get(url + '/api/users/' + $cookies.get('token')).then(function(response) {
-	      $scope.userInfos = response.data.Users;
-
-	    }, function(error){
-	      console.debug("Failure while fecthing profile informations.");
-	    });
-	} else {
-		$window.location.href = "#/404"
-	}
-
-    console.log("Controller Edit Profile");
+website.controller('editProfileController', function($scope, $rootScope, token, AuthenticationService, USER_ROLES) {
+	$rootScope.filterMenu = false;
+	$rootScope.onlineMenu = true;
+    $rootScope.offlineMenu = false;
+    $rootScope.profilePicture = token.profilePicture;
+    $rootScope.disconnect = AuthenticationService.disconnect;
+    if (AuthenticationService.isAuthorized(USER_ROLES.Developer)) {
+      $rootScope.devMenu = true;
+      $rootScope.registerDev = false;
+    } else {
+      $rootScope.devMenu = false;
+      $rootScope.registerDev = true;
+    }
+	$scope.userInfos = token;
 });

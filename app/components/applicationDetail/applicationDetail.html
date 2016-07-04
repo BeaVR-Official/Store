@@ -30,9 +30,11 @@
 .profile-picture {
   max-height:150px;
   max-width:150px;
+  margin:0 auto;
 }
 
-.left-part-comment {
+.left-part-comment,
+.left-part-appInfos {
   min-width:180px;
   float:left;
 }
@@ -51,6 +53,39 @@
   float:left;
 }
 
+ .glyphicon-star,
+ .glyphicon-star-empty,
+ .ratings {
+    color:#32a9ad;
+    margin-right: 5px;
+    min-height: 25px;
+  }
+
+  .ratings-last-child {
+    margin-right:1px;
+  }
+
+  .app-rating-last-child {
+    margin-right:-3px;
+  }
+
+  .comment-infos,
+  .app-infos {
+    max-width:150px;
+  }
+
+  #comment-rating {
+    margin: 10px auto 0  auto;
+    text-align:center;
+    font-size:15px;
+  }
+
+  #app-rating {
+    margin: 10px auto 0  auto;
+    text-align:center;
+    font-size:22px;
+  }
+
 </style>
 
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
@@ -65,9 +100,15 @@
     <div class="container">
       <div class="well">
           <div class="media">
-          	<a class="pull-left" href="#">
-        		<img class="media-object cadre-images" ng-src="{{ appInfos.logo }}" style="width: 150px; height: 150px;">
-      		  </a>
+            <div class="left-part-appInfos">
+              <div class="app-infos">
+                <img class="media-object cadre-images profile-picture" ng-src="{{ appInfos.logo }}" style="width: 150px; height: 150px;">
+                <div id="app-rating">
+                    <span ng-show="appInfos.avgRating != null" ng-repeat="t in getRating(appInfos.avgRating) track by $index" ng-class="{'app-rating-last-child':$last}" class="glyphicon glyphicon-star"></span>
+                    <span ng-show="appInfos.avgRating != null" ng-repeat="t in getRating(5 - appInfos.avgRating) track by $index" class="glyphicon glyphicon-star-empty"></span>
+                </div>
+              </div>
+      		  </div>
       		<div class="media-body">
         		<h4 class="media-heading">{{appInfos.name }}</h4>
               <p class="text-right date-publication">Publiée le : {{ appInfos.creationDate | date:'dd/MM/yyyy'}}</p>
@@ -92,7 +133,7 @@
                 <input type="hidden" name="shipping" value="0.00">
                 <input type="hidden" value="http://localhost:8888/BeaVRStore/BeaVRWebStore/#/" name="return">
                 <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHostedGuest">
-                <p class="text-right"><input class="btn btn-secondary btn-beavr btn-lg" type="image" src="" border="0" name="submit" alt=""></p>
+                <p class="text-right"><input class="btn btn-secondary btn-beavr btn-lg" type="image" src="" border="0" name="submit" alt="" value="Payer"></p>
                 </form>
               </span>
            </div>
@@ -142,7 +183,13 @@
     <div class="well">
         <div class="media">
           <div class="left-part-comment">
-      		  <img class="media-object cadre-images profile-picture" ng-src="{{ commentInfos.profilePicture }}">
+            <div class="comment-infos">
+              <img class="media-object cadre-images profile-picture" ng-src="{{ commentInfos.profilePicture }}">
+              <div id="comment-rating">
+                  <span ng-show="commentInfos.rating != null" ng-repeat="t in getRating(commentInfos.rating) track by $index" ng-class="{'ratings-last-child':$last}" class="glyphicon glyphicon-star"></span>
+                  <span ng-show="commentInfos.rating != null" ng-repeat="t in getRating(5 - commentInfos.rating) track by $index" class="glyphicon glyphicon-star-empty"></span>
+              </div>
+            </div>
           </div>
     		<div class="media-body">
           <div class="comment-header">

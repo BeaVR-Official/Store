@@ -1,46 +1,22 @@
-website.controller('mainController', function($scope, $rootScope, $http, $window, $cookies) {
+website.controller('mainController', function($scope, $rootScope, $http, AuthenticationService, token, USER_ROLES) {
 
   $rootScope.filterMenu = true;
-  if ($window.localStorage.getItem('token') !== null) {
-    $rootScope.accountHref = '#/profile'
+  if (token !== undefined) {
     $rootScope.onlineMenu = true;
     $rootScope.offlineMenu = false;
-
-    $http.get(url + '/api/users/' + $window.localStorage.getItem('token')).then(function(response){
-
-        $rootScope.profilePicture = response.data.Users.profilePicture;
-
-    }, function(error){
-        console.debug("Failure while fetching user infos.");
-    });
-
-    $rootScope.disconnect = function() {
-      $window.localStorage.removeItem('token');
-      $window.location.href = "#/"
-      $window.location.reload();
-    }
-  } else if ($cookies.get('token') !== undefined) {
-    $rootScope.accountHref = '#/profile'
-    $rootScope.onlineMenu = true;
-    $rootScope.offlineMenu = false;
-
-    $http.get(url + '/api/users/' + $cookies.get('token')).then(function(response){
-
-        $rootScope.profilePicture = response.data.Users.profilePicture;
-
-    }, function(error){
-        console.debug("Failure while fetching user infos.");
-    });
-
-    $rootScope.disconnect = function() {
-      $cookies.remove('token');
-      $window.location.href = "#/"
-      $window.location.reload();
+    $rootScope.profilePicture = token.profilePicture;
+    $rootScope.disconnect = AuthenticationService.disconnect;
+    if (AuthenticationService.isAuthorized(USER_ROLES.Developer)) {
+      $rootScope.devMenu = true;
+      $rootScope.registerDev = false;
+    } else {
+      $rootScope.devMenu = false;
+      $rootScope.registerDev = true;
     }
   } else {
-    $rootScope.accountHref = '#/connexion'
     $rootScope.onlineMenu = false;
     $rootScope.offlineMenu = true;
+    $rootScope.devMenu = false;
   }
 
   $http.get(url + '/api/applications/state/1').then(function(response) {
@@ -57,9 +33,6 @@ website.controller('mainController', function($scope, $rootScope, $http, $window
 
       return parseFloat(ratingB) - parseFloat(ratingA);
     });
-
-    console.log($scope.data);
-
 
     }, function(error){
       console.debug("Failure while fetching applications' list.");
@@ -97,6 +70,4 @@ website.controller('carouselController', function($scope) {
       id: 2
     }
   ];
-
-  console.log("Controller Main");
 })

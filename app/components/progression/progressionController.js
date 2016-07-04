@@ -1,11 +1,14 @@
-website.controller('progressionController', function($scope, $http, $window, $cookies) {
-  if ($window.localStorage.getItem('token') !== null) {
-      //create route and treat data
-  } else if ($cookies.get('token') !== undefined) {
-      //create route and treat data
-  } else {
-    $window.location.href = "#/404"
-  }
-
-  console.log("Controller Progression");
+website.controller('progressionController', function($scope, $rootScope, token, AuthenticationService, USER_ROLES) {
+    $rootScope.filterMenu = false;
+    $rootScope.onlineMenu = true;
+    $rootScope.offlineMenu = false;
+    $rootScope.profilePicture = token.profilePicture;
+    $rootScope.disconnect = AuthenticationService.disconnect;
+    if (AuthenticationService.isAuthorized(USER_ROLES.Developer)) {
+      $rootScope.devMenu = true;
+      $rootScope.registerDev = false;
+    } else {
+      $rootScope.devMenu = false;
+      $rootScope.registerDev = true;
+    }
 });
