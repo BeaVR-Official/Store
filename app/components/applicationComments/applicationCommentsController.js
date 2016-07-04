@@ -1,4 +1,4 @@
-website.controller('applicationCommentsController', function($scope, $http, $routeParams){
+website.controller('applicationCommentsController', function($scope, $http, $routeParams, AuthenticationService){
 
     /* Liste of comments after the application of the filter. */
     $scope.filteredComments = [];
@@ -10,9 +10,11 @@ website.controller('applicationCommentsController', function($scope, $http, $rou
     $scope.loading;
     var returnMessageDiv = angular.element(document.querySelector('#returnMessage'));
 
+    $scope.userInfos = AuthenticationService.getToken();
+
     /* Data used when adding a comment */
     $scope.addCommentData = {
-      author : 1,
+      author : $scope.userInfos.id,
       title : '',
       comment : '',
       rating : 3,
@@ -36,46 +38,66 @@ website.controller('applicationCommentsController', function($scope, $http, $rou
       console.debug("Failure while fetching applications' list.");
     });
 
-    $http.post(url + '/api/comments/hasCommented/' + $routeParams.idApplication, { idAuthor : 1 }).success(function(result) {
-        if (result.Error == false) {
-          $scope.hasCommented = true;
-          $scope.oldComment = result.Comment;
+    $scope.checkHasCommented = function() {
 
-          console.log(result.Comment);
+      $http.post(url + '/api/comments/hasCommented/' + $routeParams.idApplication, { idAuthor : $scope.userInfos.id }).success(function(result) {
+        console.log(result);
+          if (result.Error == false) {
+            $scope.hasCommented = true;
+            $scope.oldComment = result.Comment;
 
-          $scope.addCommentData = {
-            idComment : $scope.oldComment.idComment,
-            author : $scope.oldComment.author,
-            title : $scope.oldComment.title,
-            comment : $scope.oldComment.comment,
-            rating : $scope.oldComment.rating,
-            application : $scope.oldComment.application,
+            $scope.addCommentData = {
+              idComment : $scope.oldComment.idComment,
+              author : $scope.oldComment.author,
+              title : $scope.oldComment.title,
+              comment : $scope.oldComment.comment,
+              rating : $scope.oldComment.rating,
+              application : $scope.oldComment.application,
+            }
+
+            $('#input-21b').rating('update', $scope.oldComment.rating);
+
+          } else {
+            switch (result.Code)
+            {
+              case 102:
+                $("#addCommentForm button").each(function() {
+                  $(this).prop('disabled', true);
+                });
+                $scope.returnMessage = errorMessage["HAS_COMMENTED"];
+                returnMessageDiv.addClass("error-message"); 
+                break;
+              case 103:
+                $scope.hasCommented = false;
+                break;
+            }
           }
+      }).error(function(result) {
+          $("#addCommentForm button").each(function() {
+            $(this).prop('disabled', true);
+          });
+          $scope.returnMessage = errorMessage["HAS_COMMENTED"];
+          returnMessageDiv.addClass("error-message"); 
+      });
 
-          $('#input-21b').rating('update', $scope.oldComment.rating);
+    }
 
-        } else {
-          switch (result.Code)
-          {
-            case 102:
-              //Disable le boutton et afficher un msg d'erreur
-              break;
-            case 103:
-              hasCommented = false;
-              break;
-          }
-        }
-    }).error(function(result) {
-        //Disable le boutton et afficher un msg d'erreur
-    });
+    $scope.checkHasCommented();
 
-    $http.get(url + '/api/comments/' + $routeParams.idApplication).then(function(response){
-      $scope.comments = response.data.Comments;
-      $scope.filteredComments = response.data.Comments;
-      updateFilteredItems();
-    }, function(error){
-      console.debug("Failure while fetching comments' list.");
-    });
+    $scope.getAllComments = function() {
+
+      $http.get(url + '/api/comments/' + $routeParams.idApplication).then(function(response){
+        $scope.comments = response.data.Comments;
+
+        $scope.filteredComments = response.data.Comments;
+        updateFilteredItems();
+      }, function(error){
+        console.debug("Failure while fetching comments' list.");
+      });
+
+    }
+
+    $scope.getAllComments();
 
     /* Add Comment */
 
@@ -91,8 +113,6 @@ website.controller('applicationCommentsController', function($scope, $http, $rou
 
     $scope.addCommentAction = function() {
 
-      console.log($scope.addCommentData);
-
         var data = {
          title : $scope.addCommentData.title,
          comment : $scope.addCommentData.comment,
@@ -107,9 +127,11 @@ website.controller('applicationCommentsController', function($scope, $http, $rou
              .success(function(result) {
                  if (result.Error == false) {
                    
-                   $scope.hasCommented = true;
+                   $scope.checkHasCommented();
                    $scope.returnMessage = successMessage["ADD_COMMENT"];
                    returnMessageDiv.addClass("success-message"); 
+                   $scope.getAllComments();
+                   $scope.appInfos.nbComments += 1;
 
                    setTimeout(function() {
                       $('#addComment').collapse('hide');
@@ -155,6 +177,7 @@ website.controller('applicationCommentsController', function($scope, $http, $rou
                  if (result.Error == false) {
                    $scope.returnMessage = successMessage["EDIT_COMMENT"];
                    returnMessageDiv.addClass("success-message"); 
+                   $scope.getAllComments();
 
                    setTimeout(function() {
                       $('#addComment').collapse('hide');
@@ -169,7 +192,7 @@ website.controller('applicationCommentsController', function($scope, $http, $rou
                       break;
                    }
                  }
-
+                  console.log(result);
                  $scope.loading = false;
 
               })
