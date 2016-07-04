@@ -1,0 +1,295 @@
+<!-- Star Rating Bootstrap -->
+<link rel="stylesheet" href="assets/css/star-rating.css" media="all" type="text/css"/>
+<script src="assets/js/star-rating.js" type="text/javascript"></script>
+
+<style>
+
+       .error-message {
+       text-align:center;
+       color:#e85a5a;
+       font-size:15px;
+       font-weight:bold;
+       line-height:30px;
+     }
+ 
+     .success-message {
+       text-align:center;
+       color:#1BB2BD;
+       font-size:15px;
+       font-weight:bold;
+       line-height:30px
+     }
+
+.media-body .media-heading {
+  color:#32a9ad;
+  font-weight:bold;
+  font-size:22px;
+}
+.cadre-images {
+  border:2px solid #32a9ad;
+}
+
+.page-part-title {
+  font-size:20px;
+  font-weight:bold;
+}
+
+.date-publication {
+  font-weight:bold;
+}
+
+.description-application {
+  font-size:14px;
+}
+
+.well {
+  height:auto;
+}
+
+.profile-picture {
+  max-height:120px;
+  max-width:120px;
+  margin:0 auto;
+}
+
+.left-part-appInfos {
+  min-width:150px;
+  float:left;
+}
+
+.left-part-comment {
+    min-width:180px;
+    float:left;
+}
+
+ .glyphicon-star,
+ .glyphicon-star-empty,
+ .ratings {
+    color:#32a9ad;
+    margin-right: 5px;
+    min-height: 25px;
+    text-shadow:none;
+  }
+
+  .ratings-last-child {
+    margin-right:1px;
+  }
+
+  .app-rating-last-child {
+    margin-right:0px;
+  }
+
+  .app-rating-first-child {
+    margin-left:5px;
+  }
+
+  .app-infos {
+    max-width:120px;
+  }
+
+.comment-header {
+  display:inline-block;
+  width:100%;
+}
+
+.author-name {
+  float:right;
+  line-height:25px;
+}
+
+.title-comment {
+  float:left;
+}
+
+  .comment-infos {
+      max-width:150px;
+  }
+
+  #comment-rating {
+    margin: 10px auto 0  auto;
+    text-align:center;
+    font-size:15px;
+  }
+  #app-rating .glyphicon {
+    font-size:15px;
+    line-height:22px;
+    vertical-align:middle;
+  }
+
+  .back-app-link {
+      float:right;
+      font-size:15px;
+  }
+
+  #comments-section {
+    width:100%;
+  }
+
+  #pagination {
+    text-align:center;
+    font-size:15px;
+  }
+
+  #pagination a {
+    color: #32a9ad;
+    background-color: #f5f5f5;
+    border: 1px solid #32a9ad;
+  }
+
+  .pagination > .active > a,
+  .pagination > .active > span,
+  .pagination > .active > a:hover,
+  .pagination > .active > span:hover,
+  .pagination > .active > a:focus,
+  .pagination > .active > span:focus {
+    color:white !important;
+    background-color: #32a9ad !important;
+  }
+
+  .selectedFilter {
+    color:#32a9ad;
+    font-weight:bold;
+  }
+
+  .btn-filter:focus,
+  .btn-filter:active,
+  .btn-filter:hover,
+  .btn-filter {
+    border: 1px solid #32a9ad;
+    background-color: #f5f5f5;
+  }
+
+  #filter-dropdown {
+    margin-bottom:10px;
+    text-align:right;
+  }
+
+  #addCommentForm {
+    padding:20px;
+  }
+
+  #addCommentForm .form-group:last-child {
+    text-align:right;
+    margin-bottom: 0px;
+  }
+
+  .clear-rating {
+    opacity:0;
+    padding-right:0px !important;
+    width:10px;
+  }
+
+  .rating-container .filled-stars {
+    -webkit-text-stroke: 0px !important;
+  }
+
+</style>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div id="container">
+    <div class="container">
+      <div class="well">
+          <div class="media">
+            <div class="left-part-appInfos">
+              <div class="app-infos">
+                <img class="media-object cadre-images profile-picture" ng-src="{{ appInfos.logo }}" style="width: 150px; height: 150px;">
+              </div>
+      		  </div>
+      		<div class="media-body">
+                <h4 class="media-heading">{{appInfos.name }}</h4>
+                <br>
+                <p class="text-left"><b>Publiée le :</b> {{appInfos.creationDate | date:'dd/MM/yyyy'}}</p>
+                <p class="text-left"><b>Développée par :</b> {{ appInfos.authorName }}</p>
+                <div id="app-rating">
+                    <p class="text-left"><b>Note moyenne : </b>
+                        <span ng-show="appInfos.avgRating != null" ng-repeat="t in getRating(appInfos.avgRating) track by $index" ng-class="{'app-rating-last-child':$last, 'app-rating-first-child':$first}" class="glyphicon glyphicon-star"></span>
+                        <span ng-show="appInfos.avgRating != null" ng-repeat="t in getRating(5 - appInfos.avgRating) track by $index" class="glyphicon glyphicon-star-empty"></span>
+                    </p>
+                </div>
+           </div>
+        </div>
+      </div>
+      <button class="btn btn-beavr" ng-show="hasCommented == false" type="button" data-toggle="collapse" data-target="#addComment" aria-expanded="false" aria-controls="collapseExample">Ajouter un commentaire</button>
+      <button class="btn btn-beavr" ng-show="hasCommented == true" type="button" data-toggle="collapse" data-target="#addComment" aria-expanded="false" aria-controls="collapseExample">Modifier son commentaire</button>
+      <a class="text-right back-app-link" ng-href="#/applications/details/{{ appInfos.id }}"><span class="glyphicon glyphicon-chevron-left"></span> Retour à l'application</a>
+    </div>
+    </div> 
+  </div>
+</div>
+
+<div id="comments-section">
+
+  <div class="collapse" id="addComment">
+    <div class="panel panel-default">
+      <form id="addCommentForm" name="addCommentForm" role="form">
+          <div class="form-group">
+              <label for="title">Titre</label>
+              <input type="text" ng-model="addCommentData.title" id="title" placeholder="Titre de votre commentaire" class="form-control"/>
+          </div>
+          <div class="form-group">
+            <label for="rating">Note</label>
+            <input id="input-21b" name="rating" value="3" class="rating" data-show-caption="false"  type="number" min=0 max=5 step=1>
+          </div>
+          <div class="form-group">
+              <label for="comment">Commentaire</label>
+              <textarea id="comment" ng-model="addCommentData.comment" style="resize:none" rows="8" placeholder="Contenu de votre commentaire" class="form-control"></textarea>
+          </div>
+          <div class="form-group row">
+              <div class="col-sm-10">
+                <div id="returnMessage" class="pull-left success-message">{{returnMessage}}</div>
+              </div>
+              <div class="col-sm-2">
+              <button type="submit" ng-show="hasCommented == false" ng-click="addCommentAction()" class="btn btn-secondary btn-beavr">Ajouter<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+              <button class="btn btn-secondary btn-beavr .col-xs-6 .col-md-4" type="submit" ng-show="hasCommented == true" ng-click="editCommentAction()">Modifier<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+            </div>
+          </div>
+      </form>
+    </div>
+  </div>
+
+  <h3>{{ appInfos.nbComments > 0 ? 'Tous les commentaires (' + appInfos.nbComments + ')' : 'Aucun commentaire pour cette application' }}</h3>
+
+  <div class="dropdown" id="filter-dropdown">
+    <button class="btn btn-default dropdown-toggle btn-filter" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      Filtrer
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+      <li ng-repeat="filter in commentFilters"><a href="" ng-click="filterSelected(filter)"><span ng-class="filter == commentFilters[selectedFilter] ? 'selectedFilter' : ''">{{ filter }}</span></a></li>
+    </ul>
+</div>
+
+  <div id="container" ng-repeat="commentInfos in filteredComments | orderBy : orderByFilters[selectedFilter] : reverseFilters[selectedFilter]">
+    <div class="well">
+        <div class="media">
+          <div class="left-part-comment">
+            <div class="comment-infos">
+              <img class="media-object cadre-images profile-picture" ng-src="{{ commentInfos.profilePicture }}">
+              <div id="comment-rating">
+                  <span ng-show="commentInfos.rating != null" ng-repeat="t in getRating(commentInfos.rating) track by $index" ng-class="{'ratings-last-child':$last}" class="glyphicon glyphicon-star"></span>
+                  <span ng-show="commentInfos.rating != null" ng-repeat="t in getRating(5 - commentInfos.rating) track by $index" class="glyphicon glyphicon-star-empty"></span>
+              </div>
+            </div>
+          </div>
+        <div class="media-body">
+          <div class="comment-header">
+            <h4 class="media-heading title-comment"> {{ commentInfos.title }}</h4>
+            <p class="text-right author-name">Par <span style="font-weight:bold">{{commentInfos.pseudo == null ? 'Anonyme' : commentInfos.pseudo}}</span></p>
+          </div>
+            <p>
+              {{ commentInfos.comment }}
+            </p>
+            <ul class="list-inline list-unstyled">
+                <li><span><i class="glyphicon glyphicon-calendar"></i> {{ commentInfos.date | date:'dd/MM/yyyy hh:mm'}}</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="pagination" ng-show="comments.length > numPerPage">
+    <uib-pagination first-text="Première" previous-text="Précédente" next-text="Suivante" last-text="Dernière" class="pagination-style" total-items="comments.length"
+    ng-model="currentPage" max-size="maxSize" items-per-page="numPerPage" boundary-links="true" />
+  </div>
+</div>
+
