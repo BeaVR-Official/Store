@@ -1,4 +1,6 @@
-var url = "http://beavr-api.herokuapp.com";
+//var url = "http://beavr-api.herokuapp.com";
+
+var url = "http://localhost:3000";
 
 var website = angular.module('website', ['ngRoute', 'ngAnimate', 'ngCookies', 'ngMessages', 'ui.bootstrap']);
 
@@ -24,3 +26,9 @@ var successMessage = {
  	"MDPOUBLIE" : "Un nouveau mot de passe va vous être envoyé par mail d'ici quelques minutes.",
  	"FEEDBACK" : "Votre feedback nous a correctement été transmis. L'équipe BeaVR vous remercie !"
 };
+
+website.filter('iif', function () {
+   return function(input, trueValue, falseValue) {
+        return input ? trueValue : falseValue;
+   };
+});

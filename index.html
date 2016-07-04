@@ -29,31 +29,31 @@
     <![endif]-->
 
      <style>
- 
+
      .checkbox {
          float: left;
          margin-right: 5px !important;
      }
- 
+
      .no-error input,
      .no-error input:focus {
        border-bottom: 2px solid #1BB2BD;
      }
- 
+
      .error-message {
        text-align:center;
        color:#e85a5a;
        font-size:15px;
        font-weight:bold;
      }
- 
+
      .success-message {
        text-align:center;
        color:#1BB2BD;
        font-size:15px;
        font-weight:bold;
      }
- 
+
      .glyphicon.spinning {
          animation: spin 2s infinite linear;
          -webkit-animation: spin2 2s infinite linear;
@@ -74,7 +74,7 @@
              -webkit-transform: rotate(360deg);
          }
      }
- 
+
      </style>
 
 </head>
@@ -133,9 +133,8 @@
                   <a href="#" class="list-group-item"><img src="assets/img/icons/medecine.png">Médecine</a>
                 </div>
                 <div class="list-group">
-                  <a href="#" class="list-group-item"><img src="assets/img/icons/billets.png">Payants</a>
+                  <a href="#" class="list-group-item"><img src="assets/img/icons/billets.png">Payantes</a>
                   <a href="#" class="list-group-item"><img src="assets/img/icons/free.png">Gratuites</a>
-                  <a href="#" class="list-group-item"><img src="assets/img/icons/appStore.png">Freemium</a>
                 </div>
             </div>
 
@@ -199,6 +198,7 @@
     <script src="app/components/resetPassword/resetPasswordController.js"></script>
     <script src="app/components/404/404Controller.js"></script>
     <script src="app/components/feedback/feedbackController.js"></script>
+    <script src="app/components/payment/paymentController.js"></script>
 
     <!-- jQuery -->
     <script src="assets/js/jquery.js"></script>
@@ -260,7 +260,7 @@
                          <label for="recontact">J'accepte d'être recontacté suite à mon feedback</label>
                          <button type="submit" class="btn btn-secondary btn-beavr" style="float:right" ng-click="feedbackAction()">Envoyer<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
                      </div>
- 
+
                  </form>
              </div>
          </div>

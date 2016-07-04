@@ -60,7 +60,7 @@
 
   <h4 class="media-heading page-part-title">Informations</h4>
   <br />
-    
+
     <div id="container">
     <div class="container">
       <div class="well">
@@ -70,20 +70,31 @@
       		  </a>
       		<div class="media-body">
         		<h4 class="media-heading">{{appInfos.name }}</h4>
-              <p class="text-right date-publication">Publiée le : {{appInfos.creationDate | date:'dd/MM/yyyy'}}</p>
+              <p class="text-right date-publication">Publiée le : {{ appInfos.creationDate | date:'dd/MM/yyyy'}}</p>
               <p class="description-application">
                 {{ appInfos.description }}
               </p>
               <p class="text-left"><b>Développée par :</b> {{ appInfos.authorName }}</p>
-
-              <!--<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                <input type="hidden" name="cmd" value="_s-xclick">
-                <input type="hidden" name="hosted_button_id" value="ZPQUF3AFKYDUC">
-                <input type="image" src="https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_buynow_SM.gif" border="0" name="submit" alt="PayPal, le réflexe sécurité pour payer en ligne">
-                <img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
-              </form>-->
-
-             <p class="text-right"><button type="button" class="btn btn-secondary btn-beavr btn-lg">{{ appInfos.price }}€</button></p>
+              <span ng-if="paymentType" class="animate-if">
+                  <p class="text-right"><button type="button" class="btn btn-secondary btn-beavr btn-lg" ng-click="checkPriceAction()">{{ appInfos.price == "0" | iif : "Gratuite" : appInfos.price + "€" }}</button></p>
+              </span>
+              <span ng-if="!paymentType" class="animate-if">
+                <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                <input type="hidden" name="cmd" value="_xclick">
+                <input type="hidden" name="business" value="napsters.desmars@gmail.com">
+                <input type="hidden" name="lc" value="US">
+                <input type="hidden" name="item_name" value="{{ appInfos.name }}">
+                <input type="hidden" name="amount" value="{{ appInfos.price }}">
+                <input type="hidden" name="currency_code" value="USD">
+                <input type="hidden" name="button_subtype" value="services">
+                <input type="hidden" name="no_note" value="0">
+                <input type="hidden" name="tax_rate" value="0.00">
+                <input type="hidden" name="shipping" value="0.00">
+                <input type="hidden" value="http://localhost:8888/BeaVRStore/BeaVRWebStore/#/" name="return">
+                <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHostedGuest">
+                <p class="text-right"><input class="btn btn-secondary btn-beavr btn-lg" type="image" src="" border="0" name="submit" alt=""></p>
+                </form>
+              </span>
            </div>
         </div>
       </div>

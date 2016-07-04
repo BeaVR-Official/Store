@@ -40,12 +40,12 @@ website.config(function($routeProvider){
                 templateUrl : 'app/components/offline/offline.html',
                 controller  : 'offlineController'
             })
-            
+
             .when('/resetPassword', {
                 templateUrl : 'app/components/resetPassword/resetPassword.html',
                 controller  : 'resetPasswordController'
             })
-            
+
             .when('/404', {
                 templateUrl : 'app/components/404/404.html',
                 controller  : '404Controller'
@@ -55,6 +55,17 @@ website.config(function($routeProvider){
                 templateUrl : 'pages/usersEdit.html',
                 controller  : 'usersEditController'
             })
+
+            .when('/payment', {
+                templateUrl : 'app/components/payment/payment.html',
+                controller  : 'paymentController'
+            })
+
+            .when('/addToLibrary', {
+                templateUrl : 'app/components/payment/payment.html',
+                controller  : 'paymentController'
+            })
+
             .otherwise({
                 redirectTo: '/404'
             });
