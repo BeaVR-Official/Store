@@ -194,7 +194,7 @@
                 {{ commentInfos.comment }}
               </p>
               <ul class="list-inline list-unstyled">
-                  <li><span><i class="glyphicon glyphicon-calendar"></i> {{ commentInfos.date | date:'dd/MM/yyyy hh:mm'}}</span></li>
+                  <li><span><i class="glyphicon glyphicon-calendar"></i> {{ commentInfos.date | date:'dd/MM/yyyy HH:mm' : '+0200' }}</span></li>
             </ul>
           </div>
         </div>

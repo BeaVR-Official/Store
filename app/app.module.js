@@ -120,6 +120,10 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 		return $http.get(url + '/api/comments/' + idApp);
 	}
 
+	authService.getAppInfos = function(idApp) {
+		return $http.get(url + '/api/applications/' + idApp);
+	}
+
 	return authService;
 });
 

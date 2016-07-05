@@ -1,4 +1,4 @@
-website.controller('applicationCommentsController', function($scope, $http, $routeParams, AuthenticationService, token, comments){
+website.controller('applicationCommentsController', function($scope, $http, $routeParams, AuthenticationService, token, appInfos, comments){
 
     /* If the user is connected, then he can add or edit a comment. Otherwise, the button are disabled and hidden. */
     if (token === undefined) {
@@ -48,60 +48,33 @@ website.controller('applicationCommentsController', function($scope, $http, $rou
       application : $routeParams.idApplication
     };
 
-    $http.get(url + '/api/applications/' + $routeParams.idApplication).then(function(response){
-      $scope.appInfos = response.data.Applications;
-    }, function(error){
-      console.debug("Failure while fetching applications' list.");
-    });
+    /* We bind the preloaded data about the informations of the current application */
+    $scope.appInfos = appInfos.data.Applications;
 
     /* Check if the user has already commented this application */
     $scope.checkHasCommented = function() {
 
         /* Get the comment of the user if he already posted one */
         var userComment = $.grep($scope.comments, function(e){ return e.author == $scope.addCommentData.author; });
-        console.log(userComment);
 
-      $http.post(url + '/api/comments/hasCommented/' + $routeParams.idApplication, { idAuthor : $scope.addCommentData.author }).success(function(result) {
+        if (userComment.length > 0) {
+          $scope.hasCommented = true;
+          $scope.oldComment = userComment[0];
 
-
-        
-          if (result.Error == false) {
-            $scope.hasCommented = true;
-            $scope.oldComment = result.Comment;
-
-            $scope.addCommentData = {
-              idComment : $scope.oldComment.idComment,
-              author : $scope.oldComment.author,
-              title : $scope.oldComment.title,
-              comment : $scope.oldComment.comment,
-              rating : $scope.oldComment.rating,
-              application : $scope.oldComment.application,
-            }
-
-            $('#input-21b').rating('update', $scope.oldComment.rating);
-
-          } else {
-            switch (result.Code)
-            {
-              case 102:
-                $("#addCommentForm button").each(function() {
-                  $(this).prop('disabled', true);
-                });
-                $scope.returnMessage = errorMessage["HAS_COMMENTED"];
-                returnMessageDiv.addClass("error-message"); 
-                break;
-              case 103:
-                $scope.hasCommented = false;
-                break;
-            }
+          $scope.addCommentData = {
+            idComment : $scope.oldComment.id,
+            author : $scope.oldComment.author,
+            title : $scope.oldComment.title,
+            comment : $scope.oldComment.comment,
+            rating : $scope.oldComment.rating,
+            application : $scope.oldComment.application,
           }
-      }).error(function(result) {
-          $("#addCommentForm button").each(function() {
-            $(this).prop('disabled', true);
-          });
-          $scope.returnMessage = errorMessage["HAS_COMMENTED"];
-          returnMessageDiv.addClass("error-message"); 
-      });
+          
+          $('#input-21b').rating('update', $scope.oldComment.rating);
+        }
+        else {
+          $scope.hasCommented = false;
+        }
 
     }
 
@@ -137,8 +110,15 @@ website.controller('applicationCommentsController', function($scope, $http, $rou
                    
                    $scope.checkHasCommented();
                    $scope.returnMessage = successMessage["ADD_COMMENT"];
-                   returnMessageDiv.addClass("success-message"); 
-                   $scope.getAllComments();
+                   returnMessageDiv.addClass("success-message");
+
+                   // Add the comment to the list so it can refresh dynamically.
+                   data.date = (new Date ((new Date((new Date(new Date())).toISOString() )).getTime() - ((new Date()).getTimezoneOffset()*60000))).toISOString().slice(0, 19).replace('T', ' ');
+                   data.profilePicture = $scope.userInfos.profilePicture;
+                   $scope.comments.push(data);
+                   $scope.filteredComments = comments.data.Comments;
+                   updateFilteredItems();
+                   
                    $scope.appInfos.nbComments += 1;
 
                    setTimeout(function() {
@@ -185,7 +165,15 @@ website.controller('applicationCommentsController', function($scope, $http, $rou
                  if (result.Error == false) {
                    $scope.returnMessage = successMessage["EDIT_COMMENT"];
                    returnMessageDiv.addClass("success-message"); 
-                   $scope.getAllComments();
+                   
+                   for (var i = 0; i < $scope.comments.length; i++)
+                   {
+                     if ($scope.comments[i].author == $scope.userInfos.id) {
+                       $scope.comments[i].title = data.title;
+                       $scope.comments[i].comment = data.comment;
+                       $scope.comments[i].rating = data.rating;
+                     }
+                   }
 
                    setTimeout(function() {
                       $('#addComment').collapse('hide');
@@ -200,7 +188,7 @@ website.controller('applicationCommentsController', function($scope, $http, $rou
                       break;
                    }
                  }
-                  console.log(result);
+
                  $scope.loading = false;
 
               })

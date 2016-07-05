@@ -59,6 +59,9 @@ website.config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_RO
                             return AuthenticationService.getToken();
                         }
                     },
+                    appInfos : function(AuthenticationService, $window, $route) {
+                        return AuthenticationService.getAppInfos($route.current.params.idApplication)
+                    },
                     comments : function (AuthenticationService, $window, $route) {
                         return AuthenticationService.getComments($route.current.params.idApplication);
                     }
