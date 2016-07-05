@@ -52,7 +52,17 @@ website.config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_RO
 
             .when('/applications/details/:idApplication/comments', {
                 templateUrl : 'app/components/applicationComments/applicationComments.html',
-                controller  : 'applicationCommentsController'
+                controller  : 'applicationCommentsController',
+                resolve     : {
+                    token : function(AuthenticationService, $window) {
+                        if (AuthenticationService.isOffline() || AuthenticationService.isTokenFormatted()) {
+                            return AuthenticationService.getToken();
+                        }
+                    },
+                    comments : function (AuthenticationService, $window, $route) {
+                        return AuthenticationService.getComments($route.current.params.idApplication);
+                    }
+                }
             })
 
             .when('/library', {

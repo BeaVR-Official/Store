@@ -1,36 +1,52 @@
-website.controller('applicationCommentsController', function($scope, $http, $routeParams, AuthenticationService){
+website.controller('applicationCommentsController', function($scope, $http, $routeParams, AuthenticationService, token, comments){
 
-    /* Liste of comments after the application of the filter. */
-    $scope.filteredComments = [];
-
-    /* Variables for the old comment section */
-    $scope.hasCommented;
-    $scope.oldComment = {};
-
-    $scope.loading;
-    var returnMessageDiv = angular.element(document.querySelector('#returnMessage'));
-
-    $scope.userInfos = AuthenticationService.getToken();
-
-    /* Data used when adding a comment */
-    $scope.addCommentData = {
-      author : $scope.userInfos.id,
-      title : '',
-      comment : '',
-      rating : 3,
-      application : $routeParams.idApplication
-    };
+    /* If the user is connected, then he can add or edit a comment. Otherwise, the button are disabled and hidden. */
+    if (token === undefined) {
+      $scope.canComment = false;
+      $("#addCommentForm button").each(function() {
+        $(this).prop('disabled', true);
+      })
+    }
+    else {
+      $scope.canComment = true;
+      $scope.userInfos = token;
+    }
 
     /* Variables used for the pagination. */
     $scope.currentPage = 1;
     $scope.numPerPage = 5;
     $scope.maxSize = 5;
 
+    /* Liste of comments after the application of the filter. */
+    $scope.filteredComments = [];
+    
     /* Variables used for the filtering */
     $scope.commentFilters = ["Par date de publication", "Par note (décroissante)", "Par note (croissante)"];
     $scope.orderByFilters = ['-date', '-rating', '-rating'];
     $scope.reverseFilters = [false, false, true];
     $scope.selectedFilter = 0;
+
+    /* We set the comments with the values we got from the preloading */     
+    $scope.comments = comments.data.Comments;
+    $scope.filteredComments = comments.data.Comments;
+    updateFilteredItems();
+
+    /* Variables for the old comment section */
+    $scope.hasCommented;
+    $scope.oldComment = {};
+
+    /* Loading and stuff */
+    $scope.loading;
+    var returnMessageDiv = angular.element(document.querySelector('#returnMessage'));
+
+    /* Data used when adding a comment */
+    $scope.addCommentData = {
+      author : (token === undefined ? 0 : $scope.userInfos.id),
+      title : '',
+      comment : '',
+      rating : 3,
+      application : $routeParams.idApplication
+    };
 
     $http.get(url + '/api/applications/' + $routeParams.idApplication).then(function(response){
       $scope.appInfos = response.data.Applications;
@@ -38,10 +54,17 @@ website.controller('applicationCommentsController', function($scope, $http, $rou
       console.debug("Failure while fetching applications' list.");
     });
 
+    /* Check if the user has already commented this application */
     $scope.checkHasCommented = function() {
 
-      $http.post(url + '/api/comments/hasCommented/' + $routeParams.idApplication, { idAuthor : $scope.userInfos.id }).success(function(result) {
-        console.log(result);
+        /* Get the comment of the user if he already posted one */
+        var userComment = $.grep($scope.comments, function(e){ return e.author == $scope.addCommentData.author; });
+        console.log(userComment);
+
+      $http.post(url + '/api/comments/hasCommented/' + $routeParams.idApplication, { idAuthor : $scope.addCommentData.author }).success(function(result) {
+
+
+        
           if (result.Error == false) {
             $scope.hasCommented = true;
             $scope.oldComment = result.Comment;
@@ -83,21 +106,6 @@ website.controller('applicationCommentsController', function($scope, $http, $rou
     }
 
     $scope.checkHasCommented();
-
-    $scope.getAllComments = function() {
-
-      $http.get(url + '/api/comments/' + $routeParams.idApplication).then(function(response){
-        $scope.comments = response.data.Comments;
-
-        $scope.filteredComments = response.data.Comments;
-        updateFilteredItems();
-      }, function(error){
-        console.debug("Failure while fetching comments' list.");
-      });
-
-    }
-
-    $scope.getAllComments();
 
     /* Add Comment */
 

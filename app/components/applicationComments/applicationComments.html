@@ -210,8 +210,8 @@
            </div>
         </div>
       </div>
-      <button class="btn btn-beavr" ng-show="hasCommented == false" type="button" data-toggle="collapse" data-target="#addComment" aria-expanded="false" aria-controls="collapseExample">Ajouter un commentaire</button>
-      <button class="btn btn-beavr" ng-show="hasCommented == true" type="button" data-toggle="collapse" data-target="#addComment" aria-expanded="false" aria-controls="collapseExample">Modifier son commentaire</button>
+      <button class="btn btn-beavr" ng-show="hasCommented == false && canComment == true" type="button" data-toggle="collapse" data-target="#addComment" aria-expanded="false" aria-controls="collapseExample">Ajouter un commentaire</button>
+      <button class="btn btn-beavr" ng-show="hasCommented == true && canComment == true" type="button" data-toggle="collapse" data-target="#addComment" aria-expanded="false" aria-controls="collapseExample">Modifier son commentaire</button>
       <a class="text-right back-app-link" ng-href="#/applications/details/{{ appInfos.id }}"><span class="glyphicon glyphicon-chevron-left"></span> Retour à l'application</a>
     </div>
     </div> 

@@ -116,6 +116,10 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 		}
 	}
 
+	authService.getComments = function(idApp) {
+		return $http.get(url + '/api/comments/' + idApp);
+	}
+
 	return authService;
 });
 
