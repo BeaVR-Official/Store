@@ -1,6 +1,7 @@
 website.controller('mainController', function($scope, $rootScope, $http, AuthenticationService, token, USER_ROLES) {
 
   $rootScope.filterMenu = true;
+
   if (token !== undefined) {
     $rootScope.onlineMenu = true;
     $rootScope.offlineMenu = false;
@@ -70,4 +71,24 @@ website.controller('carouselController', function($scope) {
       id: 2
     }
   ];
+})
+
+website.controller('filterController', function($scope, $http) {
+
+    $http.get(url + '/api/devices').success(function(result) {
+        if (result.Error == false) {
+          $scope.devices = result.Devices;
+        } 
+    }).error(function(result) {
+
+    });
+
+    $http.get(url + '/api/categories/categoryTypes').success(function(result) {
+        if (result.Error == false) {
+          $scope.categories = result.Categories;
+        } 
+    }).error(function(result) {
+
+    });
+
 })

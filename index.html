@@ -78,6 +78,16 @@
          }
      }
  
+     #device-list label,
+     #category-list label {
+         padding: 10px 0;
+         font-size: 14px;
+     }
+
+     .list-group {
+         padding-right:0px;
+     }
+
      </style>
 
 </head>
@@ -120,24 +130,29 @@
 
         <div class="row">
 
-            <div id="filterMenu" class="col-md-2" ng-show="filterMenu">
-                <p class="lead">Devices</p>
-                <div class="list-group">
-                  <a href="#" class="list-group-item"><img src="assets/img/icons/steeve.png">Oculus Rift</a>
-                  <a href="#" class="list-group-item"><img src="assets/img/icons/mac.png">Leap Motion</a>
-                  <a href="#" class="list-group-item"><img src="assets/img/icons/si.png">HoloLens</a>
-                  <a href="#" class="list-group-item"><img src="assets/img/icons/robot.png">HTC Vive</a>
+            <div id="filterMenu" class="col-md-2" ng-show="filterMenu" ng-controller="filterController">
+                <div id="device-list" ng-show="devices !== undefined" class="list-group">
+                    <p class="lead">Devices</p>
+                    <div class="btn-group-vertical col-xs-12 list-group" data-toggle="buttons">
+                        <label class="btn btn-default" ng-repeat="device in devices">
+                            <input type="checkbox" id="device.name" value="device.name">{{ device.name }}
+                        </label>
+                    </div>
                 </div>
 
-                <p class="lead">Thèmes</p>
-                <div class="list-group">
-                  <a href="#" class="list-group-item"><img src="assets/img/icons/pi.png">Maths</a>
-                  <a href="#" class="list-group-item"><img src="assets/img/icons/medecine.png">Médecine</a>
+                <div id="category-list" ng-show="categories !== undefined" class="list-group">
+                    <p class="lead">Catégories</p>
+                    <div class="btn-group-vertical col-xs-12 list-group" data-toggle="buttons">
+                        <label class="btn btn-default" ng-repeat="category in categories">
+                            <input type="checkbox" id="category.description" value="category.description">{{ category.description }}
+                        </label>
+                    </div>
                 </div>
-                <div class="list-group">
+
+
+                <div class="btn-group-vertical col-xs-12 list-group">
                   <a href="#" class="list-group-item"><img src="assets/img/icons/billets.png">Payants</a>
                   <a href="#" class="list-group-item"><img src="assets/img/icons/free.png">Gratuites</a>
-                  <a href="#" class="list-group-item"><img src="assets/img/icons/appStore.png">Freemium</a>
                 </div>
             </div>
 
