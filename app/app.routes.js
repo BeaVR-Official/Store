@@ -47,7 +47,15 @@ website.config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_RO
 
             .when('/applications/details/:idApplication', {
                 templateUrl : 'app/components/applicationDetail/applicationDetail.html',
-                controller  : 'applicationDetailController'
+                controller  : 'applicationDetailController',
+                resolve     : {
+                    appInfos : function(AuthenticationService, $window, $route) {
+                        return AuthenticationService.getAppInfos($route.current.params.idApplication)
+                    },
+                    comments : function (AuthenticationService, $window, $route) {
+                        return AuthenticationService.getComments($route.current.params.idApplication, 3);
+                    }
+                }
             })
 
             .when('/applications/details/:idApplication/comments', {

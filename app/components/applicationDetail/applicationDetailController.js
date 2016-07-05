@@ -1,18 +1,7 @@
-website.controller('applicationDetailController', function($scope, $http, $routeParams){
+website.controller('applicationDetailController', function($scope, $http, $routeParams, appInfos, comments){
 
-    var limit = 3;
-
-    $http.get(url + '/api/applications/' + $routeParams.idApplication).then(function(response){
-      $scope.appInfos = response.data.Applications;
-    }, function(error){
-      console.debug("Failure while fetching applications' list.");
-    });
-
-    $http.get(url + '/api/comments/' + $routeParams.idApplication + '/' + limit).then(function(response){
-      $scope.comments = response.data.Comments;
-    }, function(error){
-      console.debug("Failure while fetching comments' list.");
-    });
+    $scope.appInfos = appInfos.data.Applications;
+    $scope.comments = comments.data.Comments;
 
     $scope.getRating = function(n) {
       if (n == null)
