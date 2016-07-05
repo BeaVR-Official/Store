@@ -3,9 +3,6 @@ website.controller('applicationCommentsController', function($scope, $http, $rou
     /* If the user is connected, then he can add or edit a comment. Otherwise, the button are disabled and hidden. */
     if (token === undefined) {
       $scope.canComment = false;
-      $("#addCommentForm button").each(function() {
-        $(this).prop('disabled', true);
-      })
     }
     else {
       $scope.canComment = true;
@@ -36,7 +33,7 @@ website.controller('applicationCommentsController', function($scope, $http, $rou
     $scope.oldComment = {};
 
     /* Loading and stuff */
-    $scope.loading;
+    $scope.loading = false;
     var returnMessageDiv = angular.element(document.querySelector('#returnMessage'));
 
     /* Data used when adding a comment */
@@ -94,110 +91,151 @@ website.controller('applicationCommentsController', function($scope, $http, $rou
 
     $scope.addCommentAction = function() {
 
-        var data = {
-         title : $scope.addCommentData.title,
-         comment : $scope.addCommentData.comment,
-         rating : $scope.addCommentData.rating,
-         author : $scope.addCommentData.author,
-         application : $scope.addCommentData.application
-       };
+        if ($scope.canComment == false) {
+          returnMessageDiv.addClass("error-message");
+          $scope.returnMessage = errorMessage["EDIT_HTML"];
+        }
+        else {
 
-       $scope.loading = true;
+          var data = {
+            title : $scope.addCommentData.title,
+            comment : $scope.addCommentData.comment,
+            rating : $scope.addCommentData.rating,
+            author : $scope.addCommentData.author,
+            application : $scope.addCommentData.application
+          };
 
-       $http.post(url + '/api/comments/' + $routeParams.idApplication, data)
-             .success(function(result) {
-                 if (result.Error == false) {
-                   
-                   $scope.checkHasCommented();
-                   $scope.returnMessage = successMessage["ADD_COMMENT"];
-                   returnMessageDiv.addClass("success-message");
+          $scope.loading = true;
 
-                   // Add the comment to the list so it can refresh dynamically.
-                   data.date = (new Date ((new Date((new Date(new Date())).toISOString() )).getTime() - ((new Date()).getTimezoneOffset()*60000))).toISOString().slice(0, 19).replace('T', ' ');
-                   data.profilePicture = $scope.userInfos.profilePicture;
-                   $scope.comments.push(data);
-                   $scope.filteredComments = comments.data.Comments;
-                   updateFilteredItems();
-                   
-                   $scope.appInfos.nbComments += 1;
+          if (!data.title || data.title.length == 0)
+          {
+            $scope.returnMessage = errorMessage["COMMENT_TITLE"];
+            $scope.loading = false;
+            returnMessageDiv.addClass("error-message");
+          }
+          else if (!data.comment || data.comment.length == 0)
+          {
+            $scope.returnMessage = errorMessage["COMMENT_COMMENT"];    
+            $scope.loading = false;
+            returnMessageDiv.addClass("error-message"); 
+          }
+          else {
+            $http.post(url + '/api/comments/' + $routeParams.idApplication, data)
+                .success(function(result) {
+                    if (result.Error == false) {
+                      
+                      $scope.checkHasCommented();
+                      $scope.returnMessage = successMessage["ADD_COMMENT"];
+                      returnMessageDiv.addClass("success-message");
 
-                   setTimeout(function() {
-                      $('#addComment').collapse('hide');
-                    }, 3000);
+                      // Add the comment to the list so it can refresh dynamically.
+                      data.date = (new Date ((new Date((new Date(new Date())).toISOString() )).getTime() - ((new Date()).getTimezoneOffset()*60000))).toISOString().slice(0, 19).replace('T', ' ');
+                      data.profilePicture = $scope.userInfos.profilePicture;
+                      $scope.comments.push(data);
+                      $scope.filteredComments = comments.data.Comments;
+                      updateFilteredItems();
+                      
+                      $scope.appInfos.nbComments += 1;
 
-                 } else {
-                   switch (result.Code)
-                   {
-                     case 102:
-                      $scope.returnMessage = errorMessage["ADD_COMMENT_102"];
-                      returnMessageDiv.addClass("error-message"); 
-                      break;
-                   }
-                 }
+                      setTimeout(function() {
+                          $('#addComment').collapse('hide');
+                        }, 3000);
 
-                 $scope.loading = false;
+                    } else {
+                      switch (result.Code)
+                      {
+                        case 102:
+                          $scope.returnMessage = errorMessage["ADD_COMMENT_102"];
+                          returnMessageDiv.addClass("error-message"); 
+                          break;
+                      }
+                    }
 
-              })
-             .error(function(result) {
-                $scope.returnMessage = errorMessage["ADD_COMMENT"];
-                returnMessageDiv.addClass("error-message"); 
-                $scope.loading = false;
-         });
+                    $scope.loading = false;
+
+                  })
+                .error(function(result) {
+                    $scope.returnMessage = errorMessage["ADD_COMMENT"];
+                    returnMessageDiv.addClass("error-message"); 
+                    $scope.loading = false;
+            });
+          }
+        }
 
     }
 
     /* Edit a comment */
     $scope.editCommentAction = function() {
 
-        var data = {
-         idComment : $scope.addCommentData.idComment,
-         title : $scope.addCommentData.title,
-         comment : $scope.addCommentData.comment,
-         rating : $scope.addCommentData.rating,
-         author : $scope.addCommentData.author,
-         application : $scope.addCommentData.application
-       };
+        if ($scope.canComment == false) {
+          returnMessageDiv.addClass("error-message");
+          $scope.returnMessage = errorMessage["EDIT_HTML"];
+        }
+        else {
 
-       $scope.loading = true;
+          var data = {
+            idComment : $scope.addCommentData.idComment,
+            title : $scope.addCommentData.title,
+            comment : $scope.addCommentData.comment,
+            rating : $scope.addCommentData.rating,
+            author : $scope.addCommentData.author,
+            application : $scope.addCommentData.application
+          };
 
-       $http.put(url + '/api/comments/' + $scope.addCommentData.idComment, data)
-             .success(function(result) {
-                 if (result.Error == false) {
-                   $scope.returnMessage = successMessage["EDIT_COMMENT"];
-                   returnMessageDiv.addClass("success-message"); 
-                   
-                   for (var i = 0; i < $scope.comments.length; i++)
-                   {
-                     if ($scope.comments[i].author == $scope.userInfos.id) {
-                       $scope.comments[i].title = data.title;
-                       $scope.comments[i].comment = data.comment;
-                       $scope.comments[i].rating = data.rating;
-                     }
-                   }
+          $scope.loading = true;
 
-                   setTimeout(function() {
-                      $('#addComment').collapse('hide');
-                    }, 3000);
+          if (!data.title || data.title.length == 0)
+          {
+            $scope.returnMessage = errorMessage["COMMENT_TITLE"];
+            $scope.loading = false;
+            returnMessageDiv.addClass("error-message");
+          }
+          else if (!data.comment || data.comment.length == 0)
+          {
+            $scope.returnMessage = errorMessage["COMMENT_COMMENT"];    
+            $scope.loading = false;
+            returnMessageDiv.addClass("error-message"); 
+          }
+          else {
+            $http.put(url + '/api/comments/' + $scope.addCommentData.idComment, data)
+                  .success(function(result) {
+                      if (result.Error == false) {
+                        $scope.returnMessage = successMessage["EDIT_COMMENT"];
+                        returnMessageDiv.addClass("success-message"); 
+                        
+                        for (var i = 0; i < $scope.comments.length; i++)
+                        {
+                          if ($scope.comments[i].author == $scope.userInfos.id) {
+                            $scope.comments[i].title = data.title;
+                            $scope.comments[i].comment = data.comment;
+                            $scope.comments[i].rating = data.rating;
+                          }
+                        }
 
-                 } else {
-                   switch (result.Code)
-                   {
-                     case 102:
-                      $scope.returnMessage = errorMessage["EDIT_COMMENT_102"];
+                        setTimeout(function() {
+                            $('#addComment').collapse('hide');
+                          }, 3000);
+
+                      } else {
+                        switch (result.Code)
+                        {
+                          case 102:
+                            $scope.returnMessage = errorMessage["EDIT_COMMENT_102"];
+                            returnMessageDiv.addClass("error-message"); 
+                            break;
+                        }
+                      }
+
+                      $scope.loading = false;
+
+                    })
+                  .error(function(result) {
+                      $scope.returnMessage = errorMessage["EDIT_COMMENT"];
                       returnMessageDiv.addClass("error-message"); 
-                      break;
-                   }
-                 }
-
-                 $scope.loading = false;
-
-              })
-             .error(function(result) {
-                $scope.returnMessage = errorMessage["EDIT_COMMENT"];
-                returnMessageDiv.addClass("error-message"); 
-                $scope.loading = false;
-         });
-
+                      $scope.loading = false;
+              });
+          }
+        }
     }
 
     /* Filtering functions */
