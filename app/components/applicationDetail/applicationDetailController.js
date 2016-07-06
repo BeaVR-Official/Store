@@ -11,7 +11,7 @@ website.controller('applicationDetailController', function($scope, $http, $route
     console.log($scope.test);
     console.log("END TOKEN INFOS");
 
-    
+
     $scope.checkPriceAction = function(){
 
       console.log("checkPriceAction");
@@ -48,9 +48,16 @@ website.controller('applicationDetailController', function($scope, $http, $route
       console.debug("Failure while fetching comments' list.");
     });
 
+
+/*website.controller('applicationDetailController', function($scope, $http, $routeParams, appInfos, comments){
+
+    $scope.appInfos = appInfos.data.Applications;
+    $scope.comments = comments.data.Comments;
+>>>>>>> 9ed0e8bec9597381774fbf5cd8675534789c4436
+
     $scope.getRating = function(n) {
       if (n == null)
         return new Array(0);
       return new Array(n);
-    };
+    };*/
 });

@@ -118,6 +118,18 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 		}
 	}
 
+	authService.getComments = function(idApp) {
+		return $http.get(url + '/api/comments/' + idApp);
+	}
+
+	authService.getComments = function(idApp, limit) {
+		return $http.get(url + '/api/comments/' + idApp + '/' + limit);
+	}
+
+	authService.getAppInfos = function(idApp) {
+		return $http.get(url + '/api/applications/' + idApp);
+	}
+
 	return authService;
 });
 
@@ -152,7 +164,10 @@ var errorMessage = {
 	"EDIT_COMMENT" : "Votre commentaire n'a pas pu être modifié. Réessayez dans quelques instants.",
 	"EDIT_COMMENT_102" : "Une erreur est survenue lors de l'envoi de votre commentaire. Réessayez dans quelques instants.",
 	"ADD_COMMENT" : "Votre commentaire n'a pas pu être ajouté. Réessayez dans quelques instants.",
-	"ADD_COMMENT_102" : "Une erreur est survenue lors de l'envoi de votre commentaire. Réessayez dans quelques instants."
+	"ADD_COMMENT_102" : "Une erreur est survenue lors de l'envoi de votre commentaire. Réessayez dans quelques instants.",
+	"EDIT_HTML" : "Modifier le code de la page pour accéder aux éléments cachés est mal.",
+	"COMMENT_TITLE" : "Le titre de votre commentaire ne peut pas être vide.",
+	"COMMENT_COMMENT" : "Le contenu de votre commentaire ne peut pas être vide."
 };
 
 var successMessage = {
