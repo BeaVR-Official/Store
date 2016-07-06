@@ -78,10 +78,8 @@
          }
      }
 
-     #device-list label,
-     #category-list label {
-         padding: 10px 0;
-         font-size: 14px;
+     #device-list #multi-select-device {
+         width:100%;
      }
 
      .list-group {
@@ -132,33 +130,41 @@
 
             <div id="filterMenu" class="col-md-2" ng-show="filterMenu" ng-controller="filterController">
                 <div id="device-list" ng-show="devices !== undefined" class="list-group">
-                    <p class="lead">Devices</p>
-                    <div class="btn-group-vertical col-xs-12 list-group" data-toggle="buttons">
-                        <label class="btn btn-default" ng-repeat="device in devices">
-                            <input type="checkbox" id="device.name" value="device.name">{{ device.name }}
-                        </label>
+                    <p class="lead">Matériel de RV</p>
+                    <div directive-id="multi-select-device" isteven-multi-select input-model="devices" output-model="filteredDevices"
+                    button-label="name" item-label="name" tick-property="ticked" helper-elements="filter" max-labels="2"
+                    max-height=100px" search-property="name" output-properties="name" translation="localLangDevices" on-item-click="sendDevicesFilter()">
                     </div>
                 </div>
-
+<!--
                 <div id="category-list" ng-show="categories !== undefined" class="list-group">
                     <p class="lead">Catégories</p>
                     <div class="btn-group-vertical col-xs-12 list-group" data-toggle="buttons">
+                        <label class="btn btn-default">
+                            <input type="checkbox" id="Toutes" value="Toutes">Toutes
+                        </label>
                         <label class="btn btn-default" ng-repeat="category in categories">
                             <input type="checkbox" id="category.description" value="category.description">{{ category.description }}
                         </label>
                     </div>
                 </div>
 
-                <!--<div class="list-group">
-                  <a href="#" class="list-group-item"><img src="assets/img/icons/billets.png">Payantes</a>-->
-
-
+                <div id="price-filter-list" class="list-group">
+                    <div class="btn-group-vertical col-xs-12 list-group" data-toggle="buttons">
+                        <label class="btn btn-default">
+                            <input type="checkbox" id="payantes" value="Payantes">Payantes
+                        </label>
+                        <label class="btn btn-default">
+                            <input type="checkbox" id="gratuites" value="Gratuites">Gratuites
+                        </label>
+                    </div>
+                </div>
 
                 <div class="btn-group-vertical col-xs-12 list-group">
                   <a href="#" class="list-group-item"><img src="assets/img/icons/billets.png">Payants</a>
 
                   <a href="#" class="list-group-item"><img src="assets/img/icons/free.png">Gratuites</a>
-                </div>
+                </div>-->
             </div>
 
             <div class="col-md-8 main-column">
@@ -230,6 +236,10 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/ui-bootstrap-tpls-1.3.3.min.js"></script>
+
+    <!-- Filtering stuff -->
+    <link href="assets/css/isteven-multi-select.css" rel="stylesheet">
+    <script src="assets/js/isteven-multi-select.js"></script>
 
 </body>
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

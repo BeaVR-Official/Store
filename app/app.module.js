@@ -1,6 +1,6 @@
 var url = "http://beavr-api.herokuapp.com";
 
-var website = angular.module('website', ['ngRoute', 'ngAnimate', 'ngCookies', 'ngMessages', 'angular-jwt', 'ui.bootstrap']);
+var website = angular.module('website', ['isteven-multi-select', 'ngRoute', 'ngAnimate', 'ngCookies', 'ngMessages', 'angular-jwt', 'ui.bootstrap']);
 
 website.factory('AuthenticationService', function($http, $window, $cookies, jwtHelper) {
 	var authService = {};

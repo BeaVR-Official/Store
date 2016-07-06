@@ -35,6 +35,8 @@ website.controller('mainController', function($scope, $rootScope, $http, Authent
       return parseFloat(ratingB) - parseFloat(ratingA);
     });
 
+    $scope.filteredApplications = angular.copy($scope.data);
+
     }, function(error){
       console.debug("Failure while fetching applications' list.");
   });
@@ -44,6 +46,37 @@ website.controller('mainController', function($scope, $rootScope, $http, Authent
       return new Array(0);
      return new Array(n);
   };
+
+  /*
+  *
+  * Filtering
+  *
+  */
+
+  $scope.$on('filterByDevice', function(event, filteredDevices) {
+    $scope.filteredDevices = filteredDevices;
+    $scope.filterByDevice();
+  })
+
+  $scope.filterByDevice = function() {
+    if ($scope.filteredDevices.length == 0) {
+      $scope.filteredApplications = angular.copy($scope.data);
+    }
+    else {
+      $scope.filteredApplications = angular.copy($scope.data);
+      for (var j = 0; j < $scope.filteredApplications.length; j++) {
+        var compatibleDevices = 0;
+        for (var i = 0; i < $scope.filteredDevices.length; i++) {
+            if ($scope.filteredApplications[j].devicesNames.search($scope.filteredDevices[i].name) != -1)
+              compatibleDevices++;
+        }
+        if (compatibleDevices == 0) {
+          $scope.filteredApplications.splice(j, 1);
+          j--;
+        }
+      }
+    }
+  }
 
 });
 
@@ -73,22 +106,38 @@ website.controller('carouselController', function($scope) {
   ];
 })
 
-website.controller('filterController', function($scope, $http) {
+website.controller('filterController', function($scope, $rootScope, $http) {
 
-    $http.get(url + '/api/devices').success(function(result) {
-        if (result.Error == false) {
-          $scope.devices = result.Devices;
-        } 
-    }).error(function(result) {
+  $http.get(url + '/api/devices').success(function(result) {
+      if (result.Error == false) {
+        $scope.devices = result.Devices;
+        
+      } 
+  }).error(function(result) {
 
-    });
+  });
 
-    $http.get(url + '/api/categories/categoryTypes').success(function(result) {
-        if (result.Error == false) {
-          $scope.categories = result.Categories;
-        } 
-    }).error(function(result) {
 
-    });
+  $http.get(url + '/api/categories/categoryTypes').success(function(result) {
+      if (result.Error == false) {
+        $scope.categories = result.Categories;
+      } 
+  }).error(function(result) {
+
+  });
+
+  $scope.filteredDevices = [];
+
+  $scope.localLangDevices = {
+    selectAll       : "",
+    selectNone      : "",
+    reset           : "",
+    search          : "Rechercher ...",
+    nothingSelected : "Tous les matériels"         //default-label is deprecated and replaced with this.
+  }
+
+  $scope.sendDevicesFilter = function() {
+    $rootScope.$broadcast('filterByDevice', $scope.filteredDevices);
+  }
 
 })
