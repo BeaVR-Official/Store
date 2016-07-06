@@ -23,7 +23,6 @@ website.controller('applicationCommentsController', function($scope, $http, $rou
     $scope.reverseFilters = [false, false, true];
     $scope.selectedFilter = 0;
 
-    /* We set the comments with the values we got from the preloading */     
     $scope.comments = comments.data.Comments;
     $scope.filteredComments = comments.data.Comments;
     updateFilteredItems();
@@ -54,7 +53,7 @@ website.controller('applicationCommentsController', function($scope, $http, $rou
         /* Get the comment of the user if he already posted one */
         var userComment = $.grep($scope.comments, function(e){ return e.author == $scope.addCommentData.author; });
 
-        if (userComment.length > 0) {
+        if (userComment !== undefined && userComment.length > 0) {
           $scope.hasCommented = true;
           $scope.oldComment = userComment[0];
 

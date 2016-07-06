@@ -53,7 +53,7 @@ website.config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_RO
                         return AuthenticationService.getAppInfos($route.current.params.idApplication)
                     },
                     comments : function (AuthenticationService, $window, $route) {
-                        return AuthenticationService.getComments($route.current.params.idApplication, 3);
+                        return AuthenticationService.getCommentsLimit($route.current.params.idApplication, 3);
                     }
                 }
             })

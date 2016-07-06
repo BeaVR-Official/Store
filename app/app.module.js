@@ -120,7 +120,7 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 		return $http.get(url + '/api/comments/' + idApp);
 	}
 
-	authService.getComments = function(idApp, limit) {
+	authService.getCommentsLimit = function(idApp, limit) {
 		return $http.get(url + '/api/comments/' + idApp + '/' + limit);
 	}
 

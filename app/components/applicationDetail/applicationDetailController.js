@@ -1,9 +1,16 @@
-website.controller('applicationDetailController', function($scope, $http, $routeParams, $location, AuthenticationService, $cookies){
+website.controller('applicationDetailController', function($scope, $http, $routeParams, $location, AuthenticationService, $cookies, appInfos, comments){
 
     var limit = 3;
 
     $scope.paymentType = false;
     $scope.isConnected = !(AuthenticationService.isOffline());
+
+    $scope.appInfos = appInfos.data.Applications;
+    if ($scope.appInfos.price == "0")
+      $scope.paymentType = true;
+    $cookies.put('id', $scope.appInfos.id);
+
+    $scope.comments = comments.data.Comments;
 
     $scope.test = AuthenticationService.getToken();
 
@@ -26,38 +33,9 @@ website.controller('applicationDetailController', function($scope, $http, $route
       }
     };
 
-    $http.get(url + '/api/applications/' + $routeParams.idApplication).then(function(response){
-
-      $scope.appInfos = response.data.Applications;
-
-      console.log($scope.appInfos);
-
-      if ($scope.appInfos.price == "0")
-        $scope.paymentType = true;
-
-        	$cookies.put('id', $scope.appInfos.id);
-
-    }, function(error){
-      console.debug("Failure while fetching applications' list.");
-    });
-
-
-    $http.get(url + '/api/comments/' + $routeParams.idApplication + '/' + limit).then(function(response){
-      $scope.comments = response.data.Comments;
-    }, function(error){
-      console.debug("Failure while fetching comments' list.");
-    });
-
-
-/*website.controller('applicationDetailController', function($scope, $http, $routeParams, appInfos, comments){
-
-    $scope.appInfos = appInfos.data.Applications;
-    $scope.comments = comments.data.Comments;
->>>>>>> 9ed0e8bec9597381774fbf5cd8675534789c4436
-
     $scope.getRating = function(n) {
       if (n == null)
         return new Array(0);
       return new Array(n);
-    };*/
+    };
 });
