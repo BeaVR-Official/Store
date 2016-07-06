@@ -45,9 +45,14 @@ website.config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_RO
                 }
             })
 
-            .when('/applications/details/:idApplications', {
+            .when('/applications/details/:idApplication', {
                 templateUrl : 'app/components/applicationDetail/applicationDetail.html',
-                controller  : 'applicationDetailController',
+                controller  : 'applicationDetailController'
+            })
+
+            .when('/applications/details/:idApplication/comments', {
+                templateUrl : 'app/components/applicationComments/applicationComments.html',
+                controller  : 'applicationCommentsController'
             })
 
             .when('/library', {

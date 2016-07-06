@@ -1,9 +1,17 @@
-website.controller('applicationDetailController', function($scope, $http, $routeParams, $location){
+website.controller('applicationDetailController', function($scope, $http, $routeParams, $location, AuthenticationService, $cookies){
 
     var limit = 3;
 
     $scope.paymentType = false;
+    $scope.isConnected = !(AuthenticationService.isOffline());
 
+    $scope.test = AuthenticationService.getToken();
+
+    console.log("TOKEN INFOS ");
+    console.log($scope.test);
+    console.log("END TOKEN INFOS");
+
+    
     $scope.checkPriceAction = function(){
 
       console.log("checkPriceAction");
@@ -12,15 +20,13 @@ website.controller('applicationDetailController', function($scope, $http, $route
 
         console.log("L'application est free");
 
-        //Faire l'appel d'api qui va add directement à la librairie
-
-      } else {
+      }else {
         console.log("il faut payer");
         $location.path('/payment');
       }
     };
 
-    $http.get(url + '/api/applications/' + $routeParams.idApplications).then(function(response){
+    $http.get(url + '/api/applications/' + $routeParams.idApplication).then(function(response){
 
       $scope.appInfos = response.data.Applications;
 
@@ -28,13 +34,15 @@ website.controller('applicationDetailController', function($scope, $http, $route
 
       if ($scope.appInfos.price == "0")
         $scope.paymentType = true;
-      console.log($scope.appInfos);
+
+        	$cookies.put('id', $scope.appInfos.id);
 
     }, function(error){
       console.debug("Failure while fetching applications' list.");
     });
 
-    $http.get(url + '/api/comments/' + $routeParams.idApplications + '/' + limit).then(function(response){
+
+    $http.get(url + '/api/comments/' + $routeParams.idApplication + '/' + limit).then(function(response){
       $scope.comments = response.data.Comments;
     }, function(error){
       console.debug("Failure while fetching comments' list.");
