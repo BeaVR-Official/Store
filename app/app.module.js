@@ -1,6 +1,4 @@
-//var url = "http://beavr-api.herokuapp.com";
-
-var url = "http://localhost:3000";
+var url = "http://beavr-api.herokuapp.com";
 
 var website = angular.module('website', ['ngRoute', 'ngAnimate', 'ngCookies', 'ngMessages', 'angular-jwt', 'ui.bootstrap']);
 
