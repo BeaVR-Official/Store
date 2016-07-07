@@ -79,17 +79,20 @@
      }
 
      #device-list #multi-select-device,
-     #category-list #multi-select-category {
+     #category-list #multi-select-category,
+     #price-list #single-select-price {
          width:100%;
      }
 
      #device-list .multiSelect .multiSelectItem,
-     #category-list .multiSelect .multiSelectItem {
+     #category-list .multiSelect .multiSelectItem,
+     #price-list .multiSelect .multiSelectItem {
          min-width:100%;
      }
         
     #device-list .multiSelect .checkboxLayer,
-    #category-list .multiSelect .checkboxLayer {
+    #category-list .multiSelect .checkboxLayer,
+    #price-list .multiSelect .checkboxLayer {
          position:relative;
      }
 
@@ -155,29 +158,15 @@
                     max-height=100px" search-property="name" output-properties="name" translation="localLangCategories" on-item-click="sendFilters()">
                     </div>
                 </div>
-<!--
-                <div id="category-list" ng-show="categories !== undefined" class="list-group">
-                    <p class="lead">Catégories</p>
-                    <div class="btn-group-vertical col-xs-12 list-group" data-toggle="buttons">
-                        <label class="btn btn-default">
-                            <input type="checkbox" id="Toutes" value="Toutes">Toutes
-                        </label>
-                        <label class="btn btn-default" ng-repeat="category in categories">
-                            <input type="checkbox" id="category.description" value="category.description">{{ category.description }}
-                        </label>
-                    </div>
-                </div>
 
-                <div id="price-filter-list" class="list-group">
-                    <div class="btn-group-vertical col-xs-12 list-group" data-toggle="buttons">
-                        <label class="btn btn-default">
-                            <input type="checkbox" id="payantes" value="Payantes">Payantes
-                        </label>
-                        <label class="btn btn-default">
-                            <input type="checkbox" id="gratuites" value="Gratuites">Gratuites
-                        </label>
+                <div id="price-list" ng-show="prices !== undefined" class="list-group">
+                    <p class="lead">Prix</p>
+                    <div directive-id="single-select-price" isteven-multi-select input-model="prices" output-model="filteredPrice"
+                    button-label="name" item-label="name" tick-property="ticked" helper-elements="" max-labels="2" selection-mode="single"
+                    max-height=100px" output-properties="name priceFilter" translation="localLangPrices" on-item-click="sendFilters()">
                     </div>
                 </div>
+<!--
 
                 <div class="btn-group-vertical col-xs-12 list-group">
                   <a href="#" class="list-group-item"><img src="assets/img/icons/billets.png">Payants</a>

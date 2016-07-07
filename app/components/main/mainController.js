@@ -52,16 +52,25 @@ website.controller('mainController', function($scope, $rootScope, $http, Authent
   * Filtering
   *
   */
-  $scope.$on('filters', function(event, filteredDevices, filteredCategories) {
+  $scope.$on('filters', function(event, filteredDevices, filteredCategories, filterPrice) {
     $scope.filteredDevices = filteredDevices;
     $scope.filteredCategories = filteredCategories;
-
+    $scope.filterPrice = filterPrice;
     $scope.applyFilters();
   })
 
   $scope.applyFilters = function() {
     if ($scope.filteredDevices.length == 0 && $scope.filteredCategories.length == 0) {
       $scope.filteredApplications = angular.copy($scope.data);
+      for (var j = 0; j < $scope.filteredApplications.length; j++) {
+        var compatibleDevices = 0;
+        if ($scope.checkPriceFilter($scope.filteredApplications[j].price, $scope.filterPrice.priceFilter) == true)
+          compatibleDevices++;
+        if (compatibleDevices == 0) {
+          $scope.filteredApplications.splice(j, 1);
+          j--;
+        }
+      }
     }
     else {
       $scope.filteredApplications = angular.copy($scope.data);
@@ -70,16 +79,34 @@ website.controller('mainController', function($scope, $rootScope, $http, Authent
         var compatibleDevices = 0;
         for (var i = 0; i < $scope.filteredDevices.length; i++)
             if ($scope.filteredApplications[j].devicesNames.search($scope.filteredDevices[i].name) != -1)
-              compatibleDevices++;
+              if ($scope.checkPriceFilter($scope.filteredApplications[j].price, $scope.filterPrice.priceFilter) == true)
+                compatibleDevices++;
         for (var k = 0; k < $scope.filteredCategories.length; k++)
           if ($scope.filteredApplications[j].categoriesNames.search($scope.filteredCategories[k].name) != -1)
-            compatibleDevices++;
+            if ($scope.checkPriceFilter($scope.filteredApplications[j].price, $scope.filterPrice.priceFilter) == true)
+              compatibleDevices++;
         if (compatibleDevices == 0) {
           $scope.filteredApplications.splice(j, 1);
           j--;
         }
       }
     }
+  }
+
+  $scope.checkPriceFilter = function(price, priceFilter) {
+    if (priceFilter == -1)
+      return (true);
+    if (priceFilter == 0) {
+      if (price == 0)
+        return (true);
+      return (false);
+    }
+    if (priceFilter > 0) {
+      if (price > 0)
+        return (true);
+      return (false);
+    }
+    return (false);
   }
 
 });
@@ -130,8 +157,11 @@ website.controller('filterController', function($scope, $rootScope, $http) {
 
   });
 
+  $scope.prices = [{ name: "Toutes les applications", priceFilter: -1, ticked: true }, { name: "Gratuites", priceFilter: 0 }, { name: "Payantes", priceFilter: 1}];
+
   $scope.filteredDevices = [];
   $scope.filteredCategories = [];
+  $scope.filteredPrice = [];
 
   $scope.localLangDevices = {
     selectAll       : "",
@@ -149,8 +179,16 @@ website.controller('filterController', function($scope, $rootScope, $http) {
     nothingSelected : "Toutes les catégories"
   }
 
+  $scope.localLangPrices = {
+    selectAll       : "",
+    selectNone      : "",
+    reset           : "",
+    search          : "Rechercher ...",
+    nothingSelected : "Toutes les applications"
+  }
+
   $scope.sendFilters = function() {
-    $rootScope.$broadcast('filters', $scope.filteredDevices, $scope.filteredCategories);
+    $rootScope.$broadcast('filters', $scope.filteredDevices, $scope.filteredCategories, $scope.filteredPrice[0]);
   }
 
 })
