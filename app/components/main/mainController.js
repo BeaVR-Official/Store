@@ -52,24 +52,28 @@ website.controller('mainController', function($scope, $rootScope, $http, Authent
   * Filtering
   *
   */
-
-  $scope.$on('filterByDevice', function(event, filteredDevices) {
+  $scope.$on('filters', function(event, filteredDevices, filteredCategories) {
     $scope.filteredDevices = filteredDevices;
-    $scope.filterByDevice();
+    $scope.filteredCategories = filteredCategories;
+
+    $scope.applyFilters();
   })
 
-  $scope.filterByDevice = function() {
-    if ($scope.filteredDevices.length == 0) {
+  $scope.applyFilters = function() {
+    if ($scope.filteredDevices.length == 0 && $scope.filteredCategories.length == 0) {
       $scope.filteredApplications = angular.copy($scope.data);
     }
     else {
       $scope.filteredApplications = angular.copy($scope.data);
+
       for (var j = 0; j < $scope.filteredApplications.length; j++) {
         var compatibleDevices = 0;
-        for (var i = 0; i < $scope.filteredDevices.length; i++) {
+        for (var i = 0; i < $scope.filteredDevices.length; i++)
             if ($scope.filteredApplications[j].devicesNames.search($scope.filteredDevices[i].name) != -1)
               compatibleDevices++;
-        }
+        for (var k = 0; k < $scope.filteredCategories.length; k++)
+          if ($scope.filteredApplications[j].categoriesNames.search($scope.filteredCategories[k].name) != -1)
+            compatibleDevices++;
         if (compatibleDevices == 0) {
           $scope.filteredApplications.splice(j, 1);
           j--;
@@ -118,7 +122,7 @@ website.controller('filterController', function($scope, $rootScope, $http) {
   });
 
 
-  $http.get(url + '/api/categories/categoryTypes').success(function(result) {
+  $http.get(url + '/api/categories').success(function(result) {
       if (result.Error == false) {
         $scope.categories = result.Categories;
       } 
@@ -127,17 +131,26 @@ website.controller('filterController', function($scope, $rootScope, $http) {
   });
 
   $scope.filteredDevices = [];
+  $scope.filteredCategories = [];
 
   $scope.localLangDevices = {
     selectAll       : "",
     selectNone      : "",
     reset           : "",
     search          : "Rechercher ...",
-    nothingSelected : "Tous les matériels"         //default-label is deprecated and replaced with this.
+    nothingSelected : "Tous les matériels"
   }
 
-  $scope.sendDevicesFilter = function() {
-    $rootScope.$broadcast('filterByDevice', $scope.filteredDevices);
+  $scope.localLangCategories = {
+    selectAll       : "",
+    selectNone      : "",
+    reset           : "",
+    search          : "Rechercher ...",
+    nothingSelected : "Toutes les catégories"
+  }
+
+  $scope.sendFilters = function() {
+    $rootScope.$broadcast('filters', $scope.filteredDevices, $scope.filteredCategories);
   }
 
 })
