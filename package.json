@@ -1,0 +1,25 @@
+{
+  "name": "store",
+  "version": "1.0.0",
+  "description": "beavr store for virtual reality",
+  "scripts": {
+    "start": "http-server ./",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BeaVR-Official/Store.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BeaVR-Official/Store/issues"
+  },
+  "homepage": "https://github.com/BeaVR-Official/Store#readme",
+  "devDependencies": {
+    "http-server": "^0.9.0"
+  },
+  "dependencies": {
+    "http-server": "^0.9.0"
+  }
+}
