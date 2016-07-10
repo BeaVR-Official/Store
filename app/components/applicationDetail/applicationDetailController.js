@@ -8,6 +8,15 @@ website.controller('applicationDetailController', function($scope, $http, $route
     $scope.appInfos = appInfos.data.Applications;
     if ($scope.appInfos.price == "0")
       $scope.paymentType = true;
+
+    $scope.myInterval = 10000;
+    $scope.noWrapSlides = false;
+    $scope.active = 0;
+    $scope.appInfosScreenshots = [];
+    $scope.appInfos.screenshots.split(",").forEach(function(data, i) {
+      $scope.appInfosScreenshots.push({ image: data, id: i });
+    });
+
     $cookies.put('id', $scope.appInfos.id);
 
     $scope.comments = comments.data.Comments;
