@@ -127,7 +127,6 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li ng-show="onlineMenu" ng-class="{active: isActive('/feedback')}"><a href="" data-target="#feedbackModal" data-toggle="modal">Feedback</a></li>
-                        <li><a href="" data-target="#myModal" data-toggle="modal">Nous contacter</a></li>
                         <li><a href="" ng-show="onlineMenu" ng-click="disconnect()">Se déconnecter</a></li>
                     </ul>
                 </div><!--/.navbar-collapse -->
@@ -185,7 +184,7 @@
                   <a href="#/profile" class="list-group-item"><img ng-src="{{ profilePicture }}" class="img-circle" style="display: block; margin: auto;"></a>
                     <a href="#/profile" class="list-group-item">Mon profil</a>
                     <a href="#/library" class="list-group-item">Bibliothèque</a>
-                    <a href="#/progression" class="list-group-item">Progression</a>
+                    <!--<a href="#/progression" class="list-group-item">Progression</a>-->
                 </div>
             </div>
 
@@ -250,35 +249,6 @@
     <script src="assets/js/isteven-multi-select.js"></script>
 
 </body>
-<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel">N'hésitez pas à nous contacter</h3>
-            </div>
-            <div class="modal-body">
-                <form id="contactform" role="form" >
-                    <div class="form-group">
-                        <label for="name">Nom</label>
-                        <input type="text" id="name" placeholder="Votre nom" class="form-control"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" placeholder="Votre adresse email (afin que nous puissions vous recontacter)"  class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" rows="4" placeholder="Votre message" class="form-control"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-success">Envoyer</button>
-            </div>
-        </div>
-    </div>
-</div>
  <div id="feedbackModal" ng-controller="feedbackController" class="modal fade" tabindex="-1" role="dialog">
      <div class="modal-dialog">
          <div class="modal-content">
