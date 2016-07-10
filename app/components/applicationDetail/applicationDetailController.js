@@ -14,11 +14,6 @@ website.controller('applicationDetailController', function($scope, $http, $route
 
     $scope.test = AuthenticationService.getToken();
 
-    console.log("TOKEN INFOS ");
-    console.log($scope.test);
-    console.log("END TOKEN INFOS");
-
-
     $scope.checkPriceAction = function(){
 
       console.log("checkPriceAction");
