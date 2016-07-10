@@ -50,7 +50,14 @@ website.config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_RO
                 controller  : 'applicationDetailController',
                 resolve     : {
                     appInfos : function(AuthenticationService, $window, $route) {
-                        return AuthenticationService.getAppInfos($route.current.params.idApplication)
+                        var infos = AuthenticationService.getAppInfos($route.current.params.idApplication);
+                        infos.then(function(response){
+                            if (response.data.Error == true)
+                                $window.location.href = "#/404";
+                            if (response.data.Applications.state != 1)
+                                $window.location.href = "#/404";
+                        });
+                        return (infos);
                     },
                     comments : function (AuthenticationService, $window, $route) {
                         return AuthenticationService.getCommentsLimit($route.current.params.idApplication, 3);
