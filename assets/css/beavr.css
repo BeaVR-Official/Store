@@ -292,6 +292,36 @@ margin: 10px auto 50px auto;
 
 /************************
 *************************
+* Index
+*************************
+************************/
+
+.modal-checkbox {
+    float: left;
+    margin-right: 5px !important;
+}
+
+
+#device-list #multi-select-device,
+#category-list #multi-select-category,
+#price-list #single-select-price {
+    width:100%;
+}
+
+#device-list .multiSelect .multiSelectItem,
+#category-list .multiSelect .multiSelectItem,
+#price-list .multiSelect .multiSelectItem {
+    min-width:100%;
+}
+  
+#device-list .multiSelect .checkboxLayer,
+#category-list .multiSelect .checkboxLayer,
+#price-list .multiSelect .checkboxLayer {
+    position:relative;
+}
+
+/************************
+*************************
 * Connexion and Inscription
 *************************
 ************************/
@@ -348,4 +378,23 @@ margin: 10px auto 50px auto;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3; /* number of lines to show */
+}
+
+/************************
+*************************
+* Edit Profile
+*************************
+************************/
+
+.avatar {
+  width: 150px;
+  height: 150px;
+}
+
+.thumb {
+    width: 30px;
+    height: 30px;
+    float: none;
+    position: relative;
+    top: 7px;
 }

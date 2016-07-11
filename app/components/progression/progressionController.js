@@ -1,4 +1,5 @@
 website.controller('progressionController', function($scope, $rootScope, token, AuthenticationService, USER_ROLES) {
+    $rootScope.menu = true;
     $rootScope.filterMenu = false;
     $rootScope.onlineMenu = true;
     $rootScope.offlineMenu = false;

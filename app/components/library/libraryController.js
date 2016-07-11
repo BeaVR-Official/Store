@@ -1,4 +1,5 @@
 website.controller('libraryController', function($scope, $rootScope, token, AuthenticationService, USER_ROLES, libraryInfos) {
+    $rootScope.menu = true;
     $rootScope.filterMenu = false;
     $rootScope.onlineMenu = true;
     $rootScope.offlineMenu = false;

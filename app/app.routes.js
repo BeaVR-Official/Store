@@ -52,6 +52,11 @@ website.config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_RO
                 templateUrl : 'app/components/applicationDetail/applicationDetail.html',
                 controller  : 'applicationDetailController',
                 resolve     : {
+                    token : function(AuthenticationService, $window) {
+                        if (AuthenticationService.isOffline() || AuthenticationService.isTokenFormatted()) {
+                            return AuthenticationService.getToken();
+                        }
+                    },
                     appInfos : function(AuthenticationService, $window, $route) {
                         var infos = AuthenticationService.getAppInfos($route.current.params.idApplication);
                         infos.then(function(response){

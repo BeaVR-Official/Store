@@ -1,7 +1,6 @@
 website.controller('mainController', function($scope, $rootScope, $http, AuthenticationService, token, USER_ROLES) {
-
+  $rootScope.menu = true;
   $rootScope.filterMenu = true;
-
   if (token !== undefined) {
     $rootScope.onlineMenu = true;
     $rootScope.offlineMenu = false;

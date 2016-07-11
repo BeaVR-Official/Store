@@ -1,4 +1,24 @@
-website.controller('applicationCommentsController', function($scope, $http, $routeParams, AuthenticationService, token, appInfos, comments){
+website.controller('applicationCommentsController', function($scope, $rootScope, $http, $routeParams, AuthenticationService, token, appInfos, comments, USER_ROLES){
+
+    $rootScope.menu = true;
+    $rootScope.filterMenu = false;
+    if (token !== undefined) {
+      $rootScope.onlineMenu = true;
+      $rootScope.offlineMenu = false;
+      $rootScope.profilePicture = token.profilePicture;
+      $rootScope.disconnect = AuthenticationService.disconnect;
+      if (AuthenticationService.isAuthorized(USER_ROLES.Developer)) {
+        $rootScope.devMenu = true;
+        $rootScope.registerDev = false;
+      } else {
+        $rootScope.devMenu = false;
+        $rootScope.registerDev = true;
+      }
+    } else {
+      $rootScope.onlineMenu = false;
+      $rootScope.offlineMenu = true;
+      $rootScope.devMenu = false;
+    }
 
     /* If the user is connected, then he can add or edit a comment. Otherwise, the button are disabled and hidden. */
     if (token === undefined) {

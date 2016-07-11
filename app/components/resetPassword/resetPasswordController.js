@@ -7,10 +7,8 @@ website.controller('resetPasswordController', function($scope, $rootScope, $http
     $scope.returnMessage = '';
     $scope.loading;
 
+    $rootScope.menu = false;
     $rootScope.filterMenu = false;
-    $rootScope.onlineMenu = false;
-    $rootScope.offlineMenu = false;
-    $rootScope.devMenu = false;
     $rootScope.registerDev = false;
 
     $scope.resetPasswordAction = function(){

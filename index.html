@@ -38,77 +38,6 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-     <style>
-
-     .checkbox {
-         float: left;
-         margin-right: 5px !important;
-     }
-
-     .no-error input,
-     .no-error input:focus {
-       border-bottom: 2px solid #1BB2BD;
-     }
-
-     .error-message {
-       text-align:center;
-       color:#e85a5a;
-       font-size:15px;
-       font-weight:bold;
-     }
-
-     .success-message {
-       text-align:center;
-       color:#1BB2BD;
-       font-size:15px;
-       font-weight:bold;
-     }
-
-     .glyphicon.spinning {
-         animation: spin 2s infinite linear;
-         -webkit-animation: spin2 2s infinite linear;
-     }
-     @keyframes spin {
-         from {
-             transform: scale(1) rotate(0deg);
-         }
-         to {
-             transform: scale(1) rotate(360deg);
-         }
-     }
-     @-webkit-keyframes spin2 {
-         from {
-             -webkit-transform: rotate(0deg);
-         }
-         to {
-             -webkit-transform: rotate(360deg);
-         }
-     }
-
-     #device-list #multi-select-device,
-     #category-list #multi-select-category,
-     #price-list #single-select-price {
-         width:100%;
-     }
-
-     #device-list .multiSelect .multiSelectItem,
-     #category-list .multiSelect .multiSelectItem,
-     #price-list .multiSelect .multiSelectItem {
-         min-width:100%;
-     }
-        
-    #device-list .multiSelect .checkboxLayer,
-    #category-list .multiSelect .checkboxLayer,
-    #price-list .multiSelect .checkboxLayer {
-         position:relative;
-     }
-
-     .list-group {
-         padding-right:0px;
-     }
-
-     </style>
-
 </head>
 
 <body>
@@ -145,8 +74,33 @@
 
     <!-- Page Content -->
     <div class="container">
-
         <div class="row">
+            <div class="col-md-2" ng-show="menu">
+                <div id="onlineMenu" ng-show="onlineMenu">
+                    <p id="titleCompteMenu" class="lead">Compte</p>
+                    <div id="compteMenu" class="list-group">
+                    <a href="#/profile" class="list-group-item"><img ng-src="{{ profilePicture }}" class="img-circle" style="display: block; margin: auto;"></a>
+                        <a href="#/profile" class="list-group-item">Mon profil</a>
+                        <a href="#/library" class="list-group-item">Bibliothèque</a>
+                        <!--<a href="#/progression" class="list-group-item">Progression</a>-->
+                    </div>
+                </div>
+                <div id="devMenu" ng-show="devMenu">
+                    <p id="titleDeveloppementMenu" class="lead">Développement</p>
+                    <div id="developpementMenu" class="list-group">
+                        <a href="#" class="list-group-item"><img src="assets/img/icons/api.png">Publier une application</a>
+                        <a href="#" class="list-group-item"><img src="assets/img/icons/git.png">Gérer vos applications</a>
+                    </div>
+                </div>
+                <div id="offlineMenu" ng-show="offlineMenu">
+                    <p id="titleCompteMenu" class="lead">Compte</p>
+                    <a href="#/connexion" class="list-group-item">Se connecter</a>
+                    <a href="#/inscription" class="list-group-item">S'inscrire</a>
+                </div>
+            </div>
+            <div class="col-md-8 main-column">
+                <div ng-view></div>
+            </div>
 
             <div id="filterMenu" class="col-md-2" ng-show="filterMenu" ng-controller="filterController">
                 <div id="device-list" ng-show="devices !== undefined" class="list-group">
@@ -175,43 +129,12 @@
 <!--
 
                 <div class="btn-group-vertical col-xs-12 list-group">
-                  <a href="#" class="list-group-item"><img src="assets/img/icons/billets.png">Payants</a>
+                <a href="#" class="list-group-item"><img src="assets/img/icons/billets.png">Payants</a>
 
-                  <a href="#" class="list-group-item"><img src="assets/img/icons/free.png">Gratuites</a>
+                <a href="#" class="list-group-item"><img src="assets/img/icons/free.png">Gratuites</a>
                 </div>-->
             </div>
-
-            <div class="col-md-8 main-column">
-              <div ng-view></div>
-            </div>
-
-            <div id="onlineMenu" class="col-md-2" ng-show="onlineMenu">
-                <p id="titleCompteMenu" class="lead">Compte</p>
-                <div id="compteMenu" class="list-group">
-                  <a href="#/profile" class="list-group-item"><img ng-src="{{ profilePicture }}" class="img-circle" style="display: block; margin: auto;"></a>
-                    <a href="#/profile" class="list-group-item">Mon profil</a>
-                    <a href="#/library" class="list-group-item">Bibliothèque</a>
-                    <!--<a href="#/progression" class="list-group-item">Progression</a>-->
-                </div>
-            </div>
-
-            <div id="devMenu" class="col-md-2" ng-show="devMenu">
-                <p id="titleDeveloppementMenu" class="lead">Développement</p>
-                <div id="developpementMenu" class="list-group">
-                    <a href="#" class="list-group-item"><img src="assets/img/icons/api.png">Publier une application</a>
-                    <a href="#" class="list-group-item"><img src="assets/img/icons/git.png">Gérer vos applications</a>
-                </div>
-            </div>
-
-            <div id="offlineMenu" class="col-md-2" ng-show="offlineMenu">
-                <p id="titleCompteMenu" class="lead">Compte</p>
-                <a href="#/connexion" class="list-group-item">Se connecter</a>
-                <a href="#/inscription" class="list-group-item">S'inscrire</a>
-            </div>
-
-
         </div>
-
     </div>
     <footer>
         <div class="row">
@@ -278,7 +201,7 @@
                          <textarea id="message" style="resize:none" rows="8" placeholder="Détail de votre feedback" class="form-control" ng-model="feedbackData.description"></textarea>
                      </div>
                      <div class="form-group">
-                         <input type="checkbox" id="recontact" class="checkbox" ng-model="feedbackData.recontact"/>
+                         <input type="checkbox" id="recontact" class="modal-checkbox" ng-model="feedbackData.recontact"/>
                          <label for="recontact">J'accepte d'être recontacté suite à mon feedback</label>
                          <button type="submit" class="btn btn-secondary btn-beavr" style="float:right" ng-click="feedbackAction()">Envoyer<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
                      </div>
