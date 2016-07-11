@@ -1,6 +1,6 @@
 var url = "http://beavr-api.herokuapp.com";
 
-var website = angular.module('website', ['isteven-multi-select', 'ngRoute', 'ngAnimate', 'ngCookies', 'ngMessages', 'angular-jwt', 'ui.bootstrap']);
+var website = angular.module('website', ['ngRoute', 'ngAnimate', 'ngCookies', 'ngMessages', 'angular-jwt', 'isteven-multi-select', 'ngFileUpload', 'ui.bootstrap']);
 
 website.factory('AuthenticationService', function($http, $window, $cookies, jwtHelper) {
 	var authService = {};
@@ -93,6 +93,10 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 		}
 	}
 
+	authService.getConnectedUserInfos = function() {
+		return $http.get(url + '/api/users/' + authService.getToken().id);
+	}
+
 	authService.getConnectedUserLibraryInfos = function () {
 		return $http.get(url + '/api/users/applications');
 	}
@@ -165,7 +169,9 @@ var errorMessage = {
 	"ADD_COMMENT_102" : "Une erreur est survenue lors de l'envoi de votre commentaire. Réessayez dans quelques instants.",
 	"EDIT_HTML" : "Modifier le code de la page pour accéder aux éléments cachés est mal.",
 	"COMMENT_TITLE" : "Le titre de votre commentaire ne peut pas être vide.",
-	"COMMENT_COMMENT" : "Le contenu de votre commentaire ne peut pas être vide."
+	"COMMENT_COMMENT" : "Le contenu de votre commentaire ne peut pas être vide.",
+	"EDIT_PROFILE_PASSWORD" : "Les deux mots de passe ne sont pas identiques.",
+	"EDIT_PROFILE" : "Une erreur est survenue lors de la modification du compte. Réessayez dans quelques instants."
 };
 
 var successMessage = {
@@ -173,7 +179,8 @@ var successMessage = {
  	"MDPOUBLIE" : "Un nouveau mot de passe va vous être envoyé par mail d'ici quelques minutes.",
  	"FEEDBACK" : "Votre feedback nous a correctement été transmis. L'équipe BeaVR vous remercie !",
 	"EDIT_COMMENT" : "Votre commentaire a correctement été modifié.",
-	"ADD_COMMENT" : "Votre commentaire a correctement été ajouté."
+	"ADD_COMMENT" : "Votre commentaire a correctement été ajouté.",
+	"EDIT_PROFILE" : "Vos informations ont été modifiées."
 };
 
 website.filter('iif', function () {

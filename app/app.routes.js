@@ -41,6 +41,9 @@ website.config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_RO
                             return AuthenticationService.getToken();
                         }
                         $window.location.href = "#/404";
+                    },
+                    userInfos : function(AuthenticationService) {
+                        return AuthenticationService.getConnectedUserInfos();
                     }
                 }
             })
