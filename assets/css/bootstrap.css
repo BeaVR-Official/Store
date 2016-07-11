@@ -4639,12 +4639,11 @@ fieldset[disabled] .navbar-default .btn-link:focus {
   color: #fff;
   background-color: transparent;
 }
-/*Added Modified*/
+
 .navbar-inverse .navbar-nav > .active > a,
 .navbar-inverse .navbar-nav > .active > a:hover,
 .navbar-inverse .navbar-nav > .active > a:focus {
-  /*color: #fff;*/
-  color:#1BB2BD;
+  color: #fff;
   background-color: #080808;
 }
 .navbar-inverse .navbar-nav > .disabled > a,
@@ -6801,35 +6800,3 @@ footer{
   left: 0;
   right: 0;
 }
-/*# sourceMappingURL=bootstrap.css.map */
-
-/*Added*/
-  #filterMenu .lead,
-  #rightMenu .lead {
-    font-weight:bold;
-  }
-  .main-column {
-    margin-bottom:30px;
-  }
-  .page-title {
-    font-weight:bold;
-    color:#1BB2BD;
-  }
-  
-  .btn-beavr,
-  .btn-beavr:focus {
-    background-color: #1BB2BD;
-    color:white;
-  }
-
-  .btn-beavr:hover,
-  .btn-beavr:active {
-    background-color: #24777A;
-    color:white;
-    text-decoration:none;
-  }
-
-  footer {
-    padding-top:10px;
-    text-align:center;
-  }

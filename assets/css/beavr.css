@@ -1,0 +1,351 @@
+/* 
+ _______  ________  ______  __     __ _______          ______  ________ ______  _______  ________         ______   ______   ______         ________ ______ __       ________ 
+/       \/        |/      \/  |   /  /       \        /      \/        /      \/       \/        |       /      \ /      \ /      \       /        /      /  |     /        |
+$$$$$$$  $$$$$$$$//$$$$$$  $$ |   $$ $$$$$$$  |      /$$$$$$  $$$$$$$$/$$$$$$  $$$$$$$  $$$$$$$$/       /$$$$$$  /$$$$$$  /$$$$$$  |      $$$$$$$$/$$$$$$/$$ |     $$$$$$$$/ 
+$$ |__$$ $$ |__   $$ |__$$ $$ |   $$ $$ |__$$ |      $$ \__$$/   $$ | $$ |  $$ $$ |__$$ $$ |__          $$ |  $$/$$ \__$$/$$ \__$$/       $$ |__     $$ | $$ |     $$ |__    
+$$    $$<$$    |  $$    $$ $$  \ /$$/$$    $$<       $$      \   $$ | $$ |  $$ $$    $$<$$    |         $$ |     $$      \$$      \       $$    |    $$ | $$ |     $$    |   
+$$$$$$$  $$$$$/   $$$$$$$$ |$$  /$$/ $$$$$$$  |       $$$$$$  |  $$ | $$ |  $$ $$$$$$$  $$$$$/          $$ |   __ $$$$$$  |$$$$$$  |      $$$$$/     $$ | $$ |     $$$$$/    
+$$ |__$$ $$ |_____$$ |  $$ | $$ $$/  $$ |  $$ |      /  \__$$ |  $$ | $$ \__$$ $$ |  $$ $$ |_____       $$ \__/  /  \__$$ /  \__$$ |      $$ |      _$$ |_$$ |_____$$ |_____ 
+$$    $$/$$       $$ |  $$ |  $$$/   $$ |  $$ |      $$    $$/   $$ | $$    $$/$$ |  $$ $$       |      $$    $$/$$    $$/$$    $$/       $$ |     / $$   $$       $$       |
+$$$$$$$/ $$$$$$$$/$$/   $$/    $/    $$/   $$/        $$$$$$/    $$/   $$$$$$/ $$/   $$/$$$$$$$$/        $$$$$$/  $$$$$$/  $$$$$$/        $$/      $$$$$$/$$$$$$$$/$$$$$$$$/ 
+                                                                                                                                                                             
+*/
+
+/************************
+*************************
+* Changes from BOOTSTRAP
+*************************
+************************/
+
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+  color:#1BB2BD !important;
+  background-color: #080808;
+}
+
+#filterMenu .lead,
+#rightMenu .lead {
+font-weight:bold;
+}
+.main-column {
+margin-bottom:30px;
+}
+
+.page-title {
+font-weight:bold;
+color:#1BB2BD;
+}
+
+.btn-beavr,
+.btn-beavr:focus {
+background-color: #1BB2BD !important;
+color:white !important;
+}
+
+.btn-beavr:hover,
+.btn-beavr:active {
+background-color: #24777A !important;
+color:white !important;
+text-decoration:none !important;
+}
+
+footer {
+padding-top:10px;
+text-align:center;
+}
+
+.button-panel .button {
+  background:#1BB2BD;
+}
+
+.button:hover {
+  background:#24777A;
+}
+
+.form-control-label {
+    padding: 0.7rem;
+    margin-bottom: 0;
+}
+
+/************************
+*************************
+* General changes
+*************************
+************************/
+
+.error-message {
+text-align:center;
+color:#e85a5a;
+font-size:15px;
+font-weight:bold;
+line-height:30px;
+}
+
+.success-message {
+text-align:center;
+color:#1BB2BD;
+font-size:15px;
+font-weight:bold;
+line-height:30px
+}
+
+/************************
+*************************
+* Changes from Comments
+* and App Details
+*************************
+************************/
+
+.media-body .media-heading {
+  color:#32a9ad;
+  font-weight:bold;
+  font-size:22px;
+}
+.cadre-images {
+  border:2px solid #32a9ad;
+}
+
+.main-profile-picture {
+    max-height: 150px;
+    max-width: 150px;
+    margin: 0 auto;
+}
+
+.page-part-title {
+  font-size:20px;
+  font-weight:bold;
+}
+
+.date-publication {
+  font-weight:bold;
+}
+
+.description-application {
+  font-size:14px;
+}
+
+.well {
+  height:auto !important;
+}
+
+.profile-picture {
+  max-height:120px;
+  max-width:120px;
+  margin:0 auto;
+}
+
+.left-part-appInfos {
+  min-width:150px;
+  float:left;
+}
+
+.left-part-comment {
+    min-width:180px;
+    float:left;
+}
+
+.glyphicon-star,
+.glyphicon-star-empty,
+.ratings {
+color:#32a9ad !important;
+margin-right: 5px;
+min-height: 25px;
+text-shadow:none;
+}
+
+.ratings-last-child {
+margin-right:1px;
+}
+
+.app-rating-last-child {
+margin-right:0px;
+}
+
+.app-rating-first-child {
+margin-left:5px;
+}
+
+.app-infos {
+max-width:120px;
+}
+
+.comment-header {
+display:inline-block;
+width:100%;
+}
+
+.author-name {
+float:right;
+line-height:25px;
+}
+
+.title-comment {
+float:left;
+}
+
+.comment-infos,
+.app-infos {
+max-width:150px;
+}
+
+#comment-rating {
+margin: 10px auto 0  auto;
+text-align:center;
+font-size:15px;
+}
+
+#app-rating-main {
+margin: 10px auto 0  auto;
+text-align:center;
+font-size:22px;
+}
+
+#app-rating .glyphicon {
+font-size:15px;
+line-height:22px;
+vertical-align:middle;
+}
+
+.back-app-link {
+    float:right;
+    font-size:15px;
+}
+
+#comments-section {
+width:100%;
+}
+
+#pagination {
+text-align:center;
+font-size:15px;
+}
+
+#pagination a {
+color: #32a9ad;
+background-color: #f5f5f5;
+border: 1px solid #32a9ad;
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+color:white !important;
+background-color: #32a9ad !important;
+}
+
+.selectedFilter {
+color:#32a9ad;
+font-weight:bold;
+}
+
+.btn-filter:focus,
+.btn-filter:active,
+.btn-filter:hover,
+.btn-filter {
+border: 1px solid #32a9ad;
+background-color: #f5f5f5;
+}
+
+#filter-dropdown {
+margin-bottom:10px;
+text-align:right;
+}
+
+#addCommentForm {
+padding:20px;
+}
+
+#addCommentForm .form-group:last-child {
+text-align:right;
+margin-bottom: 0px;
+}
+
+.clear-rating {
+opacity:0;
+padding-right:0px !important;
+width:10px;
+}
+
+.rating-container .filled-stars {
+-webkit-text-stroke: 0px !important;
+}
+
+.left-part-comment,
+.left-part-appInfos {
+  min-width:180px;
+  float:left;
+}
+
+.app-rating-main-last-child {
+margin-right:-3px;
+}
+
+
+#under-comments {
+text-align:center;
+margin: 10px auto 50px auto;
+}
+
+/************************
+*************************
+* Connexion and Inscription
+*************************
+************************/
+
+.no-error input,
+.no-error input:focus {
+  border-bottom: 2px solid #1BB2BD;
+}
+
+.glyphicon.spinning {
+    animation: spin 2s infinite linear;
+    -webkit-animation: spin2 2s infinite linear;
+}
+@keyframes spin {
+    from {
+        transform: scale(1) rotate(0deg);
+    }
+    to {
+        transform: scale(1) rotate(360deg);
+    }
+}
+@-webkit-keyframes spin2 {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+/************************
+*************************
+* Library
+*************************
+************************/
+
+.application-name {
+  font-weight:bold;
+  text-align:center;
+}
+
+.btn-launch-application {
+  text-align:center;
+}
+
+.application-area {
+  height:350px;
+}
+
+/* WEBKIT ONLY */
+.library-app-description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* number of lines to show */
+}

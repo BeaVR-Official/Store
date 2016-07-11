@@ -1,102 +1,3 @@
-<style>
-
-.media-body .media-heading {
-  color:#32a9ad;
-  font-weight:bold;
-  font-size:22px;
-}
-
-.cadre-images {
-  border:2px solid #32a9ad;
-}
-
-.page-part-title {
-  font-size:20px;
-  font-weight:bold;
-}
-
-.date-publication {
-  font-weight:bold;
-}
-
-.description-application {
-  font-size:14px;
-}
-
-.well {
-  height:auto;
-}
-
-.profile-picture {
-  max-height:150px;
-  max-width:150px;
-  margin:0 auto;
-}
-
-.left-part-comment,
-.left-part-appInfos {
-  min-width:180px;
-  float:left;
-}
-
-.comment-header {
-  display:inline-block;
-  width:100%;
-}
-
-.author-name {
-  float:right;
-  line-height:25px;
-}
-
-.title-comment {
-  float:left;
-}
-
- .glyphicon-star,
- .glyphicon-star-empty,
- .ratings {
-    color:#32a9ad;
-    margin-right: 5px;
-    min-height: 25px;
-  }
-
-  .ratings-last-child {
-    margin-right:1px;
-  }
-
-  .app-rating-last-child {
-    margin-right:-3px;
-  }
-
-  .comment-infos,
-  .app-infos {
-    max-width:150px;
-  }
-
-  #comment-rating {
-    margin: 10px auto 0  auto;
-    text-align:center;
-    font-size:15px;
-  }
-
-  #app-rating {
-    margin: 10px auto 0  auto;
-    text-align:center;
-    font-size:22px;
-  }
-
-  #comments-section {
-    width:100%;
-  }
-
-  #under-comments {
-    text-align:center;
-    margin: 10px auto 50px auto;
-  }
-
-</style>
-
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
 <div class="panel panel-default">
   <div class="panel-body">
@@ -108,9 +9,9 @@
           <div class="media">
             <div class="left-part-appInfos">
               <div class="app-infos">
-                <img class="media-object cadre-images profile-picture" ng-src="{{ appInfos.logo }}" style="width: 150px; height: 150px;">
-                <div id="app-rating">
-                    <span ng-show="appInfos.avgRating != null" ng-repeat="t in getRating(appInfos.avgRating) track by $index" ng-class="{'app-rating-last-child':$last}" class="glyphicon glyphicon-star"></span>
+                <img class="media-object cadre-images main-profile-picture" ng-src="{{ appInfos.logo }}" style="width: 150px; height: 150px;">
+                <div id="app-rating-main">
+                    <span ng-show="appInfos.avgRating != null" ng-repeat="t in getRating(appInfos.avgRating) track by $index" ng-class="{'app-rating-main-last-child':$last}" class="glyphicon glyphicon-star"></span>
                     <span ng-show="appInfos.avgRating != null" ng-repeat="t in getRating(5 - appInfos.avgRating) track by $index" class="glyphicon glyphicon-star-empty"></span>
                 </div>
               </div>

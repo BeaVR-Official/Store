@@ -67,8 +67,7 @@ form {
 }
 
 .button-panel .button {
-  background:#1BB2BD;
-  /*background: rgba(65, 185, 187, 1);*/
+  background: rgba(65, 185, 187, 1);
   border: none;
   color: #fff;
   cursor: pointer;
@@ -83,8 +82,7 @@ form {
 }
 
 .button:hover {
-  background:#24777A;
-  /*background: rgba(65, 185, 225, 1);*/
+  background: rgba(65, 185, 225, 1);
 }
 
 .form-footer {
@@ -113,10 +111,4 @@ form {
   bottom: 50%;
   width: 100%;
   height: 100%;
-}
-
-/* Added */
-.form-control-label {
-    padding: 0.7rem;
-    margin-bottom: 0;
 }
