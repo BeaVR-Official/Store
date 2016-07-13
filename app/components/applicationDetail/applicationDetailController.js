@@ -25,6 +25,9 @@ website.controller('applicationDetailController', function($scope, $rootScope, t
     $scope.paymentType = false;
     $scope.isConnected = !(AuthenticationService.isOffline());
 
+    console.log("IS CONNECTED ");
+    console.log($scope.isConnected);
+
     $scope.appInfos = appInfos.data.Applications;
 
     if ($scope.appInfos.price == "0")
@@ -48,7 +51,7 @@ website.controller('applicationDetailController', function($scope, $rootScope, t
 
     $scope.comments = comments.data.Comments;
 
-    $scope.applicationIsOwned = "";
+    $scope.applicationIsOwned = true;
 
     var data = {
       "idUser" : AuthenticationService.getToken().id
@@ -74,6 +77,7 @@ website.controller('applicationDetailController', function($scope, $rootScope, t
         alert("Vous ne pouvez pas acheter deux fois la même application");
         return;
       }*/
+      
       if ($scope.appInfos.price == "0"){
         $scope.purchaseData = {
             application : $routeParams.idApplication,
