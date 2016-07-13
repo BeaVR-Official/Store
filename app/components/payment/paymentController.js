@@ -19,10 +19,10 @@ website.controller('paymentController', function($scope, $http, $routeParams, Au
       .success(function(result) {
           if (result.Error == false) {
             alert("l'achat c'est bien passé");
-              $location.path('/#');
+              //$location.path('/#');
           } else {
             alert("Un soucis est survenue veuillez contacter le support");
-            $location.path('/#')
+            //$location.path('/#')
 
           }
       })
