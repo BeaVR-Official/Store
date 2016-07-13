@@ -1,5 +1,5 @@
 website.controller('applicationDetailController', function($scope, $rootScope, token, $http, $routeParams, $location, AuthenticationService, $cookies, appInfos, comments, USER_ROLES){
-    
+
     $rootScope.menu = true;
     $rootScope.filterMenu = false;
     if (token !== undefined) {
@@ -26,6 +26,7 @@ website.controller('applicationDetailController', function($scope, $rootScope, t
     $scope.isConnected = !(AuthenticationService.isOffline());
 
     $scope.appInfos = appInfos.data.Applications;
+
     if ($scope.appInfos.price == "0")
       $scope.paymentType = true;
 
@@ -37,22 +38,63 @@ website.controller('applicationDetailController', function($scope, $rootScope, t
       $scope.appInfosScreenshots.push({ image: data, id: i });
     });
 
-    $cookies.put('id', $scope.appInfos.id);
+    $cookies.put('idApplication', $scope.appInfos.id);
+    $cookies.put('retailer', 999);
+    $cookies.put('buyer', AuthenticationService.getToken().id);
+    $cookies.put('price', $scope.appInfos.price);
+    $cookies.put('commission', 0);
+    $cookies.put('originalPrice', $scope.appInfos.price);
+
 
     $scope.comments = comments.data.Comments;
 
-    $scope.test = AuthenticationService.getToken();
+    $scope.applicationIsOwned = "";
+
+    var data = {
+      "idUser" : AuthenticationService.getToken().id
+    };
+
+    $http.post(url + '/api/applications/userHasTheApplication', data)
+        .success(function(result) {
+
+            if (result.Error == false) {
+              $scope.applicationIsOwned = result.Canbuy;
+            } else {
+              $scope.applicationIsOwned = result.Canbuy;
+            }
+        })
+        .error(function(result) {
+          console.log("RESULT in error =>");
+          console.log(result);
+    });
 
     $scope.checkPriceAction = function(){
 
-      console.log("checkPriceAction");
-
+      if ($scope.applicationIsOwned === false) {
+        alert("Vous ne pouvez pas acheter deux fois la même application");
+        return;
+      }
       if ($scope.appInfos.price == "0"){
+        $scope.purchaseData = {
+            application : $routeParams.idApplication,
+            retailer : 999,
+            buyer : AuthenticationService.getToken().id,
+            price : $scope.appInfos.price,
+            commission : 0,
+            originalPrice : $scope.appInfos.price
+          };
 
-        console.log("L'application est free");
-
+        $http.post(url + '/api/applications/addToLibrary', $scope.purchaseData)
+            .success(function(result) {
+                if (result.Error == false) {
+                  alert("L'application a bien été ajoutée à votre bibliothèque");
+                } else {
+                  alert("Un soucis est survenue veuillez contacter le support");
+                }
+            })
+            .error(function(result) {
+        });
       }else {
-        console.log("il faut payer");
         $location.path('/payment');
       }
     };
