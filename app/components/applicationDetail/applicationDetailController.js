@@ -93,6 +93,7 @@ website.controller('applicationDetailController', function($scope, $rootScope, t
                 if (result.Error == false) {
                   alert("L'application a bien été ajoutée à votre bibliothèque");
                 } else {
+                  console.log(result);
                   alert("Un soucis est survenue veuillez contacter le support");
                 }
             })
