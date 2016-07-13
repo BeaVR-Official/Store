@@ -81,7 +81,7 @@ website.controller('applicationDetailController', function($scope, $rootScope, t
       if ($scope.appInfos.price == "0"){
         $scope.purchaseData = {
             application : $routeParams.idApplication,
-            retailer : 999,
+            retailer : 149,
             buyer : AuthenticationService.getToken().id,
             price : $scope.appInfos.price,
             commission : 0,
