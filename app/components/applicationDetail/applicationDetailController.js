@@ -77,7 +77,7 @@ website.controller('applicationDetailController', function($scope, $rootScope, t
         alert("Vous ne pouvez pas acheter deux fois la même application");
         return;
       }*/
-      
+
       if ($scope.appInfos.price == "0"){
         $scope.purchaseData = {
             application : $routeParams.idApplication,
@@ -97,6 +97,8 @@ website.controller('applicationDetailController', function($scope, $rootScope, t
                 }
             })
             .error(function(result) {
+              console.log("ERROR DANS .error de ADDTOLIB");
+              console.log(result);
         });
       }else {
         $location.path('/payment');
