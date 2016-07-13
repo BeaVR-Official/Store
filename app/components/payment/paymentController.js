@@ -11,6 +11,7 @@ website.controller('paymentController', function($scope, $http, $routeParams, Au
       originalPrice : $cookies.get('originalPrice')
     };
 
+  
 
   console.log("Controller de paiement");
   console.log($scope.purchaseData);
