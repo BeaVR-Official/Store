@@ -1,4 +1,4 @@
-website.controller('paymentController', function($scope, $http, $routeParams, AuthenticationService, $cookies){
+website.controller('paymentController', function($scope, $http, $routeParams, AuthenticationService, $cookies, $location){
 
   /* recuperer les infos dans les cookies */
 
@@ -21,8 +21,9 @@ website.controller('paymentController', function($scope, $http, $routeParams, Au
             alert("l'achat c'est bien passé");
               $location.path('/#');
           } else {
-            $location.path('/#')
             alert("Un soucis est survenue veuillez contacter le support");
+            $location.path('/#')
+
           }
       })
       .error(function(result) {
