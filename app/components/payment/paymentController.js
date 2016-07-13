@@ -4,7 +4,7 @@ website.controller('paymentController', function($scope, $http, $routeParams, Au
 
   $scope.purchaseData = {
       application : $cookies.get('idApplication'),
-      retailer : $cookies.get('retailer'),
+      retailer : 1,
       buyer : $cookies.get('buyer'),
       price : $cookies.get('price'),
       commission : $cookies.get('commission'),
@@ -21,6 +21,7 @@ website.controller('paymentController', function($scope, $http, $routeParams, Au
             alert("l'achat c'est bien passé");
               //$location.path('/#');
           } else {
+            console.log(result);
             alert("Un soucis est survenue veuillez contacter le support");
             //$location.path('/#')
 
