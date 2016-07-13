@@ -70,10 +70,10 @@ website.controller('applicationDetailController', function($scope, $rootScope, t
 
     $scope.checkPriceAction = function(){
 
-      if ($scope.applicationIsOwned === false) {
+      /*if ($scope.applicationIsOwned == false) {
         alert("Vous ne pouvez pas acheter deux fois la même application");
         return;
-      }
+      }*/
       if ($scope.appInfos.price == "0"){
         $scope.purchaseData = {
             application : $routeParams.idApplication,
