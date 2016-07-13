@@ -30,7 +30,7 @@
               <p class="text-left"><b>Développée par :</b> {{ appInfos.authorName }}</p>
               <span ng-if="paymentType" class="animate-if">
                   <p class="text-right">
-                    <button type="button" class="btn btn-secondary btn-beavr btn-lg" ng-click="checkPriceAction()" ng-show="isConnected">{{ appInfos.price == "0" | iif : "Gratuite" : appInfos.price + "€" }}</button>
+                    <button type="button" class="btn btn-secondary btn-beavr btn-lg" ng-click="checkPriceAction()" ng-show="isConnected">Gratuit</button>
                   </p>
               </span>
               <span ng-if="!paymentType" class="animate-if">
@@ -48,8 +48,9 @@
                 <input type="hidden" value="http://beavr-store.herokuapp.com/#/payment" name="return">
                 <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHostedGuest">
                 <p class="text-right">
-                  <input class="btn btn-secondary btn-beavr btn-lg" type="image" src="" border="0" name="submit" alt="" value="Payer" ng-show="isConnected">
+                  <input type="image" src="https://www.paypalobjects.com/fr_FR/i/btn/btn_buynow_LG.gif?akam_redir=1" border="0" name="submit" alt="" value="Payer" ng-show="isConnected">
                 </p>
+                <p class="text-right">Seulement {{ appInfos.price }}€</p>
                 </form>
               </span>
            </div>
@@ -105,6 +106,6 @@
     </div>
   </div>
   <div id="under-comments">
-    <a ng-show="appInfos.nbComments > 0" ng-href="#/applications/details/{{ appInfos.id }}/comments" class="btn-beavr btn-lg">En voir plus ({{ appInfos.nbComments }} avis)</a>
+    <a ng-href="#/applications/details/{{ appInfos.id }}/comments" class="btn-beavr btn-lg">En voir plus ({{ appInfos.nbComments }} avis)</a>
   </div>
 </div>

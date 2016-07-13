@@ -25,9 +25,6 @@ website.controller('applicationDetailController', function($scope, $rootScope, t
     $scope.paymentType = false;
     $scope.isConnected = !(AuthenticationService.isOffline());
 
-    console.log("IS CONNECTED ");
-    console.log($scope.isConnected);
-
     $scope.appInfos = appInfos.data.Applications;
 
     if ($scope.appInfos.price == "0")
@@ -41,35 +38,30 @@ website.controller('applicationDetailController', function($scope, $rootScope, t
       $scope.appInfosScreenshots.push({ image: data, id: i });
     });
 
-    $cookies.put('idApplication', $scope.appInfos.id);
-    $cookies.put('retailer', 999);
-    $cookies.put('buyer', AuthenticationService.getToken().id);
-    $cookies.put('price', $scope.appInfos.price);
-    $cookies.put('commission', 0);
-    $cookies.put('originalPrice', $scope.appInfos.price);
-
 
     $scope.comments = comments.data.Comments;
 
     $scope.applicationIsOwned = true;
 
-    var data = {
-      "idUser" : AuthenticationService.getToken().id
-    };
+    if (!AuthenticationService.isOffline()) {
+      var data = {
+        "idUser" : AuthenticationService.getToken().id
+      };
 
-    $http.post(url + '/api/applications/userHasTheApplication', data)
-        .success(function(result) {
+      $http.post(url + '/api/applications/userHasTheApplication', data)
+          .success(function(result) {
 
-            if (result.Error == false) {
-              $scope.applicationIsOwned = result.Canbuy;
-            } else {
-              $scope.applicationIsOwned = result.Canbuy;
-            }
-        })
-        .error(function(result) {
-          console.log("RESULT in error =>");
-          console.log(result);
-    });
+              if (result.Error == false) {
+                $scope.applicationIsOwned = result.Canbuy;
+              } else {
+                $scope.applicationIsOwned = result.Canbuy;
+              }
+          })
+          .error(function(result) {
+            console.log("RESULT in error =>");
+            console.log(result);
+      });
+    }
 
     $scope.checkPriceAction = function(){
 

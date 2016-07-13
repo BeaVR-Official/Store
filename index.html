@@ -59,7 +59,7 @@
                 <div class="collapse navbar-collapse" id="nav-collapse" ng-controller="navbarController">
                     <ul class="nav navbar-nav">
                         <li ng-class="{active: isActive('/')}"><a href="#/">Accueil</a></li>
-                        <li><a href="#/" ng-show="registerDev" data-target="#myModal" data-toggle="modal">Devenir développeur</a></li>
+                        <li><a href="#/" ng-show="registerDev" data-target="#comingSoonModal" data-toggle="modal">Devenir développeur</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li ng-show="onlineMenu" ng-class="{active: isActive('/feedback')}"><a href="" data-target="#feedbackModal" data-toggle="modal">Feedback</a></li>
@@ -211,4 +211,16 @@
          </div>
      </div>
  </div>
+
+  <div id="comingSoonModal" class="modal fade" tabindex="-1" role="dialog">
+     <div class="modal-dialog">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h1 class="branded-font-huge">COMING SOON	<i class="glyphicon glyphicon-calendar"></i></h1>
+             </div>
+         </div>
+     </div>
+ </div>
+
 </html>
