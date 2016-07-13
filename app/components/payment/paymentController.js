@@ -1,44 +1,32 @@
-website.controller('paymentController', function($scope, $http, $routeParams, AuthenticationService, $cookies){
+website.controller('paymentController', function($scope, $http, $routeParams, AuthenticationService, $cookies, $location){
+
+  /* recuperer les infos dans les cookies */
 
   $scope.purchaseData = {
-      purchaseDate : '',
-      application : '',
-      retailer : '',
-      buyer : '',
-      price : '',
-      commission : '',
-      originalPrice : ''
+      application : $cookies.get('idApplication'),
+      retailer : $cookies.get('retailer'),
+      buyer : $cookies.get('buyer'),
+      price : $cookies.get('price'),
+      commission : $cookies.get('commission'),
+      originalPrice : $cookies.get('originalPrice')
     };
 
 
-    $http.get(url + '/api/applications/' + $routeParams.idApplication).then(function(response){
+  console.log("Controller de paiement");
+  console.log($scope.purchaseData);
 
-      $scope.appInfos = response.data.Applications;
+  $http.post(url + '/api/applications/addToLibrary', $scope.purchaseData)
+      .success(function(result) {
+          if (result.Error == false) {
+            alert("l'achat c'est bien passé");
+              //$location.path('/#');
+          } else {
+            alert("Un soucis est survenue veuillez contacter le support");
+            //$location.path('/#')
 
-      console.log($scope.appInfos);
-
-
-      $cookies.put('id', $scope.appInfos.id);
-
-    }, function(error){
-      console.debug("Failure while fetching applications' list.");
-    });
-
-
-
-
-    //console.log("Controller le payement d'une application");
-
-    //$scope.paymentAction = function(){
-
-      /*$http.get(url + '/api/payment/check').then(function(response){
-
-
-      }, function(error){
-        console.debug("Failure while payment");
-      });
-
-    };*/
-
+          }
+      })
+      .error(function(result) {
+  });
 
 });

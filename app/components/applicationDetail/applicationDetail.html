@@ -5,6 +5,11 @@
   <br />
   <div id="container">
     <div class="container">
+      <!--<div class="alert alert-success alert-dismissable" ng-hide="applicationIsOwned">
+        <a class="panel-close close" data-dismiss="alert">×</a>
+        <i class="fa fa-info"></i>
+        Cette application est déjà dans votre bibliothèque
+      </div>-->
       <div class="well">
           <div class="media">
             <div class="left-part-appInfos">
@@ -24,7 +29,9 @@
               </p>
               <p class="text-left"><b>Développée par :</b> {{ appInfos.authorName }}</p>
               <span ng-if="paymentType" class="animate-if">
-                  <p class="text-right"><button type="button" class="btn btn-secondary btn-beavr btn-lg" ng-click="checkPriceAction()" ng-show="isConnected">{{ appInfos.price == "0" | iif : "Gratuite" : appInfos.price + "€" }}</button></p>
+                  <p class="text-right">
+                    <button type="button" class="btn btn-secondary btn-beavr btn-lg" ng-click="checkPriceAction()" ng-show="isConnected">{{ appInfos.price == "0" | iif : "Gratuite" : appInfos.price + "€" }}</button>
+                  </p>
               </span>
               <span ng-if="!paymentType" class="animate-if">
                 <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
@@ -38,9 +45,11 @@
                 <input type="hidden" name="no_note" value="0">
                 <input type="hidden" name="tax_rate" value="0.00">
                 <input type="hidden" name="shipping" value="0.00">
-                <input type="hidden" value="http://localhost:8888/BeaVRStore/BeaVRWebStore/#/" name="return">
+                <input type="hidden" value="http://beavr-store.herokuapp.com/#/" name="return">
                 <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHostedGuest">
-                <p class="text-right"><input class="btn btn-secondary btn-beavr btn-lg" type="image" src="" border="0" name="submit" alt="" value="Payer" ng-show="isConnected"></p>
+                <p class="text-right">
+                  <input class="btn btn-secondary btn-beavr btn-lg" type="image" src="" border="0" name="submit" alt="" value="Payer" ng-show="isConnected">
+                </p>
                 </form>
               </span>
            </div>
