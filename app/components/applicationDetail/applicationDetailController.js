@@ -38,6 +38,12 @@ website.controller('applicationDetailController', function($scope, $rootScope, t
       $scope.appInfosScreenshots.push({ image: data, id: i });
     });
 
+    $cookies.put('idApplication', $scope.appInfos.id);
+    $cookies.put('retailer', 999);
+    $cookies.put('buyer', AuthenticationService.getToken().id);
+    $cookies.put('price', $scope.appInfos.price);
+    $cookies.put('commission', 0);
+    $cookies.put('originalPrice', $scope.appInfos.price);
 
     $scope.comments = comments.data.Comments;
 
