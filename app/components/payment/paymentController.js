@@ -20,9 +20,7 @@ website.controller('paymentController', function($scope, $rootScope, $http, $win
         .success(function(result) {
               console.log(result);
             if (result.Error == false) {
-                $(window).load(function(){
-                    $scope.returnText = "L'achat de s'est correctement déroulé.";
-                });
+                $scope.returnText = "L'achat de s'est correctement déroulé.";
                 //$location.path('/#');
             } else {
               console.log(result);
