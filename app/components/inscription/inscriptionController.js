@@ -26,34 +26,26 @@ website.controller('inscriptionController', function($scope, $rootScope, $http) 
           $scope.loading = true;
           var returnMessageDiv = angular.element(document.querySelector('#returnMessage'));
 
-          $http.post(url + '/api/registration', data)
+          $http.post(url + '/api/users', data)
               .success(function(result) {
 
-                  if (result.Error == false) {
-                    $scope.inscriptionData = {};
-                    $scope.returnMessage = successMessage["INSCRIPTION"];
-                    returnMessageDiv.addClass("success-message");
-                  } else {
-                    switch (result.Code)
-                    {
-                      case 100:
-                        $scope.returnMessage = errorMessage["INSCRIPTION_100"];
-                        break;
-                      case 101:
-                        $scope.returnMessage = errorMessage["INSCRIPTION_101"];
-                        break;
-                      case 104:
-                        $scope.returnMessage = errorMessage["INSCRIPTION_104"];
-                        break;
-                    }
-                    returnMessageDiv.addClass("error-message");
-                  }
+                $scope.inscriptionData = {};
+                $scope.returnMessage = successMessage["INSCRIPTION"];
+                returnMessageDiv.addClass("success-message");
+                $scope.loading = false;
 
-                  $scope.loading = false;
-    
               })
               .error(function(result) {
-                  $scope.returnMessage = errorMessage["INSCRIPTION"];
+
+                  switch (result.error.status)
+                  {
+                    case 409:
+                      $scope.returnMessage = errorMessage["INSCRIPTION_409"];
+                      break;
+                    default:
+                      $scope.returnMessage = errorMessage["INSCRIPTION"];
+                  }
+
                   $scope.loading = false;
                   returnMessageDiv.addClass("error-message");
           });

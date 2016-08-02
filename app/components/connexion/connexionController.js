@@ -23,21 +23,24 @@ website.controller('connexionController', function($scope, $rootScope, Authentic
           $scope.loading = true;
           AuthenticationService.login(data)
           .success(function(result) {
-            if (result.Error != false) {
-              switch (result.Code) {
-                  case 103:
-                    $scope.returnMessage = errorMessage["CONNEXION_103"];
-                    break;
-                  case 200:
-                    $scope.returnMessage = errorMessage["CONNEXION_200"];
-                    break;
-                }
-            }
+
             $scope.loading = false;
+
           })
           .error(function(result) {
-            $scope.returnMessage = errorMessage["CONNEXION"];
+
+            switch (result.error.status)
+            {
+              case 401:
+                $scope.returnMessage = errorMessage["CONNEXION_401"];
+                break;
+              default:
+                $scope.returnMessage = errorMessage["CONNEXION"];
+                break;
+            }
+
             $scope.loading = false;
+
           });
         }
   };
