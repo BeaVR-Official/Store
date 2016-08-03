@@ -19,9 +19,11 @@ website.controller('mainController', function($scope, $rootScope, $http, Authent
     $rootScope.devMenu = false;
   }
 
-  $http.get(url + '/api/applications/state/1').then(function(response) {
-    $scope.data = response.data.Applications;
+  $http.get(url + '/api/applications').success(function(result) {
+        
+    $scope.data = result.data.application;
 
+    console.log(result.data.application);
     $scope.data.sort(function(a, b) {
       ratingA = a.avgRating;
       ratingB = b.avgRating;
@@ -36,7 +38,7 @@ website.controller('mainController', function($scope, $rootScope, $http, Authent
 
     $scope.filteredApplications = angular.copy($scope.data);
 
-    }, function(error){
+    }).error(function(result){
       console.debug("Failure while fetching applications' list.");
   });
 
@@ -139,19 +141,14 @@ website.controller('carouselController', function($scope) {
 website.controller('filterController', function($scope, $rootScope, $http) {
 
   $http.get(url + '/api/devices').success(function(result) {
-      if (result.Error == false) {
-        $scope.devices = result.Devices;
-        
-      } 
+    $scope.devices = result.data.devices;
   }).error(function(result) {
 
   });
 
 
   $http.get(url + '/api/categories').success(function(result) {
-      if (result.Error == false) {
-        $scope.categories = result.Categories;
-      } 
+    $scope.categories = result.data.categories;
   }).error(function(result) {
 
   });
