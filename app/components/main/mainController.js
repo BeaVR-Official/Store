@@ -1,18 +1,18 @@
-website.controller('mainController', function($scope, $rootScope, $http, AuthenticationService, token, USER_ROLES) {
+website.controller('mainController', function($scope, $rootScope, $http, AuthenticationService, userData, USER_ROLES) {
   $rootScope.menu = true;
   $rootScope.filterMenu = true;
-  if (token !== undefined) {
+  if (userData !== undefined) {
     $rootScope.onlineMenu = true;
     $rootScope.offlineMenu = false;
-    $rootScope.profilePicture = token.profilePicture;
+    $rootScope.profilePicture = userData.data.data.picture;
     $rootScope.disconnect = AuthenticationService.disconnect;
-    if (AuthenticationService.isAuthorized(USER_ROLES.Developer)) {
+    /*if (AuthenticationService.isAuthorized(USER_ROLES.Developer)) {
       $rootScope.devMenu = true;
       $rootScope.registerDev = false;
-    } else {
+    } else {*/
       $rootScope.devMenu = false;
       $rootScope.registerDev = true;
-    }
+    //}
   } else {
     $rootScope.onlineMenu = false;
     $rootScope.offlineMenu = true;

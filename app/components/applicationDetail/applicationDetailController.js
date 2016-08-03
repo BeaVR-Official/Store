@@ -7,13 +7,13 @@ website.controller('applicationDetailController', function($scope, $rootScope, t
       $rootScope.offlineMenu = false;
       $rootScope.profilePicture = token.profilePicture;
       $rootScope.disconnect = AuthenticationService.disconnect;
-      if (AuthenticationService.isAuthorized(USER_ROLES.Developer)) {
+      /*if (AuthenticationService.isAuthorized(USER_ROLES.Developer)) {
         $rootScope.devMenu = true;
         $rootScope.registerDev = false;
-      } else {
+      } else {*/
         $rootScope.devMenu = false;
         $rootScope.registerDev = true;
-      }
+      //}
     } else {
       $rootScope.onlineMenu = false;
       $rootScope.offlineMenu = true;

@@ -1,25 +1,26 @@
-website.controller('editProfileController', function($scope, $rootScope, $http, token, AuthenticationService, USER_ROLES, userInfos, Upload) {
+website.controller('editProfileController', function($scope, $rootScope, $http, userData, AuthenticationService, USER_ROLES, Upload) {
+    var userInfos = userData.data.data;
     $rootScope.menu = true;
     $rootScope.filterMenu = false;
 	  $rootScope.onlineMenu = true;
     $rootScope.offlineMenu = false;
-    $rootScope.profilePicture = token.profilePicture;
+    $rootScope.profilePicture = userData.data.data.picture;
     $rootScope.disconnect = AuthenticationService.disconnect;
-    if (AuthenticationService.isAuthorized(USER_ROLES.Developer)) {
+    /*if (AuthenticationService.isAuthorized(USER_ROLES.Developer)) {
       $rootScope.devMenu = true;
       $rootScope.registerDev = false;
-    } else {
+    } else {*/
       $rootScope.devMenu = false;
       $rootScope.registerDev = true;
-    }
+    //}
   $scope.userInfos = {
-    firstName: userInfos.data.Users.firstName,
-    lastName: userInfos.data.Users.lastName,
-    email: userInfos.data.Users.email,
-    pseudo: userInfos.data.Users.pseudo,
+    firstName: userInfos.firstName,
+    lastName: userInfos.lastName,
+    email: userInfos.email,
+    pseudo: userInfos.pseudo,
     password: '',
     confirmPassword: '',
-    profilePicture: userInfos.data.Users.profilePicture,
+    profilePicture: userInfos.picture,
     newProfilePicture: null
   };
   $scope.returnMessage = '';
@@ -29,9 +30,9 @@ website.controller('editProfileController', function($scope, $rootScope, $http, 
   $scope.uploadImageAction = function() {
     var file = $scope.userInfos.newProfilePicture;
     file.upload = Upload.upload({
-      url: url + '/api/users/upload/' + userInfos.data.Users.id,
+      url: url + '/api/users/upload/' + userInfos.id,
       method: 'POST',
-      fields: {id: userInfos.data.Users.id},
+      fields: {id: userInfos.id},
       file: file,
       fileFormDataName: 'file'
     });
@@ -78,7 +79,7 @@ website.controller('editProfileController', function($scope, $rootScope, $http, 
     };
     if (!data.newProfilePicture === null)
       dataToSend.profilePicture = data.newProfilePicture;
-      $http.put(url + '/api/users/' + userInfos.data.Users.id, dataToSend)
+      $http.put(url + '/api/users/' + userInfos.id, dataToSend)
           .success(function(result) {
               if (result.Error == false) {
                   console.log(result);

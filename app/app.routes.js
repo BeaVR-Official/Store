@@ -5,11 +5,10 @@ website.config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_RO
               templateUrl : 'app/components/main/main.html',
               controller  : 'mainController',
               resolve     : {
-                    token : function(AuthenticationService, $window) {
-                        if (AuthenticationService.isOffline() || AuthenticationService.isTokenFormatted()) {
-                            return AuthenticationService.getToken();
+                    userData : function(AuthenticationService, $window) {
+                        if (!AuthenticationService.isOffline()) {
+                            return AuthenticationService.getConnectedUserInfos();
                         }
-                        $window.location.href = "#/404";
                     }
                 }
             })
@@ -36,14 +35,11 @@ website.config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_RO
                 templateUrl : 'app/components/editProfile/editProfile.html',
                 controller  : 'editProfileController',
                 resolve     : {
-                    token   : function(AuthenticationService, $window) {
-                        if (AuthenticationService.isAuthorized([USER_ROLES.User, USER_ROLES.Developer, USER_ROLES.Administrator])) {
-                            return AuthenticationService.getToken();
+                    userData : function(AuthenticationService, $window) {
+                        if (!AuthenticationService.isOffline()) {
+                            return AuthenticationService.getConnectedUserInfos();
                         }
                         $window.location.href = "#/404";
-                    },
-                    userInfos : function(AuthenticationService) {
-                        return AuthenticationService.getConnectedUserInfos();
                     }
                 }
             })
@@ -52,9 +48,9 @@ website.config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_RO
                 templateUrl : 'app/components/applicationDetail/applicationDetail.html',
                 controller  : 'applicationDetailController',
                 resolve     : {
-                    token : function(AuthenticationService, $window) {
-                        if (AuthenticationService.isOffline() || AuthenticationService.isTokenFormatted()) {
-                            return AuthenticationService.getToken();
+                    userData : function(AuthenticationService, $window) {
+                        if (!AuthenticationService.isOffline()) {
+                            return AuthenticationService.getConnectedUserInfos();
                         }
                     },
                     appInfos : function(AuthenticationService, $window, $route) {
@@ -77,9 +73,9 @@ website.config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_RO
                 templateUrl : 'app/components/applicationComments/applicationComments.html',
                 controller  : 'applicationCommentsController',
                 resolve     : {
-                    token : function(AuthenticationService, $window) {
-                        if (AuthenticationService.isOffline() || AuthenticationService.isTokenFormatted()) {
-                            return AuthenticationService.getToken();
+                    userData : function(AuthenticationService, $window) {
+                        if (!AuthenticationService.isOffline()) {
+                            return AuthenticationService.getConnectedUserInfos();
                         }
                     },
                     appInfos : function(AuthenticationService, $window, $route) {
@@ -95,16 +91,14 @@ website.config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_RO
                 templateUrl : 'app/components/library/library.html',
                 controller  : 'libraryController',
                 resolve     : {
-                    token   : function(AuthenticationService, $window) {
-                        if (AuthenticationService.isAuthorized([USER_ROLES.User, USER_ROLES.Developer, USER_ROLES.Administrator])) {
-                            return AuthenticationService.getToken();
+                    userData : function(AuthenticationService, $window) {
+                        if (!AuthenticationService.isOffline()) {
+                            return AuthenticationService.getConnectedUserInfos();
                         }
                         $window.location.href = "#/404";
                     },
                     libraryInfos   : function(AuthenticationService, $window) {
-                        if (AuthenticationService.isAuthorized([USER_ROLES.User, USER_ROLES.Developer, USER_ROLES.Administrator])) {
-                            return AuthenticationService.getConnectedUserLibraryInfos();
-                        }
+                        return AuthenticationService.getConnectedUserLibraryInfos();
                     }
                 }
             })
@@ -113,9 +107,9 @@ website.config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_RO
                 templateUrl : 'app/components/progression/progression.html',
                 controller  : 'progressionController',
                 resolve     : {
-                    token   : function(AuthenticationService, $window) {
-                        if (AuthenticationService.isAuthorized([USER_ROLES.User, USER_ROLES.Developer, USER_ROLES.Administrator])) {
-                            return AuthenticationService.getToken();
+                    userData : function(AuthenticationService, $window) {
+                        if (!AuthenticationService.isOffline()) {
+                            return AuthenticationService.getConnectedUserInfos();
                         }
                         $window.location.href = "#/404";
                     }

@@ -10,25 +10,27 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 	authService.login = function(data) {
 		return $http.post(url + '/api/connection', data)
 		.success(function(result) {
-			if (result.Error == false) {
-				if (data.checkbox) {
-					$window.localStorage.setItem('store_token', result.Token);
-				} else {
-					$cookies.put('store_token', result.Token);
-				}
-				$window.location.href = "#/"
+			if (data.checkbox) {
+				$window.localStorage.setItem('store_token', result.data.token);
+				$window.localStorage.setItem('store_id', result.data.userId);
+			} else {
+				$cookies.put('store_token', result.data.token);
+				$cookies.put('store_id', result.data.userId);
 			}
+			$window.location.href = "#/"
 		});
 	}
 
 	authService.disconnect = function() {
 		if (authService.isAuthenticated()) {
-			if ($window.localStorage.getItem('store_token') !== null) {
+			if ($window.localStorage.getItem('store_token') !== null && $window.localStorage.getItem('store_id') !== null) {
 				$window.localStorage.removeItem('store_token');
+				$window.localStorage.removeItem('store_id')
 				$window.location.href = "#/"
 				$window.location.reload();
-			} else if ($cookies.get('store_token') !== undefined) {
+			} else if ($cookies.get('store_token') !== undefined && $cookies.get('store_id') !== undefined) {
 				$cookies.remove('store_token');
+				$cookies.remove('store_id');
 				$window.location.href = "#/"
 				$window.location.reload();
 			}
@@ -36,10 +38,11 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 	}
 
 	authService.isOffline = function() {
-		return $window.localStorage.getItem('store_token') === null && $cookies.get('store_token') === undefined;
+		return $window.localStorage.getItem('store_token') === null && $window.localStorage.getItem('store_id') === null && 
+		$cookies.get('store_token') === undefined && $cookies.get('store_id') === undefined;
 	}
 
-	authService.isTokenFormatted = function () {
+	/*authService.isTokenFormatted = function () {
 		if ($window.localStorage.getItem('store_token') !== null) {
 			try {
 				var userInfos = jwtHelper.decodeToken($window.localStorage.getItem('store_token'));
@@ -55,37 +58,14 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 				return false;
 			}
 		}
-	}
+	}*/
 
 	authService.isAuthenticated = function() {
-		if ($window.localStorage.getItem('store_token') !== null) {
-			var token = $window.localStorage.getItem('store_token');
-			if (authService.isTokenFormatted(token)) {
-				var userInfos = jwtHelper.decodeToken(token);
-				return userInfos.id !== undefined;
-			}
-		} else if ($cookies.get('store_token') !== undefined) {
-			var token = $cookies.get('store_token');
-			if (authService.isTokenFormatted(token)) {
-				var userInfos = jwtHelper.decodeToken(token);
-				return userInfos.id !== undefined;
-			}
-		}
+		return $window.localStorage.getItem('store_token') !== null && $window.localStorage.getItem('store_id') !== null ||
+		$cookies.get('store_token') !== undefined && $cookies.get('store_id') !== undefined;
 	}
 
 	authService.getToken = function() {
-		if (authService.isAuthenticated()) {
-			if ($window.localStorage.getItem('store_token') !== null) {
-				var userInfos = jwtHelper.decodeToken($window.localStorage.getItem('store_token'));
-				return userInfos;
-			} else if ($cookies.get('store_token') !== undefined) {
-				var userInfos = jwtHelper.decodeToken($cookies.get('store_token'));
-				return userInfos;
-			}
-		}
-	}
-
-	authService.getEncryptedToken = function() {
 		if (authService.isAuthenticated()) {
 			if ($window.localStorage.getItem('store_token') !== null) {
 				return $window.localStorage.getItem('store_token');
@@ -95,15 +75,35 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 		}
 	}
 
+	/*authService.getEncryptedToken = function() {
+		if (authService.isAuthenticated()) {
+			if ($window.localStorage.getItem('store_token') !== null) {
+				return $window.localStorage.getItem('store_token');
+			} else if ($cookies.get('store_token') !== undefined) {
+				return $cookies.get('store_token');
+			}
+		}
+	}*/
+
+	authService.getId = function() {
+		if (authService.isAuthenticated()) {
+			if ($window.localStorage.getItem('store_id') !== null) {
+				return $window.localStorage.getItem('store_id');
+			} else if ($cookies.get('store_id') !== undefined) {
+				return $cookies.get('store_id');
+			}
+		}
+	}
+
 	authService.getConnectedUserInfos = function() {
-		return $http.get(url + '/api/users/' + authService.getToken().id);
+		return $http.get(url + '/api/users/' + authService.getId());
 	}
 
 	authService.getConnectedUserLibraryInfos = function () {
 		return $http.get(url + '/api/users/applications');
 	}
 
-	authService.isAuthorized = function(authorizedRoles) {
+	/*authService.isAuthorized = function(authorizedRoles) {
 		if (!angular.isArray(authorizedRoles)) { // prevent type conflict
 			authorizedRoles = [authorizedRoles];
 		}
@@ -120,7 +120,7 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 		} else {
 			return false;
 		}
-	}
+	}*/
 
 	authService.getComments = function(idApp) {
 		return $http.get(url + '/api/comments/' + idApp);
@@ -145,7 +145,7 @@ website.constant('USER_ROLES', {
 
 website.config(function Config($httpProvider, jwtInterceptorProvider) {
   jwtInterceptorProvider.tokenGetter = ['config', 'AuthenticationService', function(config, AuthenticationService) {
-	return AuthenticationService.getEncryptedToken();
+	return AuthenticationService.getToken();
   }];
   $httpProvider.interceptors.push('jwtInterceptor');
 });

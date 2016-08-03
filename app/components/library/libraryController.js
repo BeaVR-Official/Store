@@ -1,16 +1,16 @@
-website.controller('libraryController', function($scope, $rootScope, token, AuthenticationService, USER_ROLES, libraryInfos) {
+website.controller('libraryController', function($scope, $rootScope, userData, AuthenticationService, USER_ROLES, libraryInfos) {
     $rootScope.menu = true;
     $rootScope.filterMenu = false;
     $rootScope.onlineMenu = true;
     $rootScope.offlineMenu = false;
-    $rootScope.profilePicture = token.profilePicture;
+    $rootScope.profilePicture = userData.data.data.profile;
     $rootScope.disconnect = AuthenticationService.disconnect;
-    if (AuthenticationService.isAuthorized(USER_ROLES.Developer)) {
+    /*if (AuthenticationService.isAuthorized(USER_ROLES.Developer)) {
       $rootScope.devMenu = true;
       $rootScope.registerDev = false;
-    } else {
+    } else {*/
       $rootScope.devMenu = false;
       $rootScope.registerDev = true;
-    }
+    //}
     $scope.userAppsInfos = libraryInfos.data.Users;
 });
