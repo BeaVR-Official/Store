@@ -29,10 +29,10 @@
             <p>{{ application.description }}</p>
           </div>
           <div class="ratings">
-              <p class="pull-left">{{ application.nbComments }} avis</p>
+              <p class="pull-left">{{ application.commentsNb }} avis</p>
               <p class="pull-right">
-                <span ng-show="application.avgRating != null" ng-repeat="t in getRating(application.avgRating) track by $index" ng-class="{'ratings-last-child':$last}" class="glyphicon glyphicon-star"></span>
-                <span ng-show="application.avgRating != null" ng-repeat="t in getRating(5 - application.avgRating) track by $index" class="glyphicon glyphicon-star-empty"></span>
+                <span ng-show="application.noteAvg != null" ng-repeat="t in getRating(application.noteAvg) track by $index" ng-class="{'ratings-last-child':$last}" class="glyphicon glyphicon-star"></span>
+                <span ng-show="application.noteAvg != null" ng-repeat="t in getRating(5 - application.noteAvg) track by $index" class="glyphicon glyphicon-star-empty"></span>
               </p>
           </div>
       </div>

@@ -23,10 +23,9 @@ website.controller('mainController', function($scope, $rootScope, $http, Authent
         
     $scope.data = result.data.application;
 
-    console.log(result.data.application);
     $scope.data.sort(function(a, b) {
-      ratingA = a.avgRating;
-      ratingB = b.avgRating;
+      ratingA = a.noteAvg;
+      ratingB = b.noteAvg;
 
       if (ratingA == null)
         ratingA = 0;
