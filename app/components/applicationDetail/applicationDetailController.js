@@ -1,16 +1,17 @@
-website.controller('applicationDetailController', function($scope, $rootScope, token, $http, $routeParams, $location, AuthenticationService, $cookies, appInfos, comments, USER_ROLES){
+website.controller('applicationDetailController', function($scope, $rootScope, $http, $routeParams, $location, AuthenticationService, $cookies, appInfos, comments, USER_ROLES){
 
     $rootScope.menu = true;
     $rootScope.filterMenu = false;
-    if (token !== undefined) {
+
+    /*if (token !== undefined) {
       $rootScope.onlineMenu = true;
       $rootScope.offlineMenu = false;
       $rootScope.profilePicture = token.profilePicture;
       $rootScope.disconnect = AuthenticationService.disconnect;
-      /*if (AuthenticationService.isAuthorized(USER_ROLES.Developer)) {
+      if (AuthenticationService.isAuthorized(USER_ROLES.Developer)) {
         $rootScope.devMenu = true;
         $rootScope.registerDev = false;
-      } else {*/
+      } else {
         $rootScope.devMenu = false;
         $rootScope.registerDev = true;
       //}
@@ -18,17 +19,14 @@ website.controller('applicationDetailController', function($scope, $rootScope, t
       $rootScope.onlineMenu = false;
       $rootScope.offlineMenu = true;
       $rootScope.devMenu = false;
-    }
+    }*/
 
     var limit = 3;
 
     $scope.paymentType = false;
     $scope.isConnected = !(AuthenticationService.isOffline());
 
-    console.log("IS CONNECTED ");
-    console.log($scope.isConnected);
-
-    $scope.appInfos = appInfos.data.Applications;
+    $scope.appInfos = appInfos.data.data.application;
 
     if ($scope.appInfos.price == "0")
       $scope.paymentType = true;
@@ -37,23 +35,23 @@ website.controller('applicationDetailController', function($scope, $rootScope, t
     $scope.noWrapSlides = false;
     $scope.active = 0;
     $scope.appInfosScreenshots = [];
-    $scope.appInfos.screenshots.split(",").forEach(function(data, i) {
+    /*$scope.appInfos.screenshots.split(",").forEach(function(data, i) {
       $scope.appInfosScreenshots.push({ image: data, id: i });
-    });
+    });*/
 
-    $cookies.put('idApplication', $scope.appInfos.id);
+    /*$cookies.put('idApplication', $scope.appInfos.id);
     $cookies.put('retailer', 999);
     $cookies.put('buyer', AuthenticationService.getToken().id);
     $cookies.put('price', $scope.appInfos.price);
     $cookies.put('commission', 0);
-    $cookies.put('originalPrice', $scope.appInfos.price);
+    $cookies.put('originalPrice', $scope.appInfos.price);*/
 
 
-    $scope.comments = comments.data.Comments;
+    $scope.comments = comments.data.data.comments;
 
     $scope.applicationIsOwned = true;
 
-    var data = {
+    /*var data = {
       "idUser" : AuthenticationService.getToken().id
     };
 
@@ -72,12 +70,12 @@ website.controller('applicationDetailController', function($scope, $rootScope, t
     });
 
     $scope.checkPriceAction = function(){
-
+*/
       /*if ($scope.applicationIsOwned == false) {
         alert("Vous ne pouvez pas acheter deux fois la même application");
         return;
       }*/
-
+/*
       if ($scope.appInfos.price == "0"){
         $scope.purchaseData = {
             application : $routeParams.idApplication,
@@ -104,7 +102,7 @@ website.controller('applicationDetailController', function($scope, $rootScope, t
       }else {
         $location.path('/payment');
       }
-    };
+    };*/
 
     $scope.getRating = function(n) {
       if (n == null)

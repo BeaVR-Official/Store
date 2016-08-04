@@ -55,11 +55,10 @@ website.config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_RO
                     },
                     appInfos : function(AuthenticationService, $window, $route) {
                         var infos = AuthenticationService.getAppInfos($route.current.params.idApplication);
-                        infos.then(function(response){
-                            if (response.data.Error == true)
-                                $window.location.href = "#/404";
-                            if (response.data.Applications.state != 1)
-                                $window.location.href = "#/404";
+                        infos.success(function(response) {
+
+                        }).error(function(response){
+                            $window.location.href = "#/404";
                         });
                         return (infos);
                     },
