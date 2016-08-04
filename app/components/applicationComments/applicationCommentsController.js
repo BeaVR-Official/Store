@@ -1,4 +1,4 @@
-website.controller('applicationCommentsController', function($scope, $rootScope, $http, $routeParams, AuthenticationService, token, appInfos, comments, USER_ROLES){
+website.controller('applicationCommentsController', function($scope, $rootScope, $http, $routeParams, AuthenticationService, token, appInfos, comments){
 
     $rootScope.menu = true;
     $rootScope.filterMenu = false;

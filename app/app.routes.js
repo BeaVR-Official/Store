@@ -1,4 +1,4 @@
-website.config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_ROLES){
+website.config(['$routeProvider', function($routeProvider){
 
       $routeProvider
             .when('/', {
@@ -15,7 +15,15 @@ website.config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_RO
 
             .when('/inscription', {
                 templateUrl : 'app/components/inscription/inscription.html',
-                controller  : 'inscriptionController'
+                controller  : 'inscriptionController',
+                resolve     : {
+                    token : function(AuthenticationService, $window) {
+                        if (AuthenticationService.isOffline()) {
+                            return ;
+                        }
+                        $window.location.href = "#/404";
+                    }
+                }
             })
 
             .when('/connexion', {
@@ -96,7 +104,7 @@ website.config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_RO
                         }
                         $window.location.href = "#/404";
                     },
-                    libraryInfos   : function(AuthenticationService, $window) {
+                    libraryInfos : function(AuthenticationService, $window) {
                         return AuthenticationService.getConnectedUserLibraryInfos();
                     }
                 }
@@ -117,17 +125,20 @@ website.config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_RO
 
             .when('/resetPassword', {
                 templateUrl : 'app/components/resetPassword/resetPassword.html',
-                controller  : 'resetPasswordController'
+                controller  : 'resetPasswordController',
+                resolve     : {
+                    token : function(AuthenticationService, $window) {
+                        if (AuthenticationService.isOffline()) {
+                            return ;
+                        }
+                        $window.location.href = "#/404";
+                    }
+                }
             })
 
             .when('/404', {
                 templateUrl : 'app/components/404/404.html',
                 controller  : '404Controller'
-            })
-
-            .when('/users/edit/:idUsers', {
-                templateUrl : 'pages/usersEdit.html',
-                controller  : 'usersEditController'
             })
 
             .when('/payment', {

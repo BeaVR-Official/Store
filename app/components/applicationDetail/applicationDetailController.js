@@ -1,25 +1,24 @@
-website.controller('applicationDetailController', function($scope, $rootScope, $http, $routeParams, $location, AuthenticationService, $cookies, appInfos, comments, USER_ROLES){
-
+website.controller('applicationDetailController', function($scope, $rootScope, $http, $routeParams, $location, AuthenticationService, $cookies, appInfos, comments, userData) {
     $rootScope.menu = true;
     $rootScope.filterMenu = false;
-
-    /*if (token !== undefined) {
+    if (userData !== undefined) {
+      var userInfos = userData.data.data;
       $rootScope.onlineMenu = true;
       $rootScope.offlineMenu = false;
-      $rootScope.profilePicture = token.profilePicture;
+      $rootScope.profilePicture = userData.data.data.picture;
       $rootScope.disconnect = AuthenticationService.disconnect;
-      if (AuthenticationService.isAuthorized(USER_ROLES.Developer)) {
+      if (userInfos.rights.id == 2) {
         $rootScope.devMenu = true;
         $rootScope.registerDev = false;
       } else {
         $rootScope.devMenu = false;
         $rootScope.registerDev = true;
-      //}
+      }
     } else {
       $rootScope.onlineMenu = false;
       $rootScope.offlineMenu = true;
       $rootScope.devMenu = false;
-    }*/
+    }
 
     var limit = 3;
 

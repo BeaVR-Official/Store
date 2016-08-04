@@ -100,7 +100,7 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 	}
 
 	authService.getConnectedUserLibraryInfos = function () {
-		return $http.get(url + '/api/users/applications');
+		return $http.get(url + '/api/users/' + authService.getId() + '/applications/');
 	}
 
 	/*authService.isAuthorized = function(authorizedRoles) {
@@ -137,12 +137,6 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 	return authService;
 });
 
-website.constant('USER_ROLES', {
-	User 			: 'User',
-	Developer 		: 'Developer',
-	Administrator 	: 'Administrator'
-});
-
 website.config(function Config($httpProvider, jwtInterceptorProvider) {
   jwtInterceptorProvider.tokenGetter = ['config', 'AuthenticationService', function(config, AuthenticationService) {
 	return AuthenticationService.getToken();
@@ -169,6 +163,8 @@ var errorMessage = {
 	"COMMENT_TITLE" : "Le titre de votre commentaire ne peut pas être vide.",
 	"COMMENT_COMMENT" : "Le contenu de votre commentaire ne peut pas être vide.",
 	"EDIT_PROFILE_PASSWORD" : "Les deux mots de passe ne sont pas identiques.",
+	"EDIT_PROFILE_403" : "Vous ne possédez pas les droits nécessaires à la modification de ce compte. Veuillez contacter un administrateur.",
+	"EDIT_PROFILE_404" : "Les informations indiquées sont incorrectes ou incomplètes.",
 	"EDIT_PROFILE" : "Une erreur est survenue lors de la modification du compte. Réessayez dans quelques instants."
 };
 

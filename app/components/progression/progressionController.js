@@ -1,15 +1,16 @@
-website.controller('progressionController', function($scope, $rootScope, userData, AuthenticationService, USER_ROLES) {
+website.controller('progressionController', function($scope, $rootScope, userData, AuthenticationService) {
+    var userInfos = userData.data.data;
     $rootScope.menu = true;
     $rootScope.filterMenu = false;
     $rootScope.onlineMenu = true;
     $rootScope.offlineMenu = false;
     $rootScope.profilePicture = userData.data.data.picture;
     $rootScope.disconnect = AuthenticationService.disconnect;
-    /*if (AuthenticationService.isAuthorized(USER_ROLES.Developer)) {
+    if (userInfos.rights.id == 2) {
       $rootScope.devMenu = true;
       $rootScope.registerDev = false;
-    } else {*/
+    } else {
       $rootScope.devMenu = false;
       $rootScope.registerDev = true;
-    //}
+    }
 });
