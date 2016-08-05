@@ -45,7 +45,7 @@ website.controller('mainController', function($scope, $rootScope, $http, Authent
   $scope.getRating = function(n) {
     if (n == null)
       return new Array(0);
-     return new Array(n);
+     return new Array(Math.ceil(n));
   };
 
   /*

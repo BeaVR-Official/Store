@@ -45,6 +45,7 @@ website.controller('applicationDetailController', function($scope, $rootScope, $
     $cookies.put('commission', 0);
     $cookies.put('originalPrice', $scope.appInfos.price);*/
 
+console.log($scope.appInfos);
 
     $scope.comments = comments.data.data.comments;
 
@@ -103,9 +104,15 @@ website.controller('applicationDetailController', function($scope, $rootScope, $
       }
     };*/
 
-    $scope.getRating = function(n) {
+    $scope.getNumberFullStar = function(n) {
       if (n == null)
         return new Array(0);
-      return new Array(n);
+      return new Array(Math.ceil(n));
     };
+
+    $scope.getNumberEmptyStar = function(n) {
+      if (n == null)
+        return new Array(0);
+      return new Array(Math.trunc(n));
+    }
 });
