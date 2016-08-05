@@ -42,11 +42,17 @@ website.controller('mainController', function($scope, $rootScope, $http, Authent
       console.debug("Failure while fetching applications' list.");
   });
 
-  $scope.getRating = function(n) {
-    if (n == null)
-      return new Array(0);
-     return new Array(Math.ceil(n));
-  };
+    $scope.getNumberFullStar = function(n) {
+      if (n == null)
+        return new Array(0);
+      return new Array(Math.ceil(n));
+    };
+
+    $scope.getNumberEmptyStar = function(n) {
+      if (n == null)
+        return new Array(0);
+      return new Array(Math.trunc(n));
+    }
 
   /*
   *

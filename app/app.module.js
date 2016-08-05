@@ -123,11 +123,11 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 	}*/
 
 	authService.getComments = function(idApp) {
-		return $http.get(url + '/api/applications/' + idApp + '/comments');
+		return $http.get(url + '/api/applications/' + idApp + '/comments?order=ASC');
 	}
 
 	authService.getCommentsLimit = function(idApp, limit) {
-		return $http.get(url + '/api/applications/' + idApp + '/comments?limit=' + limit);
+		return $http.get(url + '/api/applications/' + idApp + '/comments?limit=' + limit + "&order=ASC");
 	}
 
 	authService.getAppInfos = function(idApp) {

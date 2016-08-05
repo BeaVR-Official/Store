@@ -16,12 +16,12 @@
       		<div class="media-body">
                 <h4 class="media-heading">{{appInfos.name }}</h4>
                 <br>
-                <p class="text-left"><b>Publiée le :</b> {{appInfos.creationDate | date:'dd/MM/yyyy'}}</p>
-                <p class="text-left"><b>Développée par :</b> {{ appInfos.authorName }}</p>
+                <p class="text-left"><b>Publiée le :</b> {{appInfos.created_at | date:'dd/MM/yyyy'}}</p>
+                <p class="text-left"><b>Développée par :</b> {{ appInfos.author.public.pseudo }}</p>
                 <div id="app-rating">
                     <p class="text-left"><b>Note moyenne : </b>
-                        <span ng-show="appInfos.avgRating != null" ng-repeat="t in getRating(appInfos.avgRating) track by $index" ng-class="{'app-rating-last-child':$last, 'app-rating-first-child':$first}" class="glyphicon glyphicon-star"></span>
-                        <span ng-show="appInfos.avgRating != null" ng-repeat="t in getRating(5 - appInfos.avgRating) track by $index" class="glyphicon glyphicon-star-empty"></span>
+                        <span ng-show="appInfos.noteAvg != null" ng-repeat="t in getNumberFullStar(appInfos.noteAvg) track by $index" ng-class="{'app-rating-last-child':$last, 'app-rating-first-child':$first}" class="glyphicon glyphicon-star"></span>
+                        <span ng-show="appInfos.noteAvg != null" ng-repeat="t in getNumberEmptyStar(5 - appInfos.noteAvg) track by $index" class="glyphicon glyphicon-star-empty"></span>
                     </p>
                 </div>
            </div>
@@ -65,7 +65,7 @@
     </div>
   </div>
 
-  <h3>{{ appInfos.nbComments > 0 ? 'Tous les commentaires (' + appInfos.nbComments + ')' : 'Aucun commentaire pour cette application' }}</h3>
+  <h3>{{ appInfos.commentsNb > 0 ? 'Tous les commentaires (' + appInfos.commentsNb + ')' : 'Aucun commentaire pour cette application' }}</h3>
 
   <div class="dropdown" id="filter-dropdown">
     <button class="btn btn-default dropdown-toggle btn-filter" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -82,23 +82,23 @@
         <div class="media">
           <div class="left-part-comment">
             <div class="comment-infos">
-              <img class="media-object cadre-images profile-picture" ng-src="{{ commentInfos.profilePicture }}">
+              <img class="media-object cadre-images profile-picture" ng-src="{{ commentInfos.author.public.picture }}">
               <div id="comment-rating">
-                  <span ng-show="commentInfos.rating != null" ng-repeat="t in getRating(commentInfos.rating) track by $index" ng-class="{'ratings-last-child':$last}" class="glyphicon glyphicon-star"></span>
-                  <span ng-show="commentInfos.rating != null" ng-repeat="t in getRating(5 - commentInfos.rating) track by $index" class="glyphicon glyphicon-star-empty"></span>
+                  <span ng-show="commentInfos.rating != null" ng-repeat="t in getNumberFullStar(commentInfos.rating) track by $index" ng-class="{'ratings-last-child':$last}" class="glyphicon glyphicon-star"></span>
+                  <span ng-show="commentInfos.rating != null" ng-repeat="t in getNumberEmptyStar(5 - commentInfos.rating) track by $index" class="glyphicon glyphicon-star-empty"></span>
               </div>
             </div>
           </div>
         <div class="media-body">
           <div class="comment-header">
             <h4 class="media-heading title-comment"> {{ commentInfos.title }}</h4>
-            <p class="text-right author-name">Par <span style="font-weight:bold">{{commentInfos.pseudo == null ? 'Anonyme' : commentInfos.pseudo}}</span></p>
+            <p class="text-right author-name">Par <span style="font-weight:bold">{{commentInfos.author.public.pseudo == null ? 'Anonyme' : commentInfos.author.public.pseudo}}</span></p>
           </div>
             <p>
               {{ commentInfos.comment }}
             </p>
             <ul class="list-inline list-unstyled">
-                <li><span><i class="glyphicon glyphicon-calendar"></i> {{ commentInfos.date | date:'dd/MM/yyyy HH:mm' : '+0200'}}</span></li>
+                <li><span><i class="glyphicon glyphicon-calendar"></i> {{ commentInfos.created_at | date:'dd/MM/yyyy HH:mm' : '+0200'}}</span></li>
           </ul>
         </div>
       </div>

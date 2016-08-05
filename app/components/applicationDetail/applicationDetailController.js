@@ -45,8 +45,6 @@ website.controller('applicationDetailController', function($scope, $rootScope, $
     $cookies.put('commission', 0);
     $cookies.put('originalPrice', $scope.appInfos.price);*/
 
-console.log($scope.appInfos);
-
     $scope.comments = comments.data.data.comments;
 
     $scope.applicationIsOwned = true;

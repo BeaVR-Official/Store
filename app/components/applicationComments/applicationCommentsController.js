@@ -1,19 +1,20 @@
-website.controller('applicationCommentsController', function($scope, $rootScope, $http, $routeParams, AuthenticationService, token, appInfos, comments){
-
+website.controller('applicationCommentsController', function($scope, $rootScope, $http, $routeParams, AuthenticationService, appInfos, comments, userData){
+    
     $rootScope.menu = true;
     $rootScope.filterMenu = false;
-    if (token !== undefined) {
+    if (userData !== undefined) {
+      var userInfos = userData.data.data;
       $rootScope.onlineMenu = true;
       $rootScope.offlineMenu = false;
-      $rootScope.profilePicture = token.profile;
+      $rootScope.profilePicture = userData.data.data.picture;
       $rootScope.disconnect = AuthenticationService.disconnect;
-      /*if (AuthenticationService.isAuthorized(USER_ROLES.Developer)) {
+      if (userInfos.rights.id == 2) {
         $rootScope.devMenu = true;
         $rootScope.registerDev = false;
-      } else {*/
+      } else {
         $rootScope.devMenu = false;
         $rootScope.registerDev = true;
-      //}
+      }
     } else {
       $rootScope.onlineMenu = false;
       $rootScope.offlineMenu = true;
@@ -21,12 +22,12 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
     }
 
     /* If the user is connected, then he can add or edit a comment. Otherwise, the button are disabled and hidden. */
-    if (token === undefined) {
+    if (userData === undefined) {
       $scope.canComment = false;
     }
     else {
       $scope.canComment = true;
-      $scope.userInfos = token;
+      $scope.userInfos = userData.data.data;
     }
 
     /* Variables used for the pagination. */
@@ -43,8 +44,8 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
     $scope.reverseFilters = [false, false, true];
     $scope.selectedFilter = 0;
 
-    $scope.comments = comments.data.Comments;
-    $scope.filteredComments = comments.data.Comments;
+    $scope.comments = comments.data.data.comments;
+    $scope.filteredComments = comments.data.data.comments;
     updateFilteredItems();
 
     /* Variables for the old comment section */
@@ -57,7 +58,7 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
 
     /* Data used when adding a comment */
     $scope.addCommentData = {
-      author : (token === undefined ? 0 : $scope.userInfos.id),
+      author : (userData === undefined ? 0 : $scope.userInfos.id),
       title : '',
       comment : '',
       rating : 3,
@@ -65,14 +66,14 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
     };
 
     /* We bind the preloaded data about the informations of the current application */
-    $scope.appInfos = appInfos.data.Applications;
+    $scope.appInfos = appInfos.data.data.application;
 
     /* Check if the user has already commented this application */
     $scope.checkHasCommented = function() {
 
         /* Get the comment of the user if he already posted one */
-        var userComment = $.grep($scope.comments, function(e){ return e.author == $scope.addCommentData.author; });
-
+        var userComment = $.grep($scope.comments, function(e){ return e.author._id == $scope.addCommentData.author; });
+        
         if (userComment !== undefined && userComment.length > 0) {
           $scope.hasCommented = true;
           $scope.oldComment = userComment[0];
@@ -197,7 +198,7 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
             title : $scope.addCommentData.title,
             comment : $scope.addCommentData.comment,
             rating : $scope.addCommentData.rating,
-            author : $scope.addCommentData.author,
+            author : $scope.addCommentData.author._id,
             application : $scope.addCommentData.application
           };
 
@@ -216,7 +217,7 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
             returnMessageDiv.addClass("error-message"); 
           }
           else {
-            $http.put(url + '/api/comments/' + $scope.addCommentData.idComment, data)
+            $http.put(url + '/api/applications/' + $scope.appInfos.id + "/comments/" + $scope.addCommentData.idComment, data)
                   .success(function(result) {
                       if (result.Error == false) {
                         $scope.returnMessage = successMessage["EDIT_COMMENT"];
@@ -277,9 +278,15 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
 
     /* Rating handling */
 
-    $scope.getRating = function(n) {
+    $scope.getNumberFullStar = function(n) {
       if (n == null)
         return new Array(0);
-      return new Array(n);
+      return new Array(Math.ceil(n));
     };
+
+    $scope.getNumberEmptyStar = function(n) {
+      if (n == null)
+        return new Array(0);
+      return new Array(Math.trunc(n));
+    }
 });
