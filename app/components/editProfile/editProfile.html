@@ -67,7 +67,7 @@
               <div class="form-group">
                 <label class="col-md-3 control-label">Nouveau mot de passe:</label>
                 <div class="col-md-8">
-                  <input class="form-control" name="password" type="password" ng-minlength="8" placeholder="Nouveau mot de passe" ng-class="{'no-error' : editProfileForm.password.$valid}" ng-model="userInfos.password" ng-required="userInfos.confirmPassword">
+                  <input class="form-control" name="password" type="password" ng-minlength="8" placeholder="Nouveau mot de passe" ng-class="{'no-error' : editProfileForm.password.$valid}" ng-model="userInfos.password" ng-required="userInfos.confirmPassword.length">
                 </div>
               </div>
               <div ng-messages="editProfileForm.password.$error">
@@ -76,7 +76,7 @@
               <div class="form-group">
                 <label class="col-md-3 control-label">Confirmer le mot de passe:</label>
                 <div class="col-md-8">
-                  <input class="form-control" name="confirmPassword" type="password" ng-minlength="8" placeholder="Confirmer le mot de passe" ng-class="{'no-error' : editProfileForm.confirmPassword.$valid}" ng-required="userInfos.password" ng-model="userInfos.confirmPassword">
+                  <input class="form-control" name="confirmPassword" type="password" ng-minlength="8" placeholder="Confirmer le mot de passe" ng-class="{'no-error' : editProfileForm.confirmPassword.$valid}" ng-required="userInfos.password.length" ng-model="userInfos.confirmPassword">
                 </div>
               </div>
               <div ng-messages="editProfileForm.confirmPassword.$error">
@@ -85,7 +85,7 @@
               <div class="form-group">
                 <label class="col-md-3 control-label"></label>
                 <div class="col-md-8">
-                  <button type="submit" class="btn btn-beavr" title="Sauvegarder les changements" ng-click="editProfileAction()">Sauvegarder les changements<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                  <button type="submit" ng-disabled="editProfileForm.$invalid" class="btn btn-beavr" title="Sauvegarder les changements" ng-click="editProfileAction()">Sauvegarder les changements<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
                 </div>
               </div>
           </div>

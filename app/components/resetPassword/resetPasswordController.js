@@ -26,6 +26,7 @@ website.controller('resetPasswordController', function($scope, $rootScope, $http
             $scope.connectionData = {};
             $scope.returnMessage = successMessage["MDPOUBLIE"];
             returnMessageDiv.addClass("success-message");
+            returnMessageDiv.removeClass("error-message");
             $scope.loading = false;
 
         })
@@ -41,6 +42,7 @@ website.controller('resetPasswordController', function($scope, $rootScope, $http
             }
             $scope.loading = false;
             returnMessageDiv.addClass("error-message");
+            returnMessageDiv.removeClass("success-message");
 
         });
       };

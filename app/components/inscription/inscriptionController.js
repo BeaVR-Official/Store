@@ -32,6 +32,7 @@ website.controller('inscriptionController', function($scope, $rootScope, $http) 
                 $scope.inscriptionData = {};
                 $scope.returnMessage = successMessage["INSCRIPTION"];
                 returnMessageDiv.addClass("success-message");
+                returnMessageDiv.removeClass("error-message");
                 $scope.loading = false;
 
               })
@@ -48,6 +49,7 @@ website.controller('inscriptionController', function($scope, $rootScope, $http) 
 
                   $scope.loading = false;
                   returnMessageDiv.addClass("error-message");
+                  returnMessageDiv.removeClass("success-message");
           });
               
         }

@@ -62,40 +62,47 @@ website.controller('editProfileController', function($scope, $rootScope, $http, 
     };
 
     var returnMessageDiv = angular.element(document.querySelector('#returnMessage'));
+    var dataToSend = {
+      email: data.email
+    };
+
     if (data.password && data.confirmPassword) {
       if (!arePasswordsMatching(data.password, data.confirmPassword)) {
+        returnMessageDiv.removeClass("success-message");
         returnMessageDiv.addClass("error-message");
         $scope.returnMessage = errorMessage["EDIT_PROFILE_PASSWORD"];
         return ;
+      } else {
+        dataToSend.password = data.password;
       }
     }
     $scope.loading = true;
-    var dataToSend = {
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      password: data.password,
-      profilePicture: data.profilePicture
-    };
+
+    if (data.firstName)
+      dataToSend.firstName = data.firstName;
+    if (data.lastName)
+      dataToSend.lastName = data.lastName;
     if (!data.newProfilePicture === null)
-      dataToSend.profilePicture = data.newProfilePicture;
+      dataToSend.picture = data.newProfilePicture;
     $http.put(url + '/api/users/' + userInfos.id, dataToSend)
         .success(function(result) {
           $scope.userInfos = {
-            firstName: result.Users.firstName,
-            lastName: result.Users.lastName,
-            email: result.Users.email,
-            pseudo: result.Users.pseudo,
+            firstName: result.data.user.firstName,
+            lastName: result.data.user.lastName,
+            email: result.data.user.email,
+            pseudo: result.data.user.pseudo,
             password: '',
             confirmPassword: '',
-            profilePicture: result.Users.profilePicture,
+            profilePicture: result.data.user.profilePicture,
             newProfilePicture: null
           };
+          returnMessageDiv.removeClass("error-message");
           returnMessageDiv.addClass("success-message");
           $scope.returnMessage = successMessage["EDIT_PROFILE"];
           $scope.loading = false;
       })
       .error(function(result) {
+          returnMessageDiv.removeClass("success-message");
           returnMessageDiv.addClass("error-message");
           switch (result.error.status)
           {
