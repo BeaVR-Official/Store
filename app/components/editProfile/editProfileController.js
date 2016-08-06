@@ -28,26 +28,35 @@ website.controller('editProfileController', function($scope, $rootScope, $http, 
 
   /* A update quand l'upload d'image sera fix */
   $scope.uploadImageAction = function() {
-    var file = $scope.userInfos.newProfilePicture;
-    file.upload = Upload.upload({
-      url: url + '/api/users/upload/' + userInfos.id,
-      method: 'POST',
-      fields: {id: userInfos.id},
-      file: file,
-      fileFormDataName: 'file'
+    var file = Upload.base64DataUrl($scope.userInfos.newProfilePicture).then(function(res) {
+    var data = {
+          picture : {
+            filename : 'file.jpg',
+            buffer : res
+          }
+        };
+    $http.put(url + '/api/users/' + userInfos.id, data)
+        .success(function(result) {
+          $http.get(url + '/api/users/' + userInfos.id)
+            .success(function(result) {
+              console.log(result);
+              $scope.userInfos = {
+                firstName: result.data.firstName,
+                lastName: result.data.lastName,
+                email: result.data.email,
+                pseudo: result.data.pseudo,
+                password: '',
+                confirmPassword: '',
+                profilePicture: result.data.picture,
+                newProfilePicture: null
+              };
+            }).error(function(error) {
+              console.debug(error);
+            })
+        }).error(function(error) {
+          console.debug(error);
+        });
     });
-
-    file.upload.then(function(response) {
-      file.result = response.data;
-    }, function(response) {
-      if (response.status > 0)
-        console.log(response.data);
-    });
-
-    file.upload.progress(function(event) {
-      // Math.min is to fix IE which reports 200% sometimes
-      file.progress = Math.min(100, parseInt(100.0 * event.loaded / event.total));
-    })
   }
 
   $scope.editProfileAction = function() {
@@ -56,9 +65,7 @@ website.controller('editProfileController', function($scope, $rootScope, $http, 
       lastName: $scope.userInfos.lastName,
       email: $scope.userInfos.email,
       password: $scope.userInfos.password,
-      confirmPassword: $scope.userInfos.confirmPassword,
-      profilePicture: $scope.userInfos.profilePicture,
-      newProfilePicture: $scope.userInfos.newProfilePicture
+      confirmPassword: $scope.userInfos.confirmPassword
     };
 
     var returnMessageDiv = angular.element(document.querySelector('#returnMessage'));
@@ -82,8 +89,6 @@ website.controller('editProfileController', function($scope, $rootScope, $http, 
       dataToSend.firstName = data.firstName;
     if (data.lastName)
       dataToSend.lastName = data.lastName;
-    if (!data.newProfilePicture === null)
-      dataToSend.picture = data.newProfilePicture;
     $http.put(url + '/api/users/' + userInfos.id, dataToSend)
         .success(function(result) {
           $scope.userInfos = {
@@ -93,7 +98,7 @@ website.controller('editProfileController', function($scope, $rootScope, $http, 
             pseudo: result.data.user.pseudo,
             password: '',
             confirmPassword: '',
-            profilePicture: result.data.user.profilePicture,
+            profilePicture: result.data.user.picture,
             newProfilePicture: null
           };
           returnMessageDiv.removeClass("error-message");

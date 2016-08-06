@@ -22,10 +22,6 @@
                 <div class="form-group">
                   <button ng-disabled="!editProfileForm.file.$valid || !userInfos.newProfilePicture" type="submit" class="btn btn-beavr" title="Uploader l'image'" ng-click="uploadImageAction()">Uploader l'image</button>
                 </div>
-                <div class="progress">
-                  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{userInfos.newProfilePicture.progress}}%;">
-                  </div>
-                </div>
               <div ng-show="userInfos.newProfilePicture.result" class="list-group-item list-group-item-success">Upload terminé.</div>
             </div>
           </div>

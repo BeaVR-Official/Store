@@ -2,7 +2,7 @@
 
 var url = "http://beavr.fr:3000";
 
-var website = angular.module('website', ['ngRoute', 'ngAnimate', 'ngCookies', 'ngMessages', 'angular-jwt', 'isteven-multi-select', 'ngFileUpload', 'ui.bootstrap']);
+var website = angular.module('website', ['ngRoute', 'ngAnimate', 'ngCookies', 'ngMessages', 'angular-jwt', 'isteven-multi-select', 'ngFileUpload', 'angular-loading-bar', 'ui.bootstrap']);
 
 website.factory('AuthenticationService', function($http, $window, $cookies, jwtHelper) {
 	var authService = {};
