@@ -147,7 +147,8 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
                     returnMessageDiv.addClass("success-message");
 
                     // Add the comment to the list so it can refresh dynamically.
-                    data.created_at = (new Date ((new Date((new Date(new Date())).toISOString() )).getTime() - ((new Date()).getTimezoneOffset()*60000))).toISOString().slice(0, 19).replace('T', ' ');
+                    data.created_at = new Date(); //(new Date ((new Date((new Date(new Date())).toISOString() )).getTime() - ((new Date()).getTimezoneOffset()*60000))).toISOString().slice(0, 19).replace('T', ' ');
+                    console.log(data.created_at);
                     data.author.public.picture = $scope.userInfos.picture;
                     data.author.public.pseudo = $scope.userInfos.pseudo;
                     $scope.comments.push(data);
