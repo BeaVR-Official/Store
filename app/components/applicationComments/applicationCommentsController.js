@@ -131,12 +131,14 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
             $scope.returnMessage = errorMessage["COMMENT_TITLE"];
             $scope.loading = false;
             returnMessageDiv.addClass("error-message");
+            returnMessageDiv.removeClass("success-message"); 
           }
           else if (!data.comment || data.comment.length == 0)
           {
             $scope.returnMessage = errorMessage["COMMENT_COMMENT"];    
             $scope.loading = false;
             returnMessageDiv.addClass("error-message"); 
+            returnMessageDiv.removeClass("success-message"); 
           }
           else {
             $http.post(url + '/api/applications/' + $scope.appInfos._id + "/comments", data)
@@ -145,6 +147,7 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
                     $scope.checkHasCommented();
                     $scope.returnMessage = successMessage["ADD_COMMENT"];
                     returnMessageDiv.addClass("success-message");
+                    returnMessageDiv.removeClass("error-message"); 
 
                     // Add the comment to the list so it can refresh dynamically.
                     data.created_at = new Date(); //(new Date ((new Date((new Date(new Date())).toISOString() )).getTime() - ((new Date()).getTimezoneOffset()*60000))).toISOString().slice(0, 19).replace('T', ' ');
@@ -166,7 +169,8 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
                   })
                 .error(function(result) {
                     $scope.returnMessage = errorMessage["ADD_COMMENT"];
-                    returnMessageDiv.addClass("error-message"); 
+                    returnMessageDiv.addClass("error-message");
+                    returnMessageDiv.removeClass("success-message");
                     $scope.loading = false;
             });
           }
@@ -179,6 +183,7 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
 
         if ($scope.canComment == false) {
           returnMessageDiv.addClass("error-message");
+          returnMessageDiv.removeClass("success-message");
           $scope.returnMessage = errorMessage["EDIT_HTML"];
         }
         else {
@@ -196,19 +201,23 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
             $scope.returnMessage = errorMessage["COMMENT_TITLE"];
             $scope.loading = false;
             returnMessageDiv.addClass("error-message");
+            returnMessageDiv.removeClass("success-message"); 
           }
           else if (!data.comment || data.comment.length == 0)
           {
             $scope.returnMessage = errorMessage["COMMENT_COMMENT"];    
             $scope.loading = false;
-            returnMessageDiv.addClass("error-message"); 
+            returnMessageDiv.addClass("error-message");
+            returnMessageDiv.removeClass("success-message"); 
+
           }
           else {
             $http.put(url + '/api/applications/' + $scope.appInfos.id + "/comments/" + $scope.addCommentData.idComment, data)
                   .success(function(result) {
 
                       $scope.returnMessage = successMessage["EDIT_COMMENT"];
-                      returnMessageDiv.addClass("success-message"); 
+                      returnMessageDiv.addClass("success-message");
+                      returnMessageDiv.removeClass("error-message"); 
                       
                       for (var i = 0; i < $scope.comments.length; i++)
                       {
@@ -229,7 +238,8 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
                   .error(function(result) {
 
                       $scope.returnMessage = errorMessage["EDIT_COMMENT"];
-                      returnMessageDiv.addClass("error-message"); 
+                      returnMessageDiv.addClass("error-message");
+                      returnMessageDiv.removeClass("success-message");
                       $scope.loading = false;
               });
           }
