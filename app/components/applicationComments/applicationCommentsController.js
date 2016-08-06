@@ -121,8 +121,7 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
             title : $scope.addCommentData.title,
             comment : $scope.addCommentData.comment,
             rating : $scope.addCommentData.rating,
-            author : $scope.addCommentData.author,
-            application : $scope.addCommentData.application
+            author : { public : { picture : "" } },
           };
 
           $scope.loading = true;
@@ -140,36 +139,26 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
             returnMessageDiv.addClass("error-message"); 
           }
           else {
-            $http.post(url + '/api/comments/' + $routeParams.idApplication, data)
+            $http.post(url + '/api/applications/' + $scope.appInfos._id + "/comments", data)
                 .success(function(result) {
-                    if (result.Error == false) {
-                      
-                      $scope.checkHasCommented();
-                      $scope.returnMessage = successMessage["ADD_COMMENT"];
-                      returnMessageDiv.addClass("success-message");
 
-                      // Add the comment to the list so it can refresh dynamically.
-                      data.date = (new Date ((new Date((new Date(new Date())).toISOString() )).getTime() - ((new Date()).getTimezoneOffset()*60000))).toISOString().slice(0, 19).replace('T', ' ');
-                      data.profilePicture = $scope.userInfos.profilePicture;
-                      $scope.comments.push(data);
-                      $scope.filteredComments = comments.data.Comments;
-                      updateFilteredItems();
-                      
-                      $scope.appInfos.nbComments += 1;
+                    $scope.checkHasCommented();
+                    $scope.returnMessage = successMessage["ADD_COMMENT"];
+                    returnMessageDiv.addClass("success-message");
 
-                      setTimeout(function() {
-                          $('#addComment').collapse('hide');
-                        }, 3000);
+                    // Add the comment to the list so it can refresh dynamically.
+                    data.created_at = (new Date ((new Date((new Date(new Date())).toISOString() )).getTime() - ((new Date()).getTimezoneOffset()*60000))).toISOString().slice(0, 19).replace('T', ' ');
+                    data.author.public.picture = $scope.userInfos.picture;
+                    data.author.public.pseudo = $scope.userInfos.pseudo;
+                    $scope.comments.push(data);
+                    $scope.filteredComments = comments.data.data.comments;
+                    updateFilteredItems();
+                    
+                    $scope.appInfos.commentsNb += 1;
 
-                    } else {
-                      switch (result.Code)
-                      {
-                        case 102:
-                          $scope.returnMessage = errorMessage["ADD_COMMENT_102"];
-                          returnMessageDiv.addClass("error-message"); 
-                          break;
-                      }
-                    }
+                    setTimeout(function() {
+                        $('#addComment').collapse('hide');
+                      }, 3000);
 
                     $scope.loading = false;
 
@@ -194,12 +183,9 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
         else {
 
           var data = {
-            idComment : $scope.addCommentData.idComment,
             title : $scope.addCommentData.title,
             comment : $scope.addCommentData.comment,
             rating : $scope.addCommentData.rating,
-            author : $scope.addCommentData.author._id,
-            application : $scope.addCommentData.application
           };
 
           $scope.loading = true;
@@ -219,37 +205,28 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
           else {
             $http.put(url + '/api/applications/' + $scope.appInfos.id + "/comments/" + $scope.addCommentData.idComment, data)
                   .success(function(result) {
-                      if (result.Error == false) {
-                        $scope.returnMessage = successMessage["EDIT_COMMENT"];
-                        returnMessageDiv.addClass("success-message"); 
-                        
-                        for (var i = 0; i < $scope.comments.length; i++)
-                        {
-                          if ($scope.comments[i].author == $scope.userInfos.id) {
-                            $scope.comments[i].title = data.title;
-                            $scope.comments[i].comment = data.comment;
-                            $scope.comments[i].rating = data.rating;
-                          }
-                        }
 
-                        setTimeout(function() {
-                            $('#addComment').collapse('hide');
-                          }, 3000);
-
-                      } else {
-                        switch (result.Code)
-                        {
-                          case 102:
-                            $scope.returnMessage = errorMessage["EDIT_COMMENT_102"];
-                            returnMessageDiv.addClass("error-message"); 
-                            break;
+                      $scope.returnMessage = successMessage["EDIT_COMMENT"];
+                      returnMessageDiv.addClass("success-message"); 
+                      
+                      for (var i = 0; i < $scope.comments.length; i++)
+                      {
+                        if ($scope.comments[i].author._id == $scope.userInfos._id) {
+                          $scope.comments[i].title = data.title;
+                          $scope.comments[i].comment = data.comment;
+                          $scope.comments[i].rating = data.rating;
                         }
                       }
+
+                      setTimeout(function() {
+                          $('#addComment').collapse('hide');
+                        }, 3000);
 
                       $scope.loading = false;
 
                     })
                   .error(function(result) {
+
                       $scope.returnMessage = errorMessage["EDIT_COMMENT"];
                       returnMessageDiv.addClass("error-message"); 
                       $scope.loading = false;
