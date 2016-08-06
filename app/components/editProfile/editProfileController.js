@@ -39,7 +39,6 @@ website.controller('editProfileController', function($scope, $rootScope, $http, 
         .success(function(result) {
           $http.get(url + '/api/users/' + userInfos.id)
             .success(function(result) {
-              console.log(result);
               $scope.userInfos = {
                 firstName: result.data.firstName,
                 lastName: result.data.lastName,
