@@ -39,7 +39,7 @@ website.controller('mainController', function($scope, $rootScope, $http, Authent
     $scope.filteredApplications = angular.copy($scope.data);
 
     }).error(function(result){
-      console.debug("Failure while fetching applications' list.");
+
   });
 
     $scope.getNumberFullStar = function(n) {
@@ -84,12 +84,15 @@ website.controller('mainController', function($scope, $rootScope, $http, Authent
 
       for (var j = 0; j < $scope.filteredApplications.length; j++) {
         var compatibleDevices = 0;
-        for (var i = 0; i < $scope.filteredDevices.length; i++)
-            if ($scope.filteredApplications[j].devicesNames.search($scope.filteredDevices[i].name) != -1)
+        for (var i = 0; i < $scope.filteredDevices.length; i++) {
+          console.log($scope.filteredDevices[i]);
+          console.log($scope.filteredDevices[j]);
+            if ($scope.filteredApplications[j].devicesName.indexOf($scope.filteredDevices[i]._id) != -1)
               if ($scope.checkPriceFilter($scope.filteredApplications[j].price, $scope.filterPrice.priceFilter) == true)
                 compatibleDevices++;
+        }
         for (var k = 0; k < $scope.filteredCategories.length; k++)
-          if ($scope.filteredApplications[j].categoriesNames.search($scope.filteredCategories[k].name) != -1)
+          if ($scope.filteredApplications[j].categoriesName.indexOf($scope.filteredCategories[k]._id) != -1)
             if ($scope.checkPriceFilter($scope.filteredApplications[j].price, $scope.filterPrice.priceFilter) == true)
               compatibleDevices++;
         if (compatibleDevices == 0) {
@@ -151,7 +154,6 @@ website.controller('filterController', function($scope, $rootScope, $http) {
   }).error(function(result) {
 
   });
-
 
   $http.get(url + '/api/categories').success(function(result) {
     $scope.categories = result.data.categories;

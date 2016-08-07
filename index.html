@@ -110,7 +110,7 @@
                     <p class="lead">Matériel de RV</p>
                     <div directive-id="multi-select-device" isteven-multi-select input-model="devices" output-model="filteredDevices"
                     button-label="name" item-label="name" tick-property="ticked" helper-elements="filter" max-labels="2"
-                    max-height=100px" search-property="name" output-properties="name" translation="localLangDevices" on-item-click="sendFilters()">
+                    max-height=100px" search-property="name" output-properties="name _id" translation="localLangDevices" on-item-click="sendFilters()">
                     </div>
                 </div>
 
@@ -118,7 +118,7 @@
                     <p class="lead">Catégories</p>
                     <div directive-id="multi-select-category" isteven-multi-select input-model="categories" output-model="filteredCategories"
                     button-label="name" item-label="name" tick-property="ticked" helper-elements="filter" max-labels="2"
-                    max-height=100px" search-property="name" output-properties="name" translation="localLangCategories" on-item-click="sendFilters()">
+                    max-height=100px" search-property="name" output-properties="name _id" translation="localLangCategories" on-item-click="sendFilters()">
                     </div>
                 </div>
 
