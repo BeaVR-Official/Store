@@ -13,7 +13,7 @@
               <h6>Choisir une autre photo de profil...</h6>
                 <div class="form-group">
                   <input type="file" ngf-select ng-model="userInfos.newProfilePicture" name="file" ngf-pattern="'image/*'"
-                    ngf-accept="'image/*'" ngf-max-size="5MB" ngf-min-height="100" ngf-validate="{pattern: '.jpg, .png, .bmp'}"
+                    ngf-accept="'image/*'" ngf-max-size="5MB" ngf-min-height="100" ngf-validate="{pattern: '.jpg, .png, .gif'}"
                     ngf-resize="{width: 150, height: 150}">
                   <div ng-show="editProfileForm.file.$error.pattern" class="error-message">Le fichier doit être une image.</div>
                   <div ng-show="editProfileForm.file.$error.maxSize" class="error-message">La taille du fichier doit être inférieure à 5MB.</div>
