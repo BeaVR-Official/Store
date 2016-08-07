@@ -31,29 +31,28 @@ website.controller('editProfileController', function($scope, $rootScope, $http, 
     var file = Upload.base64DataUrl($scope.userInfos.newProfilePicture).then(function(res) {
     var data = {
           picture : {
-            filename : 'file.jpg',
+            filename : $scope.userInfos.newProfilePicture.name,
             buffer : res
           }
         };
     $http.put(url + '/api/users/' + userInfos.id, data)
         .success(function(result) {
-          $http.get(url + '/api/users/' + userInfos.id)
-            .success(function(result) {
-              $scope.userInfos = {
-                firstName: result.data.firstName,
-                lastName: result.data.lastName,
-                email: result.data.email,
-                pseudo: result.data.pseudo,
-                password: '',
-                confirmPassword: '',
-                profilePicture: result.data.picture,
-                newProfilePicture: null
-              };
-            }).error(function(error) {
-              console.debug(error);
-            })
+          $scope.userInfos = {
+            firstName: result.data.user.firstName,
+            lastName: result.data.user.lastName,
+            email: result.data.user.email,
+            pseudo: result.data.user.pseudo,
+            password: '',
+            confirmPassword: '',
+            profilePicture: result.data.user.picture,
+            newProfilePicture: null
+          };
+          $rootScope.profilePicture = result.data.user.picture;
         }).error(function(error) {
-          console.debug(error);
+          var returnMessageDiv = angular.element(document.querySelector('#returnMessage'));
+          returnMessageDiv.removeClass("success-message");
+          returnMessageDiv.addClass("error-message");
+          $scope.returnMessage = errorMessage["EDIT_PROFILE_PROFILE_PICTURE"];
         });
     });
   }

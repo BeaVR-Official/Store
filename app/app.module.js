@@ -162,6 +162,7 @@ var errorMessage = {
 	"COMMENT_TITLE" : "Le titre de votre commentaire ne peut pas être vide.",
 	"COMMENT_COMMENT" : "Le contenu de votre commentaire ne peut pas être vide.",
 	"EDIT_PROFILE_PASSWORD" : "Les deux mots de passe ne sont pas identiques.",
+	"EDIT_PROFILE_PROFILE_PICTURE" : "Une erreur est survenue lors du téléversement de votre photo de profil. Réessayez dans quelques instants.",
 	"EDIT_PROFILE_403" : "Vous ne possédez pas les droits nécessaires à la modification de ce compte. Veuillez contacter un administrateur.",
 	"EDIT_PROFILE_404" : "Les informations indiquées sont incorrectes ou incomplètes.",
 	"EDIT_PROFILE" : "Une erreur est survenue lors de la modification du compte. Réessayez dans quelques instants."
