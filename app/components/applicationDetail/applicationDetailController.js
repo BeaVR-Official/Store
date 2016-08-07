@@ -33,10 +33,10 @@ website.controller('applicationDetailController', function($scope, $rootScope, $
     $scope.myInterval = 10000;
     $scope.noWrapSlides = false;
     $scope.active = 0;
+
     $scope.appInfosScreenshots = [];
-    /*$scope.appInfos.screenshots.split(",").forEach(function(data, i) {
-      $scope.appInfosScreenshots.push({ image: data, id: i });
-    });*/
+    for (var i = 0; i < $scope.appInfos.screenshots.length; i++)
+      $scope.appInfosScreenshots.push({ image: $scope.appInfos.screenshots[i], id: i});
 
     /*$cookies.put('idApplication', $scope.appInfos.id);
     $cookies.put('retailer', 999);
