@@ -99,8 +99,12 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
 
     /* Add Comment */
 
+    $scope.initialRating = null;
+
     // No Angular handling for Bootstrap star-rating so we do it à la mano
     $('#input-21b').on('rating.change', function(event, value, caption) {
+      if ($scope.hasCommented == true && $scope.initialRating == null)
+        $scope.initialRating = $scope.addCommentData.rating;
       // 'value' is a string here!
       $scope.addCommentData.rating = Number(value);
     });
@@ -157,9 +161,11 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
                     $scope.comments.push(data);
                     $scope.filteredComments = comments.data.data.comments;
                     updateFilteredItems();
+                    updateAverageNote(null, data.rating);
                     
                     $scope.appInfos.commentsNb += 1;
                     $scope.hasCommented = true;
+                    $scope.initialRating = data.rating;
 
                     setTimeout(function() {
                         $('#addComment').collapse('hide');
@@ -219,7 +225,7 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
                       $scope.returnMessage = successMessage["EDIT_COMMENT"];
                       returnMessageDiv.addClass("success-message");
                       returnMessageDiv.removeClass("error-message"); 
-                      
+
                       for (var i = 0; i < $scope.comments.length; i++)
                       {
                         if ($scope.comments[i].author._id == $scope.userInfos._id) {
@@ -228,6 +234,9 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
                           $scope.comments[i].rating = data.rating;
                         }
                       }
+
+                      updateAverageNote($scope.initialRating, data.rating);
+                      $scope.initialRating = data.rating;
 
                       setTimeout(function() {
                           $('#addComment').collapse('hide');
@@ -277,5 +286,21 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
       if (n == null)
         return new Array(0);
       return new Array(Math.trunc(n));
+    }
+
+    function updateAverageNote(oldRating, newRating) {
+      var oldTotal = $scope.appInfos.noteAvg * $scope.appInfos.commentsNb;
+      oldTotal += newRating;
+      
+      if (oldRating != null) {
+        oldTotal -= oldRating;
+        var newTotal = oldTotal / ($scope.appInfos.commentsNb);
+      }
+      else {
+        oldTotal -= oldRating;
+        var newTotal = oldTotal / ($scope.appInfos.commentsNb + 1);
+      }
+      $scope.appInfos.noteAvg = newTotal;
+      console.log($scope.appInfos);
     }
 });
