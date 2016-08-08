@@ -115,6 +115,9 @@ website.controller('editProfileController', function($scope, $rootScope, $http, 
             case 404:
               $scope.returnMessage = errorMessage["EDIT_PROFILE_404"];
               break;
+            case 409:
+              $scope.returnMessage = errorMessage["EDIT_PROFILE_409"];
+              break;
             default:
               $scope.returnMessage = errorMessage["EDIT_PROFILE"];
               break;
