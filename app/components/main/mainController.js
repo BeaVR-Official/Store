@@ -84,13 +84,10 @@ website.controller('mainController', function($scope, $rootScope, $http, Authent
 
       for (var j = 0; j < $scope.filteredApplications.length; j++) {
         var compatibleDevices = 0;
-        for (var i = 0; i < $scope.filteredDevices.length; i++) {
-          console.log($scope.filteredDevices[i]);
-          console.log($scope.filteredDevices[j]);
+        for (var i = 0; i < $scope.filteredDevices.length; i++)
             if ($scope.filteredApplications[j].devicesName.indexOf($scope.filteredDevices[i]._id) != -1)
               if ($scope.checkPriceFilter($scope.filteredApplications[j].price, $scope.filterPrice.priceFilter) == true)
                 compatibleDevices++;
-        }
         for (var k = 0; k < $scope.filteredCategories.length; k++)
           if ($scope.filteredApplications[j].categoriesName.indexOf($scope.filteredCategories[k]._id) != -1)
             if ($scope.checkPriceFilter($scope.filteredApplications[j].price, $scope.filterPrice.priceFilter) == true)

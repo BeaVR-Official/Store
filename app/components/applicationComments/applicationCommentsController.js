@@ -159,6 +159,7 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
                     updateFilteredItems();
                     
                     $scope.appInfos.commentsNb += 1;
+                    $scope.hasCommented = true;
 
                     setTimeout(function() {
                         $('#addComment').collapse('hide');

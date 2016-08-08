@@ -105,6 +105,6 @@
     </div>
   </div>
   <div id="under-comments">
-    <a ng-show="appInfos.commentsNb > 0" ng-href="#/applications/details/{{ appInfos.id }}/comments" class="btn-beavr btn-lg">En voir plus ({{ appInfos.commentsNb }} avis)</a>
+    <a ng-href="#/applications/details/{{ appInfos.id }}/comments" class="btn-beavr btn-lg">{{ appInfos.commentsNb > 0 ? 'En voir plus (' + appInfos.commentsNb + ' avis)' : 'Poster un commentaire' }}</a>
   </div>
 </div>
