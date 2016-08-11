@@ -69,7 +69,7 @@
                                 <div id="menu-profile-picture">
                                     <img ng-src="{{ profilePicture }}">
                                 </div>
-                                <!--<span class="menu-icon"></span>-->
+                                <span class="menu-icon"></span>
                             </div>
                             <ul class="navbar-menu animate">
                                 <li ng-class="{active: isActive('/feedback')}">
@@ -213,6 +213,8 @@
         $(function () {    
             $('.navbar-toggler').on('click', function(event) {
                 event.preventDefault();
+                $('#menu-profile-picture').toggleClass('hidden');
+                $('.menu-icon').toggleClass('visible');
                 $(this).closest('.navbar-minimal').toggleClass('open');
             })
         });
