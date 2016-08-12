@@ -358,6 +358,21 @@ margin: 10px auto 50px auto;
     }
 }
 
+.animate-switch.ng-animate {
+  -webkit-transition:all linear 0.2s;
+  transition:all linear 0.2s;
+}
+.animate-switch.ng-leave,
+.animate-switch.ng-leave.ng-leave-active{
+  display:none;
+}
+.animate-switch.ng-enter {
+  opacity: 0;
+}
+.animate-switch.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
 /************************
 *************************
 * Library

@@ -18,6 +18,7 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 				$cookies.put('store_id', result.data.userId);
 			}
 			$window.location.href = "#/"
+			$window.location.reload();
 		});
 	}
 

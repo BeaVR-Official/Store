@@ -17,8 +17,8 @@
     <!-- Bootstrap Core CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
 
-    <!-- jQuery -->
-    <script src="assets/js/jquery.js"></script>
+    <!-- Semantic UI -->
+    <link href="assets/css/semantic.min.css" rel="stylesheet">
 
     <!-- Our CSS -->
     <link href="assets/css/searchbar.css" rel="stylesheet">
@@ -97,8 +97,7 @@
                 </div>
                 <div id="offlineMenu" ng-show="offlineMenu">
                     <p id="titleCompteMenu" class="lead">Compte</p>
-                    <a href="#/connexion" class="list-group-item">Se connecter</a>
-                    <a href="#/inscription" class="list-group-item">S'inscrire</a>
+                    <a href="" data-target="#authenticate_modal" data-toggle="modal" class="list-group-item">Se connecter</a>
                 </div>
             </div>
             <div class="col-md-8 main-column">
@@ -164,10 +163,15 @@
     <script src="app/components/payment/paymentController.js"></script>
     <script src="app/components/applicationComments/applicationCommentsController.js"></script>
 
+    <!-- jQuery -->
+    <script src="assets/js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/ui-bootstrap-tpls-1.3.3.min.js"></script>
+
+    <!-- Semantic UI -->
+    <script src="assets/js/semantic.min.js"></script>
 
     <!-- Filtering stuff -->
     <script src="assets/js/isteven-multi-select.js"></script>
@@ -183,33 +187,179 @@
 
 
 </body>
- <div id="feedbackModal" ng-controller="feedbackController" class="modal fade" tabindex="-1" role="dialog">
-     <div class="modal-dialog">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                 <h3 id="myModalLabel">Un problème avec le Store BeaVR ?</h3>
-                 <div id="returnMessage" ng-show="feedbackForm.$submitted">{{returnMessage}}</div>
-             </div>
-             <div class="modal-body">
-                 <form id="feedbackForm" name="feedbackForm" role="form" >
-                     <div class="form-group">
-                         <label for="object">Objet</label>
-                         <input type="text" id="object" placeholder="Objet de votre feedback" class="form-control" ng-model="feedbackData.object" required/>
-                     </div>
-                     <div class="form-group">
-                         <label for="message">Message</label>
-                         <textarea id="message" style="resize:none" rows="8" placeholder="Détail de votre feedback" class="form-control" ng-model="feedbackData.description" required></textarea>
-                     </div>
-                     <div class="form-group">
-                         <input type="checkbox" id="recontact" class="modal-checkbox" ng-model="feedbackData.recontact"/>
-                         <label for="recontact">J'accepte d'être recontacté suite à mon feedback</label>
-                         <button type="submit" ng-disabled="feedbackForm.$invalid" class="btn btn-secondary btn-beavr" style="float:right" ng-click="feedbackAction()">Envoyer<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
-                     </div>
+<div id="feedbackModal" ng-controller="feedbackController" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Un problème avec le Store BeaVR ?</h3>
+                <div id="returnMessage" ng-show="feedbackForm.$submitted">{{returnMessage}}</div>
+            </div>
+            <div class="modal-body">
+                <form id="feedbackForm" name="feedbackForm" role="form" >
+                    <div class="form-group">
+                        <label for="object">Objet</label>
+                        <input type="text" id="object" placeholder="Objet de votre feedback" class="form-control" ng-model="feedbackData.object" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" style="resize:none" rows="8" placeholder="Détail de votre feedback" class="form-control" ng-model="feedbackData.description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" id="recontact" class="modal-checkbox" ng-model="feedbackData.recontact"/>
+                        <label for="recontact">J'accepte d'être recontacté suite à mon feedback</label>
+                        <button type="submit" ng-disabled="feedbackForm.$invalid" class="btn btn-secondary btn-beavr" style="float:right" ng-click="feedbackAction()">Envoyer<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                    </div>
 
-                 </form>
-             </div>
-         </div>
-     </div>
- </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="authenticate_modal" ng-controller="connexionController" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" ng-switch="showMenu">
+        <div class="animate-switch" ng-switch-when="0">
+            <div class="ui attached success message" ng-show="justSubscribed">
+                <div class="header">
+                    Inscription réussie !
+                </div>
+                <p>Indiquez vos identifiants afin de vous connecter.</p>
+            </div>
+            <form class="ui form attached fluid segment warning" name="connectionForm">
+                <h4 class="ui dividing header" style="color: #1BB2BD">Se connecter</h4>
+                <div class="required field">
+                    <div class="ui left icon input">
+                        <i class="mail icon"></i>
+                        <input type="email" name="email" placeholder="Adresse e-mail" ng-model="connectionData.email" required>
+                    </div>
+                </div>
+                <div class="required field">
+                    <div class="ui action left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" name="password" placeholder="Mot de passe" ng-minlength="8" ng-model="connectionData.password" required>
+                        <button type="button" ng-click="showForm(2)" class="ui teal right labeled icon button">
+                            <i class="privacy icon"></i>
+                            Mot de passe oublié ?
+                        </button>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui toggle checkbox">
+                        <input type="checkbox" name="checkbox" tabindex="0"  ng-model="connectionData.checkbox">
+                        <label>Se souvenir de moi</label>
+                    </div>
+                </div>
+                <button type="submit" ng-disabled="connectionForm.$invalid" class="btn btn-secondary btn-beavr" ng-click="connexionAction()">Envoyer<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                <div class="ui warning message" ng-show="errorMessage">
+                    <div class="header">Erreur lors de la connexion</div>
+                    <ul class="list">
+                        <li>{{errorMessage}}</li>
+                    </ul>
+                </div>
+            </form>
+            <div class="ui bottom attached warning message">
+                <i class="icon help"></i>
+                    Pas encore inscrit ? L'inscription c'est <a href="" ng-click="showForm(1)">par là</a> !
+            </div>
+        </div>
+        <div class="animate-switch" ng-switch-when="1">
+            <div class="ui attached message">
+                <div class="header">
+                    Bienvenue sur BeaVR !
+                </div>
+                <p>Renseignez les informations ci-dessous afin de vous inscrire.</p>
+            </div>
+            <form class="ui form attached fluid segment warning" name="subscriptionForm">
+                <h4 class="ui dividing header" style="color: #1BB2BD">S'inscrire</h4>
+                <div class="two fields">
+                    <div class="field">
+                        <input type="text" name="subscriptionData.firstName" placeholder="Prénom" ng-model="subscriptionData.firstName">
+                    </div>
+                    <div class="field">
+                        <input type="text" name="subscriptionData.lastName" placeholder="Nom" ng-model="subscriptionData.lastName">
+                    </div>
+                </div>
+                <div class="required field">
+                    <div class="ui corner labeled left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="pseudo" required="required" ng-minlength="3" ng-maxlength="16" placeholder="Pseudo" tooltip="ntm" ng-model="subscriptionData.pseudo"></input>
+                        <div class="ui corner label">
+                            <i class="asterisk icon"></i>
+                        </div>
+                    </div>
+                    <div class="ui tiny info message">
+                        <i class="icon info circle"></i>
+                            Le pseudo doit contenir entre 3 et 16 caractères.
+                    </div>
+                </div>
+                <div class="required field">
+                    <div class="ui corner labeled left icon input">
+                        <i class="mail icon"></i>
+                        <input type="email" name="email" placeholder="Adresse e-mail" ng-model="subscriptionData.email" required>
+                        <div class="ui corner label">
+                            <i class="asterisk icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="required field">
+                    <div class="ui corner labeled left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" name="password" placeholder="Mot de passe" ng-minlength="8" ng-model="subscriptionData.password" required>
+                        <div class="ui corner label">
+                            <i class="asterisk icon"></i>
+                        </div>
+                    </div>
+                    <div class="ui tiny info message">
+                        <i class="icon info circle"></i>
+                            Le mot de passe doit être composé de 8 caractères minimum.
+                    </div>
+                </div>
+                <button type="submit" ng-disabled="subscriptionForm.$invalid" class="btn btn-secondary btn-beavr" ng-click="subscriptionAction()">Envoyer<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                <div class="ui warning message" ng-show="errorMessage">
+                    <div class="header">Erreur lors de l'inscription</div>
+                    <ul class="list">
+                        <li>{{errorMessage}}</li>
+                    </ul>
+                </div>
+            </form>
+            <div class="ui bottom attached warning message">
+                <i class="icon help"></i>
+                    Déjà inscrit ? Connectez-vous <a href="" ng-click="showForm(0)">par ici</a> !
+            </div>
+        </div>
+        <div class="animate-switch" ng-switch-when="2">
+            <div class="ui attached message">
+                <div class="header">
+                    Mot de passe oublié ?
+                </div>
+                <p>Indiquez votre adresse email, nous vous renverrons un mot de passe !</p>
+            </div>
+            <form class="ui form attached fluid segment warning" name="resetPasswordForm">
+                <h4 class="ui dividing header" style="color: #1BB2BD">Réinitialiser le mot de passe</h4>
+                <div class="required field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="email" placeholder="Adresse e-mail" ng-model="resetPasswordData.email" required>
+                    </div>
+                </div>
+                <button type="submit" ng-disabled="resetPasswordForm.$invalid" class="btn btn-secondary btn-beavr" ng-click="resetPasswordAction()">Envoyer<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                <div class="ui positive message" ng-show="successMessage">
+                    <div class="header">Mot de passe réinitialisé</div>
+                    <p>{{successMessage}}</p>
+                </div>
+                <div class="ui warning message" ng-show="errorMessage">
+                    <div class="header">Erreur lors de la réinitialisation du mot de passe</div>
+                    <ul class="list">
+                        <li>{{errorMessage}}</li>
+                    </ul>
+                </div>
+            </form>
+            <div class="ui bottom attached info message">
+                <i class="icon info circle"></i>
+                    Retournez à l'interface de connexion en cliquant <a href="" ng-click="showForm(0)">ici</a>.
+            </div>
+        </div>
+    </div>
+</div>
 </html>
