@@ -178,13 +178,11 @@
     <script src="app/app.routes.js"></script>
 
     <script src="app/components/main/mainController.js"></script>
-    <script src="app/components/inscription/inscriptionController.js"></script>
-    <script src="app/components/connexion/connexionController.js"></script>
+    <script src="app/components/authentication/authenticationController.js"></script>
     <script src="app/components/editProfile/editProfileController.js"></script>
     <script src="app/components/applicationDetail/applicationDetailController.js"></script>
     <script src="app/components/library/libraryController.js"></script>
     <script src="app/components/progression/progressionController.js"></script>
-    <script src="app/components/resetPassword/resetPasswordController.js"></script>
     <script src="app/components/404/404Controller.js"></script>
     <script src="app/components/feedback/feedbackController.js"></script>
 
@@ -256,7 +254,7 @@
     </div>
 </div>
 
-<div id="authenticate_modal" ng-controller="connexionController" class="modal fade" tabindex="-1" role="dialog">
+<div id="authenticate_modal" ng-controller="authenticationController" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" ng-switch="showMenu">
         <div class="animate-switch" ng-switch-when="0">
             <div class="ui attached success message" ng-show="justSubscribed">
@@ -378,8 +376,8 @@
                 <h4 class="ui dividing header" style="color: #1BB2BD">Réinitialiser le mot de passe</h4>
                 <div class="required field">
                     <div class="ui left icon input">
-                        <i class="user icon"></i>
-                        <input type="text" name="email" placeholder="Adresse e-mail" ng-model="resetPasswordData.email" required>
+                        <i class="mail icon"></i>
+                        <input type="email" name="email" placeholder="Adresse e-mail" ng-model="resetPasswordData.email" required>
                     </div>
                 </div>
                 <button type="submit" ng-disabled="resetPasswordForm.$invalid" class="btn btn-secondary btn-beavr" ng-click="resetPasswordAction()">Envoyer<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>

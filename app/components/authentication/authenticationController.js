@@ -1,4 +1,4 @@
-website.controller('connexionController', function($scope, $rootScope, AuthenticationService, $http) {
+website.controller('authenticationController', function($scope, $rootScope, AuthenticationService, $http) {
     $scope.connectionData = {
       email : '',
       password : '',

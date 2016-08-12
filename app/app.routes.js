@@ -13,32 +13,6 @@ website.config(['$routeProvider', function($routeProvider){
                 }
             })
 
-            .when('/inscription', {
-                templateUrl : 'app/components/inscription/inscription.html',
-                controller  : 'inscriptionController',
-                resolve     : {
-                    token : function(AuthenticationService, $window) {
-                        if (AuthenticationService.isOffline()) {
-                            return ;
-                        }
-                        $window.location.href = "#/404";
-                    }
-                }
-            })
-
-            .when('/connexion', {
-                templateUrl : 'app/components/connexion/connexion.html',
-                controller  : 'connexionController',
-                resolve     : {
-                    token : function(AuthenticationService, $window) {
-                        if (AuthenticationService.isOffline()) {
-                            return ;
-                        }
-                        $window.location.href = "#/404";
-                    }
-                }
-            })
-
             .when('/profile', {
                 templateUrl : 'app/components/editProfile/editProfile.html',
                 controller  : 'editProfileController',
@@ -117,19 +91,6 @@ website.config(['$routeProvider', function($routeProvider){
                     userData : function(AuthenticationService, $window) {
                         if (!AuthenticationService.isOffline()) {
                             return AuthenticationService.getConnectedUserInfos();
-                        }
-                        $window.location.href = "#/404";
-                    }
-                }
-            })
-
-            .when('/resetPassword', {
-                templateUrl : 'app/components/resetPassword/resetPassword.html',
-                controller  : 'resetPasswordController',
-                resolve     : {
-                    token : function(AuthenticationService, $window) {
-                        if (AuthenticationService.isOffline()) {
-                            return ;
                         }
                         $window.location.href = "#/404";
                     }
