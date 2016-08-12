@@ -60,13 +60,49 @@
                   <img class="navbar-brand-logo" src="assets/img/logo/beaver-logo-min.png">
                 </a>
                 <div class="collapse navbar-collapse" id="nav-collapse" ng-controller="navbarController">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav beavr-navbar">
                         <li ng-class="{active: isActive('/')}"><a href="#/">Accueil</a></li>
                         <li><a href="#/" ng-show="registerDev" data-target="#myModal" data-toggle="modal">Devenir développeur</a></li>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li ng-show="onlineMenu" ng-class="{active: isActive('/feedback')}"><a href="" data-target="#feedbackModal" data-toggle="modal">Feedback</a></li>
-                        <li><a href="" ng-show="onlineMenu" ng-click="disconnect()">Se déconnecter</a></li>
+                    <ul ng-show="onlineMenu"  class="nav navbar-nav navbar-right navbar navbar-fixed-left navbar-minimal animate" role="navigation">
+                            <div class="navbar-toggler animate">
+                                <div id="menu-profile-picture">
+                                    <img ng-src="{{ profilePicture }}">
+                                </div>
+                                <span class="menu-icon"></span>
+                            </div>
+                            <ul class="navbar-menu animate">
+                                <li ng-class="{active: isActive('/feedback')}">
+                                    <a href="" data-target="#feedbackModal" data-toggle="modal" class="animate">
+                                        <span class="desc animate"> Feedback </span>
+                                        <span class="glyphicon glyphicon-comment"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#/profile" class="animate">
+                                        <span class="desc animate"> Profil </span>
+                                        <span class="glyphicon glyphicon-user"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#/library" class="animate">
+                                        <span class="desc animate"> Bibliothèque </span>
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#/progression" class="animate">
+                                        <span class="desc animate"> Progression </span>
+                                        <span class="glyphicon glyphicon-list-alt"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" ng-click="disconnect()" class="animate">
+                                        <span class="desc animate"> Se déconnecter </span>
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </a>
+                                </li>
+                            </ul>
                     </ul>
                 </div><!--/.navbar-collapse -->
             </div>
@@ -74,27 +110,19 @@
         </div>
         <!-- /.container -->
     </nav>
+    
 
     <!-- Page Content -->
     <div class="container">
         <div class="row">
             <div class="col-md-2" ng-show="menu">
-                <div id="onlineMenu" ng-show="onlineMenu">
-                    <p id="titleCompteMenu" class="lead">Compte</p>
-                    <div id="compteMenu" class="list-group">
-                    <a href="#/profile" class="list-group-item"><img ng-src="{{ profilePicture }}" class="img-circle" style="display: block; margin: auto;"></a>
-                        <a href="#/profile" class="list-group-item">Mon profil</a>
-                        <a href="#/library" class="list-group-item">Bibliothèque</a>
-                        <a href="#/progression" class="list-group-item">Progression</a>
-                    </div>
-                </div>
-                <div id="devMenu" ng-show="devMenu">
+                <!--<div id="devMenu" ng-show="devMenu">
                     <p id="titleDeveloppementMenu" class="lead">Développement</p>
                     <div id="developpementMenu" class="list-group">
                         <a href="#" class="list-group-item"><img src="assets/img/icons/api.png">Publier une application</a>
                         <a href="#" class="list-group-item"><img src="assets/img/icons/git.png">Gérer vos applications</a>
                     </div>
-                </div>
+                </div>-->
                 <div id="offlineMenu" ng-show="offlineMenu">
                     <p id="titleCompteMenu" class="lead">Compte</p>
                     <a href="" data-target="#authenticate_modal" data-toggle="modal" class="list-group-item">Se connecter</a>
@@ -184,6 +212,17 @@
 
     <!-- Loading stuff -->
     <script src='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.js'></script>
+
+    <script>
+        $(function () {    
+            $('.navbar-toggler').on('click', function(event) {
+                event.preventDefault();
+                $('#menu-profile-picture').toggleClass('hidden');
+                $('.menu-icon').toggleClass('visible');
+                $(this).closest('.navbar-minimal').toggleClass('open');
+            })
+        });
+    </script>
 
 
 </body>
