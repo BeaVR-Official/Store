@@ -9,12 +9,17 @@
         <form name="editProfileForm" class="form-horizontal" role="form">
           <div class="col-md-3">
             <div class="text-center">
-              <img ng-src="{{ userInfos.profilePicture }}" class="avatar img-circle" alt="avatar">
+              <img ng-src="{{ userInfos.profilePicture }}" class="avatar" alt="avatar">
               <h6>Choisir une autre photo de profil...</h6>
                 <div class="form-group">
-                  <input type="file" ngf-select ng-model="userInfos.newProfilePicture" name="file" ngf-pattern="'image/*'"
-                    ngf-accept="'image/*'" ngf-max-size="5MB" ngf-min-height="100" ngf-validate="{pattern: '.jpg, .png, .gif'}"
-                    ngf-resize="{width: 150, height: 150}">
+                  <div class="input-group col-xs-8 col-xs-offset-2">
+                    <input type="text" class="form-control input-md" disabled placeholder="{{ userInfos.newProfilePicture.$ngfName ? userInfos.newProfilePicture.$ngfName : 'Uploadez une image'}}">
+                    <span class="input-group-btn">
+                      <button type="button" class="browse btn btn-beavr input-md" data-buttonText="Find file" ngf-select ng-model="userInfos.newProfilePicture" name="file" ngf-pattern="'image/*'"
+                        ngf-accept="'image/*'" ngf-max-size="5MB" ngf-min-height="100" ngf-validate="{pattern: '.jpg, .png, .gif'}"
+                        ngf-resize="{width: 150, height: 150, centerCrop: true}"><i class="glyphicon glyphicon-picture"></i></button>
+                    </span>
+                  </div>
                   <div ng-show="editProfileForm.file.$error.pattern" class="error-message">Le fichier doit être une image au format JPG, PNG ou GIF.</div>
                   <div ng-show="editProfileForm.file.$error.maxSize" class="error-message">La taille du fichier doit être inférieure à 5MB.</div>
                   <img ng-show="editProfileForm.file.$valid" ngf-src="!userInfos.newProfilePicture.$error && userInfos.newProfilePicture" class="thumb">
@@ -25,7 +30,6 @@
               <div ng-show="userInfos.newProfilePicture.result" class="list-group-item list-group-item-success">Upload terminé.</div>
             </div>
           </div>
-          
           <!-- edit form column -->
           <div class="col-md-9 personal-info">
             <div class="alert alert-info alert-dismissable">
