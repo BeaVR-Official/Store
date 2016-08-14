@@ -1100,7 +1100,7 @@ textarea {
 }
 a {
   /*color: #337ab7;*/
-  color:#32a9ad !important;
+  color:#32a9ad;
   text-decoration: none;
 }
 a:hover,

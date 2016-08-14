@@ -34,6 +34,10 @@ $$$$$$$/ $$$$$$$$/$$/   $$/    $/    $$/   $$/        $$$$$$/    $$/   $$$$$$/ $
 	margin-top:10px !important;
 }
 
+.caption h4 a {
+	color:#32a9ad !important;
+}
+
 #filterMenu .lead,
 #rightMenu .lead {
 font-weight:bold;
@@ -124,12 +128,12 @@ line-height:30px
 
 .comment-title {
 	color:#32a9ad !important;
-	font-size:1.7em !important;
+	font-size:1.6em !important;
 }
 
 .comment-content {
 	min-height:50px;
-	font-size:1.2em !important;
+	font-size:1.1em !important;
 }
 
 .comment-card .author {
