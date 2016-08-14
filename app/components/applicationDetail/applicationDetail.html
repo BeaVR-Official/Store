@@ -76,33 +76,27 @@
 <div id="comments-section">
   <h3>{{ appInfos.commentsNb > 0 ? 'Commentaires' : 'Aucun commentaire pour cette application' }}</h3>
   <div id="container" ng-repeat="commentInfos in comments">
-    <div class="container">
-      <div class="well">
-          <div class="media">
-            <div class="left-part-comment">
-              <div class="comment-infos">
-                <img class="media-object cadre-images profile-picture" ng-src="{{ commentInfos.author.public.picture }}">
-                <div id="comment-rating">
-                    <span ng-show="commentInfos.rating != null" ng-repeat="t in getNumberFullStar(commentInfos.rating) track by $index" ng-class="{'ratings-last-child':$last}" class="glyphicon glyphicon-star"></span>
-                    <span ng-show="commentInfos.rating != null" ng-repeat="t in getNumberEmptyStar(5 - commentInfos.rating) track by $index" class="glyphicon glyphicon-star-empty"></span>
-                </div>
-              </div>
-            </div>
-          <div class="media-body">
-            <div class="comment-header">
-              <h4 class="media-heading title-comment"> {{ commentInfos.title }}</h4>
-              <p class="text-right author-name">Par <span style="font-weight:bold">{{commentInfos.author.public.pseudo == null ? 'Anonyme' : commentInfos.author.public.pseudo}}</span></p>
-            </div>
-              <p>
-                {{ commentInfos.comment }}
-              </p>
-              <ul class="list-inline list-unstyled">
-                  <li><span><i class="glyphicon glyphicon-calendar"></i> {{ commentInfos.created_at | date:'dd/MM/yyyy HH:mm' : '+0200' }}</span></li>
-            </ul>
-          </div>
+
+    <div class="ui raised card comment-card">
+      <div class="content">
+       <span class="right floated time"><i class="glyphicon glyphicon-calendar"></i> {{ commentInfos.created_at | date:'dd/MM/yyyy HH:mm' : '+0200'}}</span>
+       <div class="header comment-title">{{ commentInfos.title }}</div>
+       <br>
+        <div class="description comment-content">
+          <p>{{ commentInfos.comment }}</p>
         </div>
       </div>
+      <div class="extra content">
+        <div class="right floated author">
+          <img class="ui avatar image" ng-src="{{ commentInfos.author.public.picture }}"> {{commentInfos.author.public.pseudo == null ? 'Anonyme' : commentInfos.author.public.pseudo}}
+        </div>
+        <div id="comment-rating">
+          <span ng-show="commentInfos.rating != null" ng-repeat="t in getNumberFullStar(commentInfos.rating) track by $index" ng-class="{'ratings-last-child':$last}" class="glyphicon glyphicon-star"></span>
+          <span ng-show="commentInfos.rating != null" ng-repeat="t in getNumberEmptyStar(5 - commentInfos.rating) track by $index" class="glyphicon glyphicon-star-empty"></span>
+        </div> 
+      </div>
     </div>
+
   </div>
   <div id="under-comments">
     <a ng-href="#/applications/details/{{ appInfos.id }}/comments" class="btn-beavr btn-lg">{{ appInfos.commentsNb > 0 ? 'En voir plus (' + appInfos.commentsNb + ' avis)' : 'Poster un commentaire' }}</a>

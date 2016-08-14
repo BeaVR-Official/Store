@@ -109,6 +109,36 @@ line-height:30px
 *************************
 ************************/
 
+.comment-card {
+	width:100% !important;
+	margin-bottom:20px !important;
+}
+
+.comment-cart .content {
+	padding: 15px !important;
+}
+
+.comment-title {
+	color:#32a9ad !important;
+	font-size:1.7em !important;
+}
+
+.comment-content {
+	min-height:50px;
+	font-size:1.2em !important;
+}
+
+.comment-card .author {
+	font-weight:bold;
+	font-size:15px;
+	color:#5e5e5e;
+}
+
+.comment-card .author .image {
+	border:1px solid #32a9ad;
+	border-radius:0 !important;
+}
+
 .media-body .media-heading {
   color:#32a9ad;
   font-weight:bold;
@@ -167,11 +197,11 @@ text-shadow:none;
 }
 
 .ratings-last-child {
-margin-right:0px;
+margin-right:2px;
 }
 
 .app-rating-last-child {
-margin-right:0px;
+margin-right:2px;
 }
 
 .app-rating-first-child {
@@ -202,9 +232,10 @@ max-width:150px;
 }
 
 #comment-rating {
-margin: 10px auto 0  auto;
-text-align:center;
-font-size:15px;
+/*margin: 10px auto 0  auto;
+text-align:center;*/
+line-height:30px;
+font-size:16px;
 }
 
 #app-rating-main {
@@ -293,13 +324,13 @@ width:10px;
 }
 
 .app-rating-main-last-child {
-margin-right:-3px;
+margin-right:0px;
 }
 
 
 #under-comments {
 text-align:center;
-margin: 10px auto 50px auto;
+margin: 30px auto 50px auto;
 }
 
 /************************
