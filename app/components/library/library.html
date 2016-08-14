@@ -1,18 +1,37 @@
 <div class="panel panel-default">
   <div class="panel-body">
-
     <div class="container">
         <h1>Ma bibliothèque d'applications</h1>
         <hr>
         <div class="row">
             <div id="container" ng-show="userAppsInfos.length" ng-repeat="applicationInfos in userAppsInfos">
               <div class="col-lg-4 application-area">
-                <img class="img-circle center-block" ng-src="{{ applicationInfos.logo }}" alt="Application logo" width="140" height="140">
-                <h4 class="application-name">{{ applicationInfos.name }}</h4>
-                <p class="library-app-description">{{ applicationInfos.description }}</p>
-                <p class="btn-launch-application">
-                  <a class="btn btn-secondary btn-beavr" ng-href="{{ applicationInfos.url }}" data-target="#comingSoonModal" data-toggle="modal" role="button">Lancer</a>
-                </p>
+                <div class="ui special cards" ng-mouseover="load()">
+                  <div class="card">
+                    <div class="blurring dimmable image">
+                      <div class="ui inverted dimmer">
+                        <div class="content">
+                          <div class="center">
+                            <button type="button" class="ui btn-beavr button" href="" data-target="#comingSoonModal" data-toggle="modal">Lancer l'application</button>
+                          </div>
+                        </div>
+                      </div>
+                      <img ng-src="{{ applicationInfos.logo }}">
+                    </div>
+                    <div class="content">
+                      <a ng-href="#/applications/details/{{ applicationInfos.id }}" class="header">{{ applicationInfos.name }}</a>
+                      <div class="meta">
+                        <span class="date">{{ applicationInfos.categoriesName }}</span>
+                      </div>
+                    </div>
+                    <div class="extra content">
+                      <a>
+                        <i class="users icon"></i>
+                        {{ applicationInfos.devicesName }}
+                      </a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div ng-show="!userAppsInfos.length" class="panel panel-default">
