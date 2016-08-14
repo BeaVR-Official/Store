@@ -30,12 +30,12 @@ $$$$$$$/ $$$$$$$$/$$/   $$/    $/    $$/   $$/        $$$$$$/    $$/   $$$$$$/ $
   background-color:#222 !important;
 }
 
-.caption h4 {
-	margin-top:10px !important;
-}
-
 .caption h4 a {
 	color:#32a9ad !important;
+}
+
+.caption {
+	height:initial !important;
 }
 
 #filterMenu .lead,
@@ -108,6 +108,19 @@ line-height:30px
   margin: 40px auto 60px auto;
   text-align: center;
   font-size: 22px;
+}
+
+.app-title a {
+	font-size:1.3em;
+	color:#32a9ad;
+}
+
+.app-title a:hover {
+	color: #1d9191;
+}
+
+.app-price {
+	font-size:1.1em;
 }
 
 /************************
@@ -193,6 +206,14 @@ line-height:30px
 .left-part-comment {
     min-width:180px;
     float:left;
+}
+
+.ratings a {
+	color: #5e5e5e !important;
+}
+
+.ratings a:hover {
+	text-decoration:underline;
 }
 
 .glyphicon-star,
