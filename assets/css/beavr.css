@@ -128,7 +128,7 @@ line-height:30px
 
 .comment-title {
 	color:#32a9ad !important;
-	font-size:1.6em !important;
+	font-size:1.5em !important;
 }
 
 .comment-content {
@@ -150,7 +150,7 @@ line-height:30px
 .media-body .media-heading {
   color:#32a9ad;
   font-weight:bold;
-  font-size:22px;
+  font-size:22px !important;
 }
 .cadre-images {
   border:2px solid #32a9ad;
