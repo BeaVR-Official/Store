@@ -30,6 +30,10 @@ $$$$$$$/ $$$$$$$$/$$/   $$/    $/    $$/   $$/        $$$$$$/    $$/   $$$$$$/ $
   background-color:#222 !important;
 }
 
+.caption h4 {
+	margin-top:10px !important;
+}
+
 #filterMenu .lead,
 #rightMenu .lead {
 font-weight:bold;
