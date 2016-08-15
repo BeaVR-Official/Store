@@ -38,6 +38,10 @@ $$$$$$$/ $$$$$$$$/$$/   $$/    $/    $$/   $$/        $$$$$$/    $$/   $$$$$$/ $
 	height:initial !important;
 }
 
+#filterMenu {
+	margin-top:10px !important;
+}
+
 #filterMenu .lead,
 #rightMenu .lead {
 font-weight:bold;
@@ -385,17 +389,26 @@ margin: 30px auto 50px auto;
 #price-list .multiSelect .multiSelectItem {
     min-width:100%;
 }
-  
+
+/*  
 #device-list .multiSelect .checkboxLayer,
 #category-list .multiSelect .checkboxLayer,
 #price-list .multiSelect .checkboxLayer {
     position:relative;
+}*/
+
+.checkboxLayer {
+	width:100%;
 }
 
 .dimmer-app-list-container .row {
 	margin:8px 0 0 0;
 	width:100%;
 	text-align:left;
+}
+
+.list-group {
+	padding: 0px !important;
 }
 
 .sub-content {

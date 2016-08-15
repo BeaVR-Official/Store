@@ -181,7 +181,7 @@ website.controller('filterController', function($scope, $rootScope, $http) {
     selectNone      : "",
     reset           : "",
     search          : "Rechercher ...",
-    nothingSelected : "Tous les matériels"
+    nothingSelected : "Tous les matériels de RV"
   }
 
   $scope.localLangCategories = {
