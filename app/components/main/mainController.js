@@ -1,11 +1,4 @@
 website.controller('mainController', function($scope, $rootScope, $http, AuthenticationService, userData) {
-
-  $scope.load = function() {
-    $('.special.cards .image').dimmer({
-      on: 'hover'
-    });
-  }
-
   $rootScope.menu = true;
   $rootScope.filterMenu = true;
   if (userData !== undefined) {
