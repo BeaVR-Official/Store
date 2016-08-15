@@ -486,6 +486,11 @@ margin: 30px auto 50px auto;
     top: 7px;
 }
 
+.categories {
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
 /************************
 *************************
 * Context Menu

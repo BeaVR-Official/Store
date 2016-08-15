@@ -1,10 +1,4 @@
-website.controller('libraryController', function($scope, $rootScope, userData, AuthenticationService, libraryInfos) {
-    $scope.load = function() {
-      $('.special.cards .image').dimmer({
-        on: 'hover'
-      });
-    }
-    $scope.load();
+website.controller('libraryController', function($scope, $rootScope, userData, AuthenticationService) {
     var userInfos = userData.data.data;
     $rootScope.menu = true;
     $rootScope.filterMenu = false;
@@ -19,5 +13,5 @@ website.controller('libraryController', function($scope, $rootScope, userData, A
       $rootScope.devMenu = false;
       $rootScope.registerDev = true;
     }
-    $scope.userAppsInfos = libraryInfos.data.data.applications;
+    $scope.userAppsInfos = userData.data.data.applications;
 });

@@ -1,5 +1,3 @@
-//var url = "http://beavr-api.herokuapp.com";
-
 var url = "http://beavr.fr:3000";
 
 var website = angular.module('website', ['ngRoute', 'ngAnimate', 'ngCookies', 'ngMessages', 'angular-jwt', 'isteven-multi-select', 'ngFileUpload', 'angular-loading-bar', 'ui.bootstrap']);
@@ -43,24 +41,6 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 		$cookies.get('store_token') === undefined && $cookies.get('store_id') === undefined;
 	}
 
-	/*authService.isTokenFormatted = function () {
-		if ($window.localStorage.getItem('store_token') !== null) {
-			try {
-				var userInfos = jwtHelper.decodeToken($window.localStorage.getItem('store_token'));
-				return true;
-			} catch (error) {
-				return false;
-			}
-		} else if ($cookies.get('store_token') !== undefined) {
-			try {
-				var userInfos = jwtHelper.decodeToken($cookies.get('store_token'));
-				return true;
-			} catch (error) {
-				return false;
-			}
-		}
-	}*/
-
 	authService.isAuthenticated = function() {
 		return $window.localStorage.getItem('store_token') !== null && $window.localStorage.getItem('store_id') !== null ||
 		$cookies.get('store_token') !== undefined && $cookies.get('store_id') !== undefined;
@@ -76,16 +56,6 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 		}
 	}
 
-	/*authService.getEncryptedToken = function() {
-		if (authService.isAuthenticated()) {
-			if ($window.localStorage.getItem('store_token') !== null) {
-				return $window.localStorage.getItem('store_token');
-			} else if ($cookies.get('store_token') !== undefined) {
-				return $cookies.get('store_token');
-			}
-		}
-	}*/
-
 	authService.getId = function() {
 		if (authService.isAuthenticated()) {
 			if ($window.localStorage.getItem('store_id') !== null) {
@@ -99,29 +69,6 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 	authService.getConnectedUserInfos = function() {
 		return $http.get(url + '/api/users/' + authService.getId());
 	}
-
-	authService.getConnectedUserLibraryInfos = function () {
-		return $http.get(url + '/api/users/' + authService.getId() + '/applications/');
-	}
-
-	/*authService.isAuthorized = function(authorizedRoles) {
-		if (!angular.isArray(authorizedRoles)) { // prevent type conflict
-			authorizedRoles = [authorizedRoles];
-		}
-		if (authService.isAuthenticated()) {
-			var role;
-			if ($window.localStorage.getItem('store_token') !== null) {
-				var userInfos = jwtHelper.decodeToken($window.localStorage.getItem('store_token'));
-				role = userInfos.role;
-			} else if ($cookies.get('store_token') !== undefined) {
-				var userInfos = jwtHelper.decodeToken($cookies.get('store_token'));
-				role = userInfos.role;
-			}
-			return authorizedRoles.indexOf(role) !== -1;
-		} else {
-			return false;
-		}
-	}*/
 
 	authService.getComments = function(idApp) {
 		return $http.get(url + '/api/applications/' + idApp + '/comments?order=DESC');
@@ -183,4 +130,30 @@ website.filter('iif', function () {
    return function(input, trueValue, falseValue) {
         return input ? trueValue : falseValue;
    };
+});
+
+website.directive('tooltip', function(){
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs){
+            $(element).hover(function(){
+                $(element).tooltip('show');
+            }, function(){
+                $(element).tooltip('hide');
+            });
+        }
+    };
+});
+
+website.directive('dimmer', function(){
+	return {
+        restrict: 'A',
+        link: function(scope, element, attrs){
+            $(element).hover(function(){
+                $(element).dimmer('show');
+			}, function(){
+                $(element).dimmer('hide');
+			});
+		}
+	};
 });

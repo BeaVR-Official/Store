@@ -77,9 +77,6 @@ website.config(['$routeProvider', function($routeProvider){
                             return AuthenticationService.getConnectedUserInfos();
                         }
                         $window.location.href = "#/404";
-                    },
-                    libraryInfos : function(AuthenticationService, $window) {
-                        return AuthenticationService.getConnectedUserLibraryInfos();
                     }
                 }
             })
