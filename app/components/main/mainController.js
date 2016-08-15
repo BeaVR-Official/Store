@@ -1,4 +1,11 @@
 website.controller('mainController', function($scope, $rootScope, $http, AuthenticationService, userData) {
+
+  $scope.load = function() {
+    $('.special.cards .image').dimmer({
+      on: 'hover'
+    });
+  }
+
   $rootScope.menu = true;
   $rootScope.filterMenu = true;
   if (userData !== undefined) {
@@ -53,7 +60,19 @@ website.controller('mainController', function($scope, $rootScope, $http, Authent
         return new Array(0);
       return new Array(Math.trunc(n));
     }
+  
+    $scope.formatStringDevicesAndCategories = function(devicesArray) {
+    
+      var finalString = "";
 
+      for (var i = 0; i < devicesArray.length; i++) {
+        finalString += devicesArray[i].name;
+        if (i != (devicesArray.length - 1))
+          finalString += ", ";
+      }
+
+      return (finalString);
+    }
   /*
   *
   * Filtering

@@ -392,6 +392,16 @@ margin: 30px auto 50px auto;
     position:relative;
 }
 
+.dimmer-app-list-container .row {
+	margin:8px 0 0 0;
+	width:100%;
+	text-align:left;
+}
+
+.sub-content {
+	font-size:0.9em;
+}
+
 /************************
 *************************
 * Connexion and Inscription
