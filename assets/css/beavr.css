@@ -409,6 +409,7 @@ margin: 30px auto 50px auto;
 
 .list-group {
 	padding: 0px !important;
+	margin: 0 15px;
 }
 
 .sub-content {

@@ -1,19 +1,19 @@
-<div id="filterMenu" class="col-md-12 ui relaxed row" ng-show="filterMenu" ng-controller="filterController" style="margin:0">
-    <div id="device-list" ng-show="devices !== undefined" class="list-group col-md-4">
+<div id="filterMenu" class="ui stackable three column grid centered" ng-show="filterMenu" ng-controller="filterController" style="margin:0">
+    <div id="device-list" ng-show="devices !== undefined" class="list-group col-md-3">
         <div directive-id="multi-select-device" isteven-multi-select input-model="devices" output-model="filteredDevices"
         button-label="name" item-label="name" tick-property="ticked" helper-elements="filter" max-labels="2"
         max-height=100px" search-property="name" output-properties="name _id" translation="localLangDevices" on-item-click="sendFilters()">
         </div>
     </div>
 
-    <div id="category-list" ng-show="categories !== undefined" class="list-group col-md-4">
+    <div id="category-list" ng-show="categories !== undefined" class="list-group col-md-3">
         <div directive-id="multi-select-category" isteven-multi-select input-model="categories" output-model="filteredCategories"
         button-label="name" item-label="name" tick-property="ticked" helper-elements="filter" max-labels="2"
         max-height=100px" search-property="name" output-properties="name _id" translation="localLangCategories" on-item-click="sendFilters()">
         </div>
     </div>
 
-    <div id="price-list" ng-show="prices !== undefined" class="list-group col-md-4">
+    <div id="price-list" ng-show="prices !== undefined" class="list-group col-md-3">
         <div directive-id="single-select-price" isteven-multi-select input-model="prices" output-model="filteredPrice"
         button-label="name" item-label="name" tick-property="ticked" helper-elements="" max-labels="2" selection-mode="single"
         max-height=100px" output-properties="name priceFilter" translation="localLangPrices" on-item-click="sendFilters()">
@@ -56,8 +56,11 @@
                   </span>
                 </div>
                 <div class="row content sub-content">
-                  <b>Catégories :</b>Plomberie, Artisanat
-                </div>
+                  <b>Catégories :</b>
+                   <span ng-repeat="categorie in application.categoriesName">
+                    {{categorie.name}} {{$last ? '' : ', '}}
+                  </span>
+               </div>
               </div>
             </div>
               <img ng-src="{{ application.logo }}" alt="">
