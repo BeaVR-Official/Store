@@ -114,6 +114,13 @@ line-height:30px
   font-size: 22px;
 }
 
+.app-title {
+	overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 0px !important;
+}
+
 .app-title a {
 	font-size:1.3em;
 	color:#32a9ad;

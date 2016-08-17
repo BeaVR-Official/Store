@@ -69,7 +69,7 @@
             </div>
             <div class="content">
               <span class="right floated app-price">{{ application.price == "0" | iif : "Gratuite" : application.price + "€" }}</span>
-              <span class="app-title"><a ng-href="#/applications/details/{{ application.id }}">{{ application.name }}</a></span>
+              <span class="app-title col-md-9"><a ng-href="#/applications/details/{{ application.id }}">{{ application.name }}</a></span>
             </div>
             <div class="extra content ratings">
               <span class="right floated">
