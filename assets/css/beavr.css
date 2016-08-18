@@ -17,10 +17,49 @@ $$$$$$$/ $$$$$$$$/$$/   $$/    $/    $$/   $$/        $$$$$$/    $$/   $$$$$$/ $
 *************************
 ************************/
 
+.body {
+	background-color: #f1f1f1;
+}
+
 .beavr-navbar {
-  font-size: 16px;
-  font-weight:bold;
-  margin-top: 6px !important;
+	display: inline-block;
+	background-color: white;
+	border-top: 5px solid #1BB2BD !important;
+}
+
+.beavr-navbar-menu {
+	font-size: 16px;
+	margin-top: 6px !important;
+	font-family: 'Open Sans', sans-serif;
+	text-transform: uppercase;
+}
+
+.beavr-navbar-menu a {
+	transition: color 0.4s ease;
+	color: grey;
+}
+
+.nav a:hover, .nav a:focus {
+	background-color: white !important;
+	color: #1BB2BD;
+}
+
+.nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
+	background-color: white !important;
+	color: #1BB2BD;
+}
+
+.beavr-navbar-toggle {
+	margin-right: 0 !important;
+	background-color: #1BB2BD !important;
+}
+
+.beavr-navbar-toggle .icon-bar {
+	background-color: white !important;
+}
+
+.panel-body {
+	background-color: #fafafa !important;
 }
 
 .navbar-inverse .navbar-nav > .active > a,
@@ -44,33 +83,38 @@ $$$$$$$/ $$$$$$$$/$$/   $$/    $/    $$/   $$/        $$$$$$/    $$/   $$$$$$/ $
 
 #filterMenu .lead,
 #rightMenu .lead {
-font-weight:bold;
+	font-weight:bold;
 }
 .main-column {
-margin-bottom:30px;
+	margin-bottom:30px;
 }
 
 .page-title {
-font-weight:bold;
-color:#1BB2BD;
+	font-weight:bold;
+	color:#1BB2BD;
 }
 
 .btn-beavr,
 .btn-beavr:focus {
-background-color: #1BB2BD !important;
-color:white !important;
+	background-color: #1BB2BD !important;
+	color: white !important;
 }
 
 .btn-beavr:hover,
 .btn-beavr:active {
-background-color: #24777A !important;
-color:white !important;
-text-decoration:none !important;
+	background-color: #24777A !important;
+	color:white !important;
+	text-decoration:none !important;
 }
 
 footer {
-padding-top:10px;
-text-align:center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align:center;
+	position: static !important;
+	border-top: solid #d3d3d3;
+	border-top-width: 1px;
+	background-color: #e9e9e9 !important;
 }
 
 .button-panel .button {

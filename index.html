@@ -33,6 +33,9 @@
     <!-- Filtering stuff -->
     <link href="assets/css/isteven-multi-select.css" rel="stylesheet">
 
+    <!-- Menu related -->
+    <link href="assets/css/yamm.css" rel="stylesheet">
+
     <!-- Loading stuff -->
     <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.css' type='text/css' media='all' />
 
@@ -48,11 +51,11 @@
 <body>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar beavr-navbar navbar-fixed-top" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#nav-collapse">
+                <button type="button" class="navbar-toggle beavr-navbar-toggle" data-toggle="collapse" data-target="#nav-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -62,11 +65,45 @@
                   <img class="navbar-brand-logo" src="assets/img/logo/beaver-logo-min.png">
                 </a>
                 <div class="collapse navbar-collapse" id="nav-collapse" ng-controller="navbarController">
-                    <ul class="nav navbar-nav beavr-navbar">
+                    <ul class="nav navbar-nav beavr-navbar-menu">
                         <li ng-class="{active: isActive('/')}"><a href="#/">Accueil</a></li>
-                        <li><a href="#/" ng-show="registerDev" data-target="#myModal" data-toggle="modal">Devenir développeur</a></li>
+                        <ul class="nav yamm navbar-nav">
+                            <li class="dropdown yamm-fw">
+                                <a href="#/" class="dropdown-toggle" data-toggle="dropdown">Filtrer les applications<i class="dropdown icon"></i></a>
+                                <ul class="dropdown-menu">
+                                <li>
+                                    <div class="yamm-content">
+                                        <div class="row">
+                                            <div id="filterMenu" class="ui stackable three column grid centered" ng-show="filterMenu" ng-controller="filterController" style="margin:0">
+                                                <div id="device-list" ng-show="devices !== undefined" class="list-group col-md-3">
+                                                    <div directive-id="multi-select-device" isteven-multi-select input-model="devices" output-model="filteredDevices"
+                                                    button-label="name" item-label="name" tick-property="ticked" helper-elements="filter" max-labels="2"
+                                                    max-height=100px" search-property="name" output-properties="name _id" translation="localLangDevices" on-item-click="sendFilters()">
+                                                    </div>
+                                                </div>
+
+                                                <div id="category-list" ng-show="categories !== undefined" class="list-group col-md-3">
+                                                    <div directive-id="multi-select-category" isteven-multi-select input-model="categories" output-model="filteredCategories"
+                                                    button-label="name" item-label="name" tick-property="ticked" helper-elements="filter" max-labels="2"
+                                                    max-height=100px" search-property="name" output-properties="name _id" translation="localLangCategories" on-item-click="sendFilters()">
+                                                    </div>
+                                                </div>
+
+                                                <div id="price-list" ng-show="prices !== undefined" class="list-group col-md-3">
+                                                    <div directive-id="single-select-price" isteven-multi-select input-model="prices" output-model="filteredPrice"
+                                                    button-label="name" item-label="name" tick-property="ticked" helper-elements="" max-labels="2" selection-mode="single"
+                                                    max-height=100px" output-properties="name priceFilter" translation="localLangPrices" on-item-click="sendFilters()">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                </ul>
+                            </li>
+                        </ul>
                     </ul>
-                    <ul ng-show="onlineMenu"  class="nav navbar-nav navbar-right navbar navbar-fixed-left navbar-minimal animate" role="navigation">
+                    <ul ng-show="onlineMenu" class="nav navbar-nav navbar-right navbar navbar-fixed-left navbar-minimal animate" role="navigation">
                             <div class="navbar-toggler animate">
                                 <div id="menu-profile-picture">
                                     <img ng-src="{{ profilePicture }}">
@@ -78,6 +115,12 @@
                                     <a href="" data-target="#feedbackModal" data-toggle="modal" class="animate">
                                         <span class="desc animate"> Feedback </span>
                                         <span class="glyphicon glyphicon-comment"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#/" class="animate">
+                                        <span class="desc animate"> Devenir développeur </span>
+                                        <span class="glyphicon glyphicon-blackboard"></span>
                                     </a>
                                 </li>
                                 <li>
@@ -191,6 +234,9 @@
                 $('#menu-profile-picture').toggleClass('hidden');
                 $('.menu-icon').toggleClass('visible');
                 $(this).closest('.navbar-minimal').toggleClass('open');
+            })
+            $(document).on('click', '.yamm .dropdown-menu', function(e) {
+                e.stopPropagation()
             })
         });
     </script>
