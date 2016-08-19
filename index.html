@@ -48,7 +48,7 @@
     <![endif]-->
 </head>
 
-<body>
+<body style="overflow-y:scroll;">
 
     <!-- Navigation -->
     <nav class="navbar beavr-navbar navbar-fixed-top" role="navigation">
@@ -69,12 +69,12 @@
                         <li ng-class="{active: isActive('/')}"><a href="#/">Accueil</a></li>
                         <ul class="nav yamm navbar-nav">
                             <li class="dropdown yamm-fw">
-                                <a href="#/" class="dropdown-toggle" data-toggle="dropdown">Filtrer les applications<i class="dropdown icon"></i></a>
+                                <a href="#/" class="dropdown-toggle" data-toggle="dropdown" ng-show="filterMenu">Filtrer les applications<i class="dropdown icon"></i></a>
                                 <ul class="dropdown-menu">
                                 <li>
                                     <div class="yamm-content">
                                         <div class="row">
-                                            <div id="filterMenu" class="ui stackable three column grid centered" ng-show="filterMenu" ng-controller="filterController" style="margin:0">
+                                            <div id="filterMenu" class="ui stackable three column grid centered" ng-controller="filterController" style="margin:0">
                                                 <div id="device-list" ng-show="devices !== undefined" class="list-group col-md-3">
                                                     <div directive-id="multi-select-device" isteven-multi-select input-model="devices" output-model="filteredDevices"
                                                     button-label="name" item-label="name" tick-property="ticked" helper-elements="filter" max-labels="2"
