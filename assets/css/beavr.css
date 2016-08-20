@@ -202,7 +202,7 @@ line-height:30px
 ************************/
 
 .appInfos-card {
-	background-color:#f7f7f7;
+	background-color:#f7f7f7 !important;
 	width:100% !important;
 }
 
