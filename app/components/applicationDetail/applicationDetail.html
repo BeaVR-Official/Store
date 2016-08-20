@@ -12,24 +12,24 @@
       </div>-->
 
 
-    <div class="ui raised card"" style="background-color:#f7f7f7;width:100%;">
+    <div class="ui raised card appInfos-card">
       <div class="content">
         <div class="left-part-appInfos">
-            <img class="media-object cadre-images main-profile-picture" ng-src="{{ appInfos.logo }}" style="max-width:300px !important">
+            <img class="media-object cadre-images main-profile-picture" ng-src="{{ appInfos.logo }}">
             <div id="app-rating-main">
-              <button type="button" class="btn btn-secondary btn-beavr btn-lg" style="width:100%;">Acheter</button>
+              <button type="button" class="btn btn-secondary btn-beavr btn-lg">Acheter</button>
             </div>
         </div>
-        <div class="media-body" style="padding:0px 5px 0px 20px !important;">
+        <div class="media-body">
           <span class="right floated">  
-            <div id="app-rating-main" style="font-size:26px !important;margin:0 !important;">
+            <div id="app-rating-main" class="app-rating-main">
               <span ng-show="appInfos.noteAvg != null" ng-repeat="t in getNumberFullStar(appInfos.noteAvg) track by $index" ng-class="{'app-rating-main-last-child':$last}" class="glyphicon glyphicon-star"></span>
               <span ng-show="appInfos.noteAvg != null" ng-repeat="t in getNumberEmptyStar(5 - appInfos.noteAvg) track by $index" class="glyphicon glyphicon-star-empty"></span>
             </div>
           </span>
-          <div class="header" style="font-weight:bold;font-size:1.7em;color:#32a9ad;line-height:26px">{{ appInfos.name }}</div>
+          <div class="header">{{ appInfos.name }}</div>
           <br>
-          <div class="description-application comment-content" style="min-height:75px;">
+          <div class="description-application comment-content">
             <p>{{ appInfos.description }}</p>
           </div>
           <br>

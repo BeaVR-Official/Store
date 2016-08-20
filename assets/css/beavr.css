@@ -201,6 +201,11 @@ line-height:30px
 *************************
 ************************/
 
+.appInfos-card {
+	background-color:#f7f7f7;
+	width:100% !important;
+}
+
 .comment-card {
 	width:100% !important;
 	margin-bottom:20px !important;
@@ -236,6 +241,16 @@ line-height:30px
   font-weight:bold;
   font-size:22px !important;
 }
+
+.media-body {
+	padding:0px 5px 0px 20px !important;
+}
+
+.app-rating-main {
+	font-size:26px !important;
+	margin:0 !important;
+}
+
 .cadre-images {
   border:2px solid #32a9ad;
 }
@@ -256,7 +271,7 @@ line-height:30px
 }
 
 .description-application {
-  font-size:14px;
+  min-height:75px;
 }
 
 .well {
@@ -272,6 +287,14 @@ line-height:30px
 .left-part-appInfos {
   min-width:150px;
   float:left;
+}
+
+.left-part-appInfos img {
+	max-width:300px;
+}
+
+#app-rating-main button {
+	width:100%;
 }
 
 .left-part-comment {
@@ -310,6 +333,13 @@ margin-left:5px;
 
 .app-infos {
 max-width:120px;
+}
+
+.header {
+	font-weight:bold;
+	font-size:1.7em;
+	color:#32a9ad;
+	line-height:26px;
 }
 
 .comment-header {
@@ -353,6 +383,11 @@ vertical-align:middle;
 .back-app-link {
     float:right;
     font-size:15px;
+	color:#32a9ad;
+}
+
+.back-app-link:hover {
+	color:#219c9e;
 }
 
 #comments-section {
