@@ -1,7 +1,7 @@
 website.controller('applicationCommentsController', function($scope, $rootScope, $http, $routeParams, AuthenticationService, appInfos, comments, userData){
     
     $rootScope.menu = true;
-    $rootScope.filterMenu = false;
+    $rootScope.homePage = false;
     if (userData !== undefined) {
       var userInfos = userData.data.data;
       $rootScope.onlineMenu = true;

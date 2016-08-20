@@ -1,15 +1,3 @@
-<div class="row carousel-holder">
-  <div class="col-md-12">
-    <div ng-controller="carouselController">
-      <uib-carousel class="carousel slide" active="active" interval="myInterval" no-wrap="noWrapSlides">
-        <uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">
-          <img class="slide-image" ng-src="{{slide.image}}">
-        </uib-slide>
-      </uib-carousel>
-    </div>
-  </div>
-</div>
-
 <h4 class="page-part-title">Applications disponibles</h4>
 <div ng-show="filteredApplications.length == 0" class="no-app-available">
   <span>Aucune application ne remplit les critères de recherche.</span>

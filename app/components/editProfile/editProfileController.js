@@ -1,7 +1,7 @@
 website.controller('editProfileController', function($scope, $rootScope, $http, userData, AuthenticationService, Upload) {
     var userInfos = userData.data.data;
     $rootScope.menu = true;
-    $rootScope.filterMenu = false;
+    $rootScope.homePage = false;
 	  $rootScope.onlineMenu = true;
     $rootScope.offlineMenu = false;
     $rootScope.profilePicture = userData.data.data.picture;

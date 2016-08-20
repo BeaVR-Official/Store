@@ -48,7 +48,7 @@
     <![endif]-->
 </head>
 
-<body style="overflow-y:scroll;">
+<body>
 
     <!-- Navigation -->
     <nav class="navbar beavr-navbar navbar-fixed-top" role="navigation">
@@ -69,7 +69,7 @@
                         <li ng-class="{active: isActive('/')}"><a href="#/">Accueil</a></li>
                         <ul class="nav yamm navbar-nav">
                             <li class="dropdown yamm-fw">
-                                <a href="#/" class="dropdown-toggle" data-toggle="dropdown" ng-show="filterMenu">Filtrer les applications<i class="dropdown icon"></i></a>
+                                <a href="#/" class="dropdown-toggle" data-toggle="dropdown" ng-show="homePage">Filtrer les applications<i class="dropdown icon"></i></a>
                                 <ul class="dropdown-menu">
                                 <li>
                                     <div class="yamm-content">
@@ -103,6 +103,11 @@
                             </li>
                         </ul>
                     </ul>
+                    <div ng-show="offlineMenu">
+                        <ul class="nav navbar-nav beavr-navbar-menu navbar-right navbar navbar-fixed-left">
+                            <li><a href="#/" data-target="#authenticate_modal" data-toggle="modal">Se connecter</a></li>
+                        </ul>
+                    </div>
                     <ul ng-show="onlineMenu" class="nav navbar-nav navbar-right navbar navbar-fixed-left navbar-minimal animate" role="navigation">
                             <div class="navbar-toggler animate">
                                 <div id="menu-profile-picture">
@@ -155,25 +160,26 @@
         </div>
         <!-- /.container -->
     </nav>
-    
+
+    <!-- Top banner -->
+    <div class="row" ng-show="homePage">
+        <a ng-href="#/applications/details/57a20c9eea11906ee742c5d6">
+        <div class="banner" style="background: url(/store/assets/img/carrousel/img3.png) 50% 100% no-repeat #000">
+            <div class="container">
+                <div class="col-md-offset-3 col-md-4 banner-content">
+                    <span>Application vedette</span>
+                    <h2>Planetarium</h2>
+                    <p>Découvrez les planètes du système solaire et tout et tout</p>
+                </div>
+            </div>
+        </div>
+        </a>
+    </div>
 
     <!-- Page Content -->
     <div class="container">
         <div class="row">
-            <div class="col-md-2" ng-show="menu">
-                <!--<div id="devMenu" ng-show="devMenu">
-                    <p id="titleDeveloppementMenu" class="lead">Développement</p>
-                    <div id="developpementMenu" class="list-group">
-                        <a href="#" class="list-group-item"><img src="assets/img/icons/api.png">Publier une application</a>
-                        <a href="#" class="list-group-item"><img src="assets/img/icons/git.png">Gérer vos applications</a>
-                    </div>
-                </div>-->
-                <div id="offlineMenu" ng-show="offlineMenu">
-                    <p id="titleCompteMenu" class="lead">Compte</p>
-                    <a href="" data-target="#authenticate_modal" data-toggle="modal" class="list-group-item">Se connecter</a>
-                </div>
-            </div>
-            <div class="col-md-8 main-column">
+            <div class="col-md-offset-2 col-md-8 main-column">
                 <div ng-view autoscroll="true"></div>
             </div>
         </div>
@@ -283,7 +289,7 @@
                 <p>Indiquez vos identifiants afin de vous connecter.</p>
             </div>
             <form class="ui form attached fluid segment warning" name="connectionForm">
-                <h4 class="ui dividing header" style="color: #1BB2BD">Se connecter</h4>
+                <h4 class="ui dividing header auth-header">Se connecter</h4>
                 <div class="required field">
                     <div class="ui left icon input">
                         <i class="mail icon"></i>
@@ -296,7 +302,7 @@
                         <input type="password" name="password" placeholder="Mot de passe" ng-minlength="8" ng-model="connectionData.password" required>
                         <button type="button" ng-click="showForm(2)" class="ui teal right labeled icon button">
                             <i class="privacy icon"></i>
-                            Mot de passe oublié ?
+                            <p class="hidden-xs">Mot de passe oublié ?</p>
                         </button>
                     </div>
                 </div>
@@ -327,7 +333,7 @@
                 <p>Renseignez les informations ci-dessous afin de vous inscrire.</p>
             </div>
             <form class="ui form attached fluid segment warning" name="subscriptionForm">
-                <h4 class="ui dividing header" style="color: #1BB2BD">S'inscrire</h4>
+                <h4 class="ui dividing header auth-header">S'inscrire</h4>
                 <div class="two fields">
                     <div class="field">
                         <input type="text" name="subscriptionData.firstName" placeholder="Prénom" ng-model="subscriptionData.firstName">
@@ -392,7 +398,7 @@
                 <p>Indiquez votre adresse email, nous vous renverrons un mot de passe !</p>
             </div>
             <form class="ui form attached fluid segment warning" name="resetPasswordForm">
-                <h4 class="ui dividing header" style="color: #1BB2BD">Réinitialiser le mot de passe</h4>
+                <h4 class="ui dividing header auth-header">Réinitialiser le mot de passe</h4>
                 <div class="required field">
                     <div class="ui left icon input">
                         <i class="mail icon"></i>

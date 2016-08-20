@@ -1,6 +1,6 @@
 website.controller('mainController', function($scope, $rootScope, $http, AuthenticationService, userData) {
   $rootScope.menu = true;
-  $rootScope.filterMenu = true;
+  $rootScope.homePage = true;
   if (userData !== undefined) {
     var userInfos = userData.data.data;
     $rootScope.onlineMenu = true;
@@ -184,7 +184,7 @@ website.controller('filterController', function($scope, $rootScope, $http) {
     selectNone      : "",
     reset           : "",
     search          : "Rechercher ...",
-    nothingSelected : "Tous les matériels de RV"
+    nothingSelected : "Tous les matériels de Réalité Virtuelle"
   }
 
   $scope.localLangCategories = {

@@ -17,7 +17,7 @@ $$$$$$$/ $$$$$$$$/$$/   $$/    $/    $$/   $$/        $$$$$$/    $$/   $$$$$$/ $
 *************************
 ************************/
 
-.body {
+body {
 	background-color: #f1f1f1;
 }
 
@@ -25,6 +25,8 @@ $$$$$$$/ $$$$$$$$/$$/   $$/    $/    $$/   $$/        $$$$$$/    $$/   $$$$$$/ $
 	display: inline-block;
 	background-color: white;
 	border-top: 5px solid #1BB2BD !important;
+	padding-bottom : 5px;
+	margin-bottom: 0 !important;
 }
 
 .beavr-navbar-menu {
@@ -37,6 +39,7 @@ $$$$$$$/ $$$$$$$$/$$/   $$/    $/    $$/   $$/        $$$$$$/    $$/   $$$$$$/ $
 .beavr-navbar-menu a {
 	transition: color 0.4s ease;
 	color: grey;
+	outline: 0 !important;
 }
 
 .nav a:hover, .nav a:focus {
@@ -523,6 +526,35 @@ margin: 30px auto 50px auto;
 	font-size:0.9em;
 }
 
+.banner {
+	width: 100vw;
+	margin-bottom: 1%;
+}
+
+.banner-content {
+	padding: 86px 0;
+}
+
+.banner-content h2 {
+	color: white; text-shadow: 1px 1px 1px #1BB2BD
+}
+
+.banner-content span {
+	color: white;
+	background: #1BB2BD;
+	font-weight: 600;
+	border-radius: 2px;
+	padding: 5px 10px 5px;
+	font-size: 15px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+.banner-content p {
+	color: #fefefe;
+	text-shadow: 1px 1px 1px #1BB2BD;
+}
+
 /************************
 *************************
 * Connexion and Inscription
@@ -568,6 +600,10 @@ margin: 30px auto 50px auto;
 }
 .animate-switch.ng-enter.ng-enter-active {
   opacity:1;
+}
+
+.auth-header {
+	color: #1BB2BD !important;
 }
 
 /************************
