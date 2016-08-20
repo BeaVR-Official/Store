@@ -201,6 +201,10 @@ line-height:30px
 *************************
 ************************/
 
+.carousel-inner > .item > img, .carousel-inner > .item > a > img {
+	max-height:350px !important;
+}
+
 .appInfos-card {
 	background-color:#f7f7f7 !important;
 	width:100% !important;
@@ -392,6 +396,7 @@ vertical-align:middle;
 
 #comments-section {
 width:100%;
+margin-top:10px;
 }
 
 #pagination {

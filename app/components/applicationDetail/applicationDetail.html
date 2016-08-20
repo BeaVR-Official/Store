@@ -72,7 +72,7 @@
 
   <div id="appScreenshots" ng-show="appInfosScreenshots.length > 0">
     <br />
-    <h4 class="media-heading page-part-title">Images de l'application</h4>
+    <h4 class="media-heading page-part-title">Aperçu de l'application</h4>
     <br />
     <div class="col-md-12">
       <uib-carousel class="carousel slide" active="active" interval="myInterval" no-wrap="noWrapSlides">
@@ -86,7 +86,7 @@
 </div>
 
 <div id="comments-section">
-  <h3>{{ appInfos.commentsNb > 0 ? 'Commentaires' : 'Aucun commentaire pour cette application' }}</h3>
+  <h3 style="font-size:1.6em;">{{ appInfos.commentsNb > 0 ? 'Commentaires' : 'Aucun commentaire pour cette application' }}</h3>
   <div id="container" ng-repeat="commentInfos in comments">
 
     <div class="ui raised card comment-card">
