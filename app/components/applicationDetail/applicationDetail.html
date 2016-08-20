@@ -10,24 +10,40 @@
         <i class="fa fa-info"></i>
         Cette application est déjà dans votre bibliothèque
       </div>-->
-      <div class="well">
-          <div class="media">
-            <div class="left-part-appInfos">
-              <div class="app-infos">
-                <img class="media-object cadre-images main-profile-picture" ng-src="{{ appInfos.logo }}" style="width: 150px; height: 150px;">
-                <div id="app-rating-main">
-                    <span ng-show="appInfos.noteAvg != null" ng-repeat="t in getNumberFullStar(appInfos.noteAvg) track by $index" ng-class="{'app-rating-main-last-child':$last}" class="glyphicon glyphicon-star"></span>
-                    <span ng-show="appInfos.noteAvg != null" ng-repeat="t in getNumberEmptyStar(5 - appInfos.noteAvg) track by $index" class="glyphicon glyphicon-star-empty"></span>
-                </div>
-              </div>
-      		  </div>
-      		<div class="media-body">
-        		<h4 class="media-heading">{{appInfos.name }}</h4>
-              <p class="text-right date-publication">Publiée le : {{ appInfos.created_at | date:'dd/MM/yyyy'}}</p>
-              <p class="description-application">
-                {{ appInfos.description }}
-              </p>
-              <p class="text-left"><b>Développée par :</b> {{ appInfos.author.public.pseudo }}</p>
+
+
+    <div class="ui raised card"" style="background-color:#f7f7f7;width:100%;">
+      <div class="content">
+        <div class="left-part-appInfos">
+            <img class="media-object cadre-images main-profile-picture" ng-src="{{ appInfos.logo }}" style="max-width:300px !important">
+            <div id="app-rating-main">
+              <button type="button" class="btn btn-secondary btn-beavr btn-lg" style="width:100%;">Acheter</button>
+            </div>
+        </div>
+        <div class="media-body" style="padding:0px 5px 0px 20px !important;">
+          <span class="right floated">  
+            <div id="app-rating-main" style="font-size:26px !important;margin:0 !important;">
+              <span ng-show="appInfos.noteAvg != null" ng-repeat="t in getNumberFullStar(appInfos.noteAvg) track by $index" ng-class="{'app-rating-main-last-child':$last}" class="glyphicon glyphicon-star"></span>
+              <span ng-show="appInfos.noteAvg != null" ng-repeat="t in getNumberEmptyStar(5 - appInfos.noteAvg) track by $index" class="glyphicon glyphicon-star-empty"></span>
+            </div>
+          </span>
+          <div class="header" style="font-weight:bold;font-size:1.7em;color:#32a9ad;line-height:26px">{{ appInfos.name }}</div>
+          <br>
+          <div class="description-application comment-content" style="min-height:75px;">
+            <p>{{ appInfos.description }}</p>
+          </div>
+          <br>
+          <span class="right floated"><i class="glyphicon glyphicon-calendar"></i> Date de publication : {{ appInfos.created_at | date:'dd/MM/yyyy'}}</span><br>
+          <span class="right floated"><i class="glyphicon glyphicon-user"></i> Développeur : {{ appInfos.author.public.pseudo }}</span><br>
+            <span class="right floated"><b>Tags :</b> <i>
+              <span ng-repeat="device in appInfos.devicesName">{{device.name}} {{$last ? '' : ', '}}</span>
+              <span ng-show="appInfos.categoriesName.length">, </span>
+              <span ng-repeat="categorie in appInfos.categoriesName">{{categorie.name}} {{$last ? '' : ', '}}</span></i></span>
+        </div>
+      </div>
+    </div>
+
+<!--
               <span ng-if="paymentType" class="animate-if">
                   <p class="text-right">
                     <button type="button" class="btn btn-secondary btn-beavr btn-lg" ng-click="checkPriceAction()" ng-show="isConnected">{{ appInfos.price == "0" | iif : "Gratuite" : appInfos.price + "€" }}</button>
@@ -52,11 +68,7 @@
                 </p>
                 </form>
               </span>
-           </div>
-        </div>
-      </div>
-    </div>
-  </div>
+-->
 
   <div id="appScreenshots" ng-show="appInfosScreenshots.length > 0">
     <br />
