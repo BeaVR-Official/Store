@@ -108,7 +108,26 @@
                             <li><a href="#/" data-target="#authenticate_modal" data-toggle="modal">Se connecter</a></li>
                         </ul>
                     </div>
-                    <ul ng-show="onlineMenu" class="nav navbar-nav navbar-right navbar navbar-fixed-left navbar-minimal animate" role="navigation">
+
+                          <ul  ng-show="onlineMenu" class="nav navbar-nav navbar-right beavr-navbar-menu" style="margin-right:-10px;">
+                            <li class="dropdown" style="width:250px;text-align:left;">
+                            <a href="" style="text-align:center;" class="dropdown-toggle" data-toggle="dropdown">{{ pseudo }} <img style="width:30px;margin-left:5px;" ng-src="{{ profilePicture }}"></a>
+                            <ul class="dropdown-menu" style="width:100%;">
+                                <li style="margin-top:3px;" ng-class="{active: isActive('/feedback')}"><a href="" data-target="#feedbackModal" data-toggle="modal" class="animate">Feedback <span class="glyphicon glyphicon-comment pull-right"></span></a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Devenir développeur <span class="glyphicon glyphicon-blackboard pull-right"></span></a></li>
+                                <li class="divider"></li>
+                                <li><a href="#/profile">Profil <span class="glyphicon glyphicon-user pull-right"></span></a></li>
+                                <li class="divider"></li>
+                                <li><a href="#/library">Bibliothèque <span class="glyphicon glyphicon-th pull-right"></span></a></li>
+                                <li class="divider"></li>
+                                <li><a href="#/progression">Progression <span class="glyphicon glyphicon-list-alt pull-right"></span></a></li>
+                                <li class="divider"></li>
+                                <li style="margin-bottom:3px;"><a href="" ng-click="disconnect()">Se déconnecter <span class="glyphicon glyphicon-remove pull-right"></span></a></li>
+                            </ul>
+                            </li>
+                        </ul>
+                    <!--<ul ng-show="onlineMenu" class="nav navbar-nav navbar-right navbar navbar-fixed-left navbar-minimal animate" role="navigation">
                             <div class="navbar-toggler animate">
                                 <div id="menu-profile-picture">
                                     <img ng-src="{{ profilePicture }}">
@@ -153,7 +172,7 @@
                                     </a>
                                 </li>
                             </ul>
-                    </ul>
+                    </ul>-->
                 </div><!--/.navbar-collapse -->
             </div>
             <!-- /.navbar-collapse -->
