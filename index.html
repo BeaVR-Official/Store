@@ -67,7 +67,7 @@
                 <div class="collapse navbar-collapse" id="nav-collapse" ng-controller="navbarController">
                     <ul class="nav navbar-nav beavr-navbar-menu">
                         <li ng-class="{active: isActive('/')}"><a href="#/">Accueil</a></li>
-                        <ul class="nav yamm navbar-nav">
+                        <ul class="nav yamm navbar-nav hidden-xs">
                             <li class="dropdown yamm-fw">
                                 <a href="#/" class="dropdown-toggle" data-toggle="dropdown" ng-show="homePage">Filtrer les applications<i class="dropdown icon"></i></a>
                                 <ul class="dropdown-menu">
@@ -289,9 +289,8 @@
                     <div class="form-group">
                         <input type="checkbox" id="recontact" class="modal-checkbox" ng-model="feedbackData.recontact"/>
                         <label for="recontact">J'accepte d'être recontacté suite à mon feedback</label>
-                        <button type="submit" ng-disabled="feedbackForm.$invalid" class="btn btn-secondary btn-beavr" style="float:right" ng-click="feedbackAction()">Envoyer<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                        <button type="submit" ng-disabled="feedbackForm.$invalid" class="btn btn-secondary btn-beavr feedback-button" ng-click="feedbackAction()">Envoyer<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
                     </div>
-
                 </form>
             </div>
         </div>

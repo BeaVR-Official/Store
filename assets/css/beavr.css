@@ -42,6 +42,12 @@ body {
 	outline: 0 !important;
 }
 
+.fdp {
+		transition: color 0.4s ease;
+	color: grey;
+	outline: 0 !important;
+}
+
 .nav a:hover, .nav a:focus {
 	background-color: white !important;
 	color: #1BB2BD;
@@ -611,18 +617,25 @@ margin: 30px auto 50px auto;
 * Library
 *************************
 ************************/
+@media (min-width:500px) {
+	.application-area {
+		height: 350px;
+	}
+}
+
+@media (max-width:500px) {
+	.application-area {
+		margin-bottom: 50px;
+	}
+}
 
 .application-name {
-  font-weight:bold;
-  text-align:center;
+	font-weight: bold;
+	text-align: center;
 }
 
 .btn-launch-application {
-  text-align:center;
-}
-
-.application-area {
-  height:350px;
+  text-align: center;
 }
 
 /* WEBKIT ONLY */
@@ -656,6 +669,18 @@ margin: 30px auto 50px auto;
 .categories {
 	padding-left: 1em;
 	padding-right: 1em;
+}
+
+/************************
+*************************
+* Feedback
+*************************
+************************/
+
+@media (min-width:500px) {
+	.feedback-button {
+		float: right;
+	}
 }
 
 /************************
