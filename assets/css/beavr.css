@@ -42,12 +42,6 @@ body {
 	outline: 0 !important;
 }
 
-.fdp {
-		transition: color 0.4s ease;
-	color: grey;
-	outline: 0 !important;
-}
-
 .nav a:hover, .nav a:focus {
 	background-color: white !important;
 	color: #1BB2BD;
