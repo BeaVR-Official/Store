@@ -25,9 +25,7 @@ website.controller('applicationDetailController', function($scope, $rootScope, $
 
     $scope.paymentType = false;
     $scope.isConnected = !(AuthenticationService.isOffline());
-
     $scope.appInfos = appInfos.data.data.application;
-
     if ($scope.appInfos.price == "0")
       $scope.paymentType = true;
 
@@ -67,7 +65,7 @@ website.controller('applicationDetailController', function($scope, $rootScope, $
           console.log("RESULT in error =>");
           console.log(result);
     });
-
+    
     $scope.checkPriceAction = function(){
 */
       /*if ($scope.applicationIsOwned == false) {
