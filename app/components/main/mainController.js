@@ -1,12 +1,14 @@
-website.controller('mainController', function($scope, $rootScope, $http, AuthenticationService, token, USER_ROLES) {
+website.controller('mainController', function($scope, $rootScope, $http, AuthenticationService, userData) {
   $rootScope.menu = true;
-  $rootScope.filterMenu = true;
-  if (token !== undefined) {
+  $rootScope.homePage = true;
+  if (userData !== undefined) {
+    var userInfos = userData.data.data;
     $rootScope.onlineMenu = true;
     $rootScope.offlineMenu = false;
-    $rootScope.profilePicture = token.profilePicture;
+    $rootScope.profilePicture = userData.data.data.picture;
+    $rootScope.pseudo = userData.data.data.pseudo;
     $rootScope.disconnect = AuthenticationService.disconnect;
-    if (AuthenticationService.isAuthorized(USER_ROLES.Developer)) {
+    if (userInfos.rights.id == 2) {
       $rootScope.devMenu = true;
       $rootScope.registerDev = false;
     } else {
@@ -19,12 +21,13 @@ website.controller('mainController', function($scope, $rootScope, $http, Authent
     $rootScope.devMenu = false;
   }
 
-  $http.get(url + '/api/applications/state/1').then(function(response) {
-    $scope.data = response.data.Applications;
+  $http.get(url + '/api/applications').success(function(result) {
+        
+    $scope.data = result.data.application;
 
     $scope.data.sort(function(a, b) {
-      ratingA = a.avgRating;
-      ratingB = b.avgRating;
+      ratingA = a.noteAvg;
+      ratingB = b.noteAvg;
 
       if (ratingA == null)
         ratingA = 0;
@@ -36,16 +39,34 @@ website.controller('mainController', function($scope, $rootScope, $http, Authent
 
     $scope.filteredApplications = angular.copy($scope.data);
 
-    }, function(error){
-      console.debug("Failure while fetching applications' list.");
+    }).error(function(result){
+
   });
 
-  $scope.getRating = function(n) {
-    if (n == null)
-      return new Array(0);
-     return new Array(n);
-  };
+    $scope.getNumberFullStar = function(n) {
+      if (n == null)
+        return new Array(0);
+      return new Array(Math.ceil(n));
+    };
 
+    $scope.getNumberEmptyStar = function(n) {
+      if (n == null)
+        return new Array(0);
+      return new Array(Math.trunc(n));
+    }
+  
+    $scope.formatStringDevicesAndCategories = function(devicesArray) {
+    
+      var finalString = "";
+
+      for (var i = 0; i < devicesArray.length; i++) {
+        finalString += devicesArray[i].name;
+        if (i != (devicesArray.length - 1))
+          finalString += ", ";
+      }
+
+      return (finalString);
+    }
   /*
   *
   * Filtering
@@ -77,13 +98,16 @@ website.controller('mainController', function($scope, $rootScope, $http, Authent
       for (var j = 0; j < $scope.filteredApplications.length; j++) {
         var compatibleDevices = 0;
         for (var i = 0; i < $scope.filteredDevices.length; i++)
-            if ($scope.filteredApplications[j].devicesNames.search($scope.filteredDevices[i].name) != -1)
+          for (var n = 0; n < $scope.filteredApplications[j].devicesName.length; n++)
+            if ($scope.filteredApplications[j].devicesName[n]._id == $scope.filteredDevices[i]._id)
               if ($scope.checkPriceFilter($scope.filteredApplications[j].price, $scope.filterPrice.priceFilter) == true)
                 compatibleDevices++;
-        for (var k = 0; k < $scope.filteredCategories.length; k++)
-          if ($scope.filteredApplications[j].categoriesNames.search($scope.filteredCategories[k].name) != -1)
-            if ($scope.checkPriceFilter($scope.filteredApplications[j].price, $scope.filterPrice.priceFilter) == true)
-              compatibleDevices++;
+        for (var k = 0; k < $scope.filteredCategories.length; k++) {
+          for (var n = 0; n < $scope.filteredApplications[j].categoriesName.length; n++)
+            if ($scope.filteredApplications[j].categoriesName[n]._id == $scope.filteredCategories[k]._id)
+              if ($scope.checkPriceFilter($scope.filteredApplications[j].price, $scope.filterPrice.priceFilter) == true)
+                compatibleDevices++;
+        }
         if (compatibleDevices == 0) {
           $scope.filteredApplications.splice(j, 1);
           j--;
@@ -139,19 +163,13 @@ website.controller('carouselController', function($scope) {
 website.controller('filterController', function($scope, $rootScope, $http) {
 
   $http.get(url + '/api/devices').success(function(result) {
-      if (result.Error == false) {
-        $scope.devices = result.Devices;
-        
-      } 
+    $scope.devices = result.data.devices;
   }).error(function(result) {
 
   });
 
-
   $http.get(url + '/api/categories').success(function(result) {
-      if (result.Error == false) {
-        $scope.categories = result.Categories;
-      } 
+    $scope.categories = result.data.categories;
   }).error(function(result) {
 
   });
@@ -167,7 +185,7 @@ website.controller('filterController', function($scope, $rootScope, $http) {
     selectNone      : "",
     reset           : "",
     search          : "Rechercher ...",
-    nothingSelected : "Tous les matériels"
+    nothingSelected : "Tous les matériels de Réalité Virtuelle"
   }
 
   $scope.localLangCategories = {

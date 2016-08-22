@@ -1,11 +1,13 @@
-website.controller('editProfileController', function($scope, $rootScope, $http, token, AuthenticationService, USER_ROLES, userInfos, Upload) {
+website.controller('editProfileController', function($scope, $rootScope, $http, userData, AuthenticationService, Upload) {
+    var userInfos = userData.data.data;
     $rootScope.menu = true;
-    $rootScope.filterMenu = false;
+    $rootScope.homePage = false;
 	  $rootScope.onlineMenu = true;
     $rootScope.offlineMenu = false;
-    $rootScope.profilePicture = token.profilePicture;
+    $rootScope.profilePicture = userData.data.data.picture;
+    $rootScope.pseudo = userData.data.data.pseudo;
     $rootScope.disconnect = AuthenticationService.disconnect;
-    if (AuthenticationService.isAuthorized(USER_ROLES.Developer)) {
+    if (userInfos.rights.id == 2) {
       $rootScope.devMenu = true;
       $rootScope.registerDev = false;
     } else {
@@ -13,40 +15,46 @@ website.controller('editProfileController', function($scope, $rootScope, $http, 
       $rootScope.registerDev = true;
     }
   $scope.userInfos = {
-    firstName: userInfos.data.Users.firstName,
-    lastName: userInfos.data.Users.lastName,
-    email: userInfos.data.Users.email,
-    pseudo: userInfos.data.Users.pseudo,
+    firstName: userInfos.firstName,
+    lastName: userInfos.lastName,
+    email: userInfos.email,
+    pseudo: userInfos.pseudo,
     password: '',
     confirmPassword: '',
-    profilePicture: userInfos.data.Users.profilePicture,
+    profilePicture: userInfos.picture,
     newProfilePicture: null
   };
   $scope.returnMessage = '';
   $scope.loading;
 
-  /* A update quand l'upload d'image sera fix */
   $scope.uploadImageAction = function() {
-    var file = $scope.userInfos.newProfilePicture;
-    file.upload = Upload.upload({
-      url: url + '/api/users/upload/' + userInfos.data.Users.id,
-      method: 'POST',
-      fields: {id: userInfos.data.Users.id},
-      file: file,
-      fileFormDataName: 'file'
+    var file = Upload.base64DataUrl($scope.userInfos.newProfilePicture).then(function(res) {
+    var data = {
+          picture : {
+            filename : $scope.userInfos.newProfilePicture.name,
+            buffer : res
+          }
+        };
+    $http.put(url + '/api/users/' + userInfos.id, data)
+        .success(function(result) {
+          $scope.userInfos = {
+            firstName: result.data.user.firstName,
+            lastName: result.data.user.lastName,
+            email: result.data.user.email,
+            pseudo: result.data.user.pseudo,
+            password: '',
+            confirmPassword: '',
+            profilePicture: result.data.user.picture,
+            newProfilePicture: null
+          };
+          $rootScope.profilePicture = result.data.user.picture;
+        }).error(function(error) {
+          var returnMessageDiv = angular.element(document.querySelector('#returnMessage'));
+          returnMessageDiv.removeClass("success-message");
+          returnMessageDiv.addClass("error-message");
+          $scope.returnMessage = errorMessage["EDIT_PROFILE_PROFILE_PICTURE"];
+        });
     });
-
-    file.upload.then(function(response) {
-      file.result = response.data;
-    }, function(response) {
-      if (response.status > 0)
-        console.log(response.data);
-    });
-
-    file.upload.progress(function(event) {
-      // Math.min is to fix IE which reports 200% sometimes
-      file.progress = Math.min(100, parseInt(100.0 * event.loaded / event.total));
-    })
   }
 
   $scope.editProfileAction = function() {
@@ -55,61 +63,66 @@ website.controller('editProfileController', function($scope, $rootScope, $http, 
       lastName: $scope.userInfos.lastName,
       email: $scope.userInfos.email,
       password: $scope.userInfos.password,
-      confirmPassword: $scope.userInfos.confirmPassword,
-      profilePicture: $scope.userInfos.profilePicture,
-      newProfilePicture: $scope.userInfos.newProfilePicture
+      confirmPassword: $scope.userInfos.confirmPassword
     };
 
     var returnMessageDiv = angular.element(document.querySelector('#returnMessage'));
+    var dataToSend = {
+      email: data.email
+    };
+
     if (data.password && data.confirmPassword) {
       if (!arePasswordsMatching(data.password, data.confirmPassword)) {
+        returnMessageDiv.removeClass("success-message");
         returnMessageDiv.addClass("error-message");
         $scope.returnMessage = errorMessage["EDIT_PROFILE_PASSWORD"];
         return ;
+      } else {
+        dataToSend.password = data.password;
       }
     }
     $scope.loading = true;
-    var dataToSend = {
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      password: data.password,
-      profilePicture: data.profilePicture
-    };
-    if (!data.newProfilePicture === null)
-      dataToSend.profilePicture = data.newProfilePicture;
-      $http.put(url + '/api/users/' + userInfos.data.Users.id, dataToSend)
-          .success(function(result) {
-              if (result.Error == false) {
-                  console.log(result);
-                  $scope.userInfos = {
-                    firstName: result.Users.firstName,
-                    lastName: result.Users.lastName,
-                    email: result.Users.email,
-                    pseudo: result.Users.pseudo,
-                    password: '',
-                    confirmPassword: '',
-                    profilePicture: result.Users.profilePicture,
-                    newProfilePicture: null
-                  };
-                  returnMessageDiv.addClass("success-message");
-                  $scope.returnMessage = successMessage["EDIT_PROFILE"];
-                  $scope.loading = false;
-              } else {
-                switch (result.Code)
-                {
-                  case 102:
-                    $scope.returnMessage = errorMessage["EDIT_PROFILE"];
-                    returnMessageDiv.addClass("error-message"); 
-                    break;
-                }
-              }
-              $scope.loading = false;
-            })
-          .error(function(result) {
+
+    if (data.firstName)
+      dataToSend.firstName = data.firstName;
+    if (data.lastName)
+      dataToSend.lastName = data.lastName;
+    $http.put(url + '/api/users/' + userInfos.id, dataToSend)
+        .success(function(result) {
+          $scope.userInfos = {
+            firstName: result.data.user.firstName,
+            lastName: result.data.user.lastName,
+            email: result.data.user.email,
+            pseudo: result.data.user.pseudo,
+            password: '',
+            confirmPassword: '',
+            profilePicture: result.data.user.picture,
+            newProfilePicture: null
+          };
+          returnMessageDiv.removeClass("error-message");
+          returnMessageDiv.addClass("success-message");
+          $scope.returnMessage = successMessage["EDIT_PROFILE"];
+          $scope.loading = false;
+      })
+      .error(function(result) {
+          returnMessageDiv.removeClass("success-message");
+          returnMessageDiv.addClass("error-message");
+          switch (result.error.status)
+          {
+            case 403:
+              $scope.returnMessage = errorMessage["EDIT_PROFILE_403"];
+              break;
+            case 404:
+              $scope.returnMessage = errorMessage["EDIT_PROFILE_404"];
+              break;
+            case 409:
+              $scope.returnMessage = errorMessage["EDIT_PROFILE_409"];
+              break;
+            default:
               $scope.returnMessage = errorMessage["EDIT_PROFILE"];
-              returnMessageDiv.addClass("error-message"); 
-              $scope.loading = false;
+              break;
+          }
+          $scope.loading = false;
       });
   };
 

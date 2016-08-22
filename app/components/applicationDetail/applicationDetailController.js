@@ -1,13 +1,14 @@
-website.controller('applicationDetailController', function($scope, $rootScope, token, $http, $routeParams, $location, AuthenticationService, $cookies, appInfos, comments, USER_ROLES){
-
+website.controller('applicationDetailController', function($scope, $rootScope, $http, $routeParams, $location, AuthenticationService, $cookies, appInfos, comments, userData) {
     $rootScope.menu = true;
-    $rootScope.filterMenu = false;
-    if (token !== undefined) {
+    $rootScope.homePage = false;
+    if (userData !== undefined) {
+      var userInfos = userData.data.data;
       $rootScope.onlineMenu = true;
       $rootScope.offlineMenu = false;
-      $rootScope.profilePicture = token.profilePicture;
+      $rootScope.profilePicture = userData.data.data.picture;
+      $rootScope.pseudo = userData.data.data.pseudo;
       $rootScope.disconnect = AuthenticationService.disconnect;
-      if (AuthenticationService.isAuthorized(USER_ROLES.Developer)) {
+      if (userInfos.rights.id == 2) {
         $rootScope.devMenu = true;
         $rootScope.registerDev = false;
       } else {
@@ -24,59 +25,54 @@ website.controller('applicationDetailController', function($scope, $rootScope, t
 
     $scope.paymentType = false;
     $scope.isConnected = !(AuthenticationService.isOffline());
-
-    $scope.appInfos = appInfos.data.Applications;
-
+    $scope.appInfos = appInfos.data.data.application;
     if ($scope.appInfos.price == "0")
       $scope.paymentType = true;
 
     $scope.myInterval = 10000;
     $scope.noWrapSlides = false;
     $scope.active = 0;
+
     $scope.appInfosScreenshots = [];
-    $scope.appInfos.screenshots.split(",").forEach(function(data, i) {
-      $scope.appInfosScreenshots.push({ image: data, id: i });
-    });
+    for (var i = 0; i < $scope.appInfos.screenshots.length; i++)
+      $scope.appInfosScreenshots.push({ image: $scope.appInfos.screenshots[i], id: i});
 
-    $scope.comments = comments.data.Comments;
-
-    $scope.applicationIsOwned = true;
-
-    if (!AuthenticationService.isOffline()) {
-        
-    
-    $cookies.put('idApplication', $scope.appInfos.id);
+    /*$cookies.put('idApplication', $scope.appInfos.id);
     $cookies.put('retailer', 999);
     $cookies.put('buyer', AuthenticationService.getToken().id);
     $cookies.put('price', $scope.appInfos.price);
     $cookies.put('commission', 0);
-    $cookies.put('originalPrice', $scope.appInfos.price);
-      var data = {
-        "idUser" : AuthenticationService.getToken().id
-      };
+    $cookies.put('originalPrice', $scope.appInfos.price);*/
 
-      $http.post(url + '/api/applications/userHasTheApplication', data)
-          .success(function(result) {
+    $scope.comments = comments.data.data.comments;
 
-              if (result.Error == false) {
-                $scope.applicationIsOwned = result.Canbuy;
-              } else {
-                $scope.applicationIsOwned = result.Canbuy;
-              }
-          })
-          .error(function(result) {
-            console.log("RESULT in error =>");
-            console.log(result);
-      });
-    }
+    $scope.applicationIsOwned = true;
 
+    /*var data = {
+      "idUser" : AuthenticationService.getToken().id
+    };
+
+    $http.post(url + '/api/applications/userHasTheApplication', data)
+        .success(function(result) {
+
+            if (result.Error == false) {
+              $scope.applicationIsOwned = result.Canbuy;
+            } else {
+              $scope.applicationIsOwned = result.Canbuy;
+            }
+        })
+        .error(function(result) {
+          console.log("RESULT in error =>");
+          console.log(result);
+    });
+    
     $scope.checkPriceAction = function(){
-
+*/
       /*if ($scope.applicationIsOwned == false) {
         alert("Vous ne pouvez pas acheter deux fois la même application");
         return;
       }*/
-
+/*
       if ($scope.appInfos.price == "0"){
         $scope.purchaseData = {
             application : $routeParams.idApplication,
@@ -103,11 +99,17 @@ website.controller('applicationDetailController', function($scope, $rootScope, t
       }else {
         $location.path('/payment');
       }
-    };
+    };*/
 
-    $scope.getRating = function(n) {
+    $scope.getNumberFullStar = function(n) {
       if (n == null)
         return new Array(0);
-      return new Array(n);
+      return new Array(Math.ceil(n));
     };
+
+    $scope.getNumberEmptyStar = function(n) {
+      if (n == null)
+        return new Array(0);
+      return new Array(Math.trunc(n));
+    }
 });

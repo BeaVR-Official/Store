@@ -27,44 +27,31 @@
        if (data.recontact == null)
          data.recontact = false;
  
-       if (!data.object || data.object.length == 0)
-       {
-         $scope.returnMessage = errorMessage["FEEDBACK_OBJECT"];
-         $scope.loading = false;
-         returnMessageDiv.addClass("error-message");
-       }
-       else if (!data.description || data.description.length == 0)
-       {
-         $scope.returnMessage = errorMessage["FEEDBACK_DESCRIPTION"];    
-         $scope.loading = false;
-         returnMessageDiv.addClass("error-message"); 
-       }
-       else {
-         $http.post(url + '/api/sendFeedback', data)
-             .success(function(result) {
- 
-                 if (result.Error == false) {
-                   $scope.feedbackData = {};
-                   $scope.returnMessage = successMessage["FEEDBACK"];
-                   returnMessageDiv.addClass("success-message"); 
-                 } else {
-                   switch (result.Code)
-                   {
-                     case 102:
-                       $scope.returnMessage = errorMessage["FEEDBACK_102"];
-                       break;
-                   }
-                   returnMessageDiv.addClass("error-message"); 
-                 }
- 
-                 $scope.loading = false;
-             })
-             .error(function(result) {
-                 $scope.returnMessage = errorMessage["FEEDBACK"];
-                 $scope.loading = false;
-                 returnMessageDiv.addClass("error-message"); 
-         });
-       }
+        $http.post(url + '/api/feedbacks', data)
+              .success(function(result) {
+                $scope.feedbackData = {};
+                returnMessageDiv.addClass("success-message");
+                returnMessageDiv.removeClass("error-message");
+                $scope.returnMessage = successMessage["FEEDBACK"];
+                $scope.loading = false;
+              })
+              .error(function(result) {
+                returnMessageDiv.addClass("error-message");
+                returnMessageDiv.removeClass("success-message");
+                switch (result.error.status)
+                {
+                  case 400:
+                    $scope.returnMessage = errorMessage["FEEDBACK_400"];
+                    break;
+                  case 403:
+                    $scope.returnMessage = errorMessage["FEEDBACK_403"];
+                    break;
+                  default:
+                    $scope.returnMessage = errorMessage["FEEDBACK"];
+                    break;
+                }
+                $scope.loading = false;
+          });
  
      };
  });

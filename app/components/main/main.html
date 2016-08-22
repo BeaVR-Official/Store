@@ -1,40 +1,54 @@
-    <div class="row carousel-holder">
+<h4 class="page-part-title">Applications disponibles</h4>
+<div ng-show="filteredApplications.length == 0" class="no-app-available">
+  <span>Aucune application ne remplit les critères de recherche.</span>
+</div>
+<div class="ui stackable grid app-list">
+  <div ng-repeat="application in filteredApplications" style="padding:0 !important;" class="four wide column">
+    <div class="ui special raised cards">
+      <div class="card">
+        <div class="blurring dimmable image" dimmer>
+          <div class="ui inverted dimmer">
+            <div class="container dimmer-app-list-container">
+              <div><b>{{application.name}}</b></div>
+              <div class="row content sub-content">
+                <b>Matériel : </b>
+                <span ng-repeat="device in application.devicesName">
+                  {{device.name}} {{$last ? '' : ', '}}
+                </span>
+              </div>
+              <div class="row content sub-content">
+                <b>Catégories :</b>
+                <span ng-repeat="categorie in application.categoriesName">
+                  {{categorie.name}} {{$last ? '' : ', '}}
+                </span>
+              </div>
+              <br>
+                            <div class="row content">
+              {{ application.description }}
+              </div>
+        
 
-      <h4 class="page-part-title">Applications vedettes</h4>
-        <div class="col-md-12">
-          <div ng-controller="carouselController">
-            <uib-carousel class="carousel slide" active="active" interval="myInterval" no-wrap="noWrapSlides">
-              <uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">
-                <img class="slide-image" ng-src="{{slide.image}}">
-              </uib-slide>
-            </uib-carousel>
+            </div>
           </div>
+          <img ng-src="{{ application.logo }}">
         </div>
-    </div>
-
-    <h4 class="page-part-title">Applications disponibles</h4>
-    <div ng-show="filteredApplications.length == 0" class="no-app-available">
-      <span>Aucune application ne remplit les critères de recherche.</span>
-    </div>
-    <div id="container" ng-repeat="application in filteredApplications">
-
-    <div class="col-sm-4 col-lg-4 col-md-4">
-      <div class="thumbnail">
-        <img ng-src="{{ application.logo }}" alt="">
-          <div class="caption">
-            <h4 class="pull-right">{{ application.price == "0" | iif : "Gratuite" : application.price + "€" }}</h4>
-            <h4>
-              <a ng-href="#/applications/details/{{ application.id }}">{{ application.name }}</a>
-            </h4>
-            <p>{{ application.description }}</p>
-          </div>
-          <div class="ratings">
-              <p class="pull-left">{{ application.nbComments }} avis</p>
-              <p class="pull-right">
-                <span ng-show="application.avgRating != null" ng-repeat="t in getRating(application.avgRating) track by $index" ng-class="{'ratings-last-child':$last}" class="glyphicon glyphicon-star"></span>
-                <span ng-show="application.avgRating != null" ng-repeat="t in getRating(5 - application.avgRating) track by $index" class="glyphicon glyphicon-star-empty"></span>
-              </p>
-          </div>
+        <div class="content">
+          <span class="right floated app-price">{{ application.price == "0" | iif : "Gratuite" : application.price + "€" }}</span>
+          <span class="app-title"><a ng-href="#/applications/details/{{ application.id }}">{{ application.name }}</a></span>
+        </div>
+        <div class="extra content ratings">
+          <span class="right floated">
+            <span ng-show="application.noteAvg != null" ng-repeat="t in getNumberFullStar(application.noteAvg) track by $index" ng-class="{'ratings-last-child':$last}" class="glyphicon glyphicon-star"></span>
+            <span ng-show="application.noteAvg != null" ng-repeat="t in getNumberEmptyStar(5 - application.noteAvg) track by $index" class="glyphicon glyphicon-star-empty"></span>
+          </span>
+          <span>
+            <a ng-href="#/applications/details/{{ application.id }}/comments">
+              <i class="comments outline icon"></i>
+              {{ application.commentsNb }}
+            </a>
+          </span>
+        </div>
       </div>
-     </div>
-   </div>
+    </div>
+  </div>
+</div>

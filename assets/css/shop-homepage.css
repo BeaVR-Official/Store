@@ -28,14 +28,15 @@ body {
 
 /*Added*/
 .caption a {
-  font-weight:bold;
+  font-weight:bold !important;
 }
 .caption a:hover {
-    color: #0d7777;
+    color: #0d7777 !important;
 }
 
 .caption h4 {
-    white-space: nowrap;
+    white-space: nowrap !important;
+    font-weight:normal !important;
 }
 
 .thumbnail img {
@@ -63,7 +64,7 @@ footer {
 }
 
 .navbar-brand-logo {
-    padding-top: 3px;
+    padding-top: 5px;
     height: 45px;
     margin-right: 10px;
 }

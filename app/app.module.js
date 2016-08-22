@@ -1,8 +1,6 @@
-var url = "http://beavr-api.herokuapp.com";
+var url = "http://beavr.fr:3000";
 
-//var url = "http://localhost:3000"
-
-var website = angular.module('website', ['ngRoute', 'ngAnimate', 'ngCookies', 'ngMessages', 'angular-jwt', 'isteven-multi-select', 'ngFileUpload', 'ui.bootstrap']);
+var website = angular.module('website', ['ngRoute', 'ngAnimate', 'ngCookies', 'ngMessages', 'angular-jwt', 'isteven-multi-select', 'ngFileUpload', 'angular-loading-bar', 'ui.bootstrap']);
 
 website.factory('AuthenticationService', function($http, $window, $cookies, jwtHelper) {
 	var authService = {};
@@ -10,25 +8,28 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 	authService.login = function(data) {
 		return $http.post(url + '/api/connection', data)
 		.success(function(result) {
-			if (result.Error == false) {
-				if (data.checkbox) {
-					$window.localStorage.setItem('store_token', result.Token);
-				} else {
-					$cookies.put('store_token', result.Token);
-				}
-				$window.location.href = "#/"
+			if (data.checkbox) {
+				$window.localStorage.setItem('store_token', result.data.token);
+				$window.localStorage.setItem('store_id', result.data.userId);
+			} else {
+				$cookies.put('store_token', result.data.token);
+				$cookies.put('store_id', result.data.userId);
 			}
+			$window.location.href = "#/"
+			$window.location.reload();
 		});
 	}
 
 	authService.disconnect = function() {
 		if (authService.isAuthenticated()) {
-			if ($window.localStorage.getItem('store_token') !== null) {
+			if ($window.localStorage.getItem('store_token') !== null && $window.localStorage.getItem('store_id') !== null) {
 				$window.localStorage.removeItem('store_token');
+				$window.localStorage.removeItem('store_id')
 				$window.location.href = "#/"
 				$window.location.reload();
-			} else if ($cookies.get('store_token') !== undefined) {
+			} else if ($cookies.get('store_token') !== undefined && $cookies.get('store_id') !== undefined) {
 				$cookies.remove('store_token');
+				$cookies.remove('store_id');
 				$window.location.href = "#/"
 				$window.location.reload();
 			}
@@ -36,56 +37,16 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 	}
 
 	authService.isOffline = function() {
-		return $window.localStorage.getItem('store_token') === null && $cookies.get('store_token') === undefined;
-	}
-
-	authService.isTokenFormatted = function () {
-		if ($window.localStorage.getItem('store_token') !== null) {
-			try {
-				var userInfos = jwtHelper.decodeToken($window.localStorage.getItem('store_token'));
-				return true;
-			} catch (error) {
-				return false;
-			}
-		} else if ($cookies.get('store_token') !== undefined) {
-			try {
-				var userInfos = jwtHelper.decodeToken($cookies.get('store_token'));
-				return true;
-			} catch (error) {
-				return false;
-			}
-		}
+		return $window.localStorage.getItem('store_token') === null && $window.localStorage.getItem('store_id') === null && 
+		$cookies.get('store_token') === undefined && $cookies.get('store_id') === undefined;
 	}
 
 	authService.isAuthenticated = function() {
-		if ($window.localStorage.getItem('store_token') !== null) {
-			var token = $window.localStorage.getItem('store_token');
-			if (authService.isTokenFormatted(token)) {
-				var userInfos = jwtHelper.decodeToken(token);
-				return userInfos.id !== undefined;
-			}
-		} else if ($cookies.get('store_token') !== undefined) {
-			var token = $cookies.get('store_token');
-			if (authService.isTokenFormatted(token)) {
-				var userInfos = jwtHelper.decodeToken(token);
-				return userInfos.id !== undefined;
-			}
-		}
+		return $window.localStorage.getItem('store_token') !== null && $window.localStorage.getItem('store_id') !== null ||
+		$cookies.get('store_token') !== undefined && $cookies.get('store_id') !== undefined;
 	}
 
 	authService.getToken = function() {
-		if (authService.isAuthenticated()) {
-			if ($window.localStorage.getItem('store_token') !== null) {
-				var userInfos = jwtHelper.decodeToken($window.localStorage.getItem('store_token'));
-				return userInfos;
-			} else if ($cookies.get('store_token') !== undefined) {
-				var userInfos = jwtHelper.decodeToken($cookies.get('store_token'));
-				return userInfos;
-			}
-		}
-	}
-
-	authService.getEncryptedToken = function() {
 		if (authService.isAuthenticated()) {
 			if ($window.localStorage.getItem('store_token') !== null) {
 				return $window.localStorage.getItem('store_token');
@@ -95,39 +56,26 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 		}
 	}
 
-	authService.getConnectedUserInfos = function() {
-		return $http.get(url + '/api/users/' + authService.getToken().id);
-	}
-
-	authService.getConnectedUserLibraryInfos = function () {
-		return $http.get(url + '/api/users/applications');
-	}
-
-	authService.isAuthorized = function(authorizedRoles) {
-		if (!angular.isArray(authorizedRoles)) { // prevent type conflict
-			authorizedRoles = [authorizedRoles];
-		}
+	authService.getId = function() {
 		if (authService.isAuthenticated()) {
-			var role;
-			if ($window.localStorage.getItem('store_token') !== null) {
-				var userInfos = jwtHelper.decodeToken($window.localStorage.getItem('store_token'));
-				role = userInfos.role;
-			} else if ($cookies.get('store_token') !== undefined) {
-				var userInfos = jwtHelper.decodeToken($cookies.get('store_token'));
-				role = userInfos.role;
+			if ($window.localStorage.getItem('store_id') !== null) {
+				return $window.localStorage.getItem('store_id');
+			} else if ($cookies.get('store_id') !== undefined) {
+				return $cookies.get('store_id');
 			}
-			return authorizedRoles.indexOf(role) !== -1;
-		} else {
-			return false;
 		}
+	}
+
+	authService.getConnectedUserInfos = function() {
+		return $http.get(url + '/api/users/' + authService.getId());
 	}
 
 	authService.getComments = function(idApp) {
-		return $http.get(url + '/api/comments/' + idApp);
+		return $http.get(url + '/api/applications/' + idApp + '/comments?order=DESC');
 	}
 
 	authService.getCommentsLimit = function(idApp, limit) {
-		return $http.get(url + '/api/comments/' + idApp + '/' + limit);
+		return $http.get(url + '/api/applications/' + idApp + '/comments?limit=' + limit + "&order=DESC");
 	}
 
 	authService.getAppInfos = function(idApp) {
@@ -137,34 +85,23 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 	return authService;
 });
 
-website.constant('USER_ROLES', {
-	User 			: 'User',
-	Developer 		: 'Developer',
-	Administrator 	: 'Administrator'
-});
-
 website.config(function Config($httpProvider, jwtInterceptorProvider) {
   jwtInterceptorProvider.tokenGetter = ['config', 'AuthenticationService', function(config, AuthenticationService) {
-	return AuthenticationService.getEncryptedToken();
+	return AuthenticationService.getToken();
   }];
   $httpProvider.interceptors.push('jwtInterceptor');
 });
 
 var errorMessage = {
-	"INSCRIPTION_100" : "Une erreur innattendue s'est produite. Réessayez dans quelques instants.",
-	"INSCRIPTION_101" : "Cette adresse mail est déjà utilisée.",
-	"INSCRIPTION_104" : "Ce pseudonyme est déjà utilisé.",
 	"INSCRIPTION" : "Une erreur est survenue pendant l'inscription. Réessayez dans quelques instants.",
-	"CONNEXION_103" : "Cet utilisateur n'existe pas.",
-	"CONNEXION_200" : "Mot de passe incorrect.",
+	"INSCRIPTION_409" : "Cet utilisateur existe déjà.",
 	"CONNEXION" : "Une erreur est survenue pendant la connexion. Réessayez dans quelques instants.",
-	"MDPOUBLIE_103" : "Aucun utilisateur n'est inscrit sous cette adresse.",
-	"MDPOUBLIE_202" : "Echec lors de l'envoi du mail. Réessayez dans quelques instants.",
+	"CONNEXION_401" : "Cet utilisateur n'existe pas ou le mot de passe renseigné est incorrect.",
+	"MDPOUBLIE_404" : "Aucun utilisateur n'est inscrit sous cette adresse.",
  	"MDPOUBLIE" : "Une erreur est survenue pendant la réinitialisation du mot de passe. Réessayez dans quelques instants.",
- 	"FEEDBACK_102" : "Echec lors de l'envoi de votre feedback. Réessayez dans quelques instants.",
+	"FEEDBACK_400" : "Les informations indiquées sont incorrectes ou incomplètes.",
+ 	"FEEDBACK_403" : "Vous ne possédez pas les droits nécessaires à l'envoi de feedback. Veuillez contacter un administrateur.",
  	"FEEDBACK" : "Une erreur est survenue lors de l'envoi de votre feedback. Réessayez dans quelques instants.",
- 	"FEEDBACK_OBJECT" : "L'objet de votre feedback ne peut pas être vide.",
- 	"FEEDBACK_DESCRIPTION" : "Votre feedback ne peut pas être vide.",
 	"EDIT_COMMENT" : "Votre commentaire n'a pas pu être modifié. Réessayez dans quelques instants.",
 	"EDIT_COMMENT_102" : "Une erreur est survenue lors de l'envoi de votre commentaire. Réessayez dans quelques instants.",
 	"ADD_COMMENT" : "Votre commentaire n'a pas pu être ajouté. Réessayez dans quelques instants.",
@@ -173,6 +110,10 @@ var errorMessage = {
 	"COMMENT_TITLE" : "Le titre de votre commentaire ne peut pas être vide.",
 	"COMMENT_COMMENT" : "Le contenu de votre commentaire ne peut pas être vide.",
 	"EDIT_PROFILE_PASSWORD" : "Les deux mots de passe ne sont pas identiques.",
+	"EDIT_PROFILE_PROFILE_PICTURE" : "Une erreur est survenue lors du téléversement de votre photo de profil. Réessayez dans quelques instants.",
+	"EDIT_PROFILE_403" : "Vous ne possédez pas les droits nécessaires à la modification de ce compte. Veuillez contacter un administrateur.",
+	"EDIT_PROFILE_404" : "Les informations indiquées sont incorrectes ou incomplètes.",
+	"EDIT_PROFILE_409" : "Cette adresse mail est déjà utilisée. Veuillez réessayer avec une adresse différente.",
 	"EDIT_PROFILE" : "Une erreur est survenue lors de la modification du compte. Réessayez dans quelques instants."
 };
 
@@ -189,4 +130,30 @@ website.filter('iif', function () {
    return function(input, trueValue, falseValue) {
         return input ? trueValue : falseValue;
    };
+});
+
+website.directive('tooltip', function(){
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs){
+            $(element).hover(function(){
+                $(element).tooltip('show');
+            }, function(){
+                $(element).tooltip('hide');
+            });
+        }
+    };
+});
+
+website.directive('dimmer', function(){
+	return {
+        restrict: 'A',
+        link: function(scope, element, attrs){
+            $(element).hover(function(){
+                $(element).dimmer('show');
+			}, function(){
+                $(element).dimmer('hide');
+			});
+		}
+	};
 });
