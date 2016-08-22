@@ -513,8 +513,9 @@ margin: 30px auto 50px auto;
 }
 
 .dimmer-app-list-container .row {
-	margin:8px 0 0 0;
+	margin:5px 0 0 0;
 	width:100%;
+	font-size:13px;
 	text-align:left;
 }
 

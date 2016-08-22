@@ -9,10 +9,7 @@
         <div class="blurring dimmable image" dimmer>
           <div class="ui inverted dimmer">
             <div class="container dimmer-app-list-container">
-              <div class="row content">
-              {{ application.description }}
-              </div>
-              <br>
+              <div><b>{{application.name}}</b></div>
               <div class="row content sub-content">
                 <b>Matériel : </b>
                 <span ng-repeat="device in application.devicesName">
@@ -25,6 +22,12 @@
                   {{categorie.name}} {{$last ? '' : ', '}}
                 </span>
               </div>
+              <br>
+                            <div class="row content">
+              {{ application.description }}
+              </div>
+        
+
             </div>
           </div>
           <img ng-src="{{ application.logo }}">
