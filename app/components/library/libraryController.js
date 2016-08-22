@@ -5,6 +5,7 @@ website.controller('libraryController', function($scope, $rootScope, userData, A
     $rootScope.onlineMenu = true;
     $rootScope.offlineMenu = false;
     $rootScope.profilePicture = userData.data.data.picture;
+    $rootScope.pseudo = userData.data.data.pseudo;
     $rootScope.disconnect = AuthenticationService.disconnect;
     if (userInfos.rights.id == 2) {
       $rootScope.devMenu = true;

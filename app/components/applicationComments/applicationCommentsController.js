@@ -7,6 +7,7 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
       $rootScope.onlineMenu = true;
       $rootScope.offlineMenu = false;
       $rootScope.profilePicture = userData.data.data.picture;
+      $rootScope.pseudo = userData.data.data.pseudo;
       $rootScope.disconnect = AuthenticationService.disconnect;
       if (userInfos.rights.id == 2) {
         $rootScope.devMenu = true;
@@ -154,8 +155,7 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
                     returnMessageDiv.removeClass("error-message"); 
 
                     // Add the comment to the list so it can refresh dynamically.
-                    data.created_at = new Date(); //(new Date ((new Date((new Date(new Date())).toISOString() )).getTime() - ((new Date()).getTimezoneOffset()*60000))).toISOString().slice(0, 19).replace('T', ' ');
-                    console.log(data.created_at);
+                    data.created_at = new Date();
                     data.author.public.picture = $scope.userInfos.picture;
                     data.author.public.pseudo = $scope.userInfos.pseudo;
                     $scope.comments.push(data);
@@ -301,6 +301,5 @@ website.controller('applicationCommentsController', function($scope, $rootScope,
         var newTotal = oldTotal / ($scope.appInfos.commentsNb + 1);
       }
       $scope.appInfos.noteAvg = newTotal;
-      console.log($scope.appInfos);
     }
 });

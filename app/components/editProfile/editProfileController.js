@@ -5,6 +5,7 @@ website.controller('editProfileController', function($scope, $rootScope, $http, 
 	  $rootScope.onlineMenu = true;
     $rootScope.offlineMenu = false;
     $rootScope.profilePicture = userData.data.data.picture;
+    $rootScope.pseudo = userData.data.data.pseudo;
     $rootScope.disconnect = AuthenticationService.disconnect;
     if (userInfos.rights.id == 2) {
       $rootScope.devMenu = true;
@@ -26,7 +27,6 @@ website.controller('editProfileController', function($scope, $rootScope, $http, 
   $scope.returnMessage = '';
   $scope.loading;
 
-  /* A update quand l'upload d'image sera fix */
   $scope.uploadImageAction = function() {
     var file = Upload.base64DataUrl($scope.userInfos.newProfilePicture).then(function(res) {
     var data = {
