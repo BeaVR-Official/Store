@@ -169,7 +169,7 @@ line-height:30px
 }
 
 .app-title a {
-	font-size:1.3em;
+	font-size:1.2em;
 	color:#32a9ad;
 }
 
@@ -178,7 +178,8 @@ line-height:30px
 }
 
 .app-price {
-	font-size:1.1em;
+	font-size:1.0em;
+	line-height:21px;
 }
 
 .app-list {
