@@ -1,0 +1,57 @@
+
+<div class="panel panel-default">
+  <div class="panel-body">
+
+    <div class="container">
+        <h1>Soumettre une application</h1>
+        <hr>
+      <div class="row">
+        <div class="col-xs-8 col-xs-offset-2">
+        
+         <form name="applicationSubmissionForm" class="form-horizontal" role="form">
+            <div class="form-group">
+                <label class="col-lg-3 control-label" for="applicationName">Nom de l'application :</label>
+                <div class="col-lg-8">
+                    <input class="form-control" placeholder="Limitation du nombre max de char" id ="applicationName" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 control-label" for="applicationDescription">Description :</label>
+                <div class="col-lg-8">
+                    <textarea class="form-control" id="applicationDescription" placeholder="Limitation du nombre max de char" rows="4"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 control-label" for="applicationPrice">Prix :</label>
+                <div class="col-lg-8">
+                    <input class="form-control" id ="applicationPrice" placeholder="Mettre cet input en dernier et les vérifs pour que 0123456789, only" type="text">
+                </div>
+            </div>
+            <select name="skills" multiple maxSelections="3" class="ui fluid dropdown">
+  <option value="">Skills</option>
+<option value="angular">Angular</option>
+<option value="css">CSS</option>
+<option value="design">Graphic Design</option>
+<option value="ember">Ember</option>
+<option value="html">HTML</option>
+<option value="ia">Information Architecture</option>
+<option value="javascript">Javascript</option>
+<option value="mech">Mechanical Engineering</option>
+<option value="meteor">Meteor</option>
+<option value="node">NodeJS</option>
+<option value="plumbing">Plumbing</option>
+<option value="python">Python</option>
+<option value="rails">Rails</option>
+<option value="react">React</option>
+<option value="repair">Kitchen Repair</option>
+<option value="ruby">Ruby</option>
+<option value="ui">UI Design</option>
+<option value="ux">User Experience</option>
+</select>
+        </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
