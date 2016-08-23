@@ -94,6 +94,19 @@ website.config(['$routeProvider', function($routeProvider){
                 }
             })
 
+            .when('/applications/submission', {
+                templateUrl : 'app/components/applicationSubmission/applicationSubmission.html',
+                controller  : 'applicationSubmissionController',
+                resolve     : {
+                    userData : function(AuthenticationService, $window) {
+                        if (!AuthenticationService.isOffline()) {
+                            return AuthenticationService.getConnectedUserInfos();
+                        }
+                        $window.location.href = "#/404";
+                    }
+                }
+            })
+
             .when('/404', {
                 templateUrl : 'app/components/404/404.html',
                 controller  : '404Controller'
