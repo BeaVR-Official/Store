@@ -48,7 +48,7 @@
     <![endif]-->
 </head>
 
-<body>
+<body ng-cloak>
 
     <!-- Navigation -->
     <nav class="navbar beavr-navbar navbar-fixed-top" role="navigation">
@@ -213,7 +213,6 @@
 
     <!-- Angular JS -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-cookies.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-route.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.js"></script>
@@ -330,7 +329,7 @@
                         <label>Se souvenir de moi</label>
                     </div>
                 </div>
-                <button type="submit" ng-disabled="connectionForm.$invalid" class="btn btn-secondary btn-beavr" ng-click="connexionAction()">Envoyer<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                <button type="submit" ng-disabled="connectionForm.$invalid" class="btn btn-secondary btn-beavr" ng-click="connexionAction()">Se connecter<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
                 <div class="ui warning message" ng-show="errorMessage">
                     <div class="header">Erreur lors de la connexion</div>
                     <ul class="list">
@@ -395,7 +394,7 @@
                             Le mot de passe doit être composé de 8 caractères minimum.
                     </div>
                 </div>
-                <button type="submit" ng-disabled="subscriptionForm.$invalid" class="btn btn-secondary btn-beavr" ng-click="subscriptionAction()">Envoyer<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                <button type="submit" ng-disabled="subscriptionForm.$invalid" class="btn btn-secondary btn-beavr" ng-click="subscriptionAction()">S'inscrire<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
                 <div class="ui warning message" ng-show="errorMessage">
                     <div class="header">Erreur lors de l'inscription</div>
                     <ul class="list">
