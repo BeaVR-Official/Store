@@ -17,6 +17,10 @@ $$$$$$$/ $$$$$$$$/$$/   $$/    $/    $$/   $$/        $$$$$$/    $$/   $$$$$$/ $
 *************************
 ************************/
 
+.panel {
+	margin-top:10px;
+}
+
 body {
 	background-color: #f1f1f1;
 }
@@ -697,6 +701,10 @@ margin: 30px auto 50px auto;
 #main-dropdown img {
 	width:30px;
 	margin-left:5px;
+}
+
+#main-dropdown a:hover {
+	color: #32a9ad;
 }
 
 #main-dropdown .dropdown-menu {
