@@ -48,6 +48,46 @@
 <option value="ui">UI Design</option>
 <option value="ux">User Experience</option>
 </select>
+
+            <div class="text-center">
+                <div class="form-group">
+                    <label class="col-lg-3 control-label" for="uploadLogo">Logo :</label>
+                    <div class="input-group col-xs-8 col-xs-offset-2">
+                    <input type="text" class="form-control input-md" id="uploadLogo" disabled placeholder="{{ appInfos.logo.$ngfName ? appInfos.logo.$ngfName : 'Uploadez un logo'}}">
+                    <span class="input-group-btn">
+                        <button type="button" class="browse btn btn-beavr input-md" data-buttonText="Find file" ngf-select ng-model="appInfos.logo" name="logo" ngf-pattern="'image/*'"
+                        ngf-accept="'image/*'" ngf-max-size="5MB" ngf-min-height="100" ngf-validate="{pattern: '.jpg, .png, .gif'}"
+                        ngf-resize="{width: 460, height: 215, centerCrop: true}"><i class="glyphicon glyphicon-picture"></i></button>
+                    </span>
+                    </div>
+                    <div ng-show="applicationSubmissionForm.logo.$error.pattern" class="error-message">Le fichier doit être une image au format JPG, PNG ou GIF.</div>
+                    <div ng-show="applicationSubmissionForm.logo.$error.maxSize" class="error-message">La taille du fichier doit être inférieure à 5MB.</div>
+                    <img ng-show="applicationSubmissionForm.logo.$valid" ngf-src="!appInfos.logo.$error && appInfos.logo" class="thumb-rec">
+                </div>
+                <div ng-show="appInfos.logo.result" class="list-group-item list-group-item-success">Upload terminé.</div>
+            </div>
+
+            <div class="text-center">
+                <div class="form-group">
+                    <label class="col-lg-3 control-label" for="uploadScreenshots">Screenshots :</label>
+                    <div class="input-group col-xs-8 col-xs-offset-2">
+                    <input type="text" class="form-control input-md" id="uploadScreenshots" disabled placeholder="{{ appInfos.screenshots.$ngfName ? appInfos.screenshots.$ngfName : 'Uploadez des screenshots'}}">
+                    <span class="input-group-btn">
+                        <button type="button" class="browse btn btn-beavr input-md" data-buttonText="Find file" ngf-select="uploadScreenshots($files)" ngf-multiple="true" ngf-max-files ng-model="appInfos.screenshots" name="screenshots" ngf-pattern="'image/*'"
+                        ngf-accept="'image/*'" ngf-max-size="5MB" ngf-min-height="100" ngf-validate="{pattern: '.jpg, .png, .gif'}"
+                        ngf-resize="{width: 460, height: 215, centerCrop: true}"><i class="glyphicon glyphicon-picture"></i></button>
+                    </span>
+                    </div>
+                    <div ng-show="applicationSubmissionForm.screenshots.$error.pattern" class="error-message">Le fichier doit être une image au format JPG, PNG ou GIF.</div>
+                    <div ng-show="applicationSubmissionForm.screenshots.$error.maxSize" class="error-message">La taille du fichier doit être inférieure à 5MB.</div>
+                    <div ng-show="applicationSubmissionForm.screenshots.$error.maxFiles" class="error-message">Le nombre de screenshots ne peut pas dépasser 3.</div>
+                    <img ng-show="applicationSubmissionForm.screenshots.$valid" ngf-src="!appInfos.screenshots.$error && appInfos.screenshots" class="thumb-rec">
+                </div>
+                <div ng-show="appInfos.screenshots.result" class="list-group-item list-group-item-success">Upload terminé.</div>
+            </div>
+
+
+
         </form>
 
         </div>
