@@ -103,6 +103,12 @@ website.config(['$routeProvider', function($routeProvider){
                             return AuthenticationService.getConnectedUserInfos();
                         }
                         $window.location.href = "#/404";
+                    },
+                    categories : function(AuthenticationService, $window) {
+                        return AuthenticationService.getCategories();
+                    },
+                    devices : function(AuthenticationService, $window) {
+                        return AuthenticationService.getDevices();
                     }
                 }
             })

@@ -1,4 +1,4 @@
-website.controller('applicationSubmissionController', function($scope, $rootScope, $http, userData, AuthenticationService, Upload) {
+website.controller('applicationSubmissionController', function($scope, $rootScope, $http, userData, AuthenticationService, categories, devices, Upload) {
     $rootScope.menu = true;
     $rootScope.homePage = false;
     if (userData !== undefined) {
@@ -21,12 +21,25 @@ website.controller('applicationSubmissionController', function($scope, $rootScop
       $rootScope.devMenu = false;
     }
 
-    $('.ui.dropdown')
-  .dropdown({
-    maxSelections:3,
-    message : {
-      maxSelections : "Kappa"
+    $scope.categories = categories.data.data.categories;
+    $scope.devices = devices.data.data.devices;
+    
+    $scope.filteredCategories = [];
+    $scope.filteredDevices = [];
+
+    $scope.localLangCategories = {
+      selectAll       : "",
+      selectNone      : "",
+      reset           : "",
+      search          : "Rechercher ...",
+      nothingSelected : "Sélectionnez une ou plusieurs catégories"
     }
-  })
-;
+
+    $scope.localLangDevices = {
+      selectAll       : "",
+      selectNone      : "",
+      reset           : "",
+      search          : "Rechercher ...",
+      nothingSelected : "Sélectionnez un ou plusieurs matériels de réalité virtuelle"
+    }
 });

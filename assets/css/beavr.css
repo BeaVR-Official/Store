@@ -446,6 +446,13 @@ margin-bottom:10px;
 text-align:right;
 }
 
+.appSubmissionDropdown {
+	padding:0 !important;
+	text-align:center;
+	text-transform:uppercase;
+	font-family:'Open Sans';
+}
+
 #addCommentForm {
 padding:20px;
 }
