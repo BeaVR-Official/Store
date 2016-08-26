@@ -42,4 +42,47 @@ website.controller('applicationSubmissionController', function($scope, $rootScop
       search          : "Rechercher ...",
       nothingSelected : "Sélectionnez un ou plusieurs matériels de réalité virtuelle"
     }
+
+    $scope.appInfos = {
+      name: "",
+      description: "",
+      price: "",
+      logo: "nothing atm",
+      url: "nothing atm",
+    };
+
+    $scope.submitApplicationAction = function() {
+    
+      console.log($scope.appInfos);
+      console.log($scope.filteredCategories);
+      console.log($scope.filteredDevices);
+
+      var data = {
+        name : $scope.appInfos.name,
+        description : $scope.appInfos.description,
+        price : $scope.appInfos.price,
+        logo : $scope.appInfos.logo,
+        devices: ["57a7624c87b8da510e7452ad"],
+        categories: ["577e89c37a108ec22897dab1"],
+        url: "url bidon"
+      };
+
+      console.log(data);
+
+      $scope.loading = true;
+
+      $http.post(url + '/api/applications/', data)
+          .success(function(result) {
+
+              $scope.loading = false;
+              console.log(result);
+
+            })
+          .error(function(result) {
+              
+              console.log(result);
+              $scope.loading = false;
+      });
+    }
+
 });
