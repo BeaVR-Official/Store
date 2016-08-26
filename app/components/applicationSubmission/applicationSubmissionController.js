@@ -85,4 +85,21 @@ website.controller('applicationSubmissionController', function($scope, $rootScop
       });
     }
 
+    $scope.uploadScreenshots = function (files) {
+        $scope.files = files;
+        if (files && files.length) {
+            Upload.upload({
+                url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
+                data: {
+                    files: files
+                }
+            }).then(function (response) {
+                $scope.screenshotsResult = response.data;
+            }, function (response) {
+                if (response.status > 0) {
+                    $scope.errorMsg = response.status + ': ' + response.data;
+                }
+            });
+        }
+    };
 });
