@@ -113,6 +113,19 @@ website.config(['$routeProvider', function($routeProvider){
                 }
             })
 
+            .when('/transactionHistory', {
+                templateUrl : 'app/components/transactionHistory/transactionHistory.html',
+                controller  : 'transactionHistoryController',
+                resolve     : {
+                    userData : function(AuthenticationService, $window) {
+                        if (!AuthenticationService.isOffline()) {
+                            return AuthenticationService.getConnectedUserInfos();
+                        }
+                        $window.location.href = "#/404";
+                    },
+                }
+            })
+
             .when('/404', {
                 templateUrl : 'app/components/404/404.html',
                 controller  : '404Controller'

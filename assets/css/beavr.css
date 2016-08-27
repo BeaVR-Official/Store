@@ -714,6 +714,10 @@ margin: 30px auto 50px auto;
 	margin-right:-10px;
 }
 
+#main-dropdown .glyphicon {
+	line-height:17px;
+}
+
 #main-dropdown .dropdown {
 	 width:250px;
 	 text-align:left;
