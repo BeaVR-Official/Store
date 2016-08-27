@@ -15,7 +15,7 @@
                   <div class="input-group col-xs-8 col-xs-offset-2">
                     <input type="text" class="form-control input-md" disabled placeholder="{{ userInfos.newProfilePicture.$ngfName ? userInfos.newProfilePicture.$ngfName : 'Uploadez une image'}}">
                     <span class="input-group-btn">
-                      <button type="button" class="browse btn btn-beavr input-md" data-buttonText="Find file" ngf-select ng-model="userInfos.newProfilePicture" name="file" ngf-pattern="'image/*'"
+                      <button type="button" class="browse btn btn-beavr input-md" data-buttonText="Sélectionner un fichier" ngf-select ng-model="userInfos.newProfilePicture" name="file" ngf-pattern="'image/*'"
                         ngf-accept="'image/*'" ngf-max-size="5MB" ngf-min-height="100" ngf-validate="{pattern: '.jpg, .png, .gif'}"
                         ngf-resize="{width: 150, height: 150, centerCrop: true}"><i class="glyphicon glyphicon-picture"></i></button>
                     </span>

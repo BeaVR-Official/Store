@@ -82,6 +82,14 @@ website.factory('AuthenticationService', function($http, $window, $cookies, jwtH
 		return $http.get(url + '/api/applications/' + idApp);
 	}
 
+	authService.getCategories = function() {
+		return $http.get(url + '/api/categories/');
+	}
+
+	authService.getDevices = function() {
+		return $http.get(url + '/api/devices/');
+	}
+
 	return authService;
 });
 

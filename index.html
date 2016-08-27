@@ -109,13 +109,14 @@
                         </ul>
                     </div>
 
-                          <ul  ng-show="onlineMenu" class="nav navbar-nav navbar-right beavr-navbar-menu" style="margin-right:-10px;">
-                            <li class="dropdown" style="width:250px;text-align:left;">
-                            <a href="" style="text-align:center;" class="dropdown-toggle" data-toggle="dropdown">{{ pseudo }} <img style="width:30px;margin-left:5px;" ng-src="{{ profilePicture }}"></a>
-                            <ul class="dropdown-menu" style="width:100%;">
+                          <ul id="main-dropdown" ng-show="onlineMenu" class="nav navbar-nav navbar-right beavr-navbar-menu">
+                            <li class="dropdown">
+                            <a href="" style="text-align:center;" class="dropdown-toggle" data-toggle="dropdown">{{ pseudo }} <img ng-src="{{ profilePicture }}"></a>
+                            <ul class="dropdown-menu">
                                 <li style="margin-top:3px;" ng-class="{active: isActive('/feedback')}"><a href="" data-target="#feedbackModal" data-toggle="modal" class="animate">Feedback <span class="glyphicon glyphicon-comment pull-right"></span></a></li>
                                 <li class="divider"></li>
-                                <li><a href="#">Devenir développeur <span class="glyphicon glyphicon-blackboard pull-right"></span></a></li>
+                                <li ng-show="registerDev"><a href="#">Devenir développeur <span class="glyphicon glyphicon-blackboard pull-right"></span></a></li>
+                                <li ng-show="devMenu"><a href="#/applications/submission">Soumettre une application <span class="glyphicon glyphicon-upload pull-right"></span></a></li>
                                 <li class="divider"></li>
                                 <li><a href="#/profile">Profil <span class="glyphicon glyphicon-user pull-right"></span></a></li>
                                 <li class="divider"></li>
@@ -123,56 +124,12 @@
                                 <li class="divider"></li>
                                 <li><a href="#/progression">Progression <span class="glyphicon glyphicon-list-alt pull-right"></span></a></li>
                                 <li class="divider"></li>
+                                <li><a href="#/transactionHistory">Historique des transactions <span class="glyphicon glyphicon-euro pull-right"></span></a></li>
+                                <li class="divider"></li>
                                 <li style="margin-bottom:3px;"><a href="" ng-click="disconnect()">Se déconnecter <span class="glyphicon glyphicon-remove pull-right"></span></a></li>
                             </ul>
                             </li>
                         </ul>
-                    <!--<ul ng-show="onlineMenu" class="nav navbar-nav navbar-right navbar navbar-fixed-left navbar-minimal animate" role="navigation">
-                            <div class="navbar-toggler animate">
-                                <div id="menu-profile-picture">
-                                    <img ng-src="{{ profilePicture }}">
-                                </div>
-                                <span class="menu-icon"></span>
-                            </div>
-                            <ul class="navbar-menu animate">
-                                <li ng-class="{active: isActive('/feedback')}">
-                                    <a href="" data-target="#feedbackModal" data-toggle="modal" class="animate">
-                                        <span class="desc animate"> Feedback </span>
-                                        <span class="glyphicon glyphicon-comment"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#/" class="animate">
-                                        <span class="desc animate"> Devenir développeur </span>
-                                        <span class="glyphicon glyphicon-blackboard"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#/profile" class="animate">
-                                        <span class="desc animate"> Profil </span>
-                                        <span class="glyphicon glyphicon-user"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#/library" class="animate">
-                                        <span class="desc animate"> Bibliothèque </span>
-                                        <span class="glyphicon glyphicon-th"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#/progression" class="animate">
-                                        <span class="desc animate"> Progression </span>
-                                        <span class="glyphicon glyphicon-list-alt"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="" ng-click="disconnect()" class="animate">
-                                        <span class="desc animate"> Se déconnecter </span>
-                                        <span class="glyphicon glyphicon-remove"></span>
-                                    </a>
-                                </li>
-                            </ul>
-                    </ul>-->
                 </div><!--/.navbar-collapse -->
             </div>
             <!-- /.navbar-collapse -->
@@ -228,6 +185,8 @@
     <script src="app/components/progression/progressionController.js"></script>
     <script src="app/components/404/404Controller.js"></script>
     <script src="app/components/feedback/feedbackController.js"></script>
+    <script src="app/components/applicationSubmission/applicationSubmissionController.js"></script>
+    <script src="app/components/transactionHistory/transactionHistoryController.js"></script>
 
     <script src="app/components/payment/paymentController.js"></script>
     <script src="app/components/applicationComments/applicationCommentsController.js"></script>
@@ -362,7 +321,7 @@
                 <div class="required field">
                     <div class="ui corner labeled left icon input">
                         <i class="user icon"></i>
-                        <input type="text" name="pseudo" required="required" ng-minlength="3" ng-maxlength="16" placeholder="Pseudo" tooltip="ntm" ng-model="subscriptionData.pseudo"></input>
+                        <input type="text" name="pseudo" required="required" ng-minlength="3" ng-maxlength="16" placeholder="Pseudo" ng-model="subscriptionData.pseudo"></input>
                         <div class="ui corner label">
                             <i class="asterisk icon"></i>
                         </div>
