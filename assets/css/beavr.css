@@ -654,8 +654,8 @@ margin: 30px auto 50px auto;
 ************************/
 
 .avatar {
-  width: 150px;
-  height: 150px;
+	width: 150px;
+	height: 150px;
 }
 
 .thumb {
@@ -664,6 +664,12 @@ margin: 30px auto 50px auto;
     float: none;
     position: relative;
     top: 7px;
+	-webkit-transition: all .5s ease; -moz-transition: all .5s ease; -ms-transition: all .5s ease; transition: all .5s ease;
+}
+
+.thumb:hover {
+	width: 150px;
+	height: 150px;
 }
 
 .categories {
@@ -695,13 +701,30 @@ margin: 30px auto 50px auto;
     float: none;
     position: relative;
     top: 7px;
+	-webkit-transition: all .5s ease; -moz-transition: all .5s ease; -ms-transition: all .5s ease; transition: all .5s ease;
+}
+
+.thumb-rec:hover {
+    width: 460px;
+    height: 215px;
+}
+
+@media (max-width:700px) {
+	.thumb-rec:hover {
+		width: 200px;
+		height: 93px;
+	}
+}
+
+.small-font-xs {
+	font-size: .7em;
 }
 
 .appSubmissionDropdown {
-	padding:0 !important;
-	text-align:center;
-	text-transform:uppercase;
-	font-family:'Open Sans';
+	padding: 0 !important;
+	text-align: center;
+	text-transform: uppercase;
+	font-family: 'Open Sans';
 }
 
 /************************
