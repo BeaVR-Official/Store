@@ -1,14 +1,13 @@
-website.controller('mainController', function($scope, $rootScope, $http, AuthenticationService, userData) {
+website.controller('mainController', function ($scope, $rootScope, $http, AuthenticationService, userData, appInfos) {
   $rootScope.menu = true;
   $rootScope.homePage = true;
   if (userData !== undefined) {
-    var userInfos = userData.data.data;
     $rootScope.onlineMenu = true;
     $rootScope.offlineMenu = false;
-    $rootScope.profilePicture = userData.data.data.picture;
-    $rootScope.pseudo = userData.data.data.pseudo;
+    $rootScope.profilePicture = userData.picture;
+    $rootScope.pseudo = userData.pseudo;
     $rootScope.disconnect = AuthenticationService.disconnect;
-    if (userInfos.rights.id == 2) {
+    if (userData.rights.id == 2) {
       $rootScope.devMenu = true;
       $rootScope.registerDev = false;
     } else {
@@ -20,66 +19,59 @@ website.controller('mainController', function($scope, $rootScope, $http, Authent
     $rootScope.offlineMenu = true;
     $rootScope.devMenu = false;
   }
+  $scope.data = appInfos;
 
-  $http.get(url + '/api/applications').success(function(result) {
-        
-    $scope.data = result.data.application;
+  $scope.data.sort(function (a, b) {
+    ratingA = a.noteAvg;
+    ratingB = b.noteAvg;
 
-    $scope.data.sort(function(a, b) {
-      ratingA = a.noteAvg;
-      ratingB = b.noteAvg;
+    if (ratingA == null)
+      ratingA = 0;
+    if (ratingB == null)
+      ratingB = 0;
 
-      if (ratingA == null)
-        ratingA = 0;
-      if (ratingB == null)
-        ratingB = 0;
-
-      return parseFloat(ratingB) - parseFloat(ratingA);
-    });
-
-    $scope.filteredApplications = angular.copy($scope.data);
-
-    }).error(function(result){
-
+    return parseFloat(ratingB) - parseFloat(ratingA);
   });
 
-    $scope.getNumberFullStar = function(n) {
-      if (n == null)
-        return new Array(0);
-      return new Array(Math.ceil(n));
-    };
+  $scope.filteredApplications = angular.copy($scope.data);
 
-    $scope.getNumberEmptyStar = function(n) {
-      if (n == null)
-        return new Array(0);
-      return new Array(Math.trunc(n));
+  $scope.getNumberFullStar = function (n) {
+    if (n == null)
+      return new Array(0);
+    return new Array(Math.ceil(n));
+  };
+
+  $scope.getNumberEmptyStar = function (n) {
+    if (n == null)
+      return new Array(0);
+    return new Array(Math.trunc(n));
+  }
+
+  $scope.formatStringDevicesAndCategories = function (devicesArray) {
+
+    var finalString = "";
+
+    for (var i = 0; i < devicesArray.length; i++) {
+      finalString += devicesArray[i].name;
+      if (i != (devicesArray.length - 1))
+        finalString += ", ";
     }
-  
-    $scope.formatStringDevicesAndCategories = function(devicesArray) {
-    
-      var finalString = "";
 
-      for (var i = 0; i < devicesArray.length; i++) {
-        finalString += devicesArray[i].name;
-        if (i != (devicesArray.length - 1))
-          finalString += ", ";
-      }
-
-      return (finalString);
-    }
+    return (finalString);
+  }
   /*
   *
   * Filtering
   *
   */
-  $scope.$on('filters', function(event, filteredDevices, filteredCategories, filterPrice) {
+  $scope.$on('filters', function (event, filteredDevices, filteredCategories, filterPrice) {
     $scope.filteredDevices = filteredDevices;
     $scope.filteredCategories = filteredCategories;
     $scope.filterPrice = filterPrice;
     $scope.applyFilters();
   })
 
-  $scope.applyFilters = function() {
+  $scope.applyFilters = function () {
     if ($scope.filteredDevices.length == 0 && $scope.filteredCategories.length == 0) {
       $scope.filteredApplications = angular.copy($scope.data);
       for (var j = 0; j < $scope.filteredApplications.length; j++) {
@@ -116,7 +108,7 @@ website.controller('mainController', function($scope, $rootScope, $http, Authent
     }
   }
 
-  $scope.checkPriceFilter = function(price, priceFilter) {
+  $scope.checkPriceFilter = function (price, priceFilter) {
     if (priceFilter == -1)
       return (true);
     if (priceFilter == 0) {
@@ -134,13 +126,13 @@ website.controller('mainController', function($scope, $rootScope, $http, Authent
 
 });
 
-website.controller('navbarController', function($scope, $location) {
-      $scope.isActive = function (viewLocation) { 
-        return viewLocation === $location.path();
-    };
+website.controller('navbarController', function ($scope, $location) {
+  $scope.isActive = function (viewLocation) {
+    return viewLocation === $location.path();
+  };
 })
 
-website.controller('carouselController', function($scope) {
+website.controller('carouselController', function ($scope) {
   $scope.myInterval = 3000;
   $scope.noWrapSlides = false;
   $scope.active = 0;
@@ -160,51 +152,51 @@ website.controller('carouselController', function($scope) {
   ];
 })
 
-website.controller('filterController', function($scope, $rootScope, $http) {
+website.controller('filterController', function ($scope, $rootScope, $http) {
 
-  $http.get(url + '/api/devices').success(function(result) {
+  $http.get(url + '/api/devices').success(function (result) {
     $scope.devices = result.data.devices;
-  }).error(function(result) {
+  }).error(function (result) {
 
   });
 
-  $http.get(url + '/api/categories').success(function(result) {
+  $http.get(url + '/api/categories').success(function (result) {
     $scope.categories = result.data.categories;
-  }).error(function(result) {
+  }).error(function (result) {
 
   });
 
-  $scope.prices = [{ name: "Toutes les applications", priceFilter: -1, ticked: true }, { name: "Gratuites", priceFilter: 0 }, { name: "Payantes", priceFilter: 1}];
+  $scope.prices = [{ name: "Toutes les applications", priceFilter: -1, ticked: true }, { name: "Gratuites", priceFilter: 0 }, { name: "Payantes", priceFilter: 1 }];
 
   $scope.filteredDevices = [];
   $scope.filteredCategories = [];
   $scope.filteredPrice = [];
 
   $scope.localLangDevices = {
-    selectAll       : "",
-    selectNone      : "",
-    reset           : "",
-    search          : "Rechercher ...",
-    nothingSelected : "Tous les matériels de Réalité Virtuelle"
+    selectAll: "",
+    selectNone: "",
+    reset: "",
+    search: "Rechercher ...",
+    nothingSelected: "Tous les matériels de Réalité Virtuelle"
   }
 
   $scope.localLangCategories = {
-    selectAll       : "",
-    selectNone      : "",
-    reset           : "",
-    search          : "Rechercher ...",
-    nothingSelected : "Toutes les catégories"
+    selectAll: "",
+    selectNone: "",
+    reset: "",
+    search: "Rechercher ...",
+    nothingSelected: "Toutes les catégories"
   }
 
   $scope.localLangPrices = {
-    selectAll       : "",
-    selectNone      : "",
-    reset           : "",
-    search          : "Rechercher ...",
-    nothingSelected : "Toutes les applications"
+    selectAll: "",
+    selectNone: "",
+    reset: "",
+    search: "Rechercher ...",
+    nothingSelected: "Toutes les applications"
   }
 
-  $scope.sendFilters = function() {
+  $scope.sendFilters = function () {
     $rootScope.$broadcast('filters', $scope.filteredDevices, $scope.filteredCategories, $scope.filteredPrice[0]);
   }
 

@@ -1,4 +1,4 @@
-website.controller('applicationSubmissionController', function ($scope, $rootScope, $http, userData, AuthenticationService, categories, devices, Upload) {
+website.controller('submittedApplicationsController', function ($scope, $rootScope, $http, userData, AuthenticationService, categories, devices, Upload) {
   $rootScope.menu = true;
   $rootScope.homePage = false;
   $rootScope.onlineMenu = true;
@@ -62,10 +62,13 @@ website.controller('applicationSubmissionController', function ($scope, $rootSco
 
     $http.post(url + '/api/applications/', data)
       .success(function (result) {
+
         $scope.loading = false;
         console.log(result);
+
       })
       .error(function (result) {
+
         console.log(result);
         $scope.loading = false;
       });

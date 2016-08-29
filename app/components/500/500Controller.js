@@ -1,4 +1,4 @@
-website.controller('404Controller', function ($rootScope) {
+website.controller('500Controller', function ($rootScope) {
       $rootScope.menu = true;
       $rootScope.homePage = false;
       $rootScope.onlineMenu = false;
