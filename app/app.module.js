@@ -124,6 +124,15 @@ website.factory('AuthenticationService', function ($http, $window, $cookies, jwt
 			});
 	}
 
+	authService.getSubmittedApps = function () {
+		return $http.get(url + '/api/applications?author=' + authService.getId())
+			.then(function (response) {
+				return response.data.data.application;
+			}, function (error) {
+				$window.location.href = "#/500";
+			});
+	}
+
 	authService.getCategories = function () {
 		return $http.get(url + '/api/categories/')
 			.then(function (response) {
@@ -160,8 +169,8 @@ var errorMessage = {
 	"MDPOUBLIE_404": "Aucun utilisateur n'est inscrit sous cette adresse.",
 	"MDPOUBLIE": "Une erreur est survenue pendant la réinitialisation du mot de passe. Réessayez dans quelques instants.",
 	"FEEDBACK_400": "Les informations indiquées sont incorrectes ou incomplètes.",
-	"FEEDBACK_403": "Vous ne possédez pas les droits nécessaires à l'envoi de feedback. Veuillez contacter un administrateur.",
-	"FEEDBACK": "Une erreur est survenue lors de l'envoi de votre feedback. Réessayez dans quelques instants.",
+	"FEEDBACK_403": "Vous ne possédez pas les droits nécessaires à l'envoi de message. Veuillez contacter un administrateur.",
+	"FEEDBACK": "Une erreur est survenue lors de l'envoi de votre message. Réessayez dans quelques instants.",
 	"EDIT_COMMENT": "Votre commentaire n'a pas pu être modifié. Réessayez dans quelques instants.",
 	"EDIT_COMMENT_102": "Une erreur est survenue lors de l'envoi de votre commentaire. Réessayez dans quelques instants.",
 	"ADD_COMMENT": "Votre commentaire n'a pas pu être ajouté. Réessayez dans quelques instants.",
@@ -180,7 +189,7 @@ var errorMessage = {
 var successMessage = {
 	"INSCRIPTION": "Inscription effectuée avec succès.",
 	"MDPOUBLIE": "Un nouveau mot de passe va vous être envoyé par mail d'ici quelques minutes.",
-	"FEEDBACK": "Votre feedback nous a correctement été transmis. L'équipe BeaVR vous remercie !",
+	"FEEDBACK": "Votre message nous a correctement été transmis. L'équipe BeaVR vous remercie !",
 	"EDIT_COMMENT": "Votre commentaire a correctement été modifié.",
 	"ADD_COMMENT": "Votre commentaire a correctement été ajouté.",
 	"EDIT_PROFILE": "Vos informations ont été modifiées."

@@ -122,6 +122,9 @@ website.config(['$routeProvider', function ($routeProvider) {
                 },
                 devices: function (AuthenticationService) {
                     return AuthenticationService.getDevices();
+                },
+                appInfos: function (AuthenticationService) {
+                    return AuthenticationService.getSubmittedApps();
                 }
             }
         })

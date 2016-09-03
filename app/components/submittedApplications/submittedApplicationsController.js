@@ -1,4 +1,4 @@
-website.controller('submittedApplicationsController', function ($scope, $rootScope, $http, userData, AuthenticationService, categories, devices, Upload) {
+website.controller('submittedApplicationsController', function ($scope, $rootScope, $http, userData, AuthenticationService, categories, devices, Upload, appInfos) {
   $rootScope.menu = true;
   $rootScope.homePage = false;
   $rootScope.onlineMenu = true;
@@ -14,6 +14,8 @@ website.controller('submittedApplicationsController', function ($scope, $rootSco
 
   $scope.filteredCategories = [];
   $scope.filteredDevices = [];
+
+  $scope.applications = appInfos;
 
   $scope.localLangCategories = {
     selectAll: "",
