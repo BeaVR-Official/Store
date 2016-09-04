@@ -8,13 +8,9 @@ website.controller('submittedApplicationsController', function ($scope, $rootSco
   $rootScope.disconnect = AuthenticationService.disconnect;
   $rootScope.devMenu = true;
   $rootScope.registerDev = false;
-
-  $scope.categories = categories;
-  $scope.devices = devices;
-
   $scope.filteredCategories = [];
   $scope.filteredDevices = [];
-
+  $scope.nbOwners = 0;
   $scope.applications = appInfos;
 
   $scope.localLangCategories = {
@@ -40,6 +36,45 @@ website.controller('submittedApplicationsController', function ($scope, $rootSco
     logo: null,
     screenshots: null,
     url: "nothing atm",
+  };
+
+  $scope.updateApp = function (app) {
+    $scope.nbOwners = 0;
+    $http.get(url + '/api/applications/' + app.id + '/purchase')
+      .success(function (result) {
+        $scope.nbOwners = result.data.count;
+      })
+      .error(function (result) {
+        $scope.nbOwners = 0;
+      });
+    $scope.categories = categories.map(function (params) {
+      return { name: params.name, ticked: false };
+    });
+    var categoriesData = {
+      availableOptions: $scope.categories,
+      selectedOption: app.categoriesName
+    };
+    angular.forEach($scope.categories, function (value1, key1) {
+      for (i = 0; i < categoriesData.selectedOption.length; i++) {
+        if (categoriesData.selectedOption[i] != null && categoriesData.selectedOption[i].name === value1.name) {
+          value1.ticked = true;
+        }
+      }
+    });
+    $scope.devices = devices.map(function (params) {
+      return { name: params.name, ticked: false };
+    });
+    var devicesData = {
+      availableOptions: $scope.devices,
+      selectedOption: app.devicesName
+    };
+    angular.forEach($scope.devices, function (value1, key1) {
+      for (i = 0; i < devicesData.selectedOption.length; i++) {
+        if (devicesData.selectedOption[i] != null && devicesData.selectedOption[i].name === value1.name) {
+          value1.ticked = true;
+        }
+      }
+    });
   };
 
   $scope.submitApplicationAction = function () {
