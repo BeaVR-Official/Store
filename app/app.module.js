@@ -76,6 +76,10 @@ website.factory('AuthenticationService', function ($http, $window, $cookies, jwt
 	}
 
 	authService.getConnectedDeveloperInfos = function () {
+		if (authService.getId() === undefined) {
+			$window.location.href = "#/404";
+			return;
+		}
 		return authService.getConnectedUserInfos()
 			.then(function (response) {
 				if (response.rights.id !== 2) {
@@ -125,6 +129,10 @@ website.factory('AuthenticationService', function ($http, $window, $cookies, jwt
 	}
 
 	authService.getSubmittedApps = function () {
+		if (authService.getId() === undefined) {
+			$window.location.href = "#/404";
+			return;
+		}
 		return $http.get(url + '/api/applications?author=' + authService.getId())
 			.then(function (response) {
 				return response.data.data.application;
