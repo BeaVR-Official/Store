@@ -36,9 +36,9 @@
           <span class="right floated"><i class="glyphicon glyphicon-calendar"></i> Date de publication : {{ appInfos.created_at | date:'dd/MM/yyyy'}}</span><br>
           <span class="right floated"><i class="glyphicon glyphicon-user"></i> Développeur : {{ appInfos.author.public.pseudo }}</span><br>
             <span class="right floated"><b>Tags :</b> <i>
-              <span ng-repeat="device in appInfos.devicesName">{{device.name}} {{$last ? '' : ', '}}</span>
+              <span ng-repeat="device in appInfos.devicesName">{{device.name}}{{$last ? '' : ', '}}</span>
               <span ng-show="appInfos.categoriesName.length">, </span>
-              <span ng-repeat="categorie in appInfos.categoriesName">{{categorie.name}} {{$last ? '' : ', '}}</span></i></span>
+              <span ng-repeat="categorie in appInfos.categoriesName">{{categorie.name}}{{$last ? '' : ', '}}</span></i></span>
         </div>
       </div>
     </div>
