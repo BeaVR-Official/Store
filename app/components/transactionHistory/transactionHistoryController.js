@@ -14,6 +14,6 @@ website.controller('transactionHistoryController', function ($scope, $rootScope,
     $rootScope.registerDev = true;
   }
 
-  // Here get the history
+  $scope.allPurchases = userData.purchase;
 
 });

@@ -3,53 +3,29 @@
     <div class="container">
         <h1>Historique des transactions</h1>
         <hr>
-        <div class="ui stackable four column grid centered">
+        <div ng-show="allPurchases.length == 0" class="ui stackable four column grid centered">
               <h1>Vous n'avez effectué aucune transaction.</h1>
         </div>
-        <table class="ui selectable celled striped table">
-            <thead>
-                <tr><th colspan="3">
-                Git Repository
-                </th>
-            </tr></thead>
-            <tbody>
-                <tr>
-                <td class="collapsing">
-                    <i class="folder icon"></i> node_modules
-                </td>
-                <td>Initial commit</td>
-                <td class="right aligned collapsing">10 hours ago</td>
-                </tr>
-                <tr>
-                <td>
-                    <i class="folder icon"></i> test
-                </td>
-                <td>Initial commit</td>
-                <td class="right aligned">10 hours ago</td>
-                </tr>
-                <tr>
-                <td>
-                    <i class="folder icon"></i> build
-                </td>
-                <td>Initial commit</td>
-                <td class="right aligned">10 hours ago</td>
-                </tr>
-                <tr>
-                <td>
-                    <i class="file outline icon"></i> package.json
-                </td>
-                <td>Initial commit</td>
-                <td class="right aligned">10 hours ago</td>
-                </tr>
-                <tr>
-                <td>
-                    <i class="file outline icon"></i> Gruntfile.js
-                </td>
-                <td>Initial commit</td>
-                <td class="right aligned">10 hours ago</td>
-                </tr>
-            </tbody>
-        </table>
+        <div ng-show="allPurchases.length > 0" id="transactionHistory">
+            <table class="ui teal selectable celled striped table">
+                <thead>
+                    <tr>
+                        <th class="three wide">Date</th>
+                        <th class="three wide">Type</th>
+                        <th class="eight wide">Label</th>
+                        <th class="two wide">Montant</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="purchase in allPurchases">
+                        <td>{{ purchase.created_at | date:'dd/MM/yyyy' : '+0200' }}</td>
+                        <td>{{ purchase.payment }}</td>
+                        <td>{{ purchase.application.name }}</td>                   
+                        <td>{{ purchase.amount }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
   </div>
 </div>
