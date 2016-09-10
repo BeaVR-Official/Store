@@ -71,7 +71,7 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label" for="applicationName">Nom de l'application :</label>
                             <div class="col-lg-8">
-                                <input class="form-control" required="required" maxlength="48" ng-maxlength="48" id="applicationName" ng-model="application.name" type="text" required>
+                                <input class="form-control" maxlength="48" ng-maxlength="48" id="applicationName" ng-model="application.name" type="text" required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -177,6 +177,30 @@
                                 <div class="ui tiny info message">
                                     <i class="icon info circle"></i>
                                     Vous pouvez ajouter jusqu'à 3 captures d'écran. Elles seront automatiquement recadrées au format 460*215, comme pour le logo.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label" for="uploadArchive">Archive :</label>
+                                <div class="col-lg-8">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control input-md" id="uploadArchive" disabled placeholder="{{ appInfos.archive.name ? appInfos.archive.name : 'Mettre à jour l\'application'}}">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="browse btn btn-beavr input-md" data-buttonText="Sélectionner un fichier" ngf-select ng-model="appInfos.archive" name="archive" ngf-pattern="'.zip'"
+                                            ngf-accept="'.zip'" ngf-max-size="50MB" ngf-validate="{pattern: '.zip'}"><i class="glyphicon glyphicon-file"></i></button>
+                                        </span>
+                                    </div>
+                                    <div ng-show="applicationSubmissionForm.archive.$error.pattern" class="error-message">Le fichier doit être une archive au format ZIP.</div>
+                                    <div ng-show="applicationSubmissionForm.archive.$error.maxSize" class="error-message">La taille du fichier doit être inférieure à 50MB.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-8 col-lg-offset-3">
+                                <div class="ui tiny info message">
+                                    <i class="icon info circle"></i>
+                                    L'archive doit être au format .zip et ne doit pas dépasser 50MB.
                                 </div>
                             </div>
                         </div>

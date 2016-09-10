@@ -37,7 +37,8 @@ website.controller('applicationSubmissionController', function ($scope, $rootSco
     price: "",
     logo: null,
     screenshots: null,
-    url: "nothing atm",
+    archive: null,
+    url: "nothing atm"
   };
 
   $scope.submitApplicationAction = function () {
@@ -45,7 +46,6 @@ website.controller('applicationSubmissionController', function ($scope, $rootSco
     console.log($scope.appInfos);
     console.log($scope.filteredCategories);
     console.log($scope.filteredDevices);
-
     var data = {
       name: $scope.appInfos.name,
       description: $scope.appInfos.description,
