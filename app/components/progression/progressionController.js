@@ -13,4 +13,7 @@ website.controller('progressionController', function ($scope, $rootScope, userDa
     $rootScope.devMenu = false;
     $rootScope.registerDev = true;
   }
+
+  $scope.userAppsInfos = userData.applications;
+
 });
