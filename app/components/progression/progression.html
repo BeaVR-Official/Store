@@ -1,36 +1,38 @@
-<h1 class="page-title">Liste des sauvegardes</h1>
-
-<div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover table-striped">
-                        <thead>
-                            <tr>
-                                <th>Nom de l'application</th>
-                                <th>Niveau actuel</th>
-                                <th>Pourcentage terminé</th>
-                                <th>Date de création</th>
-                                <th style="text-align: center;">Supprimer</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Universe l'aventure ne fait que commencer...</td>
-                                <td>12</td>
-                                <td>52 %</td>
-                                <td>12/04/2015</td>
-                                <td style="text-align: center;">
-                                    <a href="" ng-click="">
-                                        <img style="width: 30px;" src="assets/img/icons/delete.png">
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="container">
+        <h1>Gestion des sauvegardes</h1>
+        <hr>
+        <div class="row">
+            <div class="col-xs-8 col-xs-offset-2">
+                <uib-tabset active="active">
+                    <uib-tab index="$index" ng-repeat="application in userAppsInfos" select="updateApp(application)" heading="{{application.name}}" disable="tab.disabled">
+                        <div class="row">
+                            <div class="col-lg-offset-4 col-lg-4">
+                                <h1><a ng-href="#/applications/details/{{ application.id }}">{{application.name}}</a></h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="ui negative icon message">
+                                <i class="remove circle icon"></i>
+                                <div class="content">
+                                    <div class="header">
+                                    Suppression de sauvegarde définitive !
+                                    </div>
+                                    <p>Réfléchissez bien avant de réinitialiser votre progression.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="ui indicating progress" progress>
+                                <div class="bar"></div>
+                                <div class="label">Avancement</div>
+                            </div>
+                        </div>
+                    </uib-tab>
+                </uib-tabset>
             </div>
         </div>
-    </div>
+      </div>
+  </div>
 </div>

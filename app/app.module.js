@@ -238,3 +238,14 @@ website.directive('dimmer', function () {
 		}
 	};
 });
+
+website.directive('progress', function () {
+	return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            $(element).progress({
+				percent: 50
+			});
+		}
+	};
+});
