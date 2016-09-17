@@ -202,6 +202,10 @@ line-height:30px
 	height:140px !important;
 }
 
+.beavr-color {
+	color: #1BB2BD;
+}
+
 /************************
 *************************
 * Changes from Comments
@@ -725,6 +729,17 @@ margin: 30px auto 50px auto;
 	text-align: center;
 	text-transform: uppercase;
 	font-family: 'Open Sans';
+}
+
+/************************
+*************************
+* Submitted apps
+*************************
+************************/
+
+.stats-container {
+	margin-top: 5%;
+	margin-bottom: 5%;
 }
 
 /************************

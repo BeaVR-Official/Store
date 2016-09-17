@@ -5,132 +5,158 @@
         <hr>
       <div class="row">
         <div class="col-xs-8 col-xs-offset-2">
-
          <form name="applicationSubmissionForm" class="form-horizontal" role="form">
+            <div class="form-group">
+                <label class="col-lg-3 control-label" for="applicationName">Nom de l'application :</label>
+                <div class="col-lg-8">
+                    <input ng-model="appInfos.name" class="form-control" maxlength="48" ng-maxlength="48" id="applicationName" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-8 col-lg-offset-3">
+                    <div class="ui tiny info message">
+                        <i class="icon info circle"></i>
+                        Le nom de l'application doit contenir au plus 48 caractères.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 control-label" for="applicationDescription">Description :</label>
+                <div class="col-lg-8">
+                    <textarea ng-model="appInfos.description" class="form-control" id="applicationDescription" ng-maxlength="1024" maxlength="1024" rows="4" required></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 control-label" for="applicationCategories">Catégories :</label>
+                <div class="col-lg-8">
+                    <div id="category-list" ng-show="categories !== undefined" class="col-xs-12 appSubmissionDropdown">
+                        <div directive-id="multi-select-category" isteven-multi-select input-model="categories" output-model="filteredCategories"
+                        button-label="name" item-label="name" tick-property="ticked" helper-elements="filter" max-labels="3"
+                        max-height="100px" search-property="name" output-properties="name _id" translation="localLangCategories">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 control-label" for="applicationDevices">Matériel :</label>
+                <div class="col-lg-8">
+                    <div id="device-list" ng-show="devices !== undefined" class="col-xs-12 appSubmissionDropdown">
+                        <div directive-id="multi-select-device" isteven-multi-select input-model="devices" output-model="filteredDevices"
+                        button-label="name" item-label="name" tick-property="ticked" helper-elements="filter" max-labels="3"
+                        max-height="100px" search-property="name" output-properties="name _id" translation="localLangDevices">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-8 col-lg-offset-3">
+                    <div class="ui tiny info message">
+                        <i class="icon info circle"></i>
+                        Attention : La sélection de catégories ou matériels sans rapport avec votre application entraînera l'échec immédiat de sa validation.
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
                 <div class="form-group">
-                    <label class="col-lg-3 control-label" for="applicationName">Nom de l'application :</label>
+                    <label class="col-lg-3 control-label" for="uploadLogo">Logo :</label>
                     <div class="col-lg-8">
-                        <input ng-model="appInfos.name" class="form-control" required="required" maxlength="48" ng-maxlength="48" id="applicationName" type="text" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-lg-8 col-lg-offset-3">
-                        <div class="ui tiny info message">
-                            <i class="icon info circle"></i>
-                            Le nom de l'application doit contenir au plus 48 caractères.
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-3 control-label" for="applicationDescription">Description :</label>
-                    <div class="col-lg-8">
-                        <textarea ng-model="appInfos.description" class="form-control" id="applicationDescription" ng-maxlength="1024" maxlength="1024" rows="4" required></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-3 control-label" for="applicationCategories">Catégories :</label>
-                    <div class="col-lg-8">
-                        <div id="category-list" ng-show="categories !== undefined" class="col-xs-12 appSubmissionDropdown">
-                            <div directive-id="multi-select-category" isteven-multi-select input-model="categories" output-model="filteredCategories"
-                            button-label="name" item-label="name" tick-property="ticked" helper-elements="filter" max-labels="3"
-                            max-height=100px" search-property="name" output-properties="name _id" translation="localLangCategories">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-lg-3 control-label" for="applicationDevices">Matériel :</label>
-                    <div class="col-lg-8">
-                        <div id="device-list" ng-show="devices !== undefined" class="col-xs-12 appSubmissionDropdown">
-                            <div directive-id="multi-select-device" isteven-multi-select input-model="devices" output-model="filteredDevices"
-                            button-label="name" item-label="name" tick-property="ticked" helper-elements="filter" max-labels="3"
-                            max-height=100px" search-property="name" output-properties="name _id" translation="localLangDevices">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-lg-8 col-lg-offset-3">
-                        <div class="ui tiny info message">
-                            <i class="icon info circle"></i>
-                            Attention : La sélection de catégories ou matériels sans rapport avec votre application entraînera l'échec immédiat de sa validation.
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label" for="uploadLogo">Logo :</label>
-                        <div class="col-lg-8">
-                            <div class="input-group">
-                                <input type="text" class="form-control input-md" id="uploadLogo" disabled placeholder="{{ appInfos.logo.$ngfName ? appInfos.logo.$ngfName : 'Uploadez un logo'}}">
-                                <span class="input-group-btn">
-                                    <button type="button" class="browse btn btn-beavr input-md" data-buttonText="Sélectionner un fichier" ngf-select ng-model="appInfos.logo" name="logo" ngf-pattern="'image/*'"
-                                    ngf-accept="'image/*'" ngf-max-size="5MB" ngf-min-height="100" ngf-validate="{pattern: '.jpg, .png, .gif'}"
-                                    ngf-resize="{width: 460, height: 215, centerCrop: true}"><i class="glyphicon glyphicon-picture"></i></button>
-                                </span>
-                            </div>
-                            <div ng-show="applicationSubmissionForm.logo.$error.pattern" class="error-message">Le fichier doit être une image au format JPG, PNG ou GIF.</div>
-                            <div ng-show="applicationSubmissionForm.logo.$error.maxSize" class="error-message">La taille du fichier doit être inférieure à 5MB.</div>
-                            <img ng-show="applicationSubmissionForm.logo.$valid" ngf-src="!appInfos.logo.$error && appInfos.logo" class="thumb-rec">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-lg-8 col-lg-offset-3">
-                        <div class="ui tiny info message">
-                            <i class="icon info circle"></i>
-                            L'image est automatiquement recadrée au format 460*215 de manière à être rectangulaire.
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label" for="uploadScreenshots">Screenshots :</label>
-                        <div class="col-lg-8">
-                            <div class="input-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-md" id="uploadLogo" disabled placeholder="{{ appInfos.logo.$ngfName ? appInfos.logo.$ngfName : 'Uploader un logo'}}">
                             <span class="input-group-btn">
-                                <button type="button" class="fluid ui teal right labeled icon button" data-buttonText="Sélectionner un fichier" ngf-select ngf-multiple="true" ngf-max-files="3" ng-model="appInfos.screenshots" name="screenshots" ngf-pattern="'image/*'"
-                                ngf-accept="'image/*'" ngf-max-size="5MB" ngf-min-height="100" ngf-validate="{pattern: '.jpg, .png, .gif'}"
-                                ngf-resize="{width: 460, height: 215, centerCrop: true}">
-                                    <i class="folder open icon hidden-xs"></i>
-                                    <p class="small-font-xs">Ajouter des captures d'écran</p>
-                                </button>
+                                <button type="button" class="browse btn btn-beavr input-md" data-buttonText="Sélectionner un fichier" ngf-select ng-model="appInfos.logo" name="logo" ngf-pattern="'image/*'"
+                                ngf-accept="'image/*'" ngf-max-size="5MB" ngf-min-height="100" ngf-min-width="100" ngf-validate="{pattern: '.jpg, .png, .gif'}"
+                                ngf-resize="{width: 460, height: 215, centerCrop: true}" required><i class="glyphicon glyphicon-picture"></i></button>
                             </span>
-                            </div>
-                            <div ng-show="applicationSubmissionForm.screenshots.$error.pattern" class="error-message">Le fichier doit être une image au format JPG, PNG ou GIF.</div>
-                            <div ng-show="applicationSubmissionForm.screenshots.$error.maxSize" class="error-message">La taille du fichier doit être inférieure à 5MB.</div>
-                            <div ng-show="applicationSubmissionForm.screenshots.$error.maxFiles" class="error-message">Le nombre de captures d'écran ne peut pas dépasser 3.</div>
-                            <div class="ui celled list">
-                                <div class="item" ng-repeat="screenshot in appInfos.screenshots">
-                                <img ng-show="applicationSubmissionForm.screenshots.$valid" ngf-src="!appInfos.screenshots.$error && screenshot" class="thumb-rec">
-                                    <div class="content" style="margin-top: 10px">
-                                        {{ screenshot.$ngfName }}
-                                    </div>
+                        </div>
+                        <div ng-show="applicationSubmissionForm.logo.$error.pattern" class="error-message">Le fichier doit être une image au format JPG, PNG ou GIF.</div>
+                        <div ng-show="applicationSubmissionForm.logo.$error.maxSize" class="error-message">La taille du fichier doit être inférieure à 5MB.</div>
+                        <div ng-show="applicationSubmissionForm.logo.$error.minHeight || applicationSubmissionForm.logo.$error.minWidth" class="error-message">Le fichier doit au moins être au format 100x100.</div>
+                        <img ng-show="applicationSubmissionForm.logo.$valid" ngf-src="!appInfos.logo.$error && appInfos.logo" class="thumb-rec">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-8 col-lg-offset-3">
+                    <div class="ui tiny info message">
+                        <i class="icon info circle"></i>
+                        L'image est automatiquement recadrée au format 460*215 de manière à être rectangulaire.
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <div class="form-group">
+                    <label class="col-lg-3 control-label" for="uploadScreenshots">Screenshots :</label>
+                    <div class="col-lg-8">
+                        <div class="input-group">
+                        <span class="input-group-btn">
+                            <button type="button" class="fluid ui teal right labeled icon button" data-buttonText="Sélectionner un fichier" ngf-select ngf-multiple="true" ngf-max-files="3" ng-model="appInfos.screenshots" name="screenshots" ngf-pattern="'image/*'"
+                            ngf-accept="'image/*'" ngf-max-size="5MB" ngf-min-height="100" ngf-min-width="100" ngf-validate="{pattern: '.jpg, .png, .gif'}"
+                            ngf-resize="{width: 460, height: 215, centerCrop: true}">
+                                <i class="folder open icon hidden-xs"></i>
+                                <p class="small-font-xs">Ajouter des captures d'écran</p>
+                            </button>
+                        </span>
+                        </div>
+                        <div ng-show="applicationSubmissionForm.screenshots.$error.pattern" class="error-message">Le fichier doit être une image au format JPG, PNG ou GIF.</div>
+                        <div ng-show="applicationSubmissionForm.screenshots.$error.maxSize" class="error-message">La taille du fichier doit être inférieure à 5MB.</div>
+                        <div ng-show="applicationSubmissionForm.screenshots.$error.maxFiles" class="error-message">Le nombre de captures d'écran ne peut pas dépasser 3.</div>
+                        <div ng-show="applicationSubmissionForm.screenshots.$error.minHeight || applicationSubmissionForm.screenshots.$error.minWidth" class="error-message">Le fichier doit au moins être au format 100x100.</div>
+                        <div class="ui celled list">
+                            <div class="item" ng-repeat="screenshot in appInfos.screenshots">
+                            <img ng-show="applicationSubmissionForm.screenshots.$valid" ngf-src="!appInfos.screenshots.$error && screenshot" class="thumb-rec">
+                                <div class="content" style="margin-top: 10px">
+                                    {{ screenshot.$ngfName }}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-8 col-lg-offset-3">
+                    <div class="ui tiny info message">
+                        <i class="icon info circle"></i>
+                        Vous pouvez ajouter jusqu'à 3 captures d'écran. Elles seront automatiquement recadrées au format 460*215, comme pour le logo.
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
                 <div class="form-group">
-                    <div class="col-lg-8 col-lg-offset-3">
-                        <div class="ui tiny info message">
-                            <i class="icon info circle"></i>
-                            Vous pouvez ajouter jusqu'à 3 captures d'écran. Elles seront automatiquement recadrées au format 460*215, comme pour le logo.
+                    <label class="col-lg-3 control-label" for="uploadArchive">Archive :</label>
+                    <div class="col-lg-8">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-md" id="uploadArchive" disabled placeholder="{{ appInfos.url.name ? appInfos.url.name : 'Uploader une archive'}}">
+                            <span class="input-group-btn">
+                                <button type="button" class="browse btn btn-beavr input-md" data-buttonText="Sélectionner un fichier" ngf-select ng-model="appInfos.url" name="url" ngf-pattern="'.zip'"
+                                ngf-accept="'.zip'" ngf-max-size="50MB" ngf-validate="{pattern: '.zip'}" required><i class="glyphicon glyphicon-file"></i></button>
+                            </span>
                         </div>
+                        <div ng-show="applicationSubmissionForm.url.$error.pattern" class="error-message">Le fichier doit être une archive au format ZIP.</div>
+                        <div ng-show="applicationSubmissionForm.url.$error.maxSize" class="error-message">La taille du fichier doit être inférieure à 50MB.</div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-lg-3 control-label" for="applicationPrice">Prix :</label>
-                    <div class="col-lg-8">            
-                        <input ng-model="appInfos.price" id=applicationPrice" type="number" class="form-control" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" required/>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-8 col-lg-offset-3">
+                    <div class="ui tiny info message">
+                        <i class="icon info circle"></i>
+                        L'archive doit être au format .zip et ne doit pas dépasser 50MB.
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label"></label>
-                    <div class="col-md-8">
-                        <button type="submit" ng-click="submitApplicationAction()" ng-disabled="applicationSubmissionForm.$invalid" class="btn btn-beavr" title="Publier l'application'" ng-click="">Publier l'application<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
-                    </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 control-label" for="applicationPrice">Prix :</label>
+                <div class="col-lg-8">            
+                    <input ng-model="appInfos.price" id=applicationPrice" type="number" class="form-control" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" required/>
                 </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label"></label>
+                <div class="col-md-8">
+                    <div id="returnMessage" ng-show="applicationSubmissionForm.$submitted">{{returnMessage}}</div>
+                    <button type="submit" ng-click="submitApplicationAction()" ng-disabled="applicationSubmissionForm.$invalid" class="btn btn-beavr" title="Publier l'application">Publier l'application<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                </div>
+            </div>
         </form>
         </div>
       </div>

@@ -95,9 +95,7 @@ website.config(['$routeProvider', function ($routeProvider) {
             controller: 'applicationSubmissionController',
             resolve: {
                 userData: function (AuthenticationService) {
-                    if (!AuthenticationService.isOffline()) {
-                        return AuthenticationService.getConnectedDeveloperInfos();
-                    }
+                    return AuthenticationService.getConnectedDeveloperInfos();
                 },
                 categories: function (AuthenticationService) {
                     return AuthenticationService.getCategories();
@@ -112,16 +110,17 @@ website.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'app/components/submittedApplications/submittedApplications.html',
             controller: 'submittedApplicationsController',
             resolve: {
-                userData: function (AuthenticationService) {
-                    if (!AuthenticationService.isOffline()) {
-                        return AuthenticationService.getConnectedDeveloperInfos();
-                    }
+                userData: function (AuthenticationService, $window) {
+                    return AuthenticationService.getConnectedDeveloperInfos();
                 },
                 categories: function (AuthenticationService) {
                     return AuthenticationService.getCategories();
                 },
                 devices: function (AuthenticationService) {
                     return AuthenticationService.getDevices();
+                },
+                appInfos: function (AuthenticationService) {
+                    return AuthenticationService.getSubmittedApps();
                 }
             }
         })

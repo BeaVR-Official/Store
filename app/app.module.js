@@ -1,6 +1,6 @@
 var url = "http://beavr.fr:3000";
 
-var website = angular.module('website', ['ngRoute', 'ngCookies', 'ngMessages', 'angular-jwt', 'isteven-multi-select', 'ngFileUpload', 'angular-loading-bar', 'ui.bootstrap']);
+var website = angular.module('website', ['ngRoute', 'ngCookies', 'ngMessages', 'angular-jwt', 'isteven-multi-select', 'ngFileUpload', 'angular-loading-bar', 'counter', 'ui.bootstrap']);
 
 website.factory('AuthenticationService', function ($http, $window, $cookies, jwtHelper) {
 	var authService = {};
@@ -76,6 +76,10 @@ website.factory('AuthenticationService', function ($http, $window, $cookies, jwt
 	}
 
 	authService.getConnectedDeveloperInfos = function () {
+		if (authService.getId() === undefined) {
+			$window.location.href = "#/404";
+			return;
+		}
 		return authService.getConnectedUserInfos()
 			.then(function (response) {
 				if (response.rights.id !== 2) {
@@ -124,6 +128,19 @@ website.factory('AuthenticationService', function ($http, $window, $cookies, jwt
 			});
 	}
 
+	authService.getSubmittedApps = function () {
+		if (authService.getId() === undefined) {
+			$window.location.href = "#/404";
+			return;
+		}
+		return $http.get(url + '/api/applications?author=' + authService.getId())
+			.then(function (response) {
+				return response.data.data.application;
+			}, function (error) {
+				$window.location.href = "#/500";
+			});
+	}
+
 	authService.getCategories = function () {
 		return $http.get(url + '/api/categories/')
 			.then(function (response) {
@@ -160,8 +177,8 @@ var errorMessage = {
 	"MDPOUBLIE_404": "Aucun utilisateur n'est inscrit sous cette adresse.",
 	"MDPOUBLIE": "Une erreur est survenue pendant la réinitialisation du mot de passe. Réessayez dans quelques instants.",
 	"FEEDBACK_400": "Les informations indiquées sont incorrectes ou incomplètes.",
-	"FEEDBACK_403": "Vous ne possédez pas les droits nécessaires à l'envoi de feedback. Veuillez contacter un administrateur.",
-	"FEEDBACK": "Une erreur est survenue lors de l'envoi de votre feedback. Réessayez dans quelques instants.",
+	"FEEDBACK_403": "Vous ne possédez pas les droits nécessaires à l'envoi de message. Veuillez contacter un administrateur.",
+	"FEEDBACK": "Une erreur est survenue lors de l'envoi de votre message. Réessayez dans quelques instants.",
 	"EDIT_COMMENT": "Votre commentaire n'a pas pu être modifié. Réessayez dans quelques instants.",
 	"EDIT_COMMENT_102": "Une erreur est survenue lors de l'envoi de votre commentaire. Réessayez dans quelques instants.",
 	"ADD_COMMENT": "Votre commentaire n'a pas pu être ajouté. Réessayez dans quelques instants.",
@@ -174,16 +191,20 @@ var errorMessage = {
 	"EDIT_PROFILE_403": "Vous ne possédez pas les droits nécessaires à la modification de ce compte. Veuillez contacter un administrateur.",
 	"EDIT_PROFILE_404": "Les informations indiquées sont incorrectes ou incomplètes.",
 	"EDIT_PROFILE_409": "Cette adresse mail est déjà utilisée. Veuillez réessayer avec une adresse différente.",
-	"EDIT_PROFILE": "Une erreur est survenue lors de la modification du compte. Réessayez dans quelques instants."
+	"EDIT_PROFILE": "Une erreur est survenue lors de la modification du compte. Réessayez dans quelques instants.",
+	"POST_APP": "Une erreur est survenue lors de l'envoi de l'application. Réessayez dans quelques instants.",
+	"EDIT_APP": "Une erreur est survenue lors de la modification de l'application. Réessayez dans quelques instants."
 };
 
 var successMessage = {
 	"INSCRIPTION": "Inscription effectuée avec succès.",
 	"MDPOUBLIE": "Un nouveau mot de passe va vous être envoyé par mail d'ici quelques minutes.",
-	"FEEDBACK": "Votre feedback nous a correctement été transmis. L'équipe BeaVR vous remercie !",
+	"FEEDBACK": "Votre message nous a correctement été transmis. L'équipe BeaVR vous remercie !",
 	"EDIT_COMMENT": "Votre commentaire a correctement été modifié.",
 	"ADD_COMMENT": "Votre commentaire a correctement été ajouté.",
-	"EDIT_PROFILE": "Vos informations ont été modifiées."
+	"EDIT_PROFILE": "Vos informations ont été modifiées.",
+	"POST_APP": "L'application a bien été envoyée et est en cours de validation par nos équipes.",
+	"EDIT_APP": "Vos modifications ont été envoyées à notre équipe et sont en cours de validation."
 };
 
 website.filter('iif', function () {
@@ -213,6 +234,17 @@ website.directive('dimmer', function () {
                 $(element).dimmer('show');
 			}, function () {
                 $(element).dimmer('hide');
+			});
+		}
+	};
+});
+
+website.directive('progress', function () {
+	return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            $(element).progress({
+				percent: 50
 			});
 		}
 	};

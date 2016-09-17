@@ -16,7 +16,8 @@
 
     <!-- jQuery -->
     <script src="assets/js/jquery.js"></script>
-    
+    <script src="assets/js/jquery.easing.min.js"></script>
+
     <!-- Bootstrap Core CSS -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
 
@@ -113,10 +114,12 @@
                             <li class="dropdown">
                             <a href="" style="text-align:center;" class="dropdown-toggle" data-toggle="dropdown">{{ pseudo }} <img ng-src="{{ profilePicture }}"></a>
                             <ul class="dropdown-menu">
-                                <li style="margin-top:3px;" ng-class="{active: isActive('/feedback')}"><a href="" data-target="#feedbackModal" data-toggle="modal" class="animate">Feedback <span class="glyphicon glyphicon-comment pull-right"></span></a></li>
+                                <li style="margin-top:3px;" ng-class="{active: isActive('/feedback')}"><a href="" data-target="#feedbackModal" data-toggle="modal" class="animate">Nous contacter <span class="glyphicon glyphicon-comment pull-right"></span></a></li>
                                 <li class="divider"></li>
                                 <li ng-show="registerDev"><a href="#">Devenir développeur <span class="glyphicon glyphicon-blackboard pull-right"></span></a></li>
                                 <li ng-show="devMenu"><a href="#/applications/submission">Soumettre une application <span class="glyphicon glyphicon-upload pull-right"></span></a></li>
+                                <li class="divider"></li>
+                                <li ng-show="devMenu"><a href="#/applications/submitted">Mes applications déposées <span class="glyphicon glyphicon-folder-open pull-right"></span></a></li>
                                 <li class="divider"></li>
                                 <li><a href="#/profile">Profil <span class="glyphicon glyphicon-user pull-right"></span></a></li>
                                 <li class="divider"></li>
@@ -212,6 +215,9 @@
     <!-- Loading stuff -->
     <script src='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.js'></script>
 
+    <!-- Counter stuff -->
+    <script src="assets/js/angular-counter-with-easing.min.js"></script>
+
     <script>
         $(function () {    
             $('.navbar-toggler').on('click', function(event) {
@@ -240,15 +246,15 @@
                 <form id="feedbackForm" name="feedbackForm" role="form" >
                     <div class="form-group">
                         <label for="object">Objet</label>
-                        <input type="text" id="object" placeholder="Objet de votre feedback" class="form-control" ng-model="feedbackData.object" required/>
+                        <input type="text" id="object" placeholder="Objet de votre message" class="form-control" ng-model="feedbackData.object" required/>
                     </div>
                     <div class="form-group">
                         <label for="message">Message</label>
-                        <textarea id="message" style="resize:none" rows="8" placeholder="Détail de votre feedback" class="form-control" ng-model="feedbackData.description" required></textarea>
+                        <textarea id="message" style="resize:none" rows="8" placeholder="Détail de votre message" class="form-control" ng-model="feedbackData.description" required></textarea>
                     </div>
                     <div class="form-group">
                         <input type="checkbox" id="recontact" class="modal-checkbox" ng-model="feedbackData.recontact"/>
-                        <label for="recontact">J'accepte d'être recontacté suite à mon feedback</label>
+                        <label for="recontact">J'accepte d'être recontacté suite à mon message</label>
                         <button type="submit" ng-disabled="feedbackForm.$invalid" class="btn btn-secondary btn-beavr feedback-button" ng-click="feedbackAction()">Envoyer<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
                     </div>
                 </form>

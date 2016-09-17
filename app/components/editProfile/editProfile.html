@@ -16,12 +16,13 @@
                     <input type="text" class="form-control input-md" disabled placeholder="{{ userInfos.newProfilePicture.$ngfName ? userInfos.newProfilePicture.$ngfName : 'Uploadez une image'}}">
                     <span class="input-group-btn">
                       <button type="button" class="browse btn btn-beavr input-md" data-buttonText="Sélectionner un fichier" ngf-select ng-model="userInfos.newProfilePicture" name="file" ngf-pattern="'image/*'"
-                        ngf-accept="'image/*'" ngf-max-size="5MB" ngf-min-height="100" ngf-validate="{pattern: '.jpg, .png, .gif'}"
+                        ngf-accept="'image/*'" ngf-max-size="5MB" ngf-min-height="100" ngf-min-width="100" ngf-validate="{pattern: '.jpg, .png, .gif'}"
                         ngf-resize="{width: 150, height: 150, centerCrop: true}"><i class="glyphicon glyphicon-picture"></i></button>
                     </span>
                   </div>
                   <div ng-show="editProfileForm.file.$error.pattern" class="error-message">Le fichier doit être une image au format JPG, PNG ou GIF.</div>
                   <div ng-show="editProfileForm.file.$error.maxSize" class="error-message">La taille du fichier doit être inférieure à 5MB.</div>
+                  <div ng-show="editProfileForm.file.$error.minHeight || editProfileForm.file.$error.minWidth" class="error-message">Le fichier doit au moins être au format 100x100.</div>
                   <img ng-show="editProfileForm.file.$valid" ngf-src="!userInfos.newProfilePicture.$error && userInfos.newProfilePicture" class="thumb">
                 </div>
                 <div class="form-group">
