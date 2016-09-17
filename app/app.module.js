@@ -191,7 +191,9 @@ var errorMessage = {
 	"EDIT_PROFILE_403": "Vous ne possédez pas les droits nécessaires à la modification de ce compte. Veuillez contacter un administrateur.",
 	"EDIT_PROFILE_404": "Les informations indiquées sont incorrectes ou incomplètes.",
 	"EDIT_PROFILE_409": "Cette adresse mail est déjà utilisée. Veuillez réessayer avec une adresse différente.",
-	"EDIT_PROFILE": "Une erreur est survenue lors de la modification du compte. Réessayez dans quelques instants."
+	"EDIT_PROFILE": "Une erreur est survenue lors de la modification du compte. Réessayez dans quelques instants.",
+	"POST_APP": "Une erreur est survenue lors de l'envoi de l'application. Réessayez dans quelques instants.",
+	"EDIT_APP": "Une erreur est survenue lors de la modification de l'application. Réessayez dans quelques instants."
 };
 
 var successMessage = {
@@ -200,7 +202,9 @@ var successMessage = {
 	"FEEDBACK": "Votre message nous a correctement été transmis. L'équipe BeaVR vous remercie !",
 	"EDIT_COMMENT": "Votre commentaire a correctement été modifié.",
 	"ADD_COMMENT": "Votre commentaire a correctement été ajouté.",
-	"EDIT_PROFILE": "Vos informations ont été modifiées."
+	"EDIT_PROFILE": "Vos informations ont été modifiées.",
+	"POST_APP": "L'application a bien été envoyée et est en cours de validation par nos équipes.",
+	"EDIT_APP": "Vos modifications ont été envoyées à notre équipe et sont en cours de validation."
 };
 
 website.filter('iif', function () {
