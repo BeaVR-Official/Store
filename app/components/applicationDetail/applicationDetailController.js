@@ -1,6 +1,7 @@
 website.controller('applicationDetailController', function ($scope, $rootScope, $http, $routeParams, $location, AuthenticationService, $cookies, appInfos, comments, userData) {
   $rootScope.menu = true;
   $rootScope.homePage = false;
+  $scope.isOwned = false;
   if (userData !== undefined) {
     $rootScope.onlineMenu = true;
     $rootScope.offlineMenu = false;
@@ -14,6 +15,11 @@ website.controller('applicationDetailController', function ($scope, $rootScope, 
       $rootScope.devMenu = false;
       $rootScope.registerDev = true;
     }
+    angular.forEach(userData.applications, function (value, key) {
+      if (value._id === appInfos._id) {
+        $scope.isOwned = true;
+      }
+    });
   } else {
     $rootScope.onlineMenu = false;
     $rootScope.offlineMenu = true;
@@ -22,11 +28,8 @@ website.controller('applicationDetailController', function ($scope, $rootScope, 
 
   var limit = 3;
 
-  $scope.paymentType = false;
-  $scope.isConnected = !(AuthenticationService.isOffline());
   $scope.appInfos = appInfos;
-  if ($scope.appInfos.price == "0")
-    $scope.paymentType = true;
+  $scope.isFree = $scope.appInfos.price == "0";
 
   $scope.myInterval = 10000;
   $scope.noWrapSlides = false;
@@ -45,25 +48,11 @@ website.controller('applicationDetailController', function ($scope, $rootScope, 
 
   $scope.comments = comments;
 
-  $scope.applicationIsOwned = true;
+  $scope.addToLibrary = function () {
 
-  /*var data = {
-    "idUser" : AuthenticationService.getToken().id
-  };
+  }
 
-  $http.post(url + '/api/applications/userHasTheApplication', data)
-      .success(function(result) {
-
-          if (result.Error == false) {
-            $scope.applicationIsOwned = result.Canbuy;
-          } else {
-            $scope.applicationIsOwned = result.Canbuy;
-          }
-      })
-      .error(function(result) {
-        console.log("RESULT in error =>");
-        console.log(result);
-  });
+  /*
   
   $scope.checkPriceAction = function(){
 */
