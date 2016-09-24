@@ -282,3 +282,18 @@ website.directive('paypalButton', function () {
 		}
 	};
 });
+
+website.directive('fadeAlert', function () {
+	return {
+		restrict: 'A',
+		link: function (scope, element, attrs) {
+			scope.$watch("transactionSucceed", function() {
+				if (scope.transactionSucceed === true) {
+					$(element).fadeTo(10000, 500).slideUp(500, function () {
+						$(element).slideUp(500);
+					});
+				}
+			});
+		}
+	}
+});

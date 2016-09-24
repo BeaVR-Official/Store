@@ -31,7 +31,7 @@ website.controller('applicationDetailController', function ($scope, $rootScope, 
   $scope.appInfos = appInfos;
   $scope.isFree = $scope.appInfos.price == "0";
 
-  $scope.myInterval = 10000;
+  $scope.myInterval = 2500;
   $scope.noWrapSlides = false;
   $scope.active = 0;
 
@@ -49,8 +49,15 @@ website.controller('applicationDetailController', function ($scope, $rootScope, 
   $scope.comments = comments;
 
   $scope.addToLibrary = function () {
-
-  }
+    $http.get(url + '/api/applications/' + appInfos.id + '/payment')
+      .success(function (result) {
+        $scope.isOwned = true;
+        $rootScope.transactionSucceed = true;
+      })
+      .error(function (result) {
+        console.debug(result);
+      })
+  };
 
   /*
   

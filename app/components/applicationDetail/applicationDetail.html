@@ -1,6 +1,9 @@
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
+
 <div class="panel panel-default">
+  
   <div class="panel-body">
+
   <h4 class="media-heading page-part-title">Informations</h4>
   <br />
   <div id="container">
@@ -17,7 +20,7 @@
         <div class="left-part-appInfos">
             <img class="media-object cadre-images main-profile-picture" ng-src="{{ appInfos.logo }}">
             <div id="app-rating-main">
-              <div ng-if="!isOwned">
+              <div ng-hide="isOwned">
                 <div ng-if="isFree && onlineMenu">
                   <button type="button" class="btn btn-secondary btn-beavr btn-lg" ng-click="addToLibrary()">Ajouter à ma librairie</button>
                 </div>
@@ -27,8 +30,8 @@
                     data-size="medium" data-shape="pill" data-label="Payer {{ appInfos.price }}€" data-button_type="submit" data-button_disabled="false"></script>
                 </div>
               </div>
-              <div ng-if="isOwned">
-                <button disabled class="btn btn-secondary btn-beavr btn-lg" ng-click="addToLibrary()">Vous possédez cette application</button>
+              <div ng-show="isOwned">
+                <button disabled class="btn btn-secondary btn-beavr btn-lg">Vous possédez cette application</button>
               </div>
               <!--
               <span ng-if="paymentType" class="animate-if">
@@ -116,7 +119,7 @@
     <div class="col-md-12">
       <uib-carousel class="carousel slide" active="active" interval="myInterval" no-wrap="noWrapSlides">
         <uib-slide ng-repeat="screen in appInfosScreenshots track by screen.id" index="screen.id">
-          <img class="slide-image" ng-src="{{screen.image}}">
+          <img ng-src="{{screen.image}}">
         </uib-slide>
       </uib-carousel>
     </div>
