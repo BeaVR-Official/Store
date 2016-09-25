@@ -42,6 +42,9 @@ website.config(['$routeProvider', function ($routeProvider) {
                 },
                 comments: function (AuthenticationService, $route) {
                     return AuthenticationService.getCommentsLimit($route.current.params.idApplication, 3);
+                },
+                braintreeAuth: function (AuthenticationService, $route) {
+                    return AuthenticationService.getBraintreeAuth($route.current.params.idApplication);
                 }
             }
         })
@@ -146,16 +149,6 @@ website.config(['$routeProvider', function ($routeProvider) {
         .when('/500', {
             templateUrl: 'app/components/500/500.html',
             controller: '500Controller'
-        })
-
-        .when('/payment', {
-            templateUrl: 'app/components/payment/payment.html',
-            controller: 'paymentController'
-        })
-
-        .when('/addToLibrary', {
-            templateUrl: 'app/components/payment/payment.html',
-            controller: 'paymentController'
         })
 
         .otherwise({

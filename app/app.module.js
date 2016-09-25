@@ -159,6 +159,15 @@ website.factory('AuthenticationService', function ($http, $window, $cookies, jwt
 			});
 	}
 
+	authService.getBraintreeAuth = function (idApp) {
+		return $http.get(url + '/api/applications/' + idApp + '/payment')
+			.then(function (response) {
+				return response.data.data.clientToken;
+			}, function (error) {
+				$window.location.href = "#/404";
+			});
+	}
+
 	return authService;
 });
 
@@ -193,7 +202,8 @@ var errorMessage = {
 	"EDIT_PROFILE_409": "Cette adresse mail est déjà utilisée. Veuillez réessayer avec une adresse différente.",
 	"EDIT_PROFILE": "Une erreur est survenue lors de la modification du compte. Réessayez dans quelques instants.",
 	"POST_APP": "Une erreur est survenue lors de l'envoi de l'application. Réessayez dans quelques instants.",
-	"EDIT_APP": "Une erreur est survenue lors de la modification de l'application. Réessayez dans quelques instants."
+	"EDIT_APP": "Une erreur est survenue lors de la modification de l'application. Réessayez dans quelques instants.",
+	"BUY_APP": "<i class='fa fa-times'></i> Une <strong>erreur</strong> est survenue lors de l'achat de l'application. Veuillez réessayer ou contacter un administrateur."
 };
 
 var successMessage = {
@@ -204,7 +214,8 @@ var successMessage = {
 	"ADD_COMMENT": "Votre commentaire a correctement été ajouté.",
 	"EDIT_PROFILE": "Vos informations ont été modifiées.",
 	"POST_APP": "L'application a bien été envoyée et est en cours de validation par nos équipes.",
-	"EDIT_APP": "Vos modifications ont été envoyées à notre équipe et sont en cours de validation."
+	"EDIT_APP": "Vos modifications ont été envoyées à notre équipe et sont en cours de validation.",
+	"BUY_APP": "<i class='fa fa-check'></i> L'application a été ajoutée à votre <strong>bibliothèque</strong>."
 };
 
 website.filter('iif', function () {
@@ -250,47 +261,80 @@ website.directive('progress', function () {
 	};
 });
 
-website.directive('paypalButton', function () {
+website.directive('paypalButton', ['$http', function ($http) {
 	return {
         restrict: 'A',
         link: function (scope, element, attrs) {
-			var paypalButton = element[0].children[1];
-			// Create a Client component
-			braintree.client.create({
-				authorization: 'eyJ2ZXJzaW9uIjoyLCJhdXRob3JpemF0aW9uRmluZ2VycHJpbnQiOiJhNDY3NjI3MjhiOWFlZjM3NmYyMWUxNGNiYzJlYjc3OGY3Y2FhZmZkZWQwMTAyNzAxOWJhZTE1YTc4OWM3MTU3fGNyZWF0ZWRfYXQ9MjAxNi0wOS0yM1QxNToxMjo1MC4xNzY5MjQ3NjMrMDAwMFx1MDAyNm1lcmNoYW50X2lkPTM0OHBrOWNnZjNiZ3l3MmJcdTAwMjZwdWJsaWNfa2V5PTJuMjQ3ZHY4OWJxOXZtcHIiLCJjb25maWdVcmwiOiJodHRwczovL2FwaS5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tOjQ0My9tZXJjaGFudHMvMzQ4cGs5Y2dmM2JneXcyYi9jbGllbnRfYXBpL3YxL2NvbmZpZ3VyYXRpb24iLCJjaGFsbGVuZ2VzIjpbXSwiZW52aXJvbm1lbnQiOiJzYW5kYm94IiwiY2xpZW50QXBpVXJsIjoiaHR0cHM6Ly9hcGkuc2FuZGJveC5icmFpbnRyZWVnYXRld2F5LmNvbTo0NDMvbWVyY2hhbnRzLzM0OHBrOWNnZjNiZ3l3MmIvY2xpZW50X2FwaSIsImFzc2V0c1VybCI6Imh0dHBzOi8vYXNzZXRzLmJyYWludHJlZWdhdGV3YXkuY29tIiwiYXV0aFVybCI6Imh0dHBzOi8vYXV0aC52ZW5tby5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tIiwiYW5hbHl0aWNzIjp7InVybCI6Imh0dHBzOi8vY2xpZW50LWFuYWx5dGljcy5zYW5kYm94LmJyYWludHJlZWdhdGV3YXkuY29tLzM0OHBrOWNnZjNiZ3l3MmIifSwidGhyZWVEU2VjdXJlRW5hYmxlZCI6dHJ1ZSwicGF5cGFsRW5hYmxlZCI6dHJ1ZSwicGF5cGFsIjp7ImRpc3BsYXlOYW1lIjoiQWNtZSBXaWRnZXRzLCBMdGQuIChTYW5kYm94KSIsImNsaWVudElkIjpudWxsLCJwcml2YWN5VXJsIjoiaHR0cDovL2V4YW1wbGUuY29tL3BwIiwidXNlckFncmVlbWVudFVybCI6Imh0dHA6Ly9leGFtcGxlLmNvbS90b3MiLCJiYXNlVXJsIjoiaHR0cHM6Ly9hc3NldHMuYnJhaW50cmVlZ2F0ZXdheS5jb20iLCJhc3NldHNVcmwiOiJodHRwczovL2NoZWNrb3V0LnBheXBhbC5jb20iLCJkaXJlY3RCYXNlVXJsIjpudWxsLCJhbGxvd0h0dHAiOnRydWUsImVudmlyb25tZW50Tm9OZXR3b3JrIjp0cnVlLCJlbnZpcm9ubWVudCI6Im9mZmxpbmUiLCJ1bnZldHRlZE1lcmNoYW50IjpmYWxzZSwiYnJhaW50cmVlQ2xpZW50SWQiOiJtYXN0ZXJjbGllbnQzIiwiYmlsbGluZ0FncmVlbWVudHNFbmFibGVkIjp0cnVlLCJtZXJjaGFudEFjY291bnRJZCI6ImFjbWV3aWRnZXRzbHRkc2FuZGJveCIsImN1cnJlbmN5SXNvQ29kZSI6IlVTRCJ9LCJjb2luYmFzZUVuYWJsZWQiOmZhbHNlLCJtZXJjaGFudElkIjoiMzQ4cGs5Y2dmM2JneXcyYiIsInZlbm1vIjoib2ZmIn0'
-			}, function (clientErr, clientInstance) {
-				// Create PayPal component
-				braintree.paypal.create({
-					client: clientInstance
-				}, function (err, paypalInstance) {
-					paypalButton.addEventListener('click', function () {
-						// Tokenize here!
-						paypalInstance.tokenize({
-							flow: 'checkout', // Required
-							amount: scope.appInfos.price, // Required
-							currency: 'EUR', // Required
-							locale: 'fr_FR',
-							enableShippingAddress: false,
-							shippingAddressEditable: true
-						}, function (err, tokenizationPayload) {
-							// Tokenization complete
-							// Send tokenizationPayload.nonce to server
+			if (scope.appInfos.price != 0) {
+				var paypalButton = element[0].children[1];
+				// Create a Client component
+				braintree.client.create({
+					authorization: scope.auth
+				}, function (clientErr, clientInstance) {
+					// Create PayPal component
+					braintree.paypal.create({
+						client: clientInstance
+					}, function (err, paypalInstance) {
+						paypalButton.addEventListener('click', function () {
+							// Tokenize here!
+							paypalInstance.tokenize({
+								flow: 'checkout', // Required
+								amount: scope.appInfos.price, // Required
+								currency: 'EUR', // Required
+								locale: 'fr_FR',
+								enableShippingAddress: false,
+								shippingAddressEditable: true
+							}, function (err, tokenizationPayload) {
+								if (err) {
+									scope.$root.showErrorAlert = true;
+								} else {
+									var data = {
+										payment_method_nonce: tokenizationPayload.nonce
+									};
+									$http.post(url + '/api/applications/' + scope.appInfos.id + '/checkout', data)
+										.success(function (result) {
+											scope.$root.showSuccessAlert = true;
+											scope.$root.isOwned = true;
+										})
+										.error(function (result) {
+											console.debug(result);
+											scope.$root.showErrorAlert = true;
+										});
+								}
+							});
 						});
 					});
 				});
-			});
+			}
 		}
 	};
-});
+}]);
 
-website.directive('fadeAlert', function () {
+website.directive('fadeAlertSuccess', function () {
 	return {
 		restrict: 'A',
 		link: function (scope, element, attrs) {
-			scope.$watch("transactionSucceed", function() {
-				if (scope.transactionSucceed === true) {
+			scope.$watch("showSuccessAlert", function () {
+				if (scope.$root.showSuccessAlert === true) {
 					$(element).fadeTo(10000, 500).slideUp(500, function () {
 						$(element).slideUp(500);
+						scope.$root.showSuccessAlert = false;
+					});
+				}
+			});
+		}
+	}
+});
+
+website.directive('fadeAlertError', function () {
+	return {
+		restrict: 'A',
+		link: function (scope, element, attrs) {
+			scope.$watch("showErrorAlert", function () {
+				if (scope.$root.showErrorAlert === true) {
+					$(element).fadeTo(10000, 500).slideUp(500, function () {
+						$(element).slideUp(500);
+						scope.$root.showErrorAlert = false;
 					});
 				}
 			});

@@ -53,10 +53,13 @@
 
     <!-- Navigation -->
     <nav class="navbar beavr-navbar navbar-fixed-top" role="navigation">
-        <div ng-show="transactionSucceed" class="alert alert-success alert-dismissable" style="position: absolute; z-index:9999; width:100%" fade-alert>
-            <a class="panel-close close" data-dismiss="alert">×</a> 
-            <i class="fa fa-check"></i>
-             L'application a été ajoutée à votre <strong>bibliothèque</strong>.
+        <div ng-show="showSuccessAlert" class="alert alert-success alert-dismissable" style="position: absolute; z-index:9999; width:100%" fade-alert-success>
+            <a class="panel-close close" data-dismiss="alert">×</a>
+            <div ng-bind-html="successMessageAlert"></div>
+        </div>
+        <div ng-show="showErrorAlert" class="alert alert-warning alert-dismissable" style="position: absolute; z-index:9999; width:100%" fade-alert-error>
+            <a class="panel-close close" data-dismiss="alert">×</a>
+            <div ng-bind-html="errorMessageAlert"></div>
         </div>
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -198,7 +201,6 @@
     <script src="app/components/submittedApplications/submittedApplicationsController.js"></script>
     <script src="app/components/transactionHistory/transactionHistoryController.js"></script>
 
-    <script src="app/components/payment/paymentController.js"></script>
     <script src="app/components/applicationComments/applicationCommentsController.js"></script>
 
     <!-- Bootstrap Core JavaScript -->

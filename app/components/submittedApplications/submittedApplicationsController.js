@@ -113,8 +113,8 @@ website.controller('submittedApplicationsController', function ($scope, $rootSco
     var data = {
       name: selectedApp.name,
       description: selectedApp.description,
-      categories: filteredCategories.filter(Boolean),
-      devices: filteredDevices.filter(Boolean),
+      categoriesName: filteredCategories.filter(Boolean),
+      devicesName: filteredDevices.filter(Boolean),
       price: selectedApp.price
     };
 

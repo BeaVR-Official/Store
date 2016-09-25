@@ -1,7 +1,7 @@
-website.controller('applicationDetailController', function ($scope, $rootScope, $http, $routeParams, $location, AuthenticationService, $cookies, appInfos, comments, userData) {
+website.controller('applicationDetailController', function ($scope, $rootScope, $http, $routeParams, $location, AuthenticationService, $cookies, $sce, appInfos, comments, userData, braintreeAuth) {
   $rootScope.menu = true;
   $rootScope.homePage = false;
-  $scope.isOwned = false;
+  $rootScope.isOwned = false;
   if (userData !== undefined) {
     $rootScope.onlineMenu = true;
     $rootScope.offlineMenu = false;
@@ -17,7 +17,7 @@ website.controller('applicationDetailController', function ($scope, $rootScope, 
     }
     angular.forEach(userData.applications, function (value, key) {
       if (value._id === appInfos._id) {
-        $scope.isOwned = true;
+        $rootScope.isOwned = true;
       }
     });
   } else {
@@ -27,7 +27,7 @@ website.controller('applicationDetailController', function ($scope, $rootScope, 
   }
 
   var limit = 3;
-
+  $scope.auth = braintreeAuth;
   $scope.appInfos = appInfos;
   $scope.isFree = $scope.appInfos.price == "0";
 
@@ -36,65 +36,25 @@ website.controller('applicationDetailController', function ($scope, $rootScope, 
   $scope.active = 0;
 
   $scope.appInfosScreenshots = [];
-  for (var i = 0; i < $scope.appInfos.screenshots.length; i++)
+  for (var i = 0; i < $scope.appInfos.screenshots.length; i++) {
     $scope.appInfosScreenshots.push({ image: $scope.appInfos.screenshots[i], id: i });
+  }
 
-  /*$cookies.put('idApplication', $scope.appInfos.id);
-  $cookies.put('retailer', 999);
-  $cookies.put('buyer', AuthenticationService.getToken().id);
-  $cookies.put('price', $scope.appInfos.price);
-  $cookies.put('commission', 0);
-  $cookies.put('originalPrice', $scope.appInfos.price);*/
-
+  $rootScope.successMessageAlert = $sce.trustAsHtml(successMessage["BUY_APP"]);
+  $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["BUY_APP"]);
+  
   $scope.comments = comments;
 
   $scope.addToLibrary = function () {
-    $http.get(url + '/api/applications/' + appInfos.id + '/payment')
+    $http.get(url + '/api/applications/' + appInfos.id + '/free')
       .success(function (result) {
-        $scope.isOwned = true;
-        $rootScope.transactionSucceed = true;
+        $rootScope.isOwned = true;
+        $rootScope.showSuccessAlert = true;
       })
       .error(function (result) {
         console.debug(result);
       })
   };
-
-  /*
-  
-  $scope.checkPriceAction = function(){
-*/
-  /*if ($scope.applicationIsOwned == false) {
-    alert("Vous ne pouvez pas acheter deux fois la même application");
-    return;
-  }*/
-  /*
-        if ($scope.appInfos.price == "0"){
-          $scope.purchaseData = {
-              application : $routeParams.idApplication,
-              retailer : 1,
-              buyer : AuthenticationService.getToken().id,
-              price : $scope.appInfos.price,
-              commission : 0,
-              originalPrice : $scope.appInfos.price
-            };
-  
-          $http.post(url + '/api/applications/addToLibrary', $scope.purchaseData)
-              .success(function(result) {
-                  if (result.Error == false) {
-                    alert("L'application a bien été ajoutée à votre bibliothèque");
-                  } else {
-                    console.log(result);
-                    alert("Un soucis est survenue veuillez contacter le support");
-                  }
-              })
-              .error(function(result) {
-                console.log("ERROR DANS .error de ADDTOLIB");
-                console.log(result);
-          });
-        }else {
-          $location.path('/payment');
-        }
-      };*/
 
   $scope.getNumberFullStar = function (n) {
     if (n == null)

@@ -8,13 +8,6 @@
   <br />
   <div id="container">
     <div class="container">
-      <!--<div class="alert alert-success alert-dismissable" ng-hide="applicationIsOwned">
-        <a class="panel-close close" data-dismiss="alert">×</a>
-        <i class="fa fa-info"></i>
-        Cette application est déjà dans votre bibliothèque
-      </div>-->
-
-
     <div class="ui raised card appInfos-card">
       <div class="content">
         <div class="left-part-appInfos">
@@ -33,33 +26,6 @@
               <div ng-show="isOwned">
                 <button disabled class="btn btn-secondary btn-beavr btn-lg">Vous possédez cette application</button>
               </div>
-              <!--
-              <span ng-if="paymentType" class="animate-if">
-                  <p class="text-right">
-                    <button type="button" class="btn btn-secondary btn-beavr btn-lg" ng-click="checkPriceAction()" ng-show="isConnected">Gratuit</button>
-                  </p>
-              </span>
-              <span ng-if="!paymentType" class="animate-if">
-                <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                <input type="hidden" name="cmd" value="_xclick">
-                <input type="hidden" name="business" value="napsters.desmars@gmail.com">
-                <input type="hidden" name="lc" value="US">
-                <input type="hidden" name="item_name" value="{{ appInfos.name }}">
-                <input type="hidden" name="amount" value="{{ appInfos.price }}">
-                <input type="hidden" name="currency_code" value="USD">
-                <input type="hidden" name="button_subtype" value="services">
-                <input type="hidden" name="no_note" value="0">
-                <input type="hidden" name="tax_rate" value="0.00">
-                <input type="hidden" name="shipping" value="0.00">
-                <input type="hidden" value="http://beavr-store.herokuapp.com/#/payment" name="return">
-                <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHostedGuest">
-                <p class="text-right">
-                  <input type="image" src="https://www.paypalobjects.com/fr_FR/i/btn/btn_buynow_LG.gif?akam_redir=1" border="0" name="submit" alt="" value="Payer" ng-show="isConnected">
-                </p>
-                <p class="text-right">Seulement {{ appInfos.price }}€</p>
-                </form>
-              </span>
--->
             </div>
         </div>
         <div class="media-body">
@@ -84,33 +50,6 @@
         </div>
       </div>
     </div>
-<!--
-              <span ng-if="paymentType" class="animate-if">
-                  <p class="text-right">
-                    <button type="button" class="btn btn-secondary btn-beavr btn-lg" ng-click="checkPriceAction()" ng-show="isConnected">Gratuit</button>
-                  </p>
-              </span>
-              <span ng-if="!paymentType" class="animate-if">
-                <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                <input type="hidden" name="cmd" value="_xclick">
-                <input type="hidden" name="business" value="napsters.desmars@gmail.com">
-                <input type="hidden" name="lc" value="US">
-                <input type="hidden" name="item_name" value="{{ appInfos.name }}">
-                <input type="hidden" name="amount" value="{{ appInfos.price }}">
-                <input type="hidden" name="currency_code" value="USD">
-                <input type="hidden" name="button_subtype" value="services">
-                <input type="hidden" name="no_note" value="0">
-                <input type="hidden" name="tax_rate" value="0.00">
-                <input type="hidden" name="shipping" value="0.00">
-                <input type="hidden" value="http://beavr-store.herokuapp.com/#/payment" name="return">
-                <input type="hidden" name="bn" value="PP-BuyNowBF:btn_buynowCC_LG.gif:NonHostedGuest">
-                <p class="text-right">
-                  <input type="image" src="https://www.paypalobjects.com/fr_FR/i/btn/btn_buynow_LG.gif?akam_redir=1" border="0" name="submit" alt="" value="Payer" ng-show="isConnected">
-                </p>
-                <p class="text-right">Seulement {{ appInfos.price }}€</p>
-                </form>
-              </span>
--->
 
   <div id="appScreenshots" ng-show="appInfosScreenshots.length > 0">
     <br />
