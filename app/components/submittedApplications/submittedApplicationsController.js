@@ -1,4 +1,4 @@
-website.controller('submittedApplicationsController', function ($scope, $rootScope, $http, userData, AuthenticationService, categories, devices, Upload, appInfos, $q) {
+website.controller('submittedApplicationsController', function ($scope, $rootScope, $http, userData, AuthenticationService, categories, devices, Upload, appInfos, $q, $sce) {
   $rootScope.menu = true;
   $rootScope.homePage = false;
   $rootScope.onlineMenu = true;
@@ -106,7 +106,6 @@ website.controller('submittedApplicationsController', function ($scope, $rootSco
 
   $scope.submitApplicationAction = function (selectedApp, index) {
     $scope.loading = true;
-    var returnMessageDiv = angular.element(document.querySelector('#returnMessage'));
     var promisesArray = [];
     var filteredCategories = $scope.categories.map(function (category) { if (category.ticked) { return category.id } });
     var filteredDevices = $scope.devices.map(function (device) { if (device.ticked) { return device.id } });
@@ -128,9 +127,8 @@ website.controller('submittedApplicationsController', function ($scope, $rootSco
       }).success(function (response) {
         data.logo = response.data.screens[0];
       }).error(function (error) {
-        returnMessageDiv.removeClass("success-message");
-        returnMessageDiv.addClass("error-message");
-        $scope.returnMessage = successMessage["EDIT_APP"];
+        $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["EDIT_APP"]);
+        $rootScope.showErrorAlert = true;
         console.debug(error);
       });
       promisesArray.push(logoCall);
@@ -155,9 +153,8 @@ website.controller('submittedApplicationsController', function ($scope, $rootSco
           data.screenshots.push(response.data.screens[i]);
         }
       }).error(function (error) {
-        returnMessageDiv.removeClass("success-message");
-        returnMessageDiv.addClass("error-message");
-        $scope.returnMessage = successMessage["EDIT_APP"];
+        $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["EDIT_APP"]);
+        $rootScope.showErrorAlert = true;
         console.debug(error);
       });
       promisesArray.push(screensCall);
@@ -177,9 +174,8 @@ website.controller('submittedApplicationsController', function ($scope, $rootSco
       }).success(function (response) {
         data.url = response.data.source;
       }).error(function (error) {
-        returnMessageDiv.removeClass("success-message");
-        returnMessageDiv.addClass("error-message");
-        $scope.returnMessage = successMessage["EDIT_APP"];
+        $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["EDIT_APP"]);
+        $rootScope.showErrorAlert = true;
         console.debug(error);
       });
       promisesArray.push(fileCall);
@@ -190,15 +186,13 @@ website.controller('submittedApplicationsController', function ($scope, $rootSco
       $http.put(url + '/api/applications/' + selectedApp._id, data)
         .success(function (result) {
           $scope.loading = false;
-          returnMessageDiv.removeClass("error-message");
-          returnMessageDiv.addClass("success-message");
-          $scope.returnMessage = successMessage["EDIT_APP"];
+          $rootScope.successMessageAlert = $sce.trustAsHtml(successMessage["EDIT_APP"]);
+          $rootScope.showSuccessAlert = true;
         })
         .error(function (result) {
           $scope.loading = false;
-          returnMessageDiv.removeClass("success-message");
-          returnMessageDiv.addClass("error-message");
-          $scope.returnMessage = errorMessage["EDIT_APP"];
+          $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["EDIT_APP"]);
+          $rootScope.showErrorAlert = true;
           console.debug(result);
         });
     });

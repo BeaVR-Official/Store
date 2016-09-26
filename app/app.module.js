@@ -201,8 +201,8 @@ var errorMessage = {
 	"EDIT_PROFILE_404": "Les informations indiquées sont incorrectes ou incomplètes.",
 	"EDIT_PROFILE_409": "Cette adresse mail est déjà utilisée. Veuillez réessayer avec une adresse différente.",
 	"EDIT_PROFILE": "Une erreur est survenue lors de la modification du compte. Réessayez dans quelques instants.",
-	"POST_APP": "Une erreur est survenue lors de l'envoi de l'application. Réessayez dans quelques instants.",
-	"EDIT_APP": "Une erreur est survenue lors de la modification de l'application. Réessayez dans quelques instants.",
+	"POST_APP": "<i class='fa fa-times'></i> Une <strong>erreur</strong> est survenue lors de l'envoi de l'application. Réessayez dans quelques instants.",
+	"EDIT_APP": "<i class='fa fa-times'></i> Une <strong>erreur</strong> est survenue lors de la modification de l'application. Réessayez dans quelques instants.",
 	"BUY_APP": "<i class='fa fa-times'></i> Une <strong>erreur</strong> est survenue lors de l'achat de l'application. Veuillez réessayer ou contacter un administrateur."
 };
 
@@ -213,8 +213,8 @@ var successMessage = {
 	"EDIT_COMMENT": "Votre commentaire a correctement été modifié.",
 	"ADD_COMMENT": "Votre commentaire a correctement été ajouté.",
 	"EDIT_PROFILE": "Vos informations ont été modifiées.",
-	"POST_APP": "L'application a bien été envoyée et est en cours de validation par nos équipes.",
-	"EDIT_APP": "Vos modifications ont été envoyées à notre équipe et sont en cours de validation.",
+	"POST_APP": "<i class='fa fa-check'></i> L'application a bien été envoyée et est <strong>en cours de validation</strong> par nos équipes.",
+	"EDIT_APP": "<i class='fa fa-check'></i> Vos modifications ont été envoyées à notre équipe et sont <strong>en cours de validation</strong>.",
 	"BUY_APP": "<i class='fa fa-check'></i> L'application a été ajoutée à votre <strong>bibliothèque</strong>."
 };
 
@@ -316,7 +316,7 @@ website.directive('fadeAlertSuccess', function () {
 		link: function (scope, element, attrs) {
 			scope.$watch("showSuccessAlert", function () {
 				if (scope.$root.showSuccessAlert === true) {
-					$(element).fadeTo(10000, 500).slideUp(500, function () {
+					$(element).fadeTo(5000, 500).slideUp(500, function () {
 						$(element).slideUp(500);
 						scope.$root.showSuccessAlert = false;
 					});
@@ -332,7 +332,7 @@ website.directive('fadeAlertError', function () {
 		link: function (scope, element, attrs) {
 			scope.$watch("showErrorAlert", function () {
 				if (scope.$root.showErrorAlert === true) {
-					$(element).fadeTo(10000, 500).slideUp(500, function () {
+					$(element).fadeTo(5000, 500).slideUp(500, function () {
 						$(element).slideUp(500);
 						scope.$root.showErrorAlert = false;
 					});

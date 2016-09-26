@@ -1,4 +1,4 @@
-website.controller('applicationSubmissionController', function ($scope, $rootScope, $http, userData, AuthenticationService, categories, devices, $q) {
+website.controller('applicationSubmissionController', function ($scope, $rootScope, $http, userData, AuthenticationService, categories, devices, $q, $sce) {
   $rootScope.menu = true;
   $rootScope.homePage = false;
   $rootScope.onlineMenu = true;
@@ -42,7 +42,6 @@ website.controller('applicationSubmissionController', function ($scope, $rootSco
 
   $scope.submitApplicationAction = function () {
     $scope.loading = true;
-    var returnMessageDiv = angular.element(document.querySelector('#returnMessage'));
     var promisesArray = [];
     var data = {
       name: $scope.appInfos.name,
@@ -61,9 +60,8 @@ website.controller('applicationSubmissionController', function ($scope, $rootSco
     }).success(function (response) {
       data.logo = response.data.screens[0];
     }).error(function (error) {
-      returnMessageDiv.removeClass("success-message");
-      returnMessageDiv.addClass("error-message");
-      $scope.returnMessage = successMessage["POST_APP"];
+      $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["POST_APP"]);
+      $rootScope.showErrorAlert = true;
       console.debug(error);
     });
     promisesArray.push(logoCall);
@@ -80,9 +78,8 @@ website.controller('applicationSubmissionController', function ($scope, $rootSco
       }).success(function (response) {
         data.screenshots = response.data.screens;
       }).error(function (error) {
-        returnMessageDiv.removeClass("success-message");
-        returnMessageDiv.addClass("error-message");
-        $scope.returnMessage = successMessage["POST_APP"];
+        $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["POST_APP"]);
+        $rootScope.showErrorAlert = true;
         console.debug(error);
       });
       promisesArray.push(screensCall);
@@ -97,9 +94,8 @@ website.controller('applicationSubmissionController', function ($scope, $rootSco
     }).success(function (response) {
       data.url = response.data.source;
     }).error(function (error) {
-      returnMessageDiv.removeClass("success-message");
-      returnMessageDiv.addClass("error-message");
-      $scope.returnMessage = successMessage["POST_APP"];
+      $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["POST_APP"]);
+      $rootScope.showErrorAlert = true;
       console.debug(error);
     });
     promisesArray.push(fileCall);
@@ -110,15 +106,13 @@ website.controller('applicationSubmissionController', function ($scope, $rootSco
         $http.post(url + '/api/applications/', data)
           .success(function (result) {
             $scope.loading = false;
-            returnMessageDiv.removeClass("error-message");
-            returnMessageDiv.addClass("success-message");
-            $scope.returnMessage = successMessage["POST_APP"];
+            $rootScope.successMessageAlert = $sce.trustAsHtml(successMessage["POST_APP"]);
+            $rootScope.showSuccessAlert = true;
           })
           .error(function (result) {
             $scope.loading = false;
-            returnMessageDiv.removeClass("success-message");
-            returnMessageDiv.addClass("error-message");
-            $scope.returnMessage = errorMessage["POST_APP"];
+            $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["POST_APP"]);
+            $rootScope.showErrorAlert = true;
             console.debug(result);
           });
       });

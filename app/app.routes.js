@@ -44,7 +44,9 @@ website.config(['$routeProvider', function ($routeProvider) {
                     return AuthenticationService.getCommentsLimit($route.current.params.idApplication, 3);
                 },
                 braintreeAuth: function (AuthenticationService, $route) {
-                    return AuthenticationService.getBraintreeAuth($route.current.params.idApplication);
+                    if (!AuthenticationService.isOffline()) {
+                        return AuthenticationService.getBraintreeAuth($route.current.params.idApplication);
+                    }
                 }
             }
         })
