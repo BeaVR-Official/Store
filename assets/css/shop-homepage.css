@@ -8,8 +8,23 @@ body {
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
 
-.slide-image {
-    width: 100%;
+.carousel-inner > .item {
+    height: 300px;
+}
+
+.carousel-inner > .item img {
+    max-height: 100%;  
+    max-width: 100%; 
+    position: absolute;  
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
+}
+
+.right.carousel-control, .left.carousel-control {
+    display: none;
 }
 
 .carousel-holder {

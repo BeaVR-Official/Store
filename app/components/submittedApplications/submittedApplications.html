@@ -133,7 +133,7 @@
                                     <div ng-show="applicationSubmissionForm.logo.$error.pattern" class="error-message">Le fichier doit être une image au format JPG, PNG ou GIF.</div>
                                     <div ng-show="applicationSubmissionForm.logo.$error.maxSize" class="error-message">La taille du fichier doit être inférieure à 5MB.</div>
                                     <div ng-show="applicationSubmissionForm.logo.$error.minHeight || applicationSubmissionForm.logo.$error.minWidth" class="error-message">Le fichier doit au moins être au format 100x100.</div>
-                                    <img ng-show="applicationSubmissionForm.logo.$valid" ngf-src="!application.logo.$error && application.logo" class="thumb-rec">
+                                    <img ng-show="applicationSubmissionForm.logo.$valid" ngf-src="!application.logo.$error && application.logo" class="thumb-rec-logo">
                                 </div>
                             </div>
                         </div>
@@ -153,7 +153,7 @@
                                     <span class="input-group-btn">
                                         <button type="button" class="fluid ui teal right labeled icon button" data-buttonText="Sélectionner un fichier" ngf-select ngf-multiple="true" ngf-max-files="3" ng-model="application.screenshots" ng-change="updateScreenshots()" 
                                         name="screenshots" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-keep="'distinct'" ngf-max-size="5MB" ngf-min-height="100" ngf-min-width="100" ngf-validate="{pattern: '.jpg, .png, .gif'}"
-                                        ngf-resize="{width: 460, height: 215, centerCrop: true}">
+                                        ngf-resize="{width: 600, height: 300, centerCrop: true}">
                                             <i class="folder open icon hidden-xs"></i>
                                             <p class="small-font-xs">Ajouter des captures d'écran</p>
                                         </button>
@@ -165,7 +165,7 @@
                                     <div ng-show="applicationSubmissionForm.screenshots.$error.minHeight || applicationSubmissionForm.screenshots.$error.minWidth" class="error-message">Le fichier doit au moins être au format 100x100.</div>
                                     <div class="ui celled list">
                                         <div class="item" ng-repeat="screenshot in application.screenshots">
-                                        <img ngf-src="screenshot" class="thumb-rec">
+                                        <img ngf-src="screenshot" class="thumb-rec-screenshot">
                                             <div class="content" style="margin-top: 10px">
                                                 {{ screenshot.$ngfName }}
                                             </div>
@@ -182,7 +182,7 @@
                             <div class="col-lg-8 col-lg-offset-3">
                                 <div class="ui tiny info message">
                                     <i class="icon info circle"></i>
-                                    Vous pouvez ajouter jusqu'à 3 captures d'écran. Elles seront automatiquement recadrées au format 460*215, comme pour le logo.
+                                    Vous pouvez ajouter jusqu'à 3 captures d'écran. Elles seront automatiquement recadrées au format 600*300.
                                 </div>
                             </div>
                         </div>

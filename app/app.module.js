@@ -159,6 +159,15 @@ website.factory('AuthenticationService', function ($http, $window, $cookies, jwt
 			});
 	}
 
+	authService.getBraintreeAuth = function (idApp) {
+		return $http.get(url + '/api/applications/' + idApp + '/payment')
+			.then(function (response) {
+				return response.data.data.clientToken;
+			}, function (error) {
+				$window.location.href = "#/404";
+			});
+	}
+
 	return authService;
 });
 
@@ -192,8 +201,9 @@ var errorMessage = {
 	"EDIT_PROFILE_404": "Les informations indiquées sont incorrectes ou incomplètes.",
 	"EDIT_PROFILE_409": "Cette adresse mail est déjà utilisée. Veuillez réessayer avec une adresse différente.",
 	"EDIT_PROFILE": "Une erreur est survenue lors de la modification du compte. Réessayez dans quelques instants.",
-	"POST_APP": "Une erreur est survenue lors de l'envoi de l'application. Réessayez dans quelques instants.",
-	"EDIT_APP": "Une erreur est survenue lors de la modification de l'application. Réessayez dans quelques instants."
+	"POST_APP": "<i class='fa fa-times'></i> Une <strong>erreur</strong> est survenue lors de l'envoi de l'application. Réessayez dans quelques instants.",
+	"EDIT_APP": "<i class='fa fa-times'></i> Une <strong>erreur</strong> est survenue lors de la modification de l'application. Réessayez dans quelques instants.",
+	"BUY_APP": "<i class='fa fa-times'></i> Une <strong>erreur</strong> est survenue lors de l'achat de l'application. Veuillez réessayer ou contacter un administrateur."
 };
 
 var successMessage = {
@@ -203,8 +213,9 @@ var successMessage = {
 	"EDIT_COMMENT": "Votre commentaire a correctement été modifié.",
 	"ADD_COMMENT": "Votre commentaire a correctement été ajouté.",
 	"EDIT_PROFILE": "Vos informations ont été modifiées.",
-	"POST_APP": "L'application a bien été envoyée et est en cours de validation par nos équipes.",
-	"EDIT_APP": "Vos modifications ont été envoyées à notre équipe et sont en cours de validation."
+	"POST_APP": "<i class='fa fa-check'></i> L'application a bien été envoyée et est <strong>en cours de validation</strong> par nos équipes.",
+	"EDIT_APP": "<i class='fa fa-check'></i> Vos modifications ont été envoyées à notre équipe et sont <strong>en cours de validation</strong>.",
+	"BUY_APP": "<i class='fa fa-check'></i> L'application a été ajoutée à votre <strong>bibliothèque</strong>."
 };
 
 website.filter('iif', function () {
@@ -248,4 +259,85 @@ website.directive('progress', function () {
 			});
 		}
 	};
+});
+
+website.directive('paypalButton', ['$http', function ($http) {
+	return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+			if (scope.appInfos.price != 0) {
+				var paypalButton = element[0].children[1];
+				// Create a Client component
+				braintree.client.create({
+					authorization: scope.auth
+				}, function (clientErr, clientInstance) {
+					// Create PayPal component
+					braintree.paypal.create({
+						client: clientInstance
+					}, function (err, paypalInstance) {
+						paypalButton.addEventListener('click', function () {
+							// Tokenize here!
+							paypalInstance.tokenize({
+								flow: 'checkout', // Required
+								amount: scope.appInfos.price, // Required
+								currency: 'EUR', // Required
+								locale: 'fr_FR',
+								enableShippingAddress: false,
+								shippingAddressEditable: true
+							}, function (err, tokenizationPayload) {
+								if (err) {
+									scope.$root.showErrorAlert = true;
+								} else {
+									var data = {
+										payment_method_nonce: tokenizationPayload.nonce
+									};
+									$http.post(url + '/api/applications/' + scope.appInfos.id + '/checkout', data)
+										.success(function (result) {
+											scope.$root.showSuccessAlert = true;
+											scope.$root.isOwned = true;
+										})
+										.error(function (result) {
+											console.debug(result);
+											scope.$root.showErrorAlert = true;
+										});
+								}
+							});
+						});
+					});
+				});
+			}
+		}
+	};
+}]);
+
+website.directive('fadeAlertSuccess', function () {
+	return {
+		restrict: 'A',
+		link: function (scope, element, attrs) {
+			scope.$watch("showSuccessAlert", function () {
+				if (scope.$root.showSuccessAlert === true) {
+					$(element).fadeTo(5000, 500).slideUp(500, function () {
+						$(element).slideUp(500);
+						scope.$root.showSuccessAlert = false;
+					});
+				}
+			});
+		}
+	}
+});
+
+website.directive('fadeAlertError', function () {
+	return {
+		restrict: 'A',
+		link: function (scope, element, attrs) {
+			scope.$watch("showErrorAlert", function () {
+				if (scope.$root.showErrorAlert === true) {
+					$(element).fadeTo(5000, 500).slideUp(500, function () {
+						$(element).slideUp(500);
+						scope.$root.showErrorAlert = false;
+					});
+				}
+			});
+		}
+	}
 });

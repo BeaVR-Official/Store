@@ -53,6 +53,14 @@
 
     <!-- Navigation -->
     <nav class="navbar beavr-navbar navbar-fixed-top" role="navigation">
+        <div ng-show="showSuccessAlert" class="alert alert-success alert-dismissable" style="position: absolute; z-index:9999; width:100%" fade-alert-success>
+            <a class="panel-close close" data-dismiss="alert">×</a>
+            <div ng-bind-html="successMessageAlert"></div>
+        </div>
+        <div ng-show="showErrorAlert" class="alert alert-warning alert-dismissable" style="position: absolute; z-index:9999; width:100%" fade-alert-error>
+            <a class="panel-close close" data-dismiss="alert">×</a>
+            <div ng-bind-html="errorMessageAlert"></div>
+        </div>
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -115,10 +123,11 @@
                             <a href="" style="text-align:center;" class="dropdown-toggle" data-toggle="dropdown">{{ pseudo }} <img ng-src="{{ profilePicture }}"></a>
                             <ul class="dropdown-menu">
                                 <li style="margin-top:3px;" ng-class="{active: isActive('/feedback')}"><a href="" data-target="#feedbackModal" data-toggle="modal" class="animate">Nous contacter <span class="glyphicon glyphicon-comment pull-right"></span></a></li>
-                                <li class="divider"></li>
+                                <li ng-show="registerDev" class="divider"></li>
                                 <li ng-show="registerDev"><a href="#">Devenir développeur <span class="glyphicon glyphicon-blackboard pull-right"></span></a></li>
+                                <li ng-show="devMenu" class="divider"></li>
                                 <li ng-show="devMenu"><a href="#/applications/submission">Soumettre une application <span class="glyphicon glyphicon-upload pull-right"></span></a></li>
-                                <li class="divider"></li>
+                                <li ng-show="devMenu" class="divider"></li>
                                 <li ng-show="devMenu"><a href="#/applications/submitted">Mes applications déposées <span class="glyphicon glyphicon-folder-open pull-right"></span></a></li>
                                 <li class="divider"></li>
                                 <li><a href="#/profile">Profil <span class="glyphicon glyphicon-user pull-right"></span></a></li>
@@ -193,7 +202,6 @@
     <script src="app/components/submittedApplications/submittedApplicationsController.js"></script>
     <script src="app/components/transactionHistory/transactionHistoryController.js"></script>
 
-    <script src="app/components/payment/paymentController.js"></script>
     <script src="app/components/applicationComments/applicationCommentsController.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
@@ -217,6 +225,10 @@
 
     <!-- Counter stuff -->
     <script src="assets/js/angular-counter-with-easing.min.js"></script>
+
+    <!-- Braintree stuff -->
+    <script src="https://js.braintreegateway.com/web/3.3.0/js/client.min.js"></script>
+    <script src="https://js.braintreegateway.com/web/3.3.0/js/paypal.min.js"></script>
 
     <script>
         $(function () {    

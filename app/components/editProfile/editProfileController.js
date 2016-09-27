@@ -1,4 +1,4 @@
-website.controller('editProfileController', function ($scope, $rootScope, $http, userData, AuthenticationService, Upload) {
+website.controller('editProfileController', function ($scope, $rootScope, $http, $sce, userData, AuthenticationService, Upload) {
   $rootScope.menu = true;
   $rootScope.homePage = false;
   $rootScope.onlineMenu = true;
@@ -48,10 +48,8 @@ website.controller('editProfileController', function ($scope, $rootScope, $http,
           };
           $rootScope.profilePicture = result.data.user.picture;
         }).error(function (error) {
-          var returnMessageDiv = angular.element(document.querySelector('#returnMessage'));
-          returnMessageDiv.removeClass("success-message");
-          returnMessageDiv.addClass("error-message");
-          $scope.returnMessage = errorMessage["EDIT_PROFILE_PROFILE_PICTURE"];
+          $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["EDIT_PROFILE_PROFILE_PICTURE"]);
+          $rootScope.showErrorAlert = true;
         });
     });
   }
@@ -65,16 +63,14 @@ website.controller('editProfileController', function ($scope, $rootScope, $http,
       confirmPassword: $scope.userInfos.confirmPassword
     };
 
-    var returnMessageDiv = angular.element(document.querySelector('#returnMessage'));
     var dataToSend = {
       email: data.email
     };
 
     if (data.password && data.confirmPassword) {
       if (!arePasswordsMatching(data.password, data.confirmPassword)) {
-        returnMessageDiv.removeClass("success-message");
-        returnMessageDiv.addClass("error-message");
-        $scope.returnMessage = errorMessage["EDIT_PROFILE_PASSWORD"];
+        $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["EDIT_PROFILE_PASSWORD"]);
+        $rootScope.showErrorAlert = true;
         return;
       } else {
         dataToSend.password = data.password;
@@ -98,29 +94,27 @@ website.controller('editProfileController', function ($scope, $rootScope, $http,
           profilePicture: result.data.user.picture,
           newProfilePicture: null
         };
-        returnMessageDiv.removeClass("error-message");
-        returnMessageDiv.addClass("success-message");
-        $scope.returnMessage = successMessage["EDIT_PROFILE"];
+        $rootScope.successMessageAlert = $sce.trustAsHtml(successMessage["EDIT_PROFILE"]);
+        $rootScope.showSuccessAlert = true;
         $scope.loading = false;
       })
       .error(function (result) {
-        returnMessageDiv.removeClass("success-message");
-        returnMessageDiv.addClass("error-message");
         switch (result.error.status) {
           case 403:
-            $scope.returnMessage = errorMessage["EDIT_PROFILE_403"];
+            $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["EDIT_PROFILE_403"]);
             break;
           case 404:
-            $scope.returnMessage = errorMessage["EDIT_PROFILE_404"];
+            $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["EDIT_PROFILE_404"]);
             break;
           case 409:
-            $scope.returnMessage = errorMessage["EDIT_PROFILE_409"];
+            $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["EDIT_PROFILE_409"]);
             break;
           default:
-            $scope.returnMessage = errorMessage["EDIT_PROFILE"];
+            $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["EDIT_PROFILE"]);
             break;
         }
         $scope.loading = false;
+        $rootScope.showErrorAlert = true;
       });
   };
 
