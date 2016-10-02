@@ -143,6 +143,25 @@ website.config(['$routeProvider', function ($routeProvider) {
             }
         })
 
+        .when('/user/:idUser', {
+            templateUrl: 'app/components/userProfile/userProfile.html',
+            controller: 'userProfileController',
+            resolve: {
+                userData: function (AuthenticationService) {
+                    if (!AuthenticationService.isOffline()) {
+                        return AuthenticationService.getConnectedUserInfos();
+                    }
+                    $window.location.href = "#/404";
+                },
+                userInfos: function (AuthenticationService, $route) {
+                    return AuthenticationService.getUserInfos($route.current.params.idUser);
+                },
+                appInfos: function (AuthenticationService, $route) {
+                    return AuthenticationService.getUserSubmittedApps($route.current.params.idUser);
+                }
+            }
+        })
+
         .when('/404', {
             templateUrl: 'app/components/404/404.html',
             controller: '404Controller'

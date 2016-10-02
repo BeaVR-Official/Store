@@ -128,6 +128,24 @@ website.factory('AuthenticationService', function ($http, $window, $cookies, jwt
 			});
 	}
 
+	authService.getUserInfos = function (idUser) {
+		return $http.get(url + '/api/users/' + idUser)
+			.then(function (response) {
+				return response.data.data;
+			}, function (error) {
+				$window.location.href = "#/404";
+			});
+	}
+
+	authService.getUserSubmittedApps = function (idUser) {
+		return $http.get(url + '/api/applications/?author:' + idUser)
+			.then(function (response) {
+				return response.data.data;
+			}, function (error) {
+				$window.location.href = "#/404";
+			});
+	}
+
 	authService.getSubmittedApps = function () {
 		if (authService.getId() === undefined) {
 			$window.location.href = "#/404";
@@ -171,8 +189,13 @@ website.factory('AuthenticationService', function ($http, $window, $cookies, jwt
 	return authService;
 });
 
+
 website.config(function Config($httpProvider, jwtInterceptorProvider) {
-	jwtInterceptorProvider.tokenGetter = ['config', 'AuthenticationService', function (config, AuthenticationService) {
+	jwtInterceptorProvider.whiteListedDomains = ['5.196.88.52', 'ns375152.ip-5-196-88.eu', 'beavr.fr', 'localhost'];
+	jwtInterceptorProvider.tokenGetter = ['options', 'AuthenticationService', function (options, AuthenticationService) {
+		if (options.url.substr(options.url.length - 5) == '.html') {
+			return null;
+        }
 		return AuthenticationService.getToken();
 	}];
 	$httpProvider.interceptors.push('jwtInterceptor');
