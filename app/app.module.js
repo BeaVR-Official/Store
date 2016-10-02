@@ -276,9 +276,13 @@ website.directive('dimmer', function () {
 website.directive('progress', function () {
 	return {
         restrict: 'A',
-        link: function (scope, element, attrs) {
-            $(element).progress({
-				percent: 50
+        link: function (scope, element, attrs) {		
+			attrs.$observe('progressvalue', function(value) {
+				if (value) {
+					$(element).progress({
+						percent: value,
+					});
+				}
 			});
 		}
 	};
