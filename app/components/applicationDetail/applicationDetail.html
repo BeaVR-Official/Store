@@ -27,21 +27,21 @@
             </div>
         </div>
         <div class="media-body">
+          <div class="header left floated">{{ appInfos.name }}</div>
           <span class="right floated">  
             <div id="app-rating-main" class="app-rating-main">
               <span ng-show="appInfos.noteAvg != null" ng-repeat="t in getNumberFullStar(appInfos.noteAvg) track by $index" ng-class="{'app-rating-main-last-child':$last}" class="glyphicon glyphicon-star"></span>
               <span ng-show="appInfos.noteAvg != null" ng-repeat="t in getNumberEmptyStar(5 - appInfos.noteAvg) track by $index" class="glyphicon glyphicon-star-empty"></span>
             </div>
           </span>
-          <div class="header">{{ appInfos.name }}</div>
           <br>
-          <div class="description-application comment-content">
+          <div class="description-application comment-content left floated">
             <p>{{ appInfos.description }}</p>
           </div>
           <br>
-          <span class="right floated"><i class="glyphicon glyphicon-calendar"></i> Date de publication : {{ appInfos.created_at | date:'dd/MM/yyyy'}}</span><br>
-          <span class="right floated"><i class="glyphicon glyphicon-user"></i> Développeur : {{ appInfos.author.public.pseudo }}</span><br>
-            <span class="right floated"><b>Tags :</b> <i>
+          <span class="right floated bottom-informations"><i class="glyphicon glyphicon-calendar"></i> Date de publication : {{ appInfos.created_at | date:'dd/MM/yyyy'}}</span><br>
+          <span class="right floated bottom-informations"><i class="glyphicon glyphicon-user"></i> Développeur : {{ appInfos.author.public.pseudo }}</span><br>
+            <span class="right floated bottom-informations"><b>Tags :</b> <i>
               <span ng-repeat="device in appInfos.devicesName">{{device.name}}{{$last ? '' : ', '}}</span>
               <span ng-show="appInfos.categoriesName.length">, </span>
               <span ng-repeat="categorie in appInfos.categoriesName">{{categorie.name}}{{$last ? '' : ', '}}</span></i></span>
