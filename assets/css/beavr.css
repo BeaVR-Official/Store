@@ -540,6 +540,25 @@ footer {
 	}
 }
 
+@media (max-width:780px) {
+	.header-mainpage {
+		margin:0 auto !important;
+	}
+
+	.header-mainpage .brand-logo-main {
+		width:100%;
+	}
+
+	.header-mainpage .brand-logo-main:hover {
+		color:initial;
+	}
+
+	#main-dropdown .dropdown {
+    width: 100% !important;
+    margin-top: 50px;	
+	}
+}
+
 /************************
 *************************
 * Index
