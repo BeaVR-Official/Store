@@ -147,7 +147,7 @@ website.config(['$routeProvider', function ($routeProvider) {
             templateUrl: 'app/components/userProfile/userProfile.html',
             controller: 'userProfileController',
             resolve: {
-                userData: function (AuthenticationService) {
+                userData: function (AuthenticationService, $window) {
                     if (!AuthenticationService.isOffline()) {
                         return AuthenticationService.getConnectedUserInfos();
                     }

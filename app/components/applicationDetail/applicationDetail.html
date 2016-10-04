@@ -79,7 +79,8 @@
       </div>
       <div class="extra content">
         <div class="right floated author">
-          <img class="ui avatar image" ng-src="{{ commentInfos.author.public.picture }}"> {{commentInfos.author.public.pseudo == null ? 'Anonyme' : commentInfos.author.public.pseudo}}
+          <div ng-show="onlineMenu"><img class="ui avatar image" ng-src="{{ commentInfos.author.public.picture }}"><a ng-href="#/user/{{ commentInfos.author._id }}" class="comment-link">{{commentInfos.author.public.pseudo == null ? 'Anonyme' : commentInfos.author.public.pseudo}}</a></div>
+          <div ng-show="!onlineMenu"><img class="ui avatar image" ng-src="{{ commentInfos.author.public.picture }}">{{commentInfos.author.public.pseudo == null ? 'Anonyme' : commentInfos.author.public.pseudo}}</div>
         </div>
         <div id="comment-rating">
           <span ng-show="commentInfos.rating != null" ng-repeat="t in getNumberFullStar(commentInfos.rating) track by $index" ng-class="{'ratings-last-child':$last}" class="glyphicon glyphicon-star"></span>

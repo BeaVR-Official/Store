@@ -138,7 +138,7 @@ website.factory('AuthenticationService', function ($http, $window, $cookies, jwt
 	}
 
 	authService.getUserSubmittedApps = function (idUser) {
-		return $http.get(url + '/api/applications/?author:' + idUser)
+		return $http.get(url + '/api/applications/?author=' + idUser)
 			.then(function (response) {
 				return response.data.data;
 			}, function (error) {

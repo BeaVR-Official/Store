@@ -208,6 +208,34 @@ footer {
 	color: #1BB2BD;
 }
 
+.public-profile {
+	text-align: center;
+}
+
+.public-profile-avatar {
+	width: 150px;
+	height: 150px;
+	margin-bottom: 5%;
+}
+
+@media (min-width:900px) {
+	.public-profile-avatar {
+		margin-top: 32px;
+	}
+}
+
+.comment-link {
+	transition: color 0.4s ease !important;
+	color: grey !important;
+	outline: 0 !important;
+	text-decoration: none !important;
+}
+
+.comment-link:hover, .comment-link:focus {
+	background-color: white !important;
+	color: #1BB2BD !important;
+}
+
 /************************
 *************************
 * Changes from Comments

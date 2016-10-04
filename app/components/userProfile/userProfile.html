@@ -1,35 +1,27 @@
 <div class="panel panel-default">
   <div class="panel-body">
     <div class="container">
-        <h1>Historique des transactions</h1>
-        <hr>
-        <div ng-show="allPurchases.length == 0" class="ui stackable four column grid centered">
-              <h1>Vous n'avez effectué aucune transaction.</h1>
+      <h1>Profil de {{ userInfos.pseudo }}</h1>
+      <hr>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="text-center">
+            <img ng-src="{{ userInfos.picture }}" class="public-profile-avatar" alt="avatar">
+          </div>
         </div>
-        <div ng-show="allPurchases.length > 0" id="transactionHistory">
-            <table class="ui teal selectable celled striped table">
-                <thead>
-                    <tr>
-                        <th class="three wide">Date</th>
-                        <th class="three wide">Type</th>
-                        <th class="eight wide">Label</th>
-                        <th class="two wide">Montant</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="purchase in allPurchases">
-                        <td>{{ purchase.created_at | date:'dd/MM/yyyy' : '+0200' }}</td>
-                        <td>{{ purchase.payment }}</td>
-                        <td>{{ purchase.application.name }}</td>                   
-                        <td>{{ purchase.amount }}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="ui tiny info message">
-                <i class="icon info circle"></i>
-                Une transaction qui n'apparait pas ? Un virement anormal ? N'hésitez pas à <a href="" data-target="#feedbackModal" data-toggle="modal" class="animate">nous contacter</span></a> !
-            </div>
+        <div class="col-md-9">
+          <h5 class="public-profile">Applications possédées</h5>
+          <ul class="list-group">
+            <li class="list-group-item" ng-repeat="ownedApp in userInfos.application"><a ng-href="#/applications/details/{{ ownedApp.id }}" style="text-decoration: none;">{{ ownedApp.name }}</a></li> <!-- ng-repeat="ownedApp in userInfos.applications" -->
+            <li class="list-group-item" ng-show="!userInfos.application.length">{{ userInfos.pseudo }} ne possède aucune application.</li>
+          </ul>
+          <h5 class="public-profile">Applications déposées</h5>
+          <ul class="list-group">
+            <li class="list-group-item" ng-repeat="submittedApp in appInfos"><a ng-href="#/applications/details/{{ submittedApp.id }}" style="text-decoration: none;">{{ submittedApp.name }}</a></li>
+            <li class="list-group-item" ng-show="!appInfos.length">{{ userInfos.pseudo }} n'a déposé aucune application.</li>
+          </ul>
         </div>
+      </div>
     </div>
   </div>
 </div>
