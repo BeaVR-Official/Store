@@ -12,8 +12,8 @@
         <div class="col-md-9">
           <h5 class="public-profile">Applications possédées</h5>
           <ul class="list-group">
-            <li class="list-group-item" ng-repeat="ownedApp in userInfos.application"><a ng-href="#/applications/details/{{ ownedApp.id }}" style="text-decoration: none;">{{ ownedApp.name }}</a></li> <!-- ng-repeat="ownedApp in userInfos.applications" -->
-            <li class="list-group-item" ng-show="!userInfos.application.length">{{ userInfos.pseudo }} ne possède aucune application.</li>
+            <li class="list-group-item" ng-repeat="ownedApp in userInfos.applications"><a ng-href="#/applications/details/{{ ownedApp.id }}" style="text-decoration: none;">{{ ownedApp.name }}</a></li>
+            <li class="list-group-item" ng-show="!userInfos.applications.length">{{ userInfos.pseudo }} ne possède aucune application.</li>
           </ul>
           <h5 class="public-profile">Applications déposées</h5>
           <ul class="list-group">

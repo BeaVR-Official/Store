@@ -13,6 +13,6 @@ website.controller('userProfileController', function ($scope, $rootScope, userDa
         $rootScope.devMenu = false;
         $rootScope.registerDev = true;
     }
-    $scope.userInfos = userInfos.public;
+    $scope.userInfos = userInfos;
     $scope.appInfos = appInfos.application;
 });

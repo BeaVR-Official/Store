@@ -236,6 +236,18 @@ footer {
 	color: #1BB2BD !important;
 }
 
+.author-link {
+	transition: color 0.4s ease !important;
+	color: grey !important;
+	outline: 0 !important;
+	text-decoration: none !important;
+}
+
+.author-link:hover, .author-link:focus {
+	background-color: #f5f5f5 !important;
+	color: #1BB2BD !important;
+}
+
 /************************
 *************************
 * Changes from Comments

@@ -17,7 +17,8 @@
                 <h4 class="media-heading">{{appInfos.name }}</h4>
                 <br>
                 <p class="text-left"><b>Publiée le :</b> {{appInfos.created_at | date:'dd/MM/yyyy'}}</p>
-                <p class="text-left"><b>Développée par :</b> {{ appInfos.author.public.pseudo }}</p>
+                <p ng-show="!onlineMenu" class="text-left"><b>Développée par :</b> {{ appInfos.author.public.pseudo }}</p>
+                <p ng-show="onlineMenu" class="text-left"><b>Développée par :</b> <a ng-href="#/user/{{ appInfos.author._id }}" class="author-link">{{ appInfos.author.public.pseudo }}</a></p>
                 <div id="app-rating">
                     <p class="text-left"><b>Note moyenne : </b>
                         <span ng-show="appInfos.noteAvg != null" ng-repeat="t in getNumberFullStar(appInfos.noteAvg) track by $index" ng-class="{'app-rating-last-child':$last, 'app-rating-first-child':$first}" class="glyphicon glyphicon-star"></span>

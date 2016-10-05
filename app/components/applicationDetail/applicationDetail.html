@@ -40,7 +40,9 @@
           </div>
           <br>
           <span class="right floated bottom-informations"><i class="glyphicon glyphicon-calendar"></i> Date de publication : {{ appInfos.created_at | date:'dd/MM/yyyy'}}</span><br>
-          <span class="right floated bottom-informations"><i class="glyphicon glyphicon-user"></i> Développeur : {{ appInfos.author.public.pseudo }}</span><br>
+          <span ng-show="!onlineMenu" class="right floated bottom-informations"><i class="glyphicon glyphicon-user"></i> Développeur : {{ appInfos.author.public.pseudo }}</span><br>
+          <span ng-show="onlineMenu" class="right floated bottom-informations"><i class="glyphicon glyphicon-user"></i> Développeur : <a ng-href="#/user/{{ appInfos.author._id }}" class="author-link">{{ appInfos.author.public.pseudo }}</a></span><br>
+
             <span class="right floated bottom-informations"><b>Tags :</b> <i>
               <span ng-repeat="device in appInfos.devicesName">{{device.name}}{{$last ? '' : ', '}}</span>
               <span ng-show="appInfos.categoriesName.length">, </span>
