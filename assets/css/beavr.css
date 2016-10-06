@@ -565,9 +565,14 @@ footer {
 		color:initial;
 	}
 
-	#main-dropdown .dropdown {
+	#main-dropdown .dropdown,
+	.connect-link {
     width: 100% !important;
     margin-top: 50px;	
+	}
+
+	.main-container {
+		margin-top:50px;
 	}
 }
 

@@ -37,6 +37,10 @@
     <!-- Menu related -->
     <link href="assets/css/yamm.css" rel="stylesheet">
 
+    <!-- Social network buttons -->
+    <link href="assets/css/bootstrap-social.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.css" rel="stylesheet">
+
     <!-- Loading stuff -->
     <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.css' type='text/css' media='all' />
 
@@ -108,7 +112,7 @@
                     </ul>
                     <div ng-show="offlineMenu">
                         <ul class="nav navbar-nav beavr-navbar-menu navbar-right navbar navbar-fixed-left">
-                            <li><a href="" data-target="#authenticate_modal" data-toggle="modal">Se connecter</a></li>
+                            <li><a href="" data-target="#authenticate_modal" class="connect-link" data-toggle="modal">Se connecter</a></li>
                         </ul>
                     </div>
 
@@ -159,7 +163,7 @@
     </div>
 
     <!-- Page Content -->
-    <div class="container">
+    <div class="container main-container">
         <div class="row">
             <div class="col-md-offset-2 col-md-8 main-column">
                 <div ng-view autoscroll="true"></div>
@@ -303,6 +307,8 @@
                     </div>
                 </div>
                 <button type="submit" ng-disabled="connectionForm.$invalid" class="btn btn-secondary btn-beavr" ng-click="connexionAction()">Se connecter<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                <a class="btn btn-social btn-facebook" ng-click="facebookConnection()"><span class="fa fa-facebook"></span>Se connecter via Facebook</a>
+                <a class="btn btn-social btn-google" ng-click="googleConnection()"><span class="fa fa-google"></span>Se connecter via Google</a>
                 <div class="ui warning message" ng-show="errorMessage">
                     <div class="header">Erreur lors de la connexion</div>
                     <ul class="list">

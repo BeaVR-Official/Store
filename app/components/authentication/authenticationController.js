@@ -98,4 +98,36 @@ website.controller('authenticationController', function ($scope, AuthenticationS
         });
     }
   };
+
+  /***
+  * Social Network
+  */
+  $scope.facebookConnection = function() {
+
+    $http.get(url + '/auth/facebook')
+    .success(function (result) {
+        console.log("success");
+        console.log(result);
+      })
+      .error(function (result) {
+        console.log("error");
+        console.log(result);
+      });
+
+  }
+
+    $scope.googleConnection = function() {
+
+    $http.get(url + '/auth/facebook')
+    .success(function (result) {
+        console.log("success");
+        console.log(result);
+      })
+      .error(function (result) {
+        console.log("error");
+        console.log(result);
+      });
+
+  }
+
 });
