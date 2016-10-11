@@ -5,7 +5,7 @@
         <hr>
       <div class="row">
         <div class="col-xs-8 col-xs-offset-2">
-            <uib-tabset active="active">
+            <uib-tabset active="active" ng-show="applications.length">
                 <uib-tab index="$index" ng-repeat="application in applications" select="updateApp(application)" heading="{{application.name}}" disable="tab.disabled">
                     <div class="row">
                         <div class="col-lg-offset-4 col-lg-4">
@@ -226,6 +226,9 @@
                     </form>
                 </uib-tab>
             </uib-tabset>
+            <div ng-show="!applications.length">
+                <h1>Vous n'avez pas déposé d'applications.</h1>
+            </div>
         </div>
       </div>
     </div>

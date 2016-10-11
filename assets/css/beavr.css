@@ -255,6 +255,16 @@ footer {
 *************************
 ************************/
 
+@media (max-width:600px) {
+	.carousel-indicators {
+		bottom: 70px !important;
+	}
+}
+
+.carousel-indicators .active {
+	background-color: #1BB2BD !important;
+}
+
 .carousel-inner > .item > img, .carousel-inner > .item > a > img {
 	max-height:350px !important;
 }

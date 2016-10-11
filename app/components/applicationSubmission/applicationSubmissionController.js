@@ -101,21 +101,19 @@ website.controller('applicationSubmissionController', function ($scope, $rootSco
     promisesArray.push(fileCall);
 
     // called once the previous requests are done
-    if ($scope.appInfos.screenshots !== null) {
-      $q.all(promisesArray).then(function () {
-        $http.post(url + '/api/applications/', data)
-          .success(function (result) {
-            $scope.loading = false;
-            $rootScope.successMessageAlert = $sce.trustAsHtml(successMessage["POST_APP"]);
-            $rootScope.showSuccessAlert = true;
-          })
-          .error(function (result) {
-            $scope.loading = false;
-            $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["POST_APP"]);
-            $rootScope.showErrorAlert = true;
-            console.debug(result);
-          });
-      });
-    }
+    $q.all(promisesArray).then(function () {
+      $http.post(url + '/api/applications/', data)
+        .success(function (result) {
+          $scope.loading = false;
+          $rootScope.successMessageAlert = $sce.trustAsHtml(successMessage["POST_APP"]);
+          $rootScope.showSuccessAlert = true;
+        })
+        .error(function (result) {
+          $scope.loading = false;
+          $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["POST_APP"]);
+          $rootScope.showErrorAlert = true;
+          console.debug(result);
+        });
+    });
   }
 });
