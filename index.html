@@ -99,8 +99,7 @@
                                                 <div id="price-list" ng-show="prices !== undefined" class="list-group col-md-3">
                                                     <div directive-id="single-select-price" isteven-multi-select input-model="prices" output-model="filteredPrice"
                                                     button-label="name" item-label="name" tick-property="ticked" helper-elements="" max-labels="2" selection-mode="single"
-                                                    max-height=100px" output-properties="name priceFilter" translation="localLangPrices" on-item-click="sendFilters()">
-                                                    </div>
+                                                    max-height="100px" output-properties="name priceFilter" translation="localLangPrices" on-item-click="sendFilters()"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -122,7 +121,7 @@
                             <ul class="dropdown-menu">
                                 <li style="margin-top:3px;" ng-class="{active: isActive('/feedback')}"><a href="" data-target="#feedbackModal" data-toggle="modal" class="animate">Nous contacter <span class="glyphicon glyphicon-comment pull-right"></span></a></li>
                                 <li ng-show="registerDev" class="divider"></li>
-                                <li ng-show="registerDev"><a href="#">Devenir développeur <span class="glyphicon glyphicon-blackboard pull-right"></span></a></li>
+                                <li ng-show="registerDev"><a href="" data-target="#devPropagandaModal" data-toggle="modal" class="animate">Devenir développeur <span class="glyphicon glyphicon-blackboard pull-right"></span></a></li>
                                 <li ng-show="devMenu" class="divider"></li>
                                 <li ng-show="devMenu"><a href="#/applications/submission">Soumettre une application <span class="glyphicon glyphicon-upload pull-right"></span></a></li>
                                 <li ng-show="devMenu" class="divider"></li>
@@ -196,6 +195,7 @@
     <script src="app/components/404/404Controller.js"></script>
     <script src="app/components/500/500Controller.js"></script>
     <script src="app/components/feedback/feedbackController.js"></script>
+    <script src="app/components/devPropaganda/devPropagandaController.js"></script>
     <script src="app/components/applicationSubmission/applicationSubmissionController.js"></script>
     <script src="app/components/submittedApplications/submittedApplicationsController.js"></script>
     <script src="app/components/transactionHistory/transactionHistoryController.js"></script>
@@ -244,6 +244,38 @@
 
 
 </body>
+
+<div id="devPropagandaModal" ng-controller="devPropagandaController" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Devenir développeur sur BeaVR ?</h3>
+                <div id="returnMessage" ng-show="devPropagandaForm.$submitted">{{returnMessage}}</div>
+            </div>
+            <div class="modal-body">
+                <form id="devPropagandaForm" name="devPropagandaForm" role="form">
+                    <div class="text-center">
+                        <div class="ui tiny info message">
+                            <i class="icon info circle"></i>
+                                Le mode développeur vous permet de déposer manuellement vos applications afin qu'elle soit disponible sur le Store après validation et de les gérer depuis une interface spécifique. Veuillez contacter les administrateurs pour quitter le mode développeur.
+                        </div>
+                    </div>
+                    <div class="form-group text-center">
+                        <div class="ui toggle checkbox">
+                            <input type="checkbox" name="public" ng-model="checked">
+                            <label>Devenir développeur</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" ng-disabled="!checked" class="btn btn-secondary btn-beavr" ng-click="devPropagandaAction()">Envoyer<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="feedbackModal" ng-controller="feedbackController" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -253,7 +285,7 @@
                 <div id="returnMessage" ng-show="feedbackForm.$submitted">{{returnMessage}}</div>
             </div>
             <div class="modal-body">
-                <form id="feedbackForm" name="feedbackForm" role="form" >
+                <form id="feedbackForm" name="feedbackForm" role="form">
                     <div class="form-group">
                         <label for="object">Objet</label>
                         <input type="text" id="object" placeholder="Objet de votre message" class="form-control" ng-model="feedbackData.object" required/>

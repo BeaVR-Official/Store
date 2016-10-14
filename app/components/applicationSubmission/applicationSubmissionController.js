@@ -110,7 +110,14 @@ website.controller('applicationSubmissionController', function ($scope, $rootSco
         })
         .error(function (result) {
           $scope.loading = false;
-          $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["POST_APP"]);
+          switch (result.error.status) {
+            case 409:
+              $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["POST_APP_409"]);
+              break;
+            default:
+              $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["POST_APP"]);
+              break;
+          }
           $rootScope.showErrorAlert = true;
           console.debug(result);
         });
