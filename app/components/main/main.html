@@ -1,0 +1,52 @@
+<h4 class="page-part-title">Applications disponibles</h4>
+<div ng-show="filteredApplications.length == 0" class="no-app-available">
+  <span>Aucune application ne remplit les critères de recherche.</span>
+</div>
+<div class="ui stackable grid app-list">
+  <div ng-repeat="application in filteredApplications" style="padding:0 !important;" class="four wide column">
+    <div class="ui special raised cards">
+      <div class="card" style="min-width:150px !important">
+        <div class="blurring dimmable image" dimmer>
+          <div class="ui inverted dimmer">
+            <div class="container dimmer-app-list-container">
+              <div><b>{{application.name}}</b></div>
+              <div class="row content sub-content">
+                <b>Matériel : </b>
+                <span ng-repeat="device in application.devicesName">
+                  {{device.name}} {{$last ? '' : ', '}}
+                </span>
+              </div>
+              <div class="row content sub-content">
+                <b>Catégories :</b>
+                <span ng-repeat="categorie in application.categoriesName">
+                  {{categorie.name}} {{$last ? '' : ', '}}
+                </span>
+              </div>
+              <br>
+              <div class="row content">
+                {{ application.description }}
+              </div>
+            </div>
+          </div>
+          <img ng-src="{{ application.logo }}">
+        </div>
+        <div class="content ui grid">
+          <span class="app-title eleven wide column"><a ng-href="#/applications/details/{{ application.id }}">{{ application.name }}</a></span>
+          <span class="right floated app-price five wide column">{{ application.price == "0" | iif : "Gratuite" : application.price + "€" }}</span>
+      </div>
+        <div class="extra content ratings">
+          <span class="right floated">
+            <span ng-show="application.noteAvg != null" ng-repeat="t in getNumberFullStar(application.noteAvg) track by $index" ng-class="{'ratings-last-child':$last}" class="glyphicon glyphicon-star"></span>
+            <span ng-show="application.noteAvg != null" ng-repeat="t in getNumberEmptyStar(5 - application.noteAvg) track by $index" class="glyphicon glyphicon-star-empty"></span>
+          </span>
+          <span>
+            <a ng-href="#/applications/details/{{ application.id }}/comments">
+              <i class="comments outline icon"></i>
+              {{ application.commentsNb }}
+            </a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

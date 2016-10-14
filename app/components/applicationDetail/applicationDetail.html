@@ -1,0 +1,98 @@
+<div class="panel panel-default">
+  
+  <div class="panel-body">
+
+  <h4 class="media-heading page-part-title">Informations</h4>
+  <br />
+  <div id="container">
+    <div class="container">
+    <div class="ui raised card appInfos-card">
+      <div class="content">
+        <div class="left-part-appInfos">
+            <img class="media-object cadre-images main-profile-picture" ng-src="{{ appInfos.logo }}">
+            <div id="app-rating-main">
+              <div ng-hide="isOwned">
+                <div ng-if="isFree && onlineMenu">
+                  <button type="button" class="btn btn-secondary btn-beavr btn-lg" ng-click="addToLibrary()">Ajouter à ma librairie</button>
+                </div>
+                <div ng-if="!isFree && onlineMenu" paypal-button>
+                  <i class="paypal icon"></i>
+                  <script test src="assets/js/paypal-button.js" ng-model="paypalButton" data-merchant="braintree" data-locale="fr_FR" data-id="paypal-button" data-button="checkout" data-color="blue"
+                    data-size="medium" data-shape="pill" data-label="Payer {{ appInfos.price }}€" data-button_type="submit" data-button_disabled="false"></script>
+                </div>
+              </div>
+              <div ng-show="isOwned">
+                <button disabled class="btn btn-secondary btn-beavr btn-lg">Vous possédez cette application</button>
+              </div>
+            </div>
+        </div>
+        <div class="media-body">
+          <div class="header left floated">{{ appInfos.name }}</div>
+          <span class="right floated">  
+            <div id="app-rating-main" class="app-rating-main">
+              <span ng-show="appInfos.noteAvg != null" ng-repeat="t in getNumberFullStar(appInfos.noteAvg) track by $index" ng-class="{'app-rating-main-last-child':$last}" class="glyphicon glyphicon-star"></span>
+              <span ng-show="appInfos.noteAvg != null" ng-repeat="t in getNumberEmptyStar(5 - appInfos.noteAvg) track by $index" class="glyphicon glyphicon-star-empty"></span>
+            </div>
+          </span>
+          <br>
+          <div class="description-application comment-content left floated">
+            <p>{{ appInfos.description }}</p>
+          </div>
+          <br>
+          <span class="right floated bottom-informations"><i class="glyphicon glyphicon-calendar"></i> Date de publication : {{ appInfos.created_at | date:'dd/MM/yyyy'}}</span><br>
+          <span ng-show="!onlineMenu" class="right floated bottom-informations"><i class="glyphicon glyphicon-user"></i> Développeur : {{ appInfos.author.public.pseudo }}</span><br>
+          <span ng-show="onlineMenu" class="right floated bottom-informations"><i class="glyphicon glyphicon-user"></i> Développeur : <a ng-href="#/user/{{ appInfos.author._id }}" class="author-link">{{ appInfos.author.public.pseudo }}</a></span><br>
+
+            <span class="right floated bottom-informations"><b>Tags :</b> <i>
+              <span ng-repeat="device in appInfos.devicesName">{{device.name}}{{$last ? '' : ', '}}</span>
+              <span ng-show="appInfos.categoriesName.length">, </span>
+              <span ng-repeat="categorie in appInfos.categoriesName">{{categorie.name}}{{$last ? '' : ', '}}</span></i></span>
+        </div>
+      </div>
+    </div>
+
+  <div id="appScreenshots" ng-show="appInfosScreenshots.length > 0">
+    <br />
+    <h4 class="media-heading page-part-title">Aperçu de l'application</h4>
+    <br />
+    <div class="col-md-12">
+      <uib-carousel class="carousel slide" active="active" interval="myInterval" no-wrap="noWrapSlides">
+        <uib-slide ng-repeat="screen in appInfosScreenshots track by screen.id" index="screen.id">
+          <img ng-src="{{screen.image}}">
+        </uib-slide>
+      </uib-carousel>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="comments-section">
+  <h3 style="font-size:1.6em;">{{ appInfos.commentsNb > 0 ? 'Commentaires' : 'Aucun commentaire pour cette application' }}</h3>
+  <div id="container" ng-repeat="commentInfos in comments">
+
+    <div class="ui raised card comment-card">
+      <div class="content">
+       <span class="right floated time"><i class="glyphicon glyphicon-calendar"></i> {{ commentInfos.created_at | date:'dd/MM/yyyy HH:mm' : '+0200'}}</span>
+       <div class="header comment-title">{{ commentInfos.title }}</div>
+       <br>
+        <div class="description comment-content">
+          <p>{{ commentInfos.comment }}</p>
+        </div>
+      </div>
+      <div class="extra content">
+        <div class="right floated author">
+          <div ng-show="onlineMenu"><img class="ui avatar image" ng-src="{{ commentInfos.author.public.picture }}"><a ng-href="#/user/{{ commentInfos.author._id }}" class="comment-link">{{commentInfos.author.public.pseudo == null ? 'Anonyme' : commentInfos.author.public.pseudo}}</a></div>
+          <div ng-show="!onlineMenu"><img class="ui avatar image" ng-src="{{ commentInfos.author.public.picture }}">{{commentInfos.author.public.pseudo == null ? 'Anonyme' : commentInfos.author.public.pseudo}}</div>
+        </div>
+        <div id="comment-rating">
+          <span ng-show="commentInfos.rating != null" ng-repeat="t in getNumberFullStar(commentInfos.rating) track by $index" ng-class="{'ratings-last-child':$last}" class="glyphicon glyphicon-star"></span>
+          <span ng-show="commentInfos.rating != null" ng-repeat="t in getNumberEmptyStar(5 - commentInfos.rating) track by $index" class="glyphicon glyphicon-star-empty"></span>
+        </div> 
+      </div>
+    </div>
+
+  </div>
+  <div id="under-comments">
+    <a ng-href="#/applications/details/{{ appInfos.id }}/comments" class="btn-beavr btn-lg">{{ appInfos.commentsNb > 0 ? 'En voir plus (' + appInfos.commentsNb + ' avis)' : 'Poster un commentaire' }}</a>
+  </div>
+</div>

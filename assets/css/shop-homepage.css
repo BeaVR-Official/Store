@@ -1,0 +1,85 @@
+/*!
+ * Start Bootstrap - Shop Homepage HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+body {
+    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+}
+
+.carousel-inner > .item {
+    height: 300px;
+}
+
+.carousel-inner > .item img {
+    max-height: 100%;  
+    max-width: 100%; 
+    position: absolute;  
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
+}
+
+.right.carousel-control, .left.carousel-control {
+    display: none;
+}
+
+.carousel-holder {
+    margin-bottom: 30px;
+}
+
+.carousel-control,
+.item {
+    border-radius: 4px;
+}
+
+.caption {
+    height: 130px;
+    overflow: hidden;
+}
+
+/*Added*/
+.caption a {
+  font-weight:bold !important;
+}
+.caption a:hover {
+    color: #0d7777 !important;
+}
+
+.caption h4 {
+    white-space: nowrap !important;
+    font-weight:normal !important;
+}
+
+.thumbnail img {
+    width: 100%;
+}
+
+.ratings {
+    padding-right: 10px;
+    padding-left: 10px;
+    color: #d17581;
+}
+
+.thumbnail {
+    padding: 0;
+}
+
+.thumbnail .caption-full {
+    padding: 9px;
+    color: #333;
+}
+
+footer {
+    /*margin: 50px 0;*/
+    height: auto;
+}
+
+.navbar-brand-logo {
+    padding-top: 5px;
+    height: 45px;
+    margin-right: 10px;
+}

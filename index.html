@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html ng-app="website" lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>BeaVR Store</title>
+
+    <!-- BeaVR Core CSS -->
+    <link href="assets/css/beavr.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/jquery.easing.min.js"></script>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Semantic UI -->
+    <link href="assets/css/semantic.min.css" rel="stylesheet">
+
+    <!-- Our CSS -->
+    <link href="assets/css/searchbar.css" rel="stylesheet">
+    <link href="assets/css/formulaire.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="assets/css/shop-homepage.css" rel="stylesheet">
+    
+    <!-- Filtering stuff -->
+    <link href="assets/css/isteven-multi-select.css" rel="stylesheet">
+
+    <!-- Menu related -->
+    <link href="assets/css/yamm.css" rel="stylesheet">
+
+    <!-- Social network buttons -->
+    <link href="assets/css/bootstrap-social.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Loading stuff -->
+    <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.css' type='text/css' media='all' />
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body ng-cloak>
+
+    <!-- Navigation -->
+    <nav class="navbar beavr-navbar navbar-fixed-top" role="navigation">
+        <div ng-show="showSuccessAlert" class="alert alert-success alert-dismissable" style="position: absolute; z-index:9999; width:100%" fade-alert-success>
+            <a class="panel-close close" data-dismiss="alert">×</a>
+            <div ng-bind-html="successMessageAlert"></div>
+        </div>
+        <div ng-show="showErrorAlert" class="alert alert-warning alert-dismissable" style="position: absolute; z-index:9999; width:100%" fade-alert-error>
+            <a class="panel-close close" data-dismiss="alert">×</a>
+            <div ng-bind-html="errorMessageAlert"></div>
+        </div>
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header header-mainpage">
+                <a class="navbar-brand-logo brand-logo-main pull-left" href="#/">
+                  <img class="navbar-brand-logo" src="assets/img/logo/beaver-logo-min.png">
+                </a>
+                <div id="nav-collapse" ng-controller="navbarController">
+                    <ul class="nav navbar-nav beavr-navbar-menu hidden-xs">
+                        <li ng-class="{active: isActive('/')} "><a href="#/">Accueil</a></li>
+                        <ul class="nav yamm navbar-nav hidden-xs">
+                            <li class="dropdown yamm-fw">
+                                <a href="#/" class="dropdown-toggle" data-toggle="dropdown" ng-show="homePage">Filtrer les applications<i class="dropdown icon"></i></a>
+                                <ul class="dropdown-menu">
+                                <li>
+                                    <div class="yamm-content">
+                                        <div class="row">
+                                            <div id="filterMenu" class="ui stackable three column grid centered" ng-controller="filterController" style="margin:0">
+                                                <div id="device-list" ng-show="devices !== undefined" class="list-group col-md-3">
+                                                    <div directive-id="multi-select-device" isteven-multi-select input-model="devices" output-model="filteredDevices"
+                                                    button-label="name" item-label="name" tick-property="ticked" helper-elements="filter" max-labels="2"
+                                                    max-height=100px" search-property="name" output-properties="name _id" translation="localLangDevices" on-item-click="sendFilters()">
+                                                    </div>
+                                                </div>
+
+                                                <div id="category-list" ng-show="categories !== undefined" class="list-group col-md-3">
+                                                    <div directive-id="multi-select-category" isteven-multi-select input-model="categories" output-model="filteredCategories"
+                                                    button-label="name" item-label="name" tick-property="ticked" helper-elements="filter" max-labels="2"
+                                                    max-height=100px" search-property="name" output-properties="name _id" translation="localLangCategories" on-item-click="sendFilters()">
+                                                    </div>
+                                                </div>
+
+                                                <div id="price-list" ng-show="prices !== undefined" class="list-group col-md-3">
+                                                    <div directive-id="single-select-price" isteven-multi-select input-model="prices" output-model="filteredPrice"
+                                                    button-label="name" item-label="name" tick-property="ticked" helper-elements="" max-labels="2" selection-mode="single"
+                                                    max-height="100px" output-properties="name priceFilter" translation="localLangPrices" on-item-click="sendFilters()"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </ul>
+                    <div ng-show="offlineMenu">
+                        <ul class="nav navbar-nav beavr-navbar-menu navbar-right navbar navbar-fixed-left">
+                            <li><a href="" data-target="#authenticate_modal" class="connect-link" data-toggle="modal">Se connecter</a></li>
+                        </ul>
+                    </div>
+
+                          <ul id="main-dropdown" ng-show="onlineMenu" class="nav navbar-nav navbar-right beavr-navbar-menu">
+                            <li class="dropdown">
+                            <a href="" style="text-align:center;" class="dropdown-toggle" data-toggle="dropdown">{{ pseudo }} <img ng-src="{{ profilePicture }}"></a>
+                            <ul class="dropdown-menu">
+                                <li style="margin-top:3px;" ng-class="{active: isActive('/feedback')}"><a href="" data-target="#feedbackModal" data-toggle="modal" class="animate">Nous contacter <span class="glyphicon glyphicon-comment pull-right"></span></a></li>
+                                <li ng-show="registerDev" class="divider"></li>
+                                <li ng-show="registerDev"><a href="" data-target="#devPropagandaModal" data-toggle="modal" class="animate">Devenir développeur <span class="glyphicon glyphicon-blackboard pull-right"></span></a></li>
+                                <li ng-show="devMenu" class="divider"></li>
+                                <li ng-show="devMenu"><a href="#/applications/submission">Soumettre une application <span class="glyphicon glyphicon-upload pull-right"></span></a></li>
+                                <li ng-show="devMenu" class="divider"></li>
+                                <li ng-show="devMenu"><a href="#/applications/submitted">Mes applications déposées <span class="glyphicon glyphicon-folder-open pull-right"></span></a></li>
+                                <li class="divider"></li>
+                                <li><a href="#/profile">Profil <span class="glyphicon glyphicon-user pull-right"></span></a></li>
+                                <li class="divider"></li>
+                                <li><a href="#/library">Bibliothèque <span class="glyphicon glyphicon-th pull-right"></span></a></li>
+                                <li class="divider"></li>
+                                <li><a href="#/progression">Progression <span class="glyphicon glyphicon-list-alt pull-right"></span></a></li>
+                                <li class="divider"></li>
+                                <li><a href="#/transactionHistory">Historique des transactions <span class="glyphicon glyphicon-euro pull-right"></span></a></li>
+                                <li class="divider"></li>
+                                <li style="margin-bottom:3px;"><a href="" ng-click="disconnect()">Se déconnecter <span class="glyphicon glyphicon-remove pull-right"></span></a></li>
+                            </ul>
+                            </li>
+                        </ul>
+                </div><!--/.navbar-collapse -->
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Top banner -->
+    <div class="row" ng-show="homePage">
+        <a ng-href="#/applications/details/57a20c9eea11906ee742c5d6">
+        <div class="banner" style="background: url(http://image.noelshack.com/fichiers/2016/31/1470587666-1.png) 50% 100% no-repeat #000">
+            <div class="container">
+                <div class="col-md-offset-3 col-md-4 banner-content">
+                    <span>Application vedette</span>
+                    <h2>Planetarium</h2>
+                    <p>Découvrez les planètes du système solaire et tout et tout</p>
+                </div>
+            </div>
+        </div>
+        </a>
+    </div>
+
+    <!-- Page Content -->
+    <div class="container main-container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8 main-column">
+                <div ng-view autoscroll="true"></div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Copyright &copy; BeaVR 2014 - 2016</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Angular JS -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-cookies.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-route.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.js"></script>
+
+    <script src="app/app.module.js"></script>
+    <script src="app/app.routes.js"></script>
+
+    <script src="app/components/main/mainController.js"></script>
+    <script src="app/components/authentication/authenticationController.js"></script>
+    <script src="app/components/editProfile/editProfileController.js"></script>
+    <script src="app/components/applicationDetail/applicationDetailController.js"></script>
+    <script src="app/components/library/libraryController.js"></script>
+    <script src="app/components/progression/progressionController.js"></script>
+    <script src="app/components/404/404Controller.js"></script>
+    <script src="app/components/500/500Controller.js"></script>
+    <script src="app/components/feedback/feedbackController.js"></script>
+    <script src="app/components/devPropaganda/devPropagandaController.js"></script>
+    <script src="app/components/applicationSubmission/applicationSubmissionController.js"></script>
+    <script src="app/components/submittedApplications/submittedApplicationsController.js"></script>
+    <script src="app/components/transactionHistory/transactionHistoryController.js"></script>
+    <script src="app/components/userProfile/userProfileController.js"></script>
+    <script src="app/components/applicationComments/applicationCommentsController.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/ui-bootstrap-tpls-1.3.3.min.js"></script>
+
+    <!-- Semantic UI -->
+    <script src="assets/js/semantic.min.js"></script>
+
+    <!-- Filtering stuff -->
+    <script src="assets/js/isteven-multi-select.js"></script>
+
+    <!-- Upload related -->
+    <script src="assets/js/ng-file-upload.min.js"></script>
+
+    <!-- Token related -->
+    <script src="//cdn.rawgit.com/auth0/angular-jwt/master/dist/angular-jwt.js"></script>
+
+    <!-- Loading stuff -->
+    <script src='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.js'></script>
+
+    <!-- Counter stuff -->
+    <script src="assets/js/angular-counter-with-easing.min.js"></script>
+
+    <!-- Braintree stuff -->
+    <script src="https://js.braintreegateway.com/web/3.3.0/js/client.min.js"></script>
+    <script src="https://js.braintreegateway.com/web/3.3.0/js/paypal.min.js"></script>
+
+    <script>
+        $(function () {    
+            $('.navbar-toggler').on('click', function(event) {
+                event.preventDefault();
+                $('#menu-profile-picture').toggleClass('hidden');
+                $('.menu-icon').toggleClass('visible');
+                $(this).closest('.navbar-minimal').toggleClass('open');
+            })
+            $(document).on('click', '.yamm .dropdown-menu', function(e) {
+                e.stopPropagation()
+            })
+        });
+    </script>
+
+
+</body>
+
+<div id="devPropagandaModal" ng-controller="devPropagandaController" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Devenir développeur sur BeaVR ?</h3>
+                <div id="returnMessage" ng-show="devPropagandaForm.$submitted">{{returnMessage}}</div>
+            </div>
+            <div class="modal-body">
+                <form id="devPropagandaForm" name="devPropagandaForm" role="form">
+                    <div class="text-center">
+                        <div class="ui tiny info message">
+                            <i class="icon info circle"></i>
+                                Le mode développeur vous permet de déposer manuellement vos applications afin qu'elle soit disponible sur le Store après validation et de les gérer depuis une interface spécifique. Veuillez contacter les administrateurs pour quitter le mode développeur.
+                        </div>
+                    </div>
+                    <div class="form-group text-center">
+                        <div class="ui toggle checkbox">
+                            <input type="checkbox" name="public" ng-model="checked">
+                            <label>Devenir développeur</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" ng-disabled="!checked" class="btn btn-secondary btn-beavr" ng-click="devPropagandaAction()">Envoyer<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="feedbackModal" ng-controller="feedbackController" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Un problème avec le Store BeaVR ?</h3>
+                <div id="returnMessage" ng-show="feedbackForm.$submitted">{{returnMessage}}</div>
+            </div>
+            <div class="modal-body">
+                <form id="feedbackForm" name="feedbackForm" role="form">
+                    <div class="form-group">
+                        <label for="object">Objet</label>
+                        <input type="text" id="object" placeholder="Objet de votre message" class="form-control" ng-model="feedbackData.object" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" style="resize:none" rows="8" placeholder="Détail de votre message" class="form-control" ng-model="feedbackData.description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" id="recontact" class="modal-checkbox" ng-model="feedbackData.recontact"/>
+                        <label for="recontact">J'accepte d'être recontacté suite à mon message</label>
+                        <button type="submit" ng-disabled="feedbackForm.$invalid" class="btn btn-secondary btn-beavr feedback-button" ng-click="feedbackAction()">Envoyer<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="authenticate_modal" ng-controller="authenticationController" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" ng-switch="showMenu">
+        <div class="animate-switch" ng-switch-when="0">
+            <div class="ui attached success message" ng-show="justSubscribed">
+                <div class="header">
+                    Inscription réussie !
+                </div>
+                <p>Indiquez vos identifiants afin de vous connecter.</p>
+            </div>
+            <form class="ui form attached fluid segment warning" name="connectionForm">
+                <h4 class="ui dividing header auth-header">Se connecter</h4>
+                <div class="required field">
+                    <div class="ui left icon input">
+                        <i class="mail icon"></i>
+                        <input type="email" name="email" placeholder="Adresse e-mail" ng-model="connectionData.email" required>
+                    </div>
+                </div>
+                <div class="required field">
+                    <div class="ui action left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" name="password" placeholder="Mot de passe" ng-minlength="8" ng-model="connectionData.password" required>
+                        <button type="button" ng-click="showForm(2)" class="ui teal right labeled icon button">
+                            <i class="privacy icon"></i>
+                            <p class="hidden-xs">Mot de passe oublié ?</p>
+                        </button>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui toggle checkbox">
+                        <input type="checkbox" name="checkbox" tabindex="0"  ng-model="connectionData.checkbox">
+                        <label>Se souvenir de moi</label>
+                    </div>
+                </div>
+                <button type="submit" ng-disabled="connectionForm.$invalid" class="btn btn-secondary btn-beavr" ng-click="connexionAction()">Se connecter<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                <a class="btn btn-social btn-facebook" ng-click="facebookConnection()"><span class="fa fa-facebook"></span>Se connecter via Facebook</a>
+                <a class="btn btn-social btn-google" ng-click="googleConnection()"><span class="fa fa-google"></span>Se connecter via Google</a>
+                <div class="ui warning message" ng-show="errorMessage">
+                    <div class="header">Erreur lors de la connexion</div>
+                    <ul class="list">
+                        <li>{{errorMessage}}</li>
+                    </ul>
+                </div>
+            </form>
+            <div class="ui bottom attached warning message">
+                <i class="icon help"></i>
+                    Pas encore inscrit ? L'inscription c'est <a href="" ng-click="showForm(1)">par là</a> !
+            </div>
+        </div>
+        <div class="animate-switch" ng-switch-when="1">
+            <div class="ui attached message">
+                <div class="header">
+                    Bienvenue sur BeaVR !
+                </div>
+                <p>Renseignez les informations ci-dessous afin de vous inscrire.</p>
+            </div>
+            <form class="ui form attached fluid segment warning" name="subscriptionForm">
+                <h4 class="ui dividing header auth-header">S'inscrire</h4>
+                <div class="two fields">
+                    <div class="field">
+                        <input type="text" name="subscriptionData.firstName" placeholder="Prénom" ng-model="subscriptionData.firstName">
+                    </div>
+                    <div class="field">
+                        <input type="text" name="subscriptionData.lastName" placeholder="Nom" ng-model="subscriptionData.lastName">
+                    </div>
+                </div>
+                <div class="required field">
+                    <div class="ui corner labeled left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="pseudo" required="required" ng-minlength="3" ng-maxlength="16" placeholder="Pseudo" ng-model="subscriptionData.pseudo"></input>
+                        <div class="ui corner label">
+                            <i class="asterisk icon"></i>
+                        </div>
+                    </div>
+                    <div class="ui tiny info message">
+                        <i class="icon info circle"></i>
+                            Le pseudo doit contenir entre 3 et 16 caractères.
+                    </div>
+                </div>
+                <div class="required field">
+                    <div class="ui corner labeled left icon input">
+                        <i class="mail icon"></i>
+                        <input type="email" name="email" placeholder="Adresse e-mail" ng-model="subscriptionData.email" required>
+                        <div class="ui corner label">
+                            <i class="asterisk icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="required field">
+                    <div class="ui corner labeled left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" name="password" placeholder="Mot de passe" ng-minlength="8" ng-model="subscriptionData.password" required>
+                        <div class="ui corner label">
+                            <i class="asterisk icon"></i>
+                        </div>
+                    </div>
+                    <div class="ui tiny info message">
+                        <i class="icon info circle"></i>
+                            Le mot de passe doit être composé de 8 caractères minimum.
+                    </div>
+                </div>
+                <button type="submit" ng-disabled="subscriptionForm.$invalid" class="btn btn-secondary btn-beavr" ng-click="subscriptionAction()">S'inscrire<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                <div class="ui warning message" ng-show="errorMessage">
+                    <div class="header">Erreur lors de l'inscription</div>
+                    <ul class="list">
+                        <li>{{errorMessage}}</li>
+                    </ul>
+                </div>
+            </form>
+            <div class="ui bottom attached warning message">
+                <i class="icon help"></i>
+                    Déjà inscrit ? Connectez-vous <a href="" ng-click="showForm(0)">par ici</a> !
+            </div>
+        </div>
+        <div class="animate-switch" ng-switch-when="2">
+            <div class="ui attached message">
+                <div class="header">
+                    Mot de passe oublié ?
+                </div>
+                <p>Indiquez votre adresse email, nous vous renverrons un mot de passe !</p>
+            </div>
+            <form class="ui form attached fluid segment warning" name="resetPasswordForm">
+                <h4 class="ui dividing header auth-header">Réinitialiser le mot de passe</h4>
+                <div class="required field">
+                    <div class="ui left icon input">
+                        <i class="mail icon"></i>
+                        <input type="email" name="email" placeholder="Adresse e-mail" ng-model="resetPasswordData.email" required>
+                    </div>
+                </div>
+                <button type="submit" ng-disabled="resetPasswordForm.$invalid" class="btn btn-secondary btn-beavr" ng-click="resetPasswordAction()">Envoyer<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                <div class="ui positive message" ng-show="successMessage">
+                    <div class="header">Mot de passe réinitialisé</div>
+                    <p>{{successMessage}}</p>
+                </div>
+                <div class="ui warning message" ng-show="errorMessage">
+                    <div class="header">Erreur lors de la réinitialisation du mot de passe</div>
+                    <ul class="list">
+                        <li>{{errorMessage}}</li>
+                    </ul>
+                </div>
+            </form>
+            <div class="ui bottom attached info message">
+                <i class="icon info circle"></i>
+                    Retournez à l'interface de connexion en cliquant <a href="" ng-click="showForm(0)">ici</a>.
+            </div>
+        </div>
+    </div>
+</div>
+</html>

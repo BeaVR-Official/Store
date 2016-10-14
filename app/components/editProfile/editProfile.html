@@ -1,0 +1,94 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+
+    <div class="container">
+        <h1>Edition du profil</h1>
+        <hr>
+      <div class="row">
+          <!-- left column -->
+        <form name="editProfileForm" class="form-horizontal" role="form">
+          <div class="col-md-3">
+            <div class="text-center">
+              <img ng-src="{{ userInfos.profilePicture }}" class="avatar" alt="avatar">
+              <h6>Choisir une autre photo de profil...</h6>
+                <div class="form-group">
+                  <div class="input-group col-xs-8 col-xs-offset-2">
+                    <input type="text" class="form-control input-md" disabled placeholder="{{ userInfos.newProfilePicture.$ngfName ? userInfos.newProfilePicture.$ngfName : 'Uploadez une image'}}">
+                    <span class="input-group-btn">
+                      <button type="button" class="browse btn btn-beavr input-md" data-buttonText="Sélectionner un fichier" ngf-select ng-model="userInfos.newProfilePicture" name="file" ngf-pattern="'image/*'"
+                        ngf-accept="'image/*'" ngf-max-size="5MB" ngf-min-height="100" ngf-min-width="100" ngf-validate="{pattern: '.jpg, .png, .gif'}"
+                        ngf-resize="{width: 150, height: 150, centerCrop: true}"><i class="glyphicon glyphicon-picture"></i></button>
+                    </span>
+                  </div>
+                  <div ng-show="editProfileForm.file.$error.pattern" class="error-message">Le fichier doit être une image au format JPG, PNG ou GIF.</div>
+                  <div ng-show="editProfileForm.file.$error.maxSize" class="error-message">La taille du fichier doit être inférieure à 5MB.</div>
+                  <div ng-show="editProfileForm.file.$error.minHeight || editProfileForm.file.$error.minWidth" class="error-message">Le fichier doit au moins être au format 100x100.</div>
+                  <img ng-show="editProfileForm.file.$valid" ngf-src="!userInfos.newProfilePicture.$error && userInfos.newProfilePicture" class="thumb">
+                </div>
+                <div class="form-group">
+                  <button ng-disabled="!editProfileForm.file.$valid || !userInfos.newProfilePicture" type="submit" class="btn btn-beavr" title="Uploader l'image'" ng-click="uploadImageAction()">Uploader l'image</button>
+                </div>
+              <div ng-show="userInfos.newProfilePicture.result" class="list-group-item list-group-item-success">Upload terminé.</div>
+            </div>
+          </div>
+          <!-- edit form column -->
+          <div class="col-md-9 personal-info">
+            <div class="alert alert-info alert-dismissable">
+              <a class="panel-close close" data-dismiss="alert">×</a> 
+              Une photo de profil non conforme peut mener à un <strong>banissement</strong>.
+            </div>
+            <h3>Informations personnelles</h3>
+              <div class="form-group">
+                <label class="col-lg-3 control-label">Prénom:</label>
+                <div class="col-lg-8">
+                  <input class="form-control" type="text" ng-model="userInfos.firstName">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-3 control-label">Nom:</label>
+                <div class="col-lg-8">
+                  <input class="form-control" type="text" ng-model="userInfos.lastName">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-3 control-label">Pseudo:</label>
+                <div class="col-lg-8">
+                  <p class="form-control-static">{{ userInfos.pseudo }}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-3 control-label">Email:</label>
+                <div class="col-lg-8">
+                  <input class="form-control" type="email" ng-class="{'no-error' : editProfileForm.email.$valid}" ng-model="userInfos.email" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label">Nouveau mot de passe:</label>
+                <div class="col-md-8">
+                  <input class="form-control" name="password" type="password" ng-minlength="8" placeholder="Nouveau mot de passe" ng-class="{'no-error' : editProfileForm.password.$valid}" ng-model="userInfos.password" ng-required="userInfos.confirmPassword.length">
+                </div>
+              </div>
+              <div ng-messages="editProfileForm.password.$error">
+                <div ng-message="minlength">Le mot de passe doit être composé de 8 caractères minimum.</div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label">Confirmer le mot de passe:</label>
+                <div class="col-md-8">
+                  <input class="form-control" name="confirmPassword" type="password" ng-minlength="8" placeholder="Confirmer le mot de passe" ng-class="{'no-error' : editProfileForm.confirmPassword.$valid}" ng-required="userInfos.password.length" ng-model="userInfos.confirmPassword">
+                </div>
+              </div>
+              <div ng-messages="editProfileForm.confirmPassword.$error">
+                <div ng-message="minlength">Le mot de passe doit être composé de 8 caractères minimum.</div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label"></label>
+                <div class="col-md-8">
+                  <button type="submit" ng-disabled="editProfileForm.$invalid" class="btn btn-beavr" title="Sauvegarder les changements" ng-click="editProfileAction()">Sauvegarder les changements<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                </div>
+              </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

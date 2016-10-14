@@ -1,0 +1,35 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="container">
+        <h1>Historique des transactions</h1>
+        <hr>
+        <div ng-show="allPurchases.length == 0" class="ui stackable four column grid centered">
+              <h1>Vous n'avez effectué aucune transaction.</h1>
+        </div>
+        <div ng-show="allPurchases.length > 0" id="transactionHistory">
+            <table class="ui teal selectable celled striped table">
+                <thead>
+                    <tr>
+                        <th class="three wide">Date</th>
+                        <th class="three wide">Type</th>
+                        <th class="eight wide">Label</th>
+                        <th class="two wide">Montant</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="purchase in allPurchases">
+                        <td>{{ purchase.created_at | date:'dd/MM/yyyy' : '+0200' }}</td>
+                        <td>{{ purchase.payment }}</td>
+                        <td>{{ purchase.application.name }}</td>                   
+                        <td>{{ purchase.amount }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="ui tiny info message">
+                <i class="icon info circle"></i>
+                Une transaction qui n'apparait pas ? Un virement anormal ? N'hésitez pas à <a href="" data-target="#feedbackModal" data-toggle="modal" class="animate">nous contacter</span></a> !
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
