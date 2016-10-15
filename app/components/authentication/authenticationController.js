@@ -103,7 +103,6 @@ website.controller('authenticationController', function ($scope, AuthenticationS
   * Social Network
   */
   $scope.facebookConnection = function() {
-
     $scope.errorMessage = '';
     $scope.successMessage = '';
     var data = {
@@ -125,18 +124,26 @@ website.controller('authenticationController', function ($scope, AuthenticationS
     });
   }
 
-    $scope.googleConnection = function() {
+  $scope.googleConnection = function() {
+    $scope.errorMessage = '';
+    $scope.successMessage = '';
+    var data = {
+      checkbox: $scope.connectionData.checkbox
+    };
 
-    $http.get(url + '/auth/google')
-    .success(function (result) {
-        console.log("success");
-        console.log(result);
+    AuthenticationService.socialNetworkLogin(data, "google")
+      .success(function (result) {
       })
       .error(function (result) {
-        console.log("error");
-        console.log(result);
-      });
-
+        switch (result.error.status) {
+          case 401:
+            $scope.errorMessage = errorMessage["CONNEXION_401"];
+            break;
+          default:
+            $scope.errorMessage = errorMessage["CONNEXION"];
+            break;
+        }
+    });
   }
 
 });

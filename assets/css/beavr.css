@@ -427,6 +427,11 @@ footer {
 	line-height:25px;
 }
 
+.dimmer-link,
+.dimmer-link:hover {
+	color:#5e5e5e;
+}
+
 .title-comment {
 	float:left;
 }

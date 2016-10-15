@@ -154,6 +154,8 @@ website.controller('applicationCommentsController', function ($scope, $rootScope
             data.created_at = new Date();
             data.author.public.picture = $scope.userInfos.picture;
             data.author.public.pseudo = $scope.userInfos.pseudo;
+            data.author._id = $scope.userInfos.id;
+            console.log(data.author);
             $scope.comments.push(data);
             $scope.filteredComments = comments;
             updateFilteredItems();

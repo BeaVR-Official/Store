@@ -23,8 +23,6 @@ website.factory('AuthenticationService', function ($http, $window, $cookies, jwt
 	authService.socialNetworkLogin = function(data, socialNetwork) {
 		return $http.get(url + '/api/auth/' + socialNetwork, data)
 			.success(function(result) {
-				console.log("ok");
-				console.log(result);
 				if (data.checkbox) {
 					$window.localStore.setItem('store_token', result.data.token);
 				} else {

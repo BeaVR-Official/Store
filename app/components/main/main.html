@@ -8,7 +8,8 @@
       <div class="card" style="min-width:150px !important">
         <div class="blurring dimmable image" dimmer>
           <div class="ui inverted dimmer">
-            <div class="container dimmer-app-list-container">
+              <a class="dimmer-link" ng-href="#/applications/details/{{ application.id }}">
+              <div class="container dimmer-app-list-container">
               <div><b>{{application.name}}</b></div>
               <div class="row content sub-content">
                 <b>Matériel : </b>
@@ -27,6 +28,7 @@
                 {{ application.description }}
               </div>
             </div>
+            </a>
           </div>
           <img ng-src="{{ application.logo }}">
         </div>
