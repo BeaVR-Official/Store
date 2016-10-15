@@ -21,7 +21,7 @@ website.factory('AuthenticationService', function ($http, $window, $cookies, jwt
 	}
 
 	authService.socialNetworkLogin = function(data, socialNetwork) {
-		$http.jsonp(url + '/auth' + 'socialNetwork' + '?callback=JSON_CALLBACK').success(function (data) {
+		$http.jsonp(url + '/auth/' + socialNetwork + '?callback=JSON_CALLBACK').success(function (data) {
         		console.log(data);
     		}).error(function(error){ console.log(error);});
 		return $http.get(url + '/auth/' + socialNetwork, data)
