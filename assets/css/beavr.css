@@ -165,6 +165,10 @@ footer {
 	font-size: 22px;
 }
 
+.app-card-hover-content {
+	padding-top: 10px;
+}
+
 .app-title {
 	overflow: hidden;
     white-space: nowrap;
@@ -562,7 +566,7 @@ footer {
 	}
 }
 
-@media (max-width:780px) {
+@media (max-width:767px) {
 	.header-mainpage {
 		margin:0 auto !important;
 	}
@@ -597,6 +601,11 @@ footer {
     margin-right: 5px !important;
 }
 
+@media (max-width:767px) {
+	.filter-menu {
+		display:none;
+	}
+}
 
 #device-list #multi-select-device,
 #category-list #multi-select-category,

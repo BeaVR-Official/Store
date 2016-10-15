@@ -15,10 +15,16 @@
                 <div ng-if="isFree && onlineMenu">
                   <button type="button" class="btn btn-secondary btn-beavr btn-lg" ng-click="addToLibrary()">Ajouter à ma librairie</button>
                 </div>
+                <div ng-if="isFree && !onlineMenu">
+                  <button href="" data-target="#authenticate_modal" data-toggle="modal" type="button" class="btn btn-secondary btn-beavr btn-lg">Ajouter à ma librairie</button>
+                </div>
                 <div ng-if="!isFree && onlineMenu" paypal-button>
                   <i class="paypal icon"></i>
-                  <script test src="assets/js/paypal-button.js" ng-model="paypalButton" data-merchant="braintree" data-locale="fr_FR" data-id="paypal-button" data-button="checkout" data-color="blue"
+                  <script src="assets/js/paypal-button.js" ng-model="paypalButton" data-merchant="braintree" data-locale="fr_FR" data-id="paypal-button" data-button="checkout" data-color="blue"
                     data-size="medium" data-shape="pill" data-label="Payer {{ appInfos.price }}€" data-button_type="submit" data-button_disabled="false"></script>
+                </div>
+                <div ng-if="!isFree && !onlineMenu">
+                  <button href="" data-target="#authenticate_modal" data-toggle="modal" type="button" class="btn btn-secondary btn-beavr btn-lg">Payer {{ appInfos.price }}€ avec PayPal</button>
                 </div>
               </div>
               <div ng-show="isOwned">

@@ -2,13 +2,13 @@
 <div ng-show="filteredApplications.length == 0" class="no-app-available">
   <span>Aucune application ne remplit les critères de recherche.</span>
 </div>
-<div class="ui stackable grid app-list">
-  <div ng-repeat="application in filteredApplications" style="padding:0 !important;" class="four wide column">
+<div class="ui grid app-list">
+  <div ng-repeat="application in filteredApplications" style="padding:0 !important;" class="four wide widescreen five wide large screen eight wide tablet eight wide computer fourteen wide mobile column">
     <div class="ui special raised cards">
       <div class="card" style="min-width:150px !important">
         <div class="blurring dimmable image" dimmer>
           <div class="ui inverted dimmer">
-            <div class="container dimmer-app-list-container">
+            <div class="container dimmer-app-list-container app-card-hover-content">
               <div><b>{{application.name}}</b></div>
               <div class="row content sub-content">
                 <b>Matériel : </b>
@@ -24,7 +24,7 @@
               </div>
               <br>
               <div class="row content">
-                {{ application.description }}
+                {{ application.description | limitTo: 125 }}{{application.description.length > 125 ? '&hellip;' : ''}}
               </div>
             </div>
           </div>

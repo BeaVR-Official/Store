@@ -346,7 +346,7 @@ website.directive('fadeAlertSuccess', function () {
 		link: function (scope, element, attrs) {
 			scope.$watch("showSuccessAlert", function () {
 				if (scope.$root.showSuccessAlert === true) {
-					$(element).fadeTo(5000, 500).slideUp(500, function () {
+					$(element).fadeTo(2000, 500).slideUp(500, function () {
 						$(element).slideUp(500);
 						scope.$root.showSuccessAlert = false;
 					});
@@ -362,7 +362,7 @@ website.directive('fadeAlertError', function () {
 		link: function (scope, element, attrs) {
 			scope.$watch("showErrorAlert", function () {
 				if (scope.$root.showErrorAlert === true) {
-					$(element).fadeTo(5000, 500).slideUp(500, function () {
+					$(element).fadeTo(2000, 500).slideUp(500, function () {
 						$(element).slideUp(500);
 						scope.$root.showErrorAlert = false;
 					});
