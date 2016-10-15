@@ -67,10 +67,15 @@
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header header-mainpage">
-                <a class="navbar-brand-logo brand-logo-main pull-left" href="#/">
-                  <img class="navbar-brand-logo" src="assets/img/logo/beaver-logo-min.png">
+                <div id="nav-collapse" class="visible-xs nav-hotfix1" ng-controller="navbarController">
+                    <a class="navbar-brand-logo brand-logo-main pull-left" href="#/">
+                        <img class="navbar-brand-logo" src="assets/img/logo/beaver-logo-min.png">
+                    </a>
+                </div>
+                <a class=" hidden-xs navbar-brand-logo brand-logo-main pull-left" href="#/">
+                    <img class="navbar-brand-logo" src="assets/img/logo/beaver-logo-min.png">
                 </a>
-                <div id="nav-collapse" ng-controller="navbarController">
+                <div id="nav-collapse" ng-controller="navbarController" class="nav-hotfix2">
                     <ul class="nav navbar-nav beavr-navbar-menu hidden-xs">
                         <li ng-class="{active: isActive('/')} "><a href="#/">Accueil</a></li>
                         <ul class="nav yamm navbar-nav hidden-xs">
@@ -110,7 +115,7 @@
                     </ul>
                     <div ng-show="offlineMenu">
                         <ul class="nav navbar-nav beavr-navbar-menu navbar-right navbar navbar-fixed-left">
-                            <li><a href="" data-target="#authenticate_modal" class="connect-link" data-toggle="modal">Se connecter</a></li>
+                            <li><a href="" data-target="#authenticate_modal" class="a-hotfix1  connect-link" data-toggle="modal">Se connecter</a></li>
                         </ul>
                     </div>
 
@@ -146,7 +151,7 @@
     </nav>
 
     <!-- Top banner -->
-    <div class="row" ng-show="homePage">
+    <div class="row" ng-show="homePage" class="banner-hotfix-1">
         <a ng-href="#/applications/details/57a20c9eea11906ee742c5d6">
         <div class="banner" style="background: url(http://image.noelshack.com/fichiers/2016/31/1470587666-1.png) 50% 100% no-repeat #000">
             <div class="container">

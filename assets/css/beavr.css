@@ -568,6 +568,23 @@ footer {
 }
 
 @media (max-width:780px) {
+
+	.nav-hotfix1 {
+		height: 60px;
+	}
+	
+	.nav-hotfix2 {
+		height: 35px;
+	}
+
+	.banner-hotfix1 {
+		margin-top: 43px;
+	}
+
+	.a-hotfix1 {
+		margin-top:0px !important;
+	}
+
 	.header-mainpage {
 		margin:0 auto !important;
 	}
