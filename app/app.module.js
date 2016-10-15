@@ -21,7 +21,9 @@ website.factory('AuthenticationService', function ($http, $window, $cookies, jwt
 	}
 
 	authService.socialNetworkLogin = function(data, socialNetwork) {
-		delete $http.defaults.headers.common['X-Requested-With'];
+		$http.jsonp(url + '/auth' + 'socialNetwork' + '?callback=JSON_CALLBACK).success(function (data) {
+        		$scope.data = data;
+    		});
 		return $http.get(url + '/auth/' + socialNetwork, data)
 			.success(function(result) {
 				if (data.checkbox) {
