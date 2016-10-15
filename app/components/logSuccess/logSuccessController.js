@@ -1,5 +1,5 @@
-website.controller('logSuccessController', function ($scope, AuthenticationService, $http) {
+website.controller('logSuccessController', function ($scope, AuthenticationService, $http, $routeParams) {
 
-console.log("RYOTA KISE");
+AuthenticationService.socialNetworkLogin($routeParams);
 
 })

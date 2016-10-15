@@ -1,4 +1,4 @@
-website.controller('authenticationController', function ($scope, AuthenticationService, $http) {
+website.controller('authenticationController', function ($scope, AuthenticationService, $http, $window) {
   $scope.connectionData = {
     email: '',
     password: '',
@@ -102,30 +102,8 @@ website.controller('authenticationController', function ($scope, AuthenticationS
   /***
   * Social Network
   */
-  $scope.facebookConnection = function() {
-    AuthenticationService.socialNetworkLogin(data, "facebook");
-  }
-
-  $scope.googleConnection = function() {
-    $scope.errorMessage = '';
-    $scope.successMessage = '';
-    var data = {
-      checkbox: $scope.connectionData.checkbox
-    };
-
-    AuthenticationService.socialNetworkLogin(data, "google")
-      .success(function (result) {
-      })
-      .error(function (result) {
-        switch (result.error.status) {
-          case 401:
-            $scope.errorMessage = errorMessage["CONNEXION_401"];
-            break;
-          default:
-            $scope.errorMessage = errorMessage["CONNEXION"];
-            break;
-        }
-    });
+  $scope.socialNetworkConnection = function(networkName) {
+    $window.location.href = "http://beavr.fr:3000/auth/" + networkName;
   }
 
 });

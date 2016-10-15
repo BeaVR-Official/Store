@@ -15,30 +15,16 @@ website.factory('AuthenticationService', function ($http, $window, $cookies, jwt
 					$cookies.put('store_token', result.data.token);
 					$cookies.put('store_id', result.data.userId);
 				}
-				$window.location.href = "#/"
+				$window.location.href = "#/";
 				$window.location.reload();
 			});
 	}
 
-	authService.socialNetworkLogin = function(data, socialNetwork) {
-		$window.location.href="http://beavr.fr:3000/auth/" + socialNetwork;
-		/*$http.jsonp(url + '/auth/' + socialNetwork + '?callback=JSON_CALLBACK')
-		.success(function (data) {
-        	console.log(data);
-    	}).error(function(error) {
-			console.log(error);
-		});
-
-		return $http.get(url + '/auth/' + socialNetwork, data)
-			.success(function(result) {
-				if (data.checkbox) {
-					$window.localStore.setItem('store_token', result.data.token);
-				} else {
-					$cookies.put('store_token', result.data.token);
-				}
-				//$window.location.href = "#/"
-				//$window.location.reload();
-			});*/
+	authService.socialNetworkLogin = function(data) {
+		$cookies.put('store_token', data.token);
+		$cookies.put('store_id', data.userID);
+		$window.location.href = "#/";
+		$window.location.reload();
 	}
 
 	authService.disconnect = function () {
@@ -51,7 +37,7 @@ website.factory('AuthenticationService', function ($http, $window, $cookies, jwt
 			} else if ($cookies.get('store_token') !== undefined && $cookies.get('store_id') !== undefined) {
 				$cookies.remove('store_token');
 				$cookies.remove('store_id');
-				$window.location.href = "#/"
+				$window.location.href = "#/";
 				$window.location.reload();
 			}
 		}

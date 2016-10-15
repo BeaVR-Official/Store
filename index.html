@@ -339,8 +339,8 @@
                     </div>
                 </div>
                 <button type="submit" ng-disabled="connectionForm.$invalid" class="btn btn-secondary btn-beavr" ng-click="connexionAction()">Se connecter<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
-                <a class="btn btn-social btn-facebook" ng-click="facebookConnection()"><span class="fa fa-facebook"></span>Se connecter via Facebook</a>
-                <a class="btn btn-social btn-google" ng-click="googleConnection()"><span class="fa fa-google"></span>Se connecter via Google</a>
+                <a class="btn btn-social btn-facebook" ng-click="socialNetworkConnection('facebook')"><span class="fa fa-facebook"></span>Se connecter via Facebook</a>
+                <a class="btn btn-social btn-google" ng-click="socialNetworkConnection('google')"><span class="fa fa-google"></span>Se connecter via Google</a>
                 <div class="ui warning message" ng-show="errorMessage">
                     <div class="header">Erreur lors de la connexion</div>
                     <ul class="list">
