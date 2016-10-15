@@ -22,7 +22,7 @@ website.factory('AuthenticationService', function ($http, $window, $cookies, jwt
 
 	authService.socialNetworkLogin = function(data, socialNetwork) {
 		delete $http.defaults.headers.common['X-Requested-With'];
-		return $http.get(url + '/api/auth/' + socialNetwork, data)
+		return $http.get(url + '/auth/' + socialNetwork, data)
 			.success(function(result) {
 				if (data.checkbox) {
 					$window.localStore.setItem('store_token', result.data.token);
