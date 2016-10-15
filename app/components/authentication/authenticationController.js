@@ -103,25 +103,7 @@ website.controller('authenticationController', function ($scope, AuthenticationS
   * Social Network
   */
   $scope.facebookConnection = function() {
-    $scope.errorMessage = '';
-    $scope.successMessage = '';
-    var data = {
-      checkbox: $scope.connectionData.checkbox
-    };
-
-    AuthenticationService.socialNetworkLogin(data, "facebook")
-      .success(function (result) {
-      })
-      .error(function (result) {
-        switch (result.error.status) {
-          case 401:
-            $scope.errorMessage = errorMessage["CONNEXION_401"];
-            break;
-          default:
-            $scope.errorMessage = errorMessage["CONNEXION"];
-            break;
-        }
-    });
+    AuthenticationService.socialNetworkLogin(data, "facebook");
   }
 
   $scope.googleConnection = function() {
