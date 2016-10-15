@@ -104,21 +104,30 @@ website.controller('authenticationController', function ($scope, AuthenticationS
   */
   $scope.facebookConnection = function() {
 
-    $http.get(url + '/auth/facebook')
-    .success(function (result) {
-        console.log("success");
-        console.log(result);
+    $scope.errorMessage = '';
+    $scope.successMessage = '';
+    var data = {
+      checkbox: $scope.connectionData.checkbox
+    };
+
+    AuthenticationService.socialNetworkLogin(data, "facebook")
+      .success(function (result) {
       })
       .error(function (result) {
-        console.log("error");
-        console.log(result);
-      });
-
+        switch (result.error.status) {
+          case 401:
+            $scope.errorMessage = errorMessage["CONNEXION_401"];
+            break;
+          default:
+            $scope.errorMessage = errorMessage["CONNEXION"];
+            break;
+        }
+    });
   }
 
     $scope.googleConnection = function() {
 
-    $http.get(url + '/auth/facebook')
+    $http.get(url + '/auth/google')
     .success(function (result) {
         console.log("success");
         console.log(result);
