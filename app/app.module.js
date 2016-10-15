@@ -21,9 +21,14 @@ website.factory('AuthenticationService', function ($http, $window, $cookies, jwt
 	}
 
 	authService.socialNetworkLogin = function(data, socialNetwork) {
-		$http.jsonp(url + '/auth/' + socialNetwork + '?callback=JSON_CALLBACK').success(function (data) {
-        		console.log(data);
-    		}).error(function(error){ console.log(error);});
+		
+		$window.location.href="http://beavr.fr:3000/auth/" + socialNetwork;
+		/*$http.jsonp(url + '/auth/' + socialNetwork + '?callback=JSON_CALLBACK')
+		.success(function (data) {
+        	console.log(data);
+    	}).error(function(error) {
+			console.log(error);
+		});
 		return $http.get(url + '/auth/' + socialNetwork, data)
 			.success(function(result) {
 				if (data.checkbox) {
@@ -31,9 +36,9 @@ website.factory('AuthenticationService', function ($http, $window, $cookies, jwt
 				} else {
 					$cookies.put('store_token', result.data.token);
 				}
-				$window.location.href = "#/"
-				$window.location.reload();
-			});
+				//$window.location.href = "#/"
+				//$window.location.reload();
+			});*/
 	}
 
 	authService.disconnect = function () {
