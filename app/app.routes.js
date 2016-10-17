@@ -167,6 +167,11 @@ website.config(['$routeProvider', function ($routeProvider) {
             controller: 'logSuccessController'
         })
 
+        .when('/logError', {
+            templateUrl: 'app/components/500/500.html',
+            controller: '500Controller'
+        })
+
         .when('/404', {
             templateUrl: 'app/components/404/404.html',
             controller: '404Controller'
