@@ -432,8 +432,10 @@ footer {
 }
 
 .dimmer-link,
-.dimmer-link:hover {
+.dimmer-link:hover,
+.dimmer-link:focus {
 	color:#5e5e5e;
+	text-decoration: none;
 }
 
 .title-comment {
@@ -587,6 +589,7 @@ footer {
 	.a-hotfix1 {
 		margin-top:0px !important;
 	}
+}
 
 @media (max-width:767px) {
 	.header-mainpage {
