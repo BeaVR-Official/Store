@@ -592,6 +592,10 @@ footer {
 }
 
 @media (max-width:767px) {
+	.navbar-nav .open .dropdown-menu {
+		background-color: white !important;
+	}
+
 	.header-mainpage {
 		margin:0 auto !important;
 	}
@@ -606,8 +610,7 @@ footer {
 
 	#main-dropdown .dropdown,
 	.connect-link {
-    width: 100% !important;
-    margin-top: 50px;	
+	    width: 100% !important;
 	}
 
 	.main-container {
