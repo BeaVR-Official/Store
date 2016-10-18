@@ -1,4 +1,4 @@
-website.controller('devPropagandaController', function ($scope, $http, AuthenticationService) {
+website.controller('devPropagandaController', function ($scope, $http, $route, AuthenticationService) {
     $scope.returnMessage = '';
     $scope.loading;
 
@@ -8,12 +8,13 @@ website.controller('devPropagandaController', function ($scope, $http, Authentic
         $scope.loading = true;
         var returnMessageDiv = angular.element(document.querySelector('#returnMessage'));
 
-        $http.get(url + '/api/users/' + userId + '/developer/enable')
+        $http.get(url + '/api/users/' + userId + '/developer/enabled')
             .success(function (result) {
                 $scope.feedbackData = {};
                 returnMessageDiv.addClass("success-message");
                 returnMessageDiv.removeClass("error-message");
                 $scope.returnMessage = successMessage["DEV_PROPAGANDA"];
+                $route.reload();
                 $scope.loading = false;
             })
             .error(function (result) {

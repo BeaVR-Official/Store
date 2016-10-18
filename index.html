@@ -57,11 +57,9 @@
     <!-- Navigation -->
     <nav class="navbar beavr-navbar navbar-fixed-top" role="navigation">
         <div ng-show="showSuccessAlert" class="alert alert-success alert-dismissable" style="position: absolute; z-index:9999; width:100%" fade-alert-success>
-            <a class="panel-close close" data-dismiss="alert">×</a>
             <div ng-bind-html="successMessageAlert"></div>
         </div>
         <div ng-show="showErrorAlert" class="alert alert-warning alert-dismissable" style="position: absolute; z-index:9999; width:100%" fade-alert-error>
-            <a class="panel-close close" data-dismiss="alert">×</a>
             <div ng-bind-html="errorMessageAlert"></div>
         </div>
         <div class="container">
@@ -89,14 +87,14 @@
                                                 <div id="device-list" ng-show="devices !== undefined" class="list-group col-md-3">
                                                     <div directive-id="multi-select-device" isteven-multi-select input-model="devices" output-model="filteredDevices"
                                                     button-label="name" item-label="name" tick-property="ticked" helper-elements="filter" max-labels="2"
-                                                    max-height=100px" search-property="name" output-properties="name _id" translation="localLangDevices" on-item-click="sendFilters()">
+                                                    max-height="100px" search-property="name" output-properties="name _id" translation="localLangDevices" on-item-click="sendFilters()">
                                                     </div>
                                                 </div>
 
                                                 <div id="category-list" ng-show="categories !== undefined" class="list-group col-md-3">
                                                     <div directive-id="multi-select-category" isteven-multi-select input-model="categories" output-model="filteredCategories"
                                                     button-label="name" item-label="name" tick-property="ticked" helper-elements="filter" max-labels="2"
-                                                    max-height=100px" search-property="name" output-properties="name _id" translation="localLangCategories" on-item-click="sendFilters()">
+                                                    max-height="100px" search-property="name" output-properties="name _id" translation="localLangCategories" on-item-click="sendFilters()">
                                                     </div>
                                                 </div>
 
@@ -116,6 +114,7 @@
                     <div ng-show="offlineMenu">
                         <ul class="nav navbar-nav beavr-navbar-menu navbar-right navbar navbar-fixed-left">
                             <li><a href="" data-target="#authenticate_modal" class="a-hotfix1  connect-link" data-toggle="modal">Se connecter</a></li>
+                            <li><a href="" data-target="#authenticate_modal" class="connect-link" data-toggle="modal">Se connecter</a></li>
                         </ul>
                     </div>
 
