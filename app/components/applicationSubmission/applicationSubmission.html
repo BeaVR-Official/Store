@@ -23,7 +23,15 @@
             <div class="form-group">
                 <label class="col-lg-3 control-label" for="applicationDescription">Description :</label>
                 <div class="col-lg-8">
-                    <textarea ng-model="appInfos.description" class="form-control" id="applicationDescription" ng-maxlength="1024" maxlength="1024" rows="4" required></textarea>
+                    <textarea ng-model="appInfos.description" class="form-control" id="applicationDescription" ng-maxlength="600" maxlength="600" rows="4" required></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-8 col-lg-offset-3">
+                    <div class="ui tiny info message">
+                        <i class="icon info circle"></i>
+                        La description de l'application doit contenir au plus 600 caractères.
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -147,7 +155,7 @@
             <div class="form-group">
                 <label class="col-lg-3 control-label" for="applicationPrice">Prix :</label>
                 <div class="col-lg-8">            
-                    <input ng-model="appInfos.price" id=applicationPrice" type="number" class="form-control" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" required/>
+                    <input ng-model="appInfos.price" id="applicationPrice" type="number" class="form-control" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01" required/>
                 </div>
             </div>
             <div class="form-group">

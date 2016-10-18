@@ -128,6 +128,24 @@ website.factory('AuthenticationService', function ($http, $window, $cookies, jwt
 			});
 	}
 
+	authService.getUserInfos = function (idUser) {
+		return $http.get(url + '/api/users/' + idUser)
+			.then(function (response) {
+				return response.data.data;
+			}, function (error) {
+				$window.location.href = "#/404";
+			});
+	}
+
+	authService.getUserSubmittedApps = function (idUser) {
+		return $http.get(url + '/api/applications/?author=' + idUser)
+			.then(function (response) {
+				return response.data.data;
+			}, function (error) {
+				$window.location.href = "#/404";
+			});
+	}
+
 	authService.getSubmittedApps = function () {
 		if (authService.getId() === undefined) {
 			$window.location.href = "#/404";
@@ -171,8 +189,13 @@ website.factory('AuthenticationService', function ($http, $window, $cookies, jwt
 	return authService;
 });
 
+
 website.config(function Config($httpProvider, jwtInterceptorProvider) {
-	jwtInterceptorProvider.tokenGetter = ['config', 'AuthenticationService', function (config, AuthenticationService) {
+	jwtInterceptorProvider.whiteListedDomains = ['5.196.88.52', 'ns375152.ip-5-196-88.eu', 'beavr.fr', 'localhost'];
+	jwtInterceptorProvider.tokenGetter = ['options', 'AuthenticationService', function (options, AuthenticationService) {
+		if (options.url.substr(options.url.length - 5) == '.html') {
+			return null;
+        }
 		return AuthenticationService.getToken();
 	}];
 	$httpProvider.interceptors.push('jwtInterceptor');
@@ -201,9 +224,11 @@ var errorMessage = {
 	"EDIT_PROFILE_404": "Les informations indiquées sont incorrectes ou incomplètes.",
 	"EDIT_PROFILE_409": "Cette adresse mail est déjà utilisée. Veuillez réessayer avec une adresse différente.",
 	"EDIT_PROFILE": "Une erreur est survenue lors de la modification du compte. Réessayez dans quelques instants.",
+	"POST_APP_409": "Une application existe déjà avec ce nom.",
 	"POST_APP": "<i class='fa fa-times'></i> Une <strong>erreur</strong> est survenue lors de l'envoi de l'application. Réessayez dans quelques instants.",
 	"EDIT_APP": "<i class='fa fa-times'></i> Une <strong>erreur</strong> est survenue lors de la modification de l'application. Réessayez dans quelques instants.",
-	"BUY_APP": "<i class='fa fa-times'></i> Une <strong>erreur</strong> est survenue lors de l'achat de l'application. Veuillez réessayer ou contacter un administrateur."
+	"BUY_APP": "<i class='fa fa-times'></i> Une <strong>erreur</strong> est survenue lors de l'achat de l'application. Veuillez réessayer ou contacter un administrateur.",
+	"DEV_PROPAGANDA": "Une erreur est survenue lors du passage au mode développeur. Réessayez dans quelques instants."
 };
 
 var successMessage = {
@@ -215,7 +240,8 @@ var successMessage = {
 	"EDIT_PROFILE": "Vos informations ont été modifiées.",
 	"POST_APP": "<i class='fa fa-check'></i> L'application a bien été envoyée et est <strong>en cours de validation</strong> par nos équipes.",
 	"EDIT_APP": "<i class='fa fa-check'></i> Vos modifications ont été envoyées à notre équipe et sont <strong>en cours de validation</strong>.",
-	"BUY_APP": "<i class='fa fa-check'></i> L'application a été ajoutée à votre <strong>bibliothèque</strong>."
+	"BUY_APP": "<i class='fa fa-check'></i> L'application a été ajoutée à votre <strong>bibliothèque</strong>.",
+	"DEV_PROPAGANDA": "Vous êtes désormais développeur. Accédez aux nouvelles fonctionnalités depuis le menu en haut à droite."
 };
 
 website.filter('iif', function () {
@@ -253,9 +279,13 @@ website.directive('dimmer', function () {
 website.directive('progress', function () {
 	return {
         restrict: 'A',
-        link: function (scope, element, attrs) {
-            $(element).progress({
-				percent: 50
+        link: function (scope, element, attrs) {		
+			attrs.$observe('progressvalue', function(value) {
+				if (value) {
+					$(element).progress({
+						percent: value,
+					});
+				}
 			});
 		}
 	};
@@ -316,7 +346,7 @@ website.directive('fadeAlertSuccess', function () {
 		link: function (scope, element, attrs) {
 			scope.$watch("showSuccessAlert", function () {
 				if (scope.$root.showSuccessAlert === true) {
-					$(element).fadeTo(5000, 500).slideUp(500, function () {
+					$(element).fadeTo(2000, 500).slideUp(500, function () {
 						$(element).slideUp(500);
 						scope.$root.showSuccessAlert = false;
 					});
@@ -332,7 +362,7 @@ website.directive('fadeAlertError', function () {
 		link: function (scope, element, attrs) {
 			scope.$watch("showErrorAlert", function () {
 				if (scope.$root.showErrorAlert === true) {
-					$(element).fadeTo(5000, 500).slideUp(500, function () {
+					$(element).fadeTo(2000, 500).slideUp(500, function () {
 						$(element).slideUp(500);
 						scope.$root.showErrorAlert = false;
 					});

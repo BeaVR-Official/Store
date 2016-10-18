@@ -1,0 +1,27 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="container">
+      <h1>Profil de {{ userInfos.pseudo }}</h1>
+      <hr>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="text-center">
+            <img ng-src="{{ userInfos.picture }}" class="public-profile-avatar" alt="avatar">
+          </div>
+        </div>
+        <div class="col-md-9">
+          <h5 class="public-profile">Applications possédées</h5>
+          <ul class="list-group">
+            <li class="list-group-item" ng-repeat="ownedApp in userInfos.applications"><a ng-href="#/applications/details/{{ ownedApp.id }}" style="text-decoration: none;">{{ ownedApp.name }}</a></li>
+            <li class="list-group-item" ng-show="!userInfos.applications.length">{{ userInfos.pseudo }} ne possède aucune application.</li>
+          </ul>
+          <h5 class="public-profile">Applications déposées</h5>
+          <ul class="list-group">
+            <li class="list-group-item" ng-repeat="submittedApp in appInfos"><a ng-href="#/applications/details/{{ submittedApp.id }}" style="text-decoration: none;">{{ submittedApp.name }}</a></li>
+            <li class="list-group-item" ng-show="!appInfos.length">{{ userInfos.pseudo }} n'a déposé aucune application.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

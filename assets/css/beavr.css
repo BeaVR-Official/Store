@@ -165,6 +165,10 @@ footer {
 	font-size: 22px;
 }
 
+.app-card-hover-content {
+	padding-top: 10px;
+}
+
 .app-title {
 	overflow: hidden;
     white-space: nowrap;
@@ -184,6 +188,8 @@ footer {
 .app-price {
 	font-size:1.0em;
 	line-height:21px;
+	padding: 0px !important;
+	text-align:right;
 }
 
 .app-list {
@@ -192,7 +198,7 @@ footer {
 }
 
 .app-list .card {
-	margin-left:17px !important;
+	margin-left:15px !important;
 	margin-right:15px !important;
 	margin-top:30px !important;
 	margin-bottom:30px !important;
@@ -206,12 +212,62 @@ footer {
 	color: #1BB2BD;
 }
 
+.public-profile {
+	text-align: center;
+}
+
+.public-profile-avatar {
+	width: 150px;
+	height: 150px;
+	margin-bottom: 5%;
+}
+
+@media (min-width:900px) {
+	.public-profile-avatar {
+		margin-top: 32px;
+	}
+}
+
+.comment-link {
+	transition: color 0.4s ease !important;
+	color: grey !important;
+	outline: 0 !important;
+	text-decoration: none !important;
+}
+
+.comment-link:hover, .comment-link:focus {
+	background-color: white !important;
+	color: #1BB2BD !important;
+}
+
+.author-link {
+	transition: color 0.4s ease !important;
+	color: grey !important;
+	outline: 0 !important;
+	text-decoration: none !important;
+}
+
+.author-link:hover, .author-link:focus {
+	background-color: #f5f5f5 !important;
+	color: #1BB2BD !important;
+}
+
 /************************
 *************************
 * Changes from Comments
 * and App Details
 *************************
 ************************/
+
+@media (max-width:600px) {
+	.carousel-indicators {
+		bottom: 70px !important;
+	}
+}
+
+.carousel-indicators .active {
+	background-color: #1BB2BD !important;
+}
 
 .carousel-inner > .item > img, .carousel-inner > .item > a > img {
 	max-height:350px !important;
@@ -287,7 +343,14 @@ footer {
 }
 
 .description-application {
-	min-height:75px;
+	min-height:100px;
+	margin-top:15px;
+	width:100%;
+}
+
+.bottom-informations {
+	width:100%;
+	text-align:right;
 }
 
 .well {
@@ -471,7 +534,7 @@ footer {
 
 .left-part-comment,
 .left-part-appInfos {
-	min-width:180px;
+	min-width:200px;
 	float:left;
 }
 
@@ -485,6 +548,48 @@ footer {
 	margin: 30px auto 50px auto;
 }
 
+@media (max-width:580px) {
+	.media-body {
+		padding-top:20px !important;
+	}
+
+	.left-part-appInfos {
+		width:100% !important;
+	}
+
+	.left-part-appInfos img {
+		max-width:100% !important;
+	}
+
+	#app-rating-main button {
+		font-size:13px;
+	}
+}
+
+@media (max-width:767px) {
+	.header-mainpage {
+		margin:0 auto !important;
+	}
+
+	.header-mainpage .brand-logo-main {
+		width:100%;
+	}
+
+	.header-mainpage .brand-logo-main:hover {
+		color:initial;
+	}
+
+	#main-dropdown .dropdown,
+	.connect-link {
+    width: 100% !important;
+    margin-top: 50px;	
+	}
+
+	.main-container {
+		margin-top:50px;
+	}
+}
+
 /************************
 *************************
 * Index
@@ -496,6 +601,11 @@ footer {
     margin-right: 5px !important;
 }
 
+@media (max-width:767px) {
+	.filter-menu {
+		display:none;
+	}
+}
 
 #device-list #multi-select-device,
 #category-list #multi-select-category,

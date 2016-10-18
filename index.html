@@ -37,6 +37,10 @@
     <!-- Menu related -->
     <link href="assets/css/yamm.css" rel="stylesheet">
 
+    <!-- Social network buttons -->
+    <link href="assets/css/bootstrap-social.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.css" rel="stylesheet">
+
     <!-- Loading stuff -->
     <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.css' type='text/css' media='all' />
 
@@ -54,29 +58,21 @@
     <!-- Navigation -->
     <nav class="navbar beavr-navbar navbar-fixed-top" role="navigation">
         <div ng-show="showSuccessAlert" class="alert alert-success alert-dismissable" style="position: absolute; z-index:9999; width:100%" fade-alert-success>
-            <a class="panel-close close" data-dismiss="alert">×</a>
             <div ng-bind-html="successMessageAlert"></div>
         </div>
         <div ng-show="showErrorAlert" class="alert alert-warning alert-dismissable" style="position: absolute; z-index:9999; width:100%" fade-alert-error>
-            <a class="panel-close close" data-dismiss="alert">×</a>
             <div ng-bind-html="errorMessageAlert"></div>
         </div>
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle beavr-navbar-toggle" data-toggle="collapse" data-target="#nav-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand-logo pull-left" href="#/">
+            <div class="navbar-header header-mainpage">
+                <a class="navbar-brand-logo brand-logo-main pull-left" href="#/">
                   <img class="navbar-brand-logo" src="assets/img/logo/beaver-logo-min.png">
                 </a>
-                <div class="collapse navbar-collapse" id="nav-collapse" ng-controller="navbarController">
-                    <ul class="nav navbar-nav beavr-navbar-menu">
-                        <li ng-class="{active: isActive('/')}"><a href="#/">Accueil</a></li>
-                        <ul class="nav yamm navbar-nav hidden-xs">
+                <div id="nav-collapse" ng-controller="navbarController">
+                    <ul class="nav navbar-nav beavr-navbar-menu hidden-xs">
+                        <li ng-class="{active: isActive('/')} "><a href="#/">Accueil</a></li>
+                        <ul class="nav yamm navbar-nav filter-menu">
                             <li class="dropdown yamm-fw">
                                 <a href="#/" class="dropdown-toggle" data-toggle="dropdown" ng-show="homePage">Filtrer les applications<i class="dropdown icon"></i></a>
                                 <ul class="dropdown-menu">
@@ -87,22 +83,21 @@
                                                 <div id="device-list" ng-show="devices !== undefined" class="list-group col-md-3">
                                                     <div directive-id="multi-select-device" isteven-multi-select input-model="devices" output-model="filteredDevices"
                                                     button-label="name" item-label="name" tick-property="ticked" helper-elements="filter" max-labels="2"
-                                                    max-height=100px" search-property="name" output-properties="name _id" translation="localLangDevices" on-item-click="sendFilters()">
+                                                    max-height="100px" search-property="name" output-properties="name _id" translation="localLangDevices" on-item-click="sendFilters()">
                                                     </div>
                                                 </div>
 
                                                 <div id="category-list" ng-show="categories !== undefined" class="list-group col-md-3">
                                                     <div directive-id="multi-select-category" isteven-multi-select input-model="categories" output-model="filteredCategories"
                                                     button-label="name" item-label="name" tick-property="ticked" helper-elements="filter" max-labels="2"
-                                                    max-height=100px" search-property="name" output-properties="name _id" translation="localLangCategories" on-item-click="sendFilters()">
+                                                    max-height="100px" search-property="name" output-properties="name _id" translation="localLangCategories" on-item-click="sendFilters()">
                                                     </div>
                                                 </div>
 
                                                 <div id="price-list" ng-show="prices !== undefined" class="list-group col-md-3">
                                                     <div directive-id="single-select-price" isteven-multi-select input-model="prices" output-model="filteredPrice"
                                                     button-label="name" item-label="name" tick-property="ticked" helper-elements="" max-labels="2" selection-mode="single"
-                                                    max-height=100px" output-properties="name priceFilter" translation="localLangPrices" on-item-click="sendFilters()">
-                                                    </div>
+                                                    max-height="100px" output-properties="name priceFilter" translation="localLangPrices" on-item-click="sendFilters()"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -114,7 +109,7 @@
                     </ul>
                     <div ng-show="offlineMenu">
                         <ul class="nav navbar-nav beavr-navbar-menu navbar-right navbar navbar-fixed-left">
-                            <li><a href="" data-target="#authenticate_modal" data-toggle="modal">Se connecter</a></li>
+                            <li><a href="" data-target="#authenticate_modal" class="connect-link" data-toggle="modal">Se connecter</a></li>
                         </ul>
                     </div>
 
@@ -124,7 +119,7 @@
                             <ul class="dropdown-menu">
                                 <li style="margin-top:3px;" ng-class="{active: isActive('/feedback')}"><a href="" data-target="#feedbackModal" data-toggle="modal" class="animate">Nous contacter <span class="glyphicon glyphicon-comment pull-right"></span></a></li>
                                 <li ng-show="registerDev" class="divider"></li>
-                                <li ng-show="registerDev"><a href="#">Devenir développeur <span class="glyphicon glyphicon-blackboard pull-right"></span></a></li>
+                                <li ng-show="registerDev"><a href="" data-target="#devPropagandaModal" data-toggle="modal" class="animate">Devenir développeur <span class="glyphicon glyphicon-blackboard pull-right"></span></a></li>
                                 <li ng-show="devMenu" class="divider"></li>
                                 <li ng-show="devMenu"><a href="#/applications/submission">Soumettre une application <span class="glyphicon glyphicon-upload pull-right"></span></a></li>
                                 <li ng-show="devMenu" class="divider"></li>
@@ -165,7 +160,7 @@
     </div>
 
     <!-- Page Content -->
-    <div class="container">
+    <div class="container main-container">
         <div class="row">
             <div class="col-md-offset-2 col-md-8 main-column">
                 <div ng-view autoscroll="true"></div>
@@ -198,10 +193,11 @@
     <script src="app/components/404/404Controller.js"></script>
     <script src="app/components/500/500Controller.js"></script>
     <script src="app/components/feedback/feedbackController.js"></script>
+    <script src="app/components/devPropaganda/devPropagandaController.js"></script>
     <script src="app/components/applicationSubmission/applicationSubmissionController.js"></script>
     <script src="app/components/submittedApplications/submittedApplicationsController.js"></script>
     <script src="app/components/transactionHistory/transactionHistoryController.js"></script>
-
+    <script src="app/components/userProfile/userProfileController.js"></script>
     <script src="app/components/applicationComments/applicationCommentsController.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
@@ -246,6 +242,38 @@
 
 
 </body>
+
+<div id="devPropagandaModal" ng-controller="devPropagandaController" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Devenir développeur sur BeaVR ?</h3>
+                <div id="returnMessage" ng-show="devPropagandaForm.$submitted">{{returnMessage}}</div>
+            </div>
+            <div class="modal-body">
+                <form id="devPropagandaForm" name="devPropagandaForm" role="form">
+                    <div class="text-center">
+                        <div class="ui tiny info message">
+                            <i class="icon info circle"></i>
+                                Le mode développeur vous permet de déposer manuellement vos applications afin qu'elle soit disponible sur le Store après validation et de les gérer depuis une interface spécifique. Veuillez contacter les administrateurs pour quitter le mode développeur.
+                        </div>
+                    </div>
+                    <div class="form-group text-center">
+                        <div class="ui toggle checkbox">
+                            <input type="checkbox" name="public" ng-model="checked">
+                            <label>Devenir développeur</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" ng-disabled="!checked" class="btn btn-secondary btn-beavr" ng-click="devPropagandaAction()">Envoyer<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="feedbackModal" ng-controller="feedbackController" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -255,7 +283,7 @@
                 <div id="returnMessage" ng-show="feedbackForm.$submitted">{{returnMessage}}</div>
             </div>
             <div class="modal-body">
-                <form id="feedbackForm" name="feedbackForm" role="form" >
+                <form id="feedbackForm" name="feedbackForm" role="form">
                     <div class="form-group">
                         <label for="object">Objet</label>
                         <input type="text" id="object" placeholder="Objet de votre message" class="form-control" ng-model="feedbackData.object" required/>
@@ -309,6 +337,8 @@
                     </div>
                 </div>
                 <button type="submit" ng-disabled="connectionForm.$invalid" class="btn btn-secondary btn-beavr" ng-click="connexionAction()">Se connecter<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                <a class="btn btn-social btn-facebook" ng-click="facebookConnection()"><span class="fa fa-facebook"></span>Se connecter via Facebook</a>
+                <a class="btn btn-social btn-google" ng-click="googleConnection()"><span class="fa fa-google"></span>Se connecter via Google</a>
                 <div class="ui warning message" ng-show="errorMessage">
                     <div class="header">Erreur lors de la connexion</div>
                     <ul class="list">
