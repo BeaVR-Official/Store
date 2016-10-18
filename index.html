@@ -2,7 +2,6 @@
 <html ng-app="website" lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -66,13 +65,18 @@
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header header-mainpage">
-                <a class="navbar-brand-logo brand-logo-main pull-left" href="#/">
-                  <img class="navbar-brand-logo" src="assets/img/logo/beaver-logo-min.png">
+                <div id="nav-collapse" class="visible-xs nav-hotfix1" ng-controller="navbarController">
+                    <a class="navbar-brand-logo brand-logo-main pull-left" href="#/">
+                        <img class="navbar-brand-logo" src="assets/img/logo/beaver-logo-min.png">
+                    </a>
+                </div>
+                <a class=" hidden-xs navbar-brand-logo brand-logo-main pull-left" href="#/">
+                    <img class="navbar-brand-logo" src="assets/img/logo/beaver-logo-min.png">
                 </a>
-                <div id="nav-collapse" ng-controller="navbarController">
+                <div id="nav-collapse" ng-controller="navbarController" class="nav-hotfix2">
                     <ul class="nav navbar-nav beavr-navbar-menu hidden-xs">
                         <li ng-class="{active: isActive('/')} "><a href="#/">Accueil</a></li>
-                        <ul class="nav yamm navbar-nav filter-menu">
+                        <ul class="nav yamm navbar-nav hidden-xs">
                             <li class="dropdown yamm-fw">
                                 <a href="#/" class="dropdown-toggle" data-toggle="dropdown" ng-show="homePage">Filtrer les applications<i class="dropdown icon"></i></a>
                                 <ul class="dropdown-menu">
@@ -109,6 +113,7 @@
                     </ul>
                     <div ng-show="offlineMenu">
                         <ul class="nav navbar-nav beavr-navbar-menu navbar-right navbar navbar-fixed-left">
+                            <li><a href="" data-target="#authenticate_modal" class="a-hotfix1  connect-link" data-toggle="modal">Se connecter</a></li>
                             <li><a href="" data-target="#authenticate_modal" class="connect-link" data-toggle="modal">Se connecter</a></li>
                         </ul>
                     </div>
@@ -129,8 +134,8 @@
                                 <li class="divider"></li>
                                 <li><a href="#/library">Bibliothèque <span class="glyphicon glyphicon-th pull-right"></span></a></li>
                                 <li class="divider"></li>
-                                <li><a href="#/progression">Progression <span class="glyphicon glyphicon-list-alt pull-right"></span></a></li>
-                                <li class="divider"></li>
+                                <!--<li><a href="#/progression">Progression <span class="glyphicon glyphicon-list-alt pull-right"></span></a></li>
+                                <li class="divider"></li>-->
                                 <li><a href="#/transactionHistory">Historique des transactions <span class="glyphicon glyphicon-euro pull-right"></span></a></li>
                                 <li class="divider"></li>
                                 <li style="margin-bottom:3px;"><a href="" ng-click="disconnect()">Se déconnecter <span class="glyphicon glyphicon-remove pull-right"></span></a></li>
@@ -145,7 +150,7 @@
     </nav>
 
     <!-- Top banner -->
-    <div class="row" ng-show="homePage">
+    <div class="row" ng-show="homePage" class="banner-hotfix-1">
         <a ng-href="#/applications/details/57a20c9eea11906ee742c5d6">
         <div class="banner" style="background: url(http://image.noelshack.com/fichiers/2016/31/1470587666-1.png) 50% 100% no-repeat #000">
             <div class="container">
@@ -199,6 +204,7 @@
     <script src="app/components/transactionHistory/transactionHistoryController.js"></script>
     <script src="app/components/userProfile/userProfileController.js"></script>
     <script src="app/components/applicationComments/applicationCommentsController.js"></script>
+    <script src="app/components/logSuccess/logSuccessController.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="assets/js/bootstrap.min.js"></script>
@@ -337,8 +343,8 @@
                     </div>
                 </div>
                 <button type="submit" ng-disabled="connectionForm.$invalid" class="btn btn-secondary btn-beavr" ng-click="connexionAction()">Se connecter<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
-                <a class="btn btn-social btn-facebook" ng-click="facebookConnection()"><span class="fa fa-facebook"></span>Se connecter via Facebook</a>
-                <a class="btn btn-social btn-google" ng-click="googleConnection()"><span class="fa fa-google"></span>Se connecter via Google</a>
+                <a class="btn btn-social btn-facebook" ng-click="socialNetworkConnection('facebook')"><span class="fa fa-facebook"></span>Se connecter via Facebook</a>
+                <a class="btn btn-social btn-google" ng-click="socialNetworkConnection('google')"><span class="fa fa-google"></span>Se connecter via Google</a>
                 <div class="ui warning message" ng-show="errorMessage">
                     <div class="header">Erreur lors de la connexion</div>
                     <ul class="list">

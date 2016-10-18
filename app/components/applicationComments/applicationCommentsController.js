@@ -1,4 +1,4 @@
-website.controller('applicationCommentsController', function ($scope, $rootScope, $http, $routeParams, AuthenticationService, appInfos, comments, userData) {
+website.controller('applicationCommentsController', function ($scope, $rootScope, $http, $routeParams, $sce, AuthenticationService, appInfos, comments, userData) {
   $rootScope.menu = true;
   $rootScope.homePage = false;
   if (userData !== undefined) {
@@ -53,7 +53,6 @@ website.controller('applicationCommentsController', function ($scope, $rootScope
 
   /* Loading and stuff */
   $scope.loading = false;
-  var returnMessageDiv = angular.element(document.querySelector('#returnMessage'));
 
   /* Data used when adding a comment */
   $scope.addCommentData = {
@@ -115,8 +114,8 @@ website.controller('applicationCommentsController', function ($scope, $rootScope
   $scope.addCommentAction = function () {
 
     if ($scope.canComment == false) {
-      returnMessageDiv.addClass("error-message");
-      $scope.returnMessage = errorMessage["EDIT_HTML"];
+        $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["EDIT_HTML"]);
+        $rootScope.showErrorAlert = true;
     }
     else {
 
@@ -130,30 +129,28 @@ website.controller('applicationCommentsController', function ($scope, $rootScope
       $scope.loading = true;
 
       if (!data.title || data.title.length == 0) {
-        $scope.returnMessage = errorMessage["COMMENT_TITLE"];
+        $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["COMMENT_TITLE"]);
+        $rootScope.showErrorAlert = true;
         $scope.loading = false;
-        returnMessageDiv.addClass("error-message");
-        returnMessageDiv.removeClass("success-message");
       }
       else if (!data.comment || data.comment.length == 0) {
-        $scope.returnMessage = errorMessage["COMMENT_COMMENT"];
         $scope.loading = false;
-        returnMessageDiv.addClass("error-message");
-        returnMessageDiv.removeClass("success-message");
+        $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["COMMENT_COMMENT"]);
+        $rootScope.showErrorAlert = true;
       }
       else {
         $http.post(url + '/api/applications/' + $scope.appInfos._id + "/comments", data)
           .success(function (result) {
 
             $scope.checkHasCommented();
-            $scope.returnMessage = successMessage["ADD_COMMENT"];
-            returnMessageDiv.addClass("success-message");
-            returnMessageDiv.removeClass("error-message");
+            $rootScope.successMessageAlert = $sce.trustAsHtml(successMessage["ADD_COMMENT"]);
+            $rootScope.showSuccessAlert = true;
 
             // Add the comment to the list so it can refresh dynamically.
             data.created_at = new Date();
             data.author.public.picture = $scope.userInfos.picture;
             data.author.public.pseudo = $scope.userInfos.pseudo;
+            data.author._id = $scope.userInfos.id;
             $scope.comments.push(data);
             $scope.filteredComments = comments;
             updateFilteredItems();
@@ -171,9 +168,8 @@ website.controller('applicationCommentsController', function ($scope, $rootScope
 
           })
           .error(function (result) {
-            $scope.returnMessage = errorMessage["ADD_COMMENT"];
-            returnMessageDiv.addClass("error-message");
-            returnMessageDiv.removeClass("success-message");
+            $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["ADD_COMMENT"]);
+            $rootScope.showErrorAlert = true;
             $scope.loading = false;
           });
       }
@@ -185,9 +181,8 @@ website.controller('applicationCommentsController', function ($scope, $rootScope
   $scope.editCommentAction = function () {
 
     if ($scope.canComment == false) {
-      returnMessageDiv.addClass("error-message");
-      returnMessageDiv.removeClass("success-message");
-      $scope.returnMessage = errorMessage["EDIT_HTML"];
+        $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["EDIT_HTML"]);
+        $rootScope.showErrorAlert = true;
     }
     else {
 
@@ -200,25 +195,21 @@ website.controller('applicationCommentsController', function ($scope, $rootScope
       $scope.loading = true;
 
       if (!data.title || data.title.length == 0) {
-        $scope.returnMessage = errorMessage["COMMENT_TITLE"];
         $scope.loading = false;
-        returnMessageDiv.addClass("error-message");
-        returnMessageDiv.removeClass("success-message");
+        $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["COMMENT_TITLE"]);
+        $rootScope.showErrorAlert = true;
       }
       else if (!data.comment || data.comment.length == 0) {
-        $scope.returnMessage = errorMessage["COMMENT_COMMENT"];
         $scope.loading = false;
-        returnMessageDiv.addClass("error-message");
-        returnMessageDiv.removeClass("success-message");
-
+        $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["COMMENT_COMMENT"]);
+        $rootScope.showErrorAlert = true;
       }
       else {
         $http.put(url + '/api/applications/' + $scope.appInfos.id + "/comments/" + $scope.addCommentData.idComment, data)
           .success(function (result) {
 
-            $scope.returnMessage = successMessage["EDIT_COMMENT"];
-            returnMessageDiv.addClass("success-message");
-            returnMessageDiv.removeClass("error-message");
+            $rootScope.successMessageAlert = $sce.trustAsHtml(successMessage["EDIT_COMMENT"]);
+            $rootScope.showSuccessAlert = true;
 
             for (var i = 0; i < $scope.comments.length; i++) {
               if ($scope.comments[i].author._id == $scope.userInfos._id) {
@@ -230,7 +221,7 @@ website.controller('applicationCommentsController', function ($scope, $rootScope
 
             updateAverageNote($scope.initialRating, data.rating);
             $scope.initialRating = data.rating;
-
+          
             setTimeout(function () {
               $('#addComment').collapse('hide');
             }, 3000);
@@ -240,9 +231,8 @@ website.controller('applicationCommentsController', function ($scope, $rootScope
           })
           .error(function (result) {
 
-            $scope.returnMessage = errorMessage["EDIT_COMMENT"];
-            returnMessageDiv.addClass("error-message");
-            returnMessageDiv.removeClass("success-message");
+            $rootScope.errorMessageAlert = $sce.trustAsHtml(errorMessage["EDIT_COMMENT"]);
+            $rootScope.showErrorAlert = true;
             $scope.loading = false;
           });
       }

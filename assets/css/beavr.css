@@ -431,6 +431,11 @@ footer {
 	line-height:25px;
 }
 
+.dimmer-link,
+.dimmer-link:hover {
+	color:#5e5e5e;
+}
+
 .title-comment {
 	float:left;
 }
@@ -565,6 +570,23 @@ footer {
 		font-size:13px;
 	}
 }
+
+@media (max-width:780px) {
+	.nav-hotfix1 {
+		height: 60px;
+	}
+	
+	.nav-hotfix2 {
+		height: 35px;
+	}
+
+	.banner-hotfix1 {
+		margin-top: 43px;
+	}
+
+	.a-hotfix1 {
+		margin-top:0px !important;
+	}
 
 @media (max-width:767px) {
 	.header-mainpage {

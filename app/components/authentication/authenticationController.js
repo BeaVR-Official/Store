@@ -1,4 +1,4 @@
-website.controller('authenticationController', function ($scope, AuthenticationService, $http) {
+website.controller('authenticationController', function ($scope, AuthenticationService, $http, $window) {
   $scope.connectionData = {
     email: '',
     password: '',
@@ -102,32 +102,8 @@ website.controller('authenticationController', function ($scope, AuthenticationS
   /***
   * Social Network
   */
-  $scope.facebookConnection = function() {
-
-    $http.get(url + '/auth/facebook')
-    .success(function (result) {
-        console.log("success");
-        console.log(result);
-      })
-      .error(function (result) {
-        console.log("error");
-        console.log(result);
-      });
-
-  }
-
-    $scope.googleConnection = function() {
-
-    $http.get(url + '/auth/facebook')
-    .success(function (result) {
-        console.log("success");
-        console.log(result);
-      })
-      .error(function (result) {
-        console.log("error");
-        console.log(result);
-      });
-
+  $scope.socialNetworkConnection = function(networkName) {
+    $window.location.href = "http://beavr.fr:3000/auth/" + networkName;
   }
 
 });

@@ -15,9 +15,16 @@ website.factory('AuthenticationService', function ($http, $window, $cookies, jwt
 					$cookies.put('store_token', result.data.token);
 					$cookies.put('store_id', result.data.userId);
 				}
-				$window.location.href = "#/"
+				$window.location.href = "#/";
 				$window.location.reload();
 			});
+	}
+
+	authService.socialNetworkLogin = function(data) {
+		$cookies.put('store_token', data.token);
+		$cookies.put('store_id', data.userID);
+		$window.location.href = "#/";
+		$window.location.reload();
 	}
 
 	authService.disconnect = function () {
@@ -30,7 +37,7 @@ website.factory('AuthenticationService', function ($http, $window, $cookies, jwt
 			} else if ($cookies.get('store_token') !== undefined && $cookies.get('store_id') !== undefined) {
 				$cookies.remove('store_token');
 				$cookies.remove('store_id');
-				$window.location.href = "#/"
+				$window.location.href = "#/";
 				$window.location.reload();
 			}
 		}
