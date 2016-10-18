@@ -70,7 +70,7 @@
                         <img class="navbar-brand-logo" src="assets/img/logo/beaver-logo-min.png">
                     </a>
                 </div>
-                <a class=" hidden-xs navbar-brand-logo brand-logo-main pull-left" href="#/">
+                <a class="hidden-xs navbar-brand-logo brand-logo-main pull-left" href="#/">
                     <img class="navbar-brand-logo" src="assets/img/logo/beaver-logo-min.png">
                 </a>
                 <div id="nav-collapse" ng-controller="navbarController" class="nav-hotfix2">
@@ -114,34 +114,33 @@
                     <div ng-show="offlineMenu">
                         <ul class="nav navbar-nav beavr-navbar-menu navbar-right navbar navbar-fixed-left">
                             <li><a href="" data-target="#authenticate_modal" class="a-hotfix1  connect-link" data-toggle="modal">Se connecter</a></li>
-                            <li><a href="" data-target="#authenticate_modal" class="connect-link" data-toggle="modal">Se connecter</a></li>
                         </ul>
                     </div>
 
-                          <ul id="main-dropdown" ng-show="onlineMenu" class="nav navbar-nav navbar-right beavr-navbar-menu">
-                            <li class="dropdown">
-                            <a href="" style="text-align:center;" class="dropdown-toggle" data-toggle="dropdown">{{ pseudo }} <img ng-src="{{ profilePicture }}"></a>
-                            <ul class="dropdown-menu">
-                                <li style="margin-top:3px;" ng-class="{active: isActive('/feedback')}"><a href="" data-target="#feedbackModal" data-toggle="modal" class="animate">Nous contacter <span class="glyphicon glyphicon-comment pull-right"></span></a></li>
-                                <li ng-show="registerDev" class="divider"></li>
-                                <li ng-show="registerDev"><a href="" data-target="#devPropagandaModal" data-toggle="modal" class="animate">Devenir développeur <span class="glyphicon glyphicon-blackboard pull-right"></span></a></li>
-                                <li ng-show="devMenu" class="divider"></li>
-                                <li ng-show="devMenu"><a href="#/applications/submission">Soumettre une application <span class="glyphicon glyphicon-upload pull-right"></span></a></li>
-                                <li ng-show="devMenu" class="divider"></li>
-                                <li ng-show="devMenu"><a href="#/applications/submitted">Mes applications déposées <span class="glyphicon glyphicon-folder-open pull-right"></span></a></li>
-                                <li class="divider"></li>
-                                <li><a href="#/profile">Profil <span class="glyphicon glyphicon-user pull-right"></span></a></li>
-                                <li class="divider"></li>
-                                <li><a href="#/library">Bibliothèque <span class="glyphicon glyphicon-th pull-right"></span></a></li>
-                                <li class="divider"></li>
-                                <!--<li><a href="#/progression">Progression <span class="glyphicon glyphicon-list-alt pull-right"></span></a></li>
-                                <li class="divider"></li>-->
-                                <li><a href="#/transactionHistory">Historique des transactions <span class="glyphicon glyphicon-euro pull-right"></span></a></li>
-                                <li class="divider"></li>
-                                <li style="margin-bottom:3px;"><a href="" ng-click="disconnect()">Se déconnecter <span class="glyphicon glyphicon-remove pull-right"></span></a></li>
-                            </ul>
-                            </li>
+                    <ul id="main-dropdown" ng-show="onlineMenu" class="nav navbar-nav navbar-right beavr-navbar-menu">
+                        <li class="dropdown">
+                        <a href="" style="text-align:center;" class="dropdown-toggle" data-toggle="dropdown">{{ pseudo }} <img ng-src="{{ profilePicture }}"></a>
+                        <ul class="dropdown-menu">
+                            <li style="margin-top:3px;" ng-class="{active: isActive('/feedback')}"><a href="" data-target="#feedbackModal" data-toggle="modal" class="animate">Nous contacter <span class="glyphicon glyphicon-comment pull-right"></span></a></li>
+                            <li ng-show="registerDev" class="divider"></li>
+                            <li ng-show="registerDev"><a href="" data-target="#devPropagandaModal" data-toggle="modal" class="animate">Devenir développeur <span class="glyphicon glyphicon-blackboard pull-right"></span></a></li>
+                            <li ng-show="devMenu" class="divider"></li>
+                            <li ng-show="devMenu"><a href="#/applications/submission">Soumettre une application <span class="glyphicon glyphicon-upload pull-right"></span></a></li>
+                            <li ng-show="devMenu" class="divider"></li>
+                            <li ng-show="devMenu"><a href="#/applications/submitted">Mes applications déposées <span class="glyphicon glyphicon-folder-open pull-right"></span></a></li>
+                            <li class="divider"></li>
+                            <li><a href="#/profile">Profil <span class="glyphicon glyphicon-user pull-right"></span></a></li>
+                            <li class="divider"></li>
+                            <li><a href="#/library">Bibliothèque <span class="glyphicon glyphicon-th pull-right"></span></a></li>
+                            <li class="divider"></li>
+                            <!--<li><a href="#/progression">Progression <span class="glyphicon glyphicon-list-alt pull-right"></span></a></li>
+                            <li class="divider"></li>-->
+                            <li><a href="#/transactionHistory">Historique des transactions <span class="glyphicon glyphicon-euro pull-right"></span></a></li>
+                            <li class="divider"></li>
+                            <li style="margin-bottom:3px;"><a href="" ng-click="disconnect()">Se déconnecter <span class="glyphicon glyphicon-remove pull-right"></span></a></li>
                         </ul>
+                        </li>
+                    </ul>
                 </div><!--/.navbar-collapse -->
             </div>
             <!-- /.navbar-collapse -->
@@ -150,7 +149,7 @@
     </nav>
 
     <!-- Top banner -->
-    <div class="row" ng-show="homePage" class="banner-hotfix-1">
+    <div class="row" ng-show="homePage" class="banner-hotfix1">
         <a ng-href="#/applications/details/57a20c9eea11906ee742c5d6">
         <div class="banner" style="background: url(http://image.noelshack.com/fichiers/2016/31/1470587666-1.png) 50% 100% no-repeat #000">
             <div class="container">
