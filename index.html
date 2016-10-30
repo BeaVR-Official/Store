@@ -340,9 +340,14 @@
                         <label>Se souvenir de moi</label>
                     </div>
                 </div>
-                <button type="submit" ng-disabled="connectionForm.$invalid" class="btn btn-secondary btn-beavr" ng-click="connexionAction()">Se connecter<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
-                <a class="btn btn-social btn-facebook" ng-click="socialNetworkConnection('facebook')"><span class="fa fa-facebook"></span>Se connecter via Facebook</a>
-                <a class="btn btn-social btn-google" ng-click="socialNetworkConnection('google')"><span class="fa fa-google"></span>Se connecter via Google</a>
+
+                <div style="height:40px">
+                <button type="submit" ng-disabled="connectionForm.$invalid" class="btn btn-secondary btn-beavr" style="float:left;" ng-click="connexionAction()">Se connecter<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                <a class="btn btn-social-icon btn-facebook visible-xs" style="margin-left:5px;float:left;" ng-click="socialNetworkConnection('facebook')"><span class="fa fa-facebook"></span></a>
+                <a class="btn btn-social-icon btn-google visible-xs" style="float:left;margin-left:5px;" ng-click="socialNetworkConnection('google')"><span class="fa fa-google"></span></a>
+                <a class="btn btn-social btn-facebook hidden-xs" style="margin-left:5px;" ng-click="socialNetworkConnection('facebook')"><span class="fa fa-facebook"></span><span class="hidden-xs">Se connecter via Facebook</span></a>
+                <a class="btn btn-social btn-google hidden-xs" style="margin-left:5px;" ng-click="socialNetworkConnection('google')"><span class="fa fa-google"></span><span class="hidden-xs">Se connecter via Google</span></a>
+                </div>
                 <div class="ui warning message" ng-show="errorMessage">
                     <div class="header">Erreur lors de la connexion</div>
                     <ul class="list">
