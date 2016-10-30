@@ -43,6 +43,24 @@
     <!-- Loading stuff -->
     <link rel='stylesheet' href='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.min.css' type='text/css' media='all' />
 
+    <!-- Favicon stuff -->
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/img/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/img/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/img/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/img/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/img/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/img/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/img/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="assets/img/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/img/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="assets/img/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -340,13 +358,12 @@
                         <label>Se souvenir de moi</label>
                     </div>
                 </div>
-
                 <div style="height:40px">
-                <button type="submit" ng-disabled="connectionForm.$invalid" class="btn btn-secondary btn-beavr" style="float:left;" ng-click="connexionAction()">Se connecter<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
-                <a class="btn btn-social-icon btn-facebook visible-xs" style="margin-left:5px;float:left;" ng-click="socialNetworkConnection('facebook')"><span class="fa fa-facebook"></span></a>
-                <a class="btn btn-social-icon btn-google visible-xs" style="float:left;margin-left:5px;" ng-click="socialNetworkConnection('google')"><span class="fa fa-google"></span></a>
-                <a class="btn btn-social btn-facebook hidden-xs" style="margin-left:5px;" ng-click="socialNetworkConnection('facebook')"><span class="fa fa-facebook"></span><span class="hidden-xs">Se connecter via Facebook</span></a>
-                <a class="btn btn-social btn-google hidden-xs" style="margin-left:5px;" ng-click="socialNetworkConnection('google')"><span class="fa fa-google"></span><span class="hidden-xs">Se connecter via Google</span></a>
+                    <button type="submit" ng-disabled="connectionForm.$invalid" class="btn btn-secondary btn-beavr" style="float:left;" ng-click="connexionAction()">Se connecter<span ng-show="loading == true"> <i class="glyphicon glyphicon-refresh spinning"></i></span></button>
+                    <a class="btn btn-social-icon btn-facebook visible-xs" style="margin-left:5px;float:left;" ng-click="socialNetworkConnection('facebook')"><span class="fa fa-facebook"></span></a>
+                    <a class="btn btn-social-icon btn-google visible-xs" style="float:left;margin-left:5px;" ng-click="socialNetworkConnection('google')"><span class="fa fa-google"></span></a>
+                    <a class="btn btn-social btn-facebook hidden-xs" style="margin-left:5px;" ng-click="socialNetworkConnection('facebook')"><span class="fa fa-facebook"></span><span class="hidden-xs">Se connecter via Facebook</span></a>
+                    <a class="btn btn-social btn-google hidden-xs" style="margin-left:5px;" ng-click="socialNetworkConnection('google')"><span class="fa fa-google"></span><span class="hidden-xs">Se connecter via Google</span></a>
                 </div>
                 <div class="ui warning message" ng-show="errorMessage">
                     <div class="header">Erreur lors de la connexion</div>
